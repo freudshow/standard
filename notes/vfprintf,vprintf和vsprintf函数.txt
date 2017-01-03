@@ -1,0 +1,55 @@
+一、vfprintf
+
+     函数名: vfprintf
+
+　　功 能: 格式化的数据输出到指定的数据流中
+
+　　用 法: int vfprintf(FILE *stream, char *format, va_list param);
+
+　　函数说明：vfprintf()会根据参数format字符串来转换并格式化数据，然后将结果输出到参数stream指定的文件中，直到出现字符串结束  （‘/0’）为止。关于参数format字符串的格式请参 考printf（）。
+
+　　返回值：成功则返回实际输出的字符数，失败则返回-1，错误原因存于errno中。
+
+   
+
+     程序举例：
+
+         
+FILE *fp; 　　  
+int vfpf(char *fmt, ...) 　　  
+{ 　　  
+    va_list argptr; 　  
+  　int cnt; 　　  
+    va_start(argptr, fmt); 　  
+  　cnt = vfprintf(fp, fmt, argptr);   
+　　va_end(argptr); 　　  
+    return(cnt); 　  
+} 　　  
+int main(void) 　  
+{ 　  
+  　int inumber = 30; 　  
+  　float fnumber = 90.0; 　  
+  　char string[4] = "abc";   
+　　fp = tmpfile(); 　  
+  　if (fp == NULL) 　  
+  　{ 　　  
+        perror("tmpfile() call"); 　  
+      　exit(1); 　  
+  　}   
+ 
+
+二、vprintf函数
+
+     函数名: vprintf
+
+　　功 能: 送格式化输出到stdout中
+
+　　用 法: int vprintf(char *format, va_list param);
+
+ 
+
+三、vsprintf函数
+
+     功 能: 送格式化输出到串中
+
+　　用 法: int vsprintf(char *string, char *format, va_list param);

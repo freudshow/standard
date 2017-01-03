@@ -1,0 +1,59 @@
+IEC 60870
+From Wikipedia, the free encyclopedia
+
+This article may require cleanup to meet Wikipedia's quality standards. No cleanup reason has been specified. Please help improve this article if you can. (January 2011) (Learn how and when to remove this template message)
+In electrical engineering and power system automation, the International Electrotechnical Commission 60870 standards define systems used for telecontrol (supervisory control and data acquisition). Such systems are used for controlling electric power transmission grids and other geographically widespread control systems. By use of standardized protocols, equipment from many different suppliers can be made to interoperate. IEC standard 60870 has six parts, defining general information related to the standard, operating conditions, electrical interfaces, performance requirements, and data transmission protocols. The 60870 standards are developed by IEC Technical Committee 57 (Working Group 03).
+
+Contents  [hide] 
+1	List of IEC 60870 parts
+2	IEC 60870-5
+3	IEC 60870-6
+4	References
+5	External links
+List of IEC 60870 parts[edit]
+IEC TR 60870-1-1:1988 General considerations. Section One: General principles
+IEC 60870-1-2:1989 General considerations. Section Two: Guide for specifications
+IEC TR 60870-1-3:1997 General considerations - Section 3: Glossary
+IEC TR 60870-1-4:1994 General considerations - Section 4: Basic aspects of telecontrol data transmission and organization of standards IEC 870-5 and IEC 870-6
+IEC TR 60870-1-5:2000 General considerations - Section 4: Influence of modem transmission procedures with scramblers on the data integrity of transmission systems using the protocol IEC 60870-5
+IEC 60870-2-1:1995 Operating conditions - Section 1: Power supply and electromagnetic compatibility
+IEC 60870-2-2:1996 Operating conditions - Section 2: Environmental conditions (climatic, mechanical and other non electrical influences)
+IEC 60870-3:1989 Interfaces (electrical characteristics)
+IEC 60870-4:1990 Performance requirements
+IEC 60870-5[edit]
+Main article: IEC 60870-5
+IEC 60870 part 5, known as Transmission protocols, [1] provides a communication profile for sending basic telecontrol messages between two systems, which uses permanent directly connected data circuits between the systems. The IEC TC 57 WG3 have developed a protocol standard for telecontrol, teleprotection, and associated telecommunications for electric power systems. The result of this work is IEC 60870-5. Five documents specify the base IEC 60870-5:
+
+IEC 60870-5-1 Transmission Frame Formats
+IEC 60870-5-2 Data Link Transmission Services
+IEC 60870-5-3 General Structure of Application Data
+IEC 60870-5-4 Definition and Coding of Information Elements
+IEC 60870-5-5 Basic Application Functions
+IEC 60870-5-6 Guidelines for conformance testing for the IEC 60870-5 companion standards
+IEC TS 60870-5-7 Security extensions to IEC 60870-5-101 and IEC 60870-5-104 protocols (applying IEC 62351)
+The IEC TC 57 has also generated companion standards:
+
+IEC 60870-5-101 Transmission Protocols - companion standards especially for basic telecontrol tasks
+IEC 60870-5-102 Transmission Protocols - Companion standard for the transmission of integrated totals in electric power systems (this standard is not widely used)
+IEC 60870-5-103 Transmission Protocols - Companion standard for the informative interface of protection equipment
+IEC 60870-5-104 Transmission Protocols - Network access for IEC 60870-5-101 using standard transport profiles
+IEC TS 60870-5-601 Transmission protocols - Conformance test cases for the IEC 60870-5-101 companion standard
+IEC TS 60870-5-604 Conformance test cases for the IEC 60870-5-104 companion standard
+IEC 60870-5-101/102/103/104 are companion standards generated for basic telecontrol tasks, transmission of integrated totals, data exchange from protection equipment & network access of IEC101 respectively.
+
+IEC 60870-6[edit]
+Main article: IEC 60870-6
+IEC TC 57 WG3 also generated standards for telecontrol protocols compatible with ISO standards and ITU-T recommendations. These standards include:
+
+IEC 60870-6-1 Application context and organization of standards
+IEC 60870-6-2 Use of basic standards (OSI layers 1¨C4)
+IEC 60870-6-501 TASE.1 Service definitions
+IEC 60870-6-502 TASE.1 Protocol definitions
+IEC 60870-6-503 TASE.2 Services and protocol
+IEC 60870-6-504 TASE.1 User conventions
+IEC TR 60870-6-505 TASE.2 User guide
+IEC 60870-6-601 Functional profile for providing the connection-oriented transport service in an end system connected via permanent access to a packet switched data network
+IEC 60870-6-602 TASE transport profiles
+IEC 60870-6-701 Functional profile for providing the TASE.1 application service in end systems
+IEC 60870-6-702 Functional profile for providing the TASE.2 application service in end systems
+IEC 60870-6-802 TASE.2 Object models
