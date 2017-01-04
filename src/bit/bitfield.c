@@ -57,6 +57,18 @@ typedef union {
 	} confirmSTR;
 } confirmUN;
 
+typedef union {//376.2-2009, AFN=03, F5: 载波主节点状态字和载波速率, 状态字
+	u16 u16b;
+	struct {
+		u16 carrierRateCnt	:4;
+		u16 hostNodeChnCht	:2;
+		u16 routeId			:1;
+		u16 rsv1			:1;
+		u16 carrierChnCnt	:4;
+		u16 rsv2			:4;
+	} stSTR;
+} stUN;
+
 #pragma pack(pop)
 
 int main(int argc, char* argv[])
