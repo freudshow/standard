@@ -1,0 +1,134 @@
+
+
+
+mode = backup
+backup_to = /home/pt/2010-08-03_003148.squashfs
+2010-08-03 00:32:57  正在将当前系统备份到 /home/pt/2010-08-03_003148.squashfs ...
+2010-08-03 00:36:30  系统备份完毕，耗时 3 分 33 秒 
+
+
+
+mode = backup
+backup_to = /home/xitong/cloner/2010-10-29_085003.squashfs
+2010-10-29 08:52:43  正在将当前系统备份到 /home/xitong/cloner/2010-10-29_085003.squashfs ...
+
+
+
+mode = backup
+backup_to = /home/xitong/cloner/2010-10-29_091618.squashfs
+2010-10-29 09:17:29  正在将当前系统备份到 /home/xitong/cloner/2010-10-29_091618.squashfs ...
+
+
+
+mode = backup
+backup_to = /home/xitong/cloner/2010-10-29_100135.squashfs
+2010-10-29 10:01:52  正在将当前系统备份到 /home/xitong/cloner/2010-10-29_100135.squashfs ...
+
+
+
+mode = backup
+backup_to = /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_093825.squashfs
+2010-11-17 09:39:23  正在将当前系统备份到 /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_093825.squashfs ...
+
+
+
+mode = backup
+backup_to = /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_093825.squashfs
+2010-11-17 09:39:49  正在将当前系统备份到 /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_093825.squashfs ...
+
+
+
+mode = backup
+backup_to = /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_094100.squashfs
+2010-11-17 09:41:20  正在将当前系统备份到 /media/SAMSUNG/ubuntu_cloner2010.11.17/2010-11-17_094100.squashfs ...
+2010-11-17 10:31:11  系统备份完毕，耗时 49 分 50 秒 
+
+
+
+mode = backup
+backup_to = /home/xitong/2011-01-17.squashfs
+2011-01-17 08:54:09  正在将当前系统备份到 /home/xitong/2011-01-17.squashfs ...
+
+
+
+mode = backup
+backup_to = /home/xitong/UCloner-10.04.7/2011-01-17.squashfs
+2011-01-17 08:54:55  正在将当前系统备份到 /home/xitong/UCloner-10.04.7/2011-01-17.squashfs ...
+
+
+
+mode = backup
+backup_to = /home/xitong/文档/2011-01-17.squashfs
+2011-01-17 08:56:56  正在将当前系统备份到 /home/xitong/文档/2011-01-17.squashfs ...
+2011-01-17 09:45:59  系统备份完毕，耗时 49 分 2 秒 
+
+
+
+mode = backup
+backup_to = /home/xitong/UCloner-10.04.7/2011-07-02.squashfs
+2011-07-02 09:38:46  正在将当前系统备份到 /home/xitong/UCloner-10.04.7/2011-07-02.squashfs ...
+
+
+
+mode = backup
+backup_to = /home/xitong/UCloner-10.04.7/2011-07-02.squashfs
+2011-07-02 09:43:05  正在将当前系统备份到 /home/xitong/UCloner-10.04.7/2011-07-02.squashfs ...
+2011-07-02 10:48:35  系统备份完毕，耗时 65 分 29 秒 
+
+
+
+mode = restore
+restore_from = /media/PENDRIVE/2011-07-02.squashfs
+swappart = /dev/sda5
+newhostname = 
+grubdev = /dev/sda
+/ = /dev/sda1, ext4
+2014-07-12 10:29:40  开始恢复...
+2014-07-12 10:37:48  系统恢复完毕，耗时 8 分 8 秒 
+
+
+
+mode = restore
+restore_from = /media/PENDRIVE/2011-07-02.squashfs
+swappart = /dev/sda5
+newhostname = server1
+grubdev = /dev/sda
+/ = /dev/sda1, ext4
+2014-07-10 09:24:02  开始恢复...
+2014-07-10 09:30:54  系统恢复完毕，耗时 6 分 51 秒 
+
+
+
+mode = restore
+restore_from = /media/PENDRIVE/2011-07-02.squashfs
+swappart = /dev/sda5
+newhostname = 
+grubdev = /dev/sda
+/home = /dev/sda6, ext4
+/ = /dev/sda1, ext4
+2014-07-21 17:40:34  开始恢复...
+2014-07-21 17:48:49  系统恢复完毕，耗时 8 分 14 秒 
+
+
+
+mode = clone
+swappart = /dev/sdb1
+newhostname = ubuntu
+grubdev = /dev/sdb
+/home = /dev/sdb3, ext4
+/ = /dev/sdb2, ext4
+2017-01-04 18:10:53  开始复制系统文件...
+2017-01-04 18:13:39  系统文件复制完毕，执行后续操作...
+2017-01-04 18:14:57  系统克隆完毕，耗时 4 分 4 秒 
+
+
+
+mode = clone
+swappart = /dev/sdb1
+newhostname = ubuntu
+grubdev = /dev/sdb
+/home = /dev/sdb3, ext4
+/ = /dev/sdb2, ext4
+2017-01-04 18:42:35  开始复制系统文件...
+2017-01-04 18:45:21  系统文件复制完毕，执行后续操作...
+2017-01-04 18:46:57  系统克隆完毕，耗时 4 分 21 秒 

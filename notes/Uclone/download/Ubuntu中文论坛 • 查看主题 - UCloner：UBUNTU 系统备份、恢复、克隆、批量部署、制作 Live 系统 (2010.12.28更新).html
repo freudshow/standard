@@ -1,0 +1,1933 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0054)http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="zh-cn" xml:lang="zh-cn"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<META http-equiv="content-language" content="zh-cn">
+<META http-equiv="content-style-type" content="text/css">
+<META http-equiv="imagetoolbar" content="no">
+<META name="resource-type" content="document">
+<META name="distribution" content="global">
+<META name="copyright" content="2000, 2002, 2005, 2007 phpBB Group">
+<META name="keywords" content="">
+<META name="description" content="">
+<META http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+
+<TITLE>Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)</TITLE>
+
+        <LINK rel="alternate" type="application/atom+xml" title="ATOM - Ubuntu中文论坛" href="http://forum.ubuntu.org.cn/feed.php">
+        <LINK rel="alternate" type="application/atom+xml" title="ATOM - 全部版面" href="http://forum.ubuntu.org.cn/feed.php?mode=forums"><LINK rel="alternate" type="application/atom+xml" title="ATOM - 版面 - 系统安装和升级" href="http://forum.ubuntu.org.cn/feed.php?f=77"><LINK rel="alternate" type="application/atom+xml" title="ATOM - 主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)" href="http://forum.ubuntu.org.cn/feed.php?f=77&t=176612">
+
+<LINK rel="stylesheet" href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/style.php" type="text/css">
+
+<SCRIPT type="text/javascript">
+// <![CDATA[
+
+
+function popup(url, width, height, name)
+{
+	if (!name)
+	{
+		name = '_popup';
+	}
+
+	window.open(url.replace(/&amp;/g, '&'), name, 'height=' + height + ',resizable=yes,scrollbars=yes,width=' + width);
+	return false;
+}
+
+function jumpto()
+{
+	var page = prompt('填入您想前往的页数:', '1');
+	var perpage = '15';
+	var base_url = './viewtopic.php?f=77&amp;t=176612&amp;sid=958928a657ea38436e29529e1a9bc6f0';
+
+	if (page !== null && !isNaN(page) && page > 0)
+	{
+		document.location.href = base_url.replace(/&amp;/g, '&') + '&start=' + ((page - 1) * perpage);
+	}
+}
+
+/**
+* Find a member
+*/
+function find_username(url)
+{
+	popup(url, 760, 570, '_usersearch');
+	return false;
+}
+
+/**
+* Mark/unmark checklist
+* id = ID of parent container, name = name prefix, state = state [true/false]
+*/
+function marklist(id, name, state)
+{
+	var parent = document.getElementById(id);
+	if (!parent)
+	{
+		eval('parent = document.' + id);
+	}
+
+	if (!parent)
+	{
+		return;
+	}
+
+	var rb = parent.getElementsByTagName('input');
+	
+	for (var r = 0; r < rb.length; r++)
+	{
+		if (rb[r].name.substr(0, name.length) == name)
+		{
+			rb[r].checked = state;
+		}
+	}
+}
+
+
+
+	/**
+	* Play quicktime file by determining it's width/height
+	* from the displayed rectangle area
+	*
+	* Only defined if there is a file block present.
+	*/
+	function play_qt_file(obj)
+	{
+		var rectangle = obj.GetRectangle();
+
+		if (rectangle)
+		{
+			rectangle = rectangle.split(',')
+			var x1 = parseInt(rectangle[0]);
+			var x2 = parseInt(rectangle[2]);
+			var y1 = parseInt(rectangle[1]);
+			var y2 = parseInt(rectangle[3]);
+
+			var width = (x1 < 0) ? (x1 * -1) + x2 : x2 - x1;
+			var height = (y1 < 0) ? (y1 * -1) + y2 : y2 - y1;
+		}
+		else
+		{
+			var width = 200;
+			var height = 0;
+		}
+
+		obj.width = width;
+		obj.height = height + 16;
+
+		obj.SetControllerVisible(true);
+
+		obj.Play();
+	}
+
+
+// ]]>
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/highslide-full.js"></SCRIPT>
+<LINK rel="stylesheet" href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/highslide.css" type="text/css">
+<SCRIPT type="text/javascript" src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/xs_bbcode_fn.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/select_expand_bbcodes.js"></SCRIPT>
+<LINK rel="stylesheet" href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/ul_syntaxhighlighter.css" type="text/css">
+
+
+<SCRIPT type="text/javascript">
+        hs.showCredits = 0;
+        hs.graphicsDir = './styles/ubuntu/theme/highslide/graphics/';
+        hs.align = 'center';
+        hs.transitions = ['expand', 'crossfade'];
+        hs.outlineType = 'glossy-dark';
+        hs.wrapperClassName = 'glossy-dark';
+        hs.fadeInOut = true;
+        hs.dimmingOpacity = 0.3;
+        //hs.padToMinWidth = true;
+
+        if (hs.addSlideshow) hs.addSlideshow({
+            interval: 5000,
+            repeat: false,
+            useControls: true,
+            fixedControls: 'fit',
+            overlayOptions: {
+                opacity: .6,
+                position: 'bottom center',
+                hideOnMouseOut: true
+            }
+        });
+
+</SCRIPT>
+
+</HEAD><BODY class="ltr">
+
+<A name="top"></A>
+
+<DIV id="wrapheader">
+
+	<DIV id="logodesc">
+
+			 <DIV id="mastWrapper">
+			 <DIV id="masthead">	
+    <!--////////////////////////////////////////////////////////////-->
+    <A id="logo" href="http://forum.ubuntu.org.cn/index.php?sid=958928a657ea38436e29529e1a9bc6f0" style="position:absolute;display:block;width:454px;height:70px;"></A> 
+    <!--////////////////////////////////////////////////////////////-->
+				<DIV id="nav1">
+                                  <UL>
+					<LI><A href="http://blog.ubuntu.org.cn/">Blog</A></LI>
+					<LI><A href="http://paste.ubuntu.org.cn/">Paste</A></LI>
+                                         <LI><A href="http://www.ubuntu.org.cn/">Ubuntu</A></LI>
+                                         <LI><A href="http://wiki.ubuntu.org.cn/">Wiki</A></LI>
+					 <LI><A href="http://linux.ubuntu.org.cn/">Linux</A></LI> 
+                                         <LI id="current"><A href="http://forum.ubuntu.org.cn/">Forum</A></LI> 
+
+                                  </UL>
+                                </DIV></DIV></DIV>
+<DIV id="sitesearch">
+<!-- SiteSearch Google -->
+<FORM method="get" action="http://www.google.com/search" target="google_window">
+
+<INPUT type="text" name="as_q" size="31" maxlength="255" value="">
+<INPUT type="submit" name="sa" value="搜索">
+<INPUT name="as_sitesearch" value="ubuntu.org.cn" type="hidden">
+<INPUT name="newwindow" value="1" type="hidden">
+<INPUT name="complete" value="1" type="hidden">
+<INPUT name="forid" value="zh-CN" type="hidden">
+<INPUT type="hidden" name="num" value="10">
+<INPUT name="btnG" value="Google+%E6%90%9C%E7%B4%A2&amp;" type="hidden">
+<INPUT name="as_ft" value="1" type="hidden">
+<INPUT name="as_qdr" value="all" type="hidden">
+<INPUT name="as_occt" value="any" type="hidden">
+<INPUT name="as_dt" value="i" type="hidden">
+</FORM>
+<!-- SiteSearch Google -->
+</DIV>
+
+
+
+
+	</DIV>
+
+	<DIV id="menubar">
+		<TABLE width="100%" cellspacing="0">
+		<TBODY><TR>
+			<TD class="genmed">
+				<A href="http://forum.ubuntu.org.cn/ucp.php?mode=login&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_mini_login.gif" width="12" height="13" alt="*"> 登录</A>&nbsp; &nbsp;<A href="http://forum.ubuntu.org.cn/ucp.php?mode=register&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_mini_register.gif" width="12" height="13" alt="*"> 注册</A>
+					
+			</TD>
+			<TD class="genmed" align="right">
+				<A href="http://forum.ubuntu.org.cn/faq.php?sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_mini_faq.gif" width="12" height="13" alt="*"> FAQ</A>
+				
+					<!--
+					 -->
+					
+			</TD>
+		</TR>
+<!--
+		</table>
+	</div>
+
+	<div id="datebar">
+		<table width="100%" cellspacing="0">
+
+		<tr>
+			<td class="gensmall"></td>
+			<td class="gensmall" align="right">现在的时间是 2011-01-17  11:41<br /></td>
+		</tr>
+-->
+		</TBODY></TABLE>
+	</DIV>
+
+</DIV>
+
+<DIV id="wrapcentre">
+
+	
+
+	<BR style="clear: both;">
+
+	<TABLE class="tablebg" width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px;">
+	<TBODY><TR>
+		<TD class="row1">
+			<P class="breadcrumbs"><A href="http://forum.ubuntu.org.cn/index.php?sid=958928a657ea38436e29529e1a9bc6f0">论坛首页</A> » <A href="http://forum.ubuntu.org.cn/viewforum.php?f=141&sid=958928a657ea38436e29529e1a9bc6f0">系统安装区</A> » <A href="http://forum.ubuntu.org.cn/viewforum.php?f=77&sid=958928a657ea38436e29529e1a9bc6f0">系统安装和升级</A></P>
+			<P class="datetime">当前时区为 UTC + 8 小时</P>
+		</TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<BR>
+
+<DIV id="pageheader">
+	<H2><A class="titles" href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&start=0&sid=958928a657ea38436e29529e1a9bc6f0">UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)</A></H2>
+<!--
+
+-->
+	<P class="skills"><SCRIPT type="text/javascript" src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/skills.js"></SCRIPT>&nbsp;查找软件库中的软件:&nbsp;&nbsp;<CODE>aptitude search 软件包</CODE></P>
+
+</DIV>
+
+<BR clear="all"><BR>
+
+<DIV id="pagecontent">
+
+	<TABLE width="100%" cellspacing="1">
+	<TBODY><TR>
+		<TD align="left" valign="middle" nowrap="nowrap">
+		<A href="http://forum.ubuntu.org.cn/posting.php?mode=post&f=77&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/button_topic_new.gif" alt="发表新帖" title="发表新帖"></A>&nbsp;<A href="http://forum.ubuntu.org.cn/posting.php?mode=reply&f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/button_topic_reply.gif" alt="回复这个主题" title="回复这个主题"></A>
+		</TD>
+		
+			<TD class="nav" valign="middle" nowrap="nowrap">&nbsp;分页： <STRONG>1</STRONG> / <STRONG>83</STRONG><BR></TD>
+			<TD class="gensmall" nowrap="nowrap">&nbsp;[ 1238 篇帖子 ]&nbsp;</TD>
+			<TD class="gensmall" width="100%" align="right" nowrap="nowrap"><B><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#" onclick="jumpto(); return false;" title="点击前往页面&hellip;">前往页数</A> <STRONG>1</STRONG><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=15">2</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=30">3</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=45">4</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=60">5</A> ... <A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=1230">83</A> &nbsp;<A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=15">下一页</A></B></TD>
+		
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR>
+		<TD class="cat">
+			<TABLE width="100%" cellspacing="0">
+			<TBODY><TR>
+				<TD class="nav" nowrap="nowrap">&nbsp;
+				<A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&start=0&sid=958928a657ea38436e29529e1a9bc6f0&view=print" title="打印预览">打印预览</A>
+				</TD>
+				<TD class="nav" align="right" nowrap="nowrap"><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&view=previous&sid=958928a657ea38436e29529e1a9bc6f0">上一个主题</A> | <A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&view=next&sid=958928a657ea38436e29529e1a9bc6f0">下一个主题</A>&nbsp;</TD>
+			</TR>
+			</TBODY></TABLE>
+		</TD>
+	</TR>
+
+	</TBODY></TABLE>
+
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	
+		<TBODY><TR>
+			<TH>作者</TH>
+			<TH>内容</TH>
+		</TR>
+	<TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088211"></A>
+				1&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088211&sid=958928a657ea38436e29529e1a9bc6f0#p1088211"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  22:54&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody"><SPAN style="font-weight: bold"><SPAN style="color: #0000BF"><SPAN style="font-size: 150%; line-height: normal">简介</SPAN></SPAN></SPAN><BR><SPAN style="color: #008000"><BR>UCloner 是针对 Ubuntu Linux 编写的一个系统备份、恢复、克隆工具；<BR>可将 ubuntu 系统备份为 squashfs 映像文件，也可从映像文件中恢复系统，与 GHOST 类似；<BR>可以直接将系统克隆到其它硬盘分区；<BR>可用来制作 Live 系统；<BR>同时具有命令行和图形界面，以满足不同用户需求；<BR>UCloner 是开源软件，遵循 GPL v2 协议。<BR>项目主页： <!-- m --><A class="postlink" href="http://code.google.com/p/ucloner/">http://code.google.com/p/ucloner/</A><!-- m --></SPAN><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=119466&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/Screenshot-UCloner%2010.10.0-1.png" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(1).php" alt="Screenshot-UCloner 10.10.0-1.png" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">Screenshot-UCloner 10.10.0-1.png [ 39.61 KiB | 被浏览 10051 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=119464&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/Screenshot-UCloner%2010.10.0.png" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(2).php" alt="Screenshot-UCloner 10.10.0.png" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">Screenshot-UCloner 10.10.0.png [ 37.07 KiB | 被浏览 10051 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><BR><SPAN style="font-weight: bold"><SPAN style="color: #0000BF"><SPAN style="font-size: 150%; line-height: normal">下载</SPAN></SPAN></SPAN><BR><SPAN style="color: #0000BF">2010.12.28  UCloner 10.10.2-beta1</SPAN><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+			<SPAN class="gensmall"><B>文件注释:</B> 新的图形界面（分步模式）；一些细节改进。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=123095&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.10.2-beta1.tar.gz</A> [56.74 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 74 次</SPAN>
+		
+
+		<BR>
+	</DIV><BR><SPAN style="color: #0000BF">2010.11.14  UCloner 10.10.1</SPAN><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+			<SPAN class="gensmall"><B>文件注释:</B> bug 修正：去掉 finish_clone_restore 中多余的 'cn' 参数。<BR>增加“完成后自动关机”选项（borisbsr建议）。<BR>增加“关闭”按钮。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=119805&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.10.1.tar.gz</A> [50.54 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 179 次</SPAN>
+		
+
+		<BR>
+	</DIV><BR>也可到项目主页下载： <!-- m --><A class="postlink" href="http://code.google.com/p/ucloner/downloads/list">http://code.google.com/p/ucloner/downloads/list</A><!-- m --><BR><BR><SPAN style="color: #FF0000">注意1：此版本仅适用于 ubuntu 10.10、10.04、9.10；<BR>注意2：目前不支持加密主目录的系统。<BR>注意3：不要把 UCloner 解压到 Fat32 分区，否则会丢失可执行权限，导致无法运行。建议解压到用户主目录。<BR>注意4：如果您的系统是 Lubuntu 或 Kubuntu，请仔细看 说明 。</SPAN><BR><BR><BR><BR><BR><SPAN style="font-weight: bold"><SPAN style="color: #0000BF"><SPAN style="font-size: 150%; line-height: normal">TODO</SPAN></SPAN></SPAN><BR>程序内部不要用 ./xxx.py 的形式调用外部脚本，以免权限丢失时无法运行。都改成 python xxx.py 或者 sh xxx.sh <BR>备份文件已存在时提示覆盖。<BR>改进日志系统<BR>《说明》中增加：在 LIVE 系统中恢复系统的方法。<BR>《说明》中增加 /home 独立分区情况下的使用技巧<BR>写一个专门修复 grub 的小工具 <BR>弄个可以自动生成livecd的选项<BR>估算体积 给出更详细的信息<BR>在按钮上设定快捷键<BR>前边没选分区前 后边的格式 就不可选（ring0 建议）<BR>修正：目标巻名称如果带空格的话，会产生错误而中断备份过程（jerimao反馈）<BR>如果能够支持增量就好嘞（l309j建议）<BR>系统坏掉时，要还原必须要从ubuntu live CD进入Ubuntu中运行UCloner才能还原，如果能像ghost在启动项中进入选择镜像还原就太好了。（J_win 建议）<BR>修改ucloner_cmd.py 第482行,sync --av 改为 sync -vurD,并把所有分区设为current,采用更新的方式.最后成功了.（lionhit）<BR><BR><BR><BR><SPAN style="font-weight: bold"><SPAN style="color: #0000BF"><SPAN style="font-size: 150%; line-height: normal">如何把当前使用的系统做成 Live 系统</SPAN></SPAN></SPAN><BR>1，安装 casper： sudo apt-get install casper ；<BR>2，用 UCloner 备份当前系统，文件名后缀必须为 .squashfs （默认即是）；<BR>3，在任一 fat32/ntfs/ext 分区中创建一个名为 casper 的目录（注意，其它分区中不可再有同名目录）；<BR>4，将系统备份文件拷贝到 casper 中；<BR>5，到 /boot 中将当前使用的内核和 initrd 文件也拷贝到 casper 中（可用 echo initrd.img-`uname -r` vmlinuz-`uname -r` 来查看文件名）；<BR>6，建立启动项。以 grub4dos 为例：<BR><DIV class="codetitle"><B>代码:</B></DIV><DIV class="codecontent">title Live Ubuntu<BR>find --set-root /casper/内核文件名<BR>kernel /casper/内核文件名 boot=casper ro ignore_uuid<BR>initrd /casper/initrd文件名</DIV><BR>将其中的 “内核文件名” 和 “initrd文件名” 用相应的文件名替换。<BR><BR><BR><BR><SPAN style="font-weight: bold"><SPAN style="color: #0000BF"><SPAN style="font-size: 150%; line-height: normal">应用举例</SPAN></SPAN></SPAN><BR>1.将 ubuntu 系统安装到移动硬盘中，配置好。拿到目标机上，从usb启动移动硬盘中的系统，运行 Ucloner ，选择“克隆”功能，按提示进行，即可将移动硬盘中的系统克隆到目标机中。<BR>2. 在一个安装、配置好的 ubuntu 系统中运行 Ucloner ，选择“备份”功能，可将当前系统备份为 squashfs 文件。将备份文件拷到u盘或移动硬盘。在目标机上通过光盘或USB启动 ubuntu live cd ，接上存有系统备份文件的u盘或移动硬盘，运行 Ucloner ，选择“恢复”功能，按提示进行，即可将系统映像恢复到目标机中。<BR>3. （待续）<BR><BR><BR><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92132&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/01.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(3).php" alt="01.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">01.jpg [ 35.51 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92133&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/02.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(4).php" alt="02.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">02.jpg [ 32.06 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92134&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/03.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(5).php" alt="03.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">03.jpg [ 16.99 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92135&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/04.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(6).php" alt="04.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">04.jpg [ 25.48 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92136&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/05.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(7).php" alt="05.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">05.jpg [ 29.89 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92137&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/06.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(8).php" alt="06.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">06.jpg [ 28.65 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92138&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/07.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(9).php" alt="07.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">07.jpg [ 34.47 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92139&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/08.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(10).php" alt="08.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">08.jpg [ 32.25 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92140&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/09.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(11).php" alt="09.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">09.jpg [ 29.03 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV><BR><DIV class="attachtitle">附件:</DIV><DIV class="attachcontent">
+                <A href="http://forum.ubuntu.org.cn/download/file.php?id=92141&sid=958928a657ea38436e29529e1a9bc6f0&mode=view/10.jpg" id="" class="highslide" onclick="return hs.expand(this)"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(12).php" alt="10.jpg" title="Click to enlarge"></A>
+                <BR><SPAN class="gensmall">10.jpg [ 33.55 KiB | 被浏览 40370 次 ]</SPAN><BR>
+                
+
+		<BR>
+	</DIV></DIV>
+
+					
+						<BR clear="all"><BR>
+
+						<TABLE class="tablebg" width="100%" cellspacing="1">
+						<TBODY><TR>
+							<TD class="row3"><B class="genmed">附件: </B></TD>
+						</TR>
+						
+							<TR>
+								<TD class="row2">
+			<SPAN class="gensmall"><B>文件注释:</B> 支持多语言（目前只有中文和英文）；<BR>目标分区默认不格式化（matww 建议），格式化时给出更多警告信息。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=119463&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.10.0.tar.gz</A> [36.95 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 81 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+							<TR>
+								<TD class="row1">
+			<SPAN class="gensmall"><B>文件注释:</B> 修正“生成 fstab 时获取 swap 分区 UUID 错误” 的 bug （qq420100523、lainme 报告）。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=118259&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.04.7.tar.gz</A> [32.84 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 71 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+							<TR>
+								<TD class="row2">
+			<SPAN class="gensmall"><B>文件注释:</B> 改进“估算体积”函数，加快估算速度。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=115389&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.04.6.tar.gz</A> [31.18 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 212 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+							<TR>
+								<TD class="row1">
+			<SPAN class="gensmall"><B>文件注释:</B> 修正 “序号大于9的分区无法显示” 的 bug （qq420100523 报告）。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=115250&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.04.5.tar.gz</A> [29.74 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 34 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+							<TR>
+								<TD class="row2">
+			<SPAN class="gensmall"><B>文件注释:</B> 修正 “gui 中指定排除目录无效” 的 bug （lainme 报告）；改进 log 。</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=111757&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-10.04.4.tar.gz</A> [29.67 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 264 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+							<TR>
+								<TD class="row1">
+			<SPAN class="gensmall"><B>文件注释:</B> For ubuntu 9.04</SPAN><BR>
+		
+			<SPAN class="genmed">
+				<IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_topic_attach.gif" width="14" height="18" alt="" title=""> 
+				<A href="http://forum.ubuntu.org.cn/download/file.php?id=92108&sid=958928a657ea38436e29529e1a9bc6f0">UCloner-3.6.1.tar.gz</A> [362.27 KiB]
+			</SPAN><BR>
+			<SPAN class="gensmall">被下载 1802 次</SPAN>
+		
+
+		<BR>
+	</TD>
+							</TR>
+						
+						</TBODY></TABLE>
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1088212"></A>
+				2&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=99043&sid=958928a657ea38436e29529e1a9bc6f0">ptpt52</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088212&sid=958928a657ea38436e29529e1a9bc6f0#p1088212"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  22:56&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(13).php" width="95" height="128" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2008-07-27  8:51<BR><B>帖子:</B> 498<BR><B>地址:</B> 广西玉林|湖北武汉
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">mark</DIV>
+
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=99043&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088217"></A>
+				3&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=34602&sid=958928a657ea38436e29529e1a9bc6f0">xeoc</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088217&sid=958928a657ea38436e29529e1a9bc6f0#p1088217"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  22:59&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				</TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2007-05-06  10:12<BR><B>帖子:</B> 1995
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">6pt  UUID那部分有用....</DIV>
+
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=34602&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1088226"></A>
+				4&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088226&sid=958928a657ea38436e29529e1a9bc6f0#p1088226"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  23:11&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">刚刚又做了几个试验，越发搞不懂 rsync 了。。。</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088235"></A>
+				5&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088235&sid=958928a657ea38436e29529e1a9bc6f0#p1088235"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  23:18&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">搞明白了，原来 --exclude 后面跟的是相对路径</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1088251"></A>
+				6&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088251&sid=958928a657ea38436e29529e1a9bc6f0#p1088251"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  23:26&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody"><DIV class="quotetitle">xeoc 写道:</DIV><DIV class="quotecontent">6pt  UUID那部分有用....</DIV><BR><BR>谢谢你知道有几个pt  <IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/em06.gif" alt=":em06" title=":em06"></DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088254"></A>
+				7&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088254&sid=958928a657ea38436e29529e1a9bc6f0#p1088254"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-22  23:27&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody"><DIV class="quotetitle">ptpt52 写道:</DIV><DIV class="quotecontent">mark</DIV><BR><BR>谢谢你的 id 跟我是亲戚</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1088367"></A>
+				8&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=123059&sid=958928a657ea38436e29529e1a9bc6f0">Seth Nightlord</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088367&sid=958928a657ea38436e29529e1a9bc6f0#p1088367"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-23  5:25&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				</TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2008-10-30  5:17<BR><B>帖子:</B> 30
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">mark</DIV>
+
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=123059&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=123059&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088576"></A>
+				9&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088576&sid=958928a657ea38436e29529e1a9bc6f0#p1088576"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-23  11:30&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">小更新下。</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1088692"></A>
+				10&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=120361&sid=958928a657ea38436e29529e1a9bc6f0">ws_105</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088692&sid=958928a657ea38436e29529e1a9bc6f0#p1088692"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-23  13:17&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(14).php" width="128" height="128" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2008-10-24  8:02<BR><B>帖子:</B> 314
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">mark</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR>Ubuntu 8.04 @ Intel Pentium D 925 + Intel 945G Chipset + DDR2 1.0G + SATA 160G<BR><!-- m --><A class="postlink" href="http://hi.baidu.com/ws_105">http://hi.baidu.com/ws_105</A><!-- m --></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=120361&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=120361&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1088773"></A>
+				11&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=109461&sid=958928a657ea38436e29529e1a9bc6f0">tory2000</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1088773&sid=958928a657ea38436e29529e1a9bc6f0#p1088773"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-23  14:38&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				</TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2008-09-21  19:25<BR><B>帖子:</B> 150
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">做个记号 等成熟了再来下</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><SPAN style="font-size: 100%; line-height: normal"><SPAN style="color: #FF8000">永远记住:我们不是一个人在战斗!</SPAN></SPAN></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=109461&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=109461&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1089119"></A>
+				12&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=10973&sid=958928a657ea38436e29529e1a9bc6f0">yb0327</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1089119&sid=958928a657ea38436e29529e1a9bc6f0#p1089119"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-23  20:08&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				</TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-06-27  12:30<BR><B>帖子:</B> 197
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">clonezilla-live这个工具可以实现像win下的ghost的功能，可以对整个硬盘或分区克隆</DIV>
+
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=10973&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1089734"></A>
+				13&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0">ptptptptptpt</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1089734&sid=958928a657ea38436e29529e1a9bc6f0#p1089734"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-24  11:19&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file.php" width="128" height="76" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-09-19  18:16<BR><B>帖子:</B> 4103
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">有没有哪位同学用过的？？请吱一声~~</DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR><A href="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新).html" class="postlink">Ubuntu 系统备份、恢复、克隆、批量部署、制作 live 系统</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> <A href="http://forum.ubuntu.org.cn/memberlist.php?mode=email&u=15744&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_contact_email.gif" alt="发送Email" title="发送Email"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row2">
+
+			<TD align="left" valign="middle">
+				<A name="p1089745"></A>
+				14&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=7482&sid=958928a657ea38436e29529e1a9bc6f0">bones7456</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1089745&sid=958928a657ea38436e29529e1a9bc6f0#p1089745"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-24  11:26&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row2">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(15).php" width="100" height="100" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2006-04-12  20:05<BR><B>帖子:</B> 8497<BR><B>地址:</B> 杭州
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">6pt。。。 <IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/em04.gif" alt=":em04" title=":em04"></DIV>
+
+					
+						<SPAN class="signature"><BR><BR>_________________<BR>关注我的blog: <A href="http://luy.li/" class="postlink">ε==3</A></SPAN>
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row2">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=7482&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR class="row1">
+
+			<TD align="left" valign="middle">
+				<A name="p1089836"></A>
+				15&nbsp;楼&nbsp;
+				<B class="postauthor">
+			
+				<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=76112&sid=958928a657ea38436e29529e1a9bc6f0">追疯少年</A>			
+			
+
+			</B>
+			</TD>
+			<TD width="100%" height="25">
+				<TABLE width="100%" cellspacing="0">
+				<TBODY><TR>
+				
+					<TD class="gensmall" width="100%"><DIV style="float: left;">&nbsp;<B>文章标题 :</B> Re: ubuntu-cloner：克隆当前系统，避免重复安装（12.23更新）</DIV><DIV style="float: right;"><A href="http://forum.ubuntu.org.cn/viewtopic.php?p=1089836&sid=958928a657ea38436e29529e1a9bc6f0#p1089836"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_post_target.gif" width="12" height="9" alt="帖子" title="帖子"></A><B>发表于 :</B> 2008-12-24  12:42&nbsp;</DIV></TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+		
+		<TR class="row1">
+
+			<TD valign="top" class="profile">
+				<TABLE cellspacing="4" align="center" width="150">
+			
+				<TBODY><TR>
+					<TD><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/file(16).php" width="120" height="120" alt="头像"></TD>
+				</TR>
+			
+				</TBODY></TABLE>
+
+				<SPAN class="postdetails">
+					<BR><B>注册:</B> 2008-03-13  23:37<BR><B>帖子:</B> 851
+				</SPAN>
+
+			</TD>
+			<TD valign="top">
+				<TABLE width="100%" cellspacing="5">
+				<TBODY><TR>
+					<TD>
+					
+
+						<DIV class="postbody">那个sh的命令，怎么用呢？楼主介绍下～</DIV>
+
+					<BR clear="all"><BR>
+
+						<TABLE width="100%" cellspacing="0">
+						<TBODY><TR valign="middle">
+							<TD class="gensmall" align="left">
+                                                                
+							</TD>
+							<TD class="gensmall" align="right">
+							
+							</TD>
+						</TR>
+						</TBODY></TABLE>
+					</TD>
+				</TR>
+				</TBODY></TABLE>
+			</TD>
+		</TR>
+
+		<TR class="row1">
+
+			<TD class="profile"><STRONG><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#wrapheader">页首</A></STRONG></TD>
+			<TD><DIV class="gensmall" style="float: left;">&nbsp;<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=76112&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/icon_user_profile.gif" alt="用户资料" title="用户资料"></A> &nbsp;</DIV> <DIV class="gensmall" style="float: right;">&nbsp;</DIV></TD>
+	
+		</TR>
+
+	<TR>
+		<TD class="spacer" colspan="2" height="1"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/spacer.gif" alt="" width="1" height="1"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+
+	<TABLE width="100%" cellspacing="1" class="tablebg">
+	<TBODY><TR align="center">
+		<TD class="cat"><FORM name="viewtopic" method="post" action="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&start=0&sid=958928a657ea38436e29529e1a9bc6f0"><SPAN class="gensmall">显示帖子 :</SPAN> <SELECT name="st" id="st"><OPTION value="0" selected="selected">全部帖子</OPTION><OPTION value="1">1天</OPTION><OPTION value="7">7天</OPTION><OPTION value="14">2周</OPTION><OPTION value="30">1个月</OPTION><OPTION value="90">3个月</OPTION><OPTION value="180">6个月</OPTION><OPTION value="365">1年</OPTION></SELECT>&nbsp;<SPAN class="gensmall">排序</SPAN> <SELECT name="sk" id="sk"><OPTION value="a">作者</OPTION><OPTION value="t" selected="selected">发表时间</OPTION><OPTION value="s">文章标题</OPTION></SELECT> <SELECT name="sd" id="sd"><OPTION value="a" selected="selected">升序</OPTION><OPTION value="d">降序</OPTION></SELECT>&nbsp;<INPUT class="btnlite" type="submit" value="GO" name="sort"></FORM></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	<TABLE width="100%" cellspacing="1">
+	<TBODY><TR>
+		<TD align="left" valign="middle" nowrap="nowrap">
+		<A href="http://forum.ubuntu.org.cn/posting.php?mode=post&f=77&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/button_topic_new.gif" alt="发表新帖" title="发表新帖"></A>&nbsp;<A href="http://forum.ubuntu.org.cn/posting.php?mode=reply&f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0"><IMG src="./Ubuntu中文论坛 • 查看主题 - UCloner：UBUNTU 系统备份、恢复、克隆、批量部署、制作 Live 系统 (2010.12.28更新)_files/button_topic_reply.gif" alt="回复这个主题" title="回复这个主题"></A>
+		</TD>
+		
+			<TD class="nav" valign="middle" nowrap="nowrap">&nbsp;分页： <STRONG>1</STRONG> / <STRONG>83</STRONG><BR></TD>
+			<TD class="gensmall" nowrap="nowrap">&nbsp;[ 1238 篇帖子 ]&nbsp;</TD>
+			<TD class="gensmall" width="100%" align="right" nowrap="nowrap"><B><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612#" onclick="jumpto(); return false;" title="点击前往页面&hellip;">前往页数</A> <STRONG>1</STRONG><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=15">2</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=30">3</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=45">4</A><SPAN class="page-sep">, </SPAN><A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=60">5</A> ... <A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=1230">83</A> &nbsp;<A href="http://forum.ubuntu.org.cn/viewtopic.php?f=77&t=176612&sid=958928a657ea38436e29529e1a9bc6f0&start=15">下一页</A></B></TD>
+		
+	</TR>
+	</TBODY></TABLE>
+
+</DIV>
+
+
+
+<DIV id="pagefooter"></DIV>
+
+<BR clear="all">
+
+<TABLE class="tablebg" width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px;">
+	<TBODY><TR>
+		<TD class="row1">
+			<P class="breadcrumbs"><A href="http://forum.ubuntu.org.cn/index.php?sid=958928a657ea38436e29529e1a9bc6f0">论坛首页</A> » <A href="http://forum.ubuntu.org.cn/viewforum.php?f=141&sid=958928a657ea38436e29529e1a9bc6f0">系统安装区</A> » <A href="http://forum.ubuntu.org.cn/viewforum.php?f=77&sid=958928a657ea38436e29529e1a9bc6f0">系统安装和升级</A></P>
+			<P class="datetime">当前时区为 UTC + 8 小时</P>
+		</TD>
+	</TR>
+	</TBODY></TABLE>
+	<BR clear="all">
+
+	<TABLE class="tablebg" width="100%" cellspacing="1">
+	<TBODY><TR>
+		<TD class="cat"><H4>在线用户</H4></TD>
+	</TR>
+	<TR>
+		<TD class="row1"><P class="gensmall">正在浏览此版面的用户：<A href="http://forum.ubuntu.org.cn/memberlist.php?mode=viewprofile&u=186931&sid=958928a657ea38436e29529e1a9bc6f0">whr_9046</A> 和 24 位游客</P></TD>
+	</TR>
+	</TBODY></TABLE>
+
+
+<BR clear="all">
+
+<TABLE width="100%" cellspacing="1">
+<TBODY><TR>
+	<TD width="40%" valign="top" nowrap="nowrap" align="left">
+	<TD align="right" valign="top" nowrap="nowrap"><SPAN class="gensmall">您 <STRONG>不能</STRONG> 在这个版面发表主题<BR>您 <STRONG>不能</STRONG> 在这个版面回复主题<BR>您 <STRONG>不能</STRONG> 在这个版面编辑帖子<BR>您 <STRONG>不能</STRONG> 在这个版面删除帖子<BR>您 <STRONG>不能</STRONG> 在这个版面提交附件<BR></SPAN></TD>
+</TR>
+</TBODY></TABLE>
+
+<BR clear="all">
+
+<TABLE width="100%" cellspacing="0">
+<TBODY><TR>
+	<TD>
+	<TD align="right">
+	<FORM method="post" name="jumpbox" action="http://forum.ubuntu.org.cn/viewforum.php?sid=958928a657ea38436e29529e1a9bc6f0" onsubmit="if(document.jumpbox.f.value == -1){return false;}">
+
+	<TABLE cellspacing="0" cellpadding="0" border="0">
+	<TBODY><TR>
+		<TD nowrap="nowrap"><SPAN class="gensmall">前往 :</SPAN>&nbsp;<SELECT name="f" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms[&#39;jumpbox&#39;].submit() }">
+
+		
+			<OPTION value="-1">选择一个版面</OPTION>
+		<OPTION value="-1">------------------</OPTION>
+			<OPTION value="140">公告/注意事项</OPTION>
+		
+			<OPTION value="1">&nbsp; &nbsp;新闻和通知</OPTION>
+		
+			<OPTION value="127">&nbsp; &nbsp;校园社团支持</OPTION>
+		
+			<OPTION value="128">&nbsp; &nbsp;&nbsp; &nbsp;华东校区</OPTION>
+		
+			<OPTION value="129">&nbsp; &nbsp;&nbsp; &nbsp;华南校区</OPTION>
+		
+			<OPTION value="130">&nbsp; &nbsp;&nbsp; &nbsp;华北校区</OPTION>
+		
+			<OPTION value="131">&nbsp; &nbsp;&nbsp; &nbsp;华中校区</OPTION>
+		
+			<OPTION value="132">&nbsp; &nbsp;&nbsp; &nbsp;东北校区</OPTION>
+		
+			<OPTION value="134">&nbsp; &nbsp;&nbsp; &nbsp;西北校区</OPTION>
+		
+			<OPTION value="135">&nbsp; &nbsp;&nbsp; &nbsp;港澳台校区</OPTION>
+		
+			<OPTION value="136">&nbsp; &nbsp;&nbsp; &nbsp;国外校区</OPTION>
+		
+			<OPTION value="95">&nbsp; &nbsp;软件推荐</OPTION>
+		
+			<OPTION value="163">&nbsp; &nbsp;非常任务</OPTION>
+		
+			<OPTION value="141">系统安装区</OPTION>
+		
+			<OPTION value="120">&nbsp; &nbsp;教学和常见问答</OPTION>
+		
+			<OPTION value="48">&nbsp; &nbsp;初学者园地</OPTION>
+		
+			<OPTION value="77" selected="selected">&nbsp; &nbsp;系统安装和升级</OPTION>
+		
+			<OPTION value="52">&nbsp; &nbsp;&nbsp; &nbsp;新立得和软件源</OPTION>
+		
+			<OPTION value="159">&nbsp; &nbsp;&nbsp; &nbsp;Wubi安装讨论</OPTION>
+		
+			<OPTION value="139">&nbsp; &nbsp;启动和引导</OPTION>
+		
+			<OPTION value="116">&nbsp; &nbsp;网卡问题以及网络和拨号</OPTION>
+		
+			<OPTION value="156">&nbsp; &nbsp;&nbsp; &nbsp;校园网拨号</OPTION>
+		
+			<OPTION value="126">&nbsp; &nbsp;笔记本、UMPC、MID支持</OPTION>
+		
+			<OPTION value="42">&nbsp; &nbsp;常用硬件支持</OPTION>
+		
+			<OPTION value="85">&nbsp; &nbsp;系统架构支持</OPTION>
+		
+			<OPTION value="142">配置美化区</OPTION>
+		
+			<OPTION value="8">&nbsp; &nbsp;字体美化和中文支持</OPTION>
+		
+			<OPTION value="24">&nbsp; &nbsp;&nbsp; &nbsp;个人配置文件存放点</OPTION>
+		
+			<OPTION value="94">&nbsp; &nbsp;3 D 桌面特效</OPTION>
+		
+			<OPTION value="168">&nbsp; &nbsp;窗口管理器</OPTION>
+		
+			<OPTION value="12">&nbsp; &nbsp;屏幕抓图</OPTION>
+		
+			<OPTION value="143">软件使用</OPTION>
+		
+			<OPTION value="35">&nbsp; &nbsp;办公、图像、机械电子设计等</OPTION>
+		
+			<OPTION value="68">&nbsp; &nbsp;&nbsp; &nbsp;Vim和Emacs</OPTION>
+		
+			<OPTION value="73">&nbsp; &nbsp;因特网相关软件</OPTION>
+		
+			<OPTION value="74">&nbsp; &nbsp;影音多媒体</OPTION>
+		
+			<OPTION value="121">&nbsp; &nbsp;Wine及其分支</OPTION>
+		
+			<OPTION value="34">&nbsp; &nbsp;游戏和游戏模拟器</OPTION>
+		
+			<OPTION value="65">&nbsp; &nbsp;虚拟机和虚拟化</OPTION>
+		
+			<OPTION value="122">&nbsp; &nbsp;其它类软件</OPTION>
+		
+			<OPTION value="144">服务器管理</OPTION>
+		
+			<OPTION value="54">&nbsp; &nbsp;服务器基础应用</OPTION>
+		
+			<OPTION value="44">&nbsp; &nbsp;数据库管理</OPTION>
+		
+			<OPTION value="124">&nbsp; &nbsp;服务器维护和硬件相关</OPTION>
+		
+			<OPTION value="166">&nbsp; &nbsp;Ubuntu VPS</OPTION>
+		
+			<OPTION value="160">参与Ubuntu开发</OPTION>
+		
+			<OPTION value="17">&nbsp; &nbsp;软件和文档翻译</OPTION>
+		
+			<OPTION value="56">&nbsp; &nbsp;编译或打包</OPTION>
+		
+			<OPTION value="80">&nbsp; &nbsp;Ubuntu 错误报告</OPTION>
+		
+			<OPTION value="145">程序设计区</OPTION>
+		
+			<OPTION value="21">&nbsp; &nbsp;Shell脚本</OPTION>
+		
+			<OPTION value="162">&nbsp; &nbsp;GTK+和QT</OPTION>
+		
+			<OPTION value="88">&nbsp; &nbsp;软件/网站开发</OPTION>
+		
+			<OPTION value="63">&nbsp; &nbsp;&nbsp; &nbsp;Python/Php/Perl</OPTION>
+		
+			<OPTION value="70">&nbsp; &nbsp;&nbsp; &nbsp;C/C++/Java</OPTION>
+		
+			<OPTION value="97">&nbsp; &nbsp;内核及嵌入式开发</OPTION>
+		
+			<OPTION value="137">&nbsp; &nbsp;开源小工具</OPTION>
+		
+			<OPTION value="146">版本支持</OPTION>
+		
+			<OPTION value="49">&nbsp; &nbsp;Ubuntu 11.04</OPTION>
+		
+			<OPTION value="169">&nbsp; &nbsp;Ubuntu 10.04 LTS</OPTION>
+		
+			<OPTION value="50">&nbsp; &nbsp;Ubuntu 8.04 LTS</OPTION>
+		
+			<OPTION value="86">&nbsp; &nbsp;老旧版本支持</OPTION>
+		
+			<OPTION value="147">衍生发行版</OPTION>
+		
+			<OPTION value="38">&nbsp; &nbsp;Kubuntu</OPTION>
+		
+			<OPTION value="39">&nbsp; &nbsp;Xubuntu &amp; Lubuntu</OPTION>
+		
+			<OPTION value="28">&nbsp; &nbsp;Ubuntu中文衍生版</OPTION>
+		
+			<OPTION value="103">&nbsp; &nbsp;Ubuntu国外衍生版</OPTION>
+		
+			<OPTION value="161">&nbsp; &nbsp;Ubuntu衍生版制作</OPTION>
+		
+			<OPTION value="105">&nbsp; &nbsp;其它类Unix OS发行版</OPTION>
+		
+			<OPTION value="155">&nbsp; &nbsp;&nbsp; &nbsp;Arch发行版</OPTION>
+		
+			<OPTION value="165">&nbsp; &nbsp;&nbsp; &nbsp;Debian发行版</OPTION>
+		
+			<OPTION value="148">感想区</OPTION>
+		
+			<OPTION value="101">&nbsp; &nbsp;深度PK版</OPTION>
+		
+			<OPTION value="112">&nbsp; &nbsp;Ubuntu故事和感慨</OPTION>
+		
+			<OPTION value="153">&nbsp; &nbsp;Full Circle 开源杂志</OPTION>
+		
+			<OPTION value="149">分享交流区</OPTION>
+		
+			<OPTION value="27">&nbsp; &nbsp;Ubuntu 光盘分享</OPTION>
+		
+			<OPTION value="31">&nbsp; &nbsp;同城交流</OPTION>
+		
+			<OPTION value="152">&nbsp; &nbsp;线下活动专版</OPTION>
+		
+			<OPTION value="150">归档区</OPTION>
+		
+			<OPTION value="123">&nbsp; &nbsp;归档贴</OPTION>
+		
+			<OPTION value="151">站务区</OPTION>
+		
+			<OPTION value="100">&nbsp; &nbsp;Ubuntu 中文网上商店</OPTION>
+		
+			<OPTION value="157">&nbsp; &nbsp;Ubuntu 宣传推广</OPTION>
+		
+			<OPTION value="16">&nbsp; &nbsp;论坛管理</OPTION>
+		
+
+		</SELECT>&nbsp;<INPUT class="btnlite" type="submit" value="GO"></TD>
+	</TR>
+	</TBODY></TABLE>
+
+	</FORM>
+</TD>
+</TR>
+</TBODY></TABLE>
+
+
+</DIV>
+
+<!--
+	We request you retain the full copyright notice below including the link to www.phpbb.com.
+	This not only gives respect to the large amount of time given freely by the developers
+	but also helps build interest, traffic and use of phpBB3. If you (honestly) cannot retain
+	the full copyright we ask you at least leave in place the "Powered by phpBB" line, with
+	"phpBB" linked to www.phpbb.com. If you refuse to include even this then support on our
+	forums may be affected.
+
+	The phpBB Group : 2006
+//-->
+
+<DIV id="wrapfooter">
+	
+        <SPAN class="gensmall">本站点为公益性站点，用于推广开源自由软件，由 <A href="http://www.diahosting.com/client/aff.php?aff=531">DiaHosting VPS</A> 和 <A href="https://service.burst.net/aff2.php?aff=459&affurl=5">BurstNet VPS</A> 提供服务。</SPAN><BR>
+	<SPAN class="gensmall">我们认为：软件应可免费取得，软件工具在各种语言环境下皆可使用，且不会有任何功能上的差异；<BR>人们应有定制和修改软件的自由，且方式不受限制，只要他们自认为合适。</SPAN><BR>
+	<SPAN class="copyright">Powered by <A href="http://www.phpbb.com/">phpBB</A> © 2000, 2002, 2005, 2007 phpBB Group
+	<BR>简体中文语系由 <A href="http://www.phpbbchina.com/creditinfo">PHPBB中文翻译小组</A> 维护制作</SPAN>
+</DIV>
+
+
+<DIV style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; position: absolute; left: 0px; top: 0px; width: 100%; z-index: 1001; "><A class="highslide-loading" title="Click to cancel" href="javascript:;" style="position: absolute; opacity: 0.75; left: -9999px; z-index: 1; ">Loading...</A><DIV style="display: none; "></DIV><TABLE cellspacing="0" style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; visibility: hidden; position: absolute; border-collapse: collapse; "><TBODY style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; "><TR style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; height: auto; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: 0px 0px; background-repeat: initial initial; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: 0px -57px; background-repeat: initial initial; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: -28.5px 0px; background-repeat: initial initial; "></TR><TR style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; height: auto; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: 0px -114px; background-repeat: initial initial; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; position: relative; " class="glossy-dark"><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: -28.5px -114px; background-repeat: initial initial; "></TR><TR style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; height: auto; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: 0px -28.5px; background-repeat: initial initial; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: 0px -85.5px; background-repeat: initial initial; "><TD style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; line-height: 0; font-size: 0px; background-image: url(http://forum.ubuntu.org.cn/styles/ubuntu/theme/highslide/graphics/outlines/glossy-dark.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; height: 28.5px; width: 28.5px; background-position: -28.5px -28.5px; background-repeat: initial initial; "></TR></TBODY></TABLE></DIV></BODY></HTML>

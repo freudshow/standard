@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0038)http://jadeluo.javaeye.com/blog/846565 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <TITLE>UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站</TITLE>
+    <META name="description" content="http://code.google.com/p/ucloner/Introduction&para; UCloner is a backup/restore/clone tool designed for Ubuntu Linux. In some way it&#39;s just like Norton Ghost for Windows. With UCloner you can backup your Ub ...">
+    <META name="keywords" content=" Linux UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具">
+    <LINK rel="shortcut icon" href="http://jadeluo.javaeye.com/images/favicon.ico" type="image/x-icon">
+    <LINK rel="search" type="application/opensearchdescription+xml" href="http://jadeluo.javaeye.com/open_search.xml" title="JavaEye">
+    <LINK href="http://jadeluo.javaeye.com/rss" rel="alternate" title="集思广益" type="application/rss+xml">
+    <LINK href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<LINK href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+    <SCRIPT src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/application.js" type="text/javascript"></SCRIPT>
+      
+  <LINK href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <SCRIPT src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/shCoreCommon.js" type="text/javascript"></SCRIPT>
+<SCRIPT src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/hotkey.js" type="text/javascript"></SCRIPT>
+  <STYLE>
+    div#main {background-color: transparent; border: 0; padding: 0px; width: 740px;}
+  </STYLE>
+  <LINK href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/ui.css" media="screen" rel="stylesheet" type="text/css">
+  <SCRIPT src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/compress.js" type="text/javascript"></SCRIPT>
+  </HEAD><BODY>
+    <DIV id="header">
+      <DIV id="blog_site_nav">
+  <A href="http://www.javaeye.com/" class="homepage">首页</A>
+  <A href="http://www.javaeye.com/news">新闻</A>
+  <A href="http://www.javaeye.com/forums">论坛</A>
+  <A href="http://www.javaeye.com/ask">问答</A>
+  <A href="http://www.javaeye.com/blogs">博客</A>
+  <A href="http://www.javaeye.com/job">招聘</A>
+  <A href="http://jadeluo.javaeye.com/blog/846565#" onclick="return false;" id="msna"><U>更多</U> <SMALL>▼</SMALL></A>
+  <DIV class="quick_menu" style="display:none;">
+    <A href="http://www.javaeye.com/wiki">专栏</A>
+    <!--<a href="http://www.javaeye.com/articles">文摘</a>//-->
+    <A href="http://www.javaeye.com/groups">圈子</A>
+    <A href="http://www.javaeye.com/search">搜索</A>
+  </DIV>
+</DIV>
+      <DIV id="user_nav">
+      <A href="http://jadeluo.javaeye.com/login" class="welcome" title="登录">您还未登录 !</A>
+    <A href="http://www.javaeye.com/all" style="color:red">我的应用</A>
+    <A href="http://jadeluo.javaeye.com/login">登录</A>
+    <A href="http://jadeluo.javaeye.com/signup" class="nobg">注册</A>
+  </DIV>
+    </DIV>
+
+    <DIV id="page">
+      <DIV id="branding" class="clearfix">
+        <DIV id="blog_name"><H1><A href="http://jadeluo.javaeye.com/">集思广益</A></H1></DIV>
+        <DIV id="blog_preview">
+          
+        </DIV>
+        <DIV id="blog_domain">永久域名 <A href="http://jadeluo.javaeye.com/">http://jadeluo.javaeye.com</A></DIV>
+      </DIV>
+      
+      
+      <DIV id="content" class="clearfix">
+        <DIV id="main">
+          
+
+
+          
+
+
+<DIV class="blog_main"> 
+  <DIV class="blog_nav">
+    
+    <DIV class="pre_next">
+      <A href="http://jadeluo.javaeye.com/blog/867296" class="next" title="生成zip文件">生成zip文件</A>
+      |
+      <A href="http://jadeluo.javaeye.com/blog/846561" class="pre" title="ubuntu man手册完善">ubuntu man手册完善</A>
+    </DIV>
+  </DIV>
+  <DIV class="blog_title">
+    <DIV class="date"><SPAN class="year">2010</SPAN><SPAN class="sep_year">-</SPAN><SPAN class="month">12</SPAN><SPAN class="sep_month">-</SPAN><SPAN class="day">19</SPAN></DIV>
+    <H3><A href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站.html">UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具</A></H3>
+                <STRONG>文章分类:<A href="http://www.javaeye.com/blogs/category/os" style="text-decoration:none;padding-right:10px;">操作系统</A></STRONG>    
+  </DIV>
+
+  <DIV class="blog_content">
+    http://code.google.com/p/ucloner/Introduction¶
+<BR>
+<BR>UCloner is a backup/restore/clone tool designed for Ubuntu Linux. In some way it's just like Norton Ghost for Windows.
+<BR>
+<BR>With UCloner you can backup your Ubuntu system to a squashfs image file. Directly from this image file you can boot up a PC into a so-called "Live Ubuntu" environment (need "casper" package).
+<BR>
+<BR>An active ubuntu system can clone itself into a/some target partition(s) with the help of UCloner. Remember Agent Smith in Matrix ? yeah, that's it.
+<BR>
+<BR>It has both command line and graphical interface. It's more flexible when running in command line interface.
+<BR>
+<BR>UCloner is free software, distributed under GPL v2.
+<BR>
+<BR>NOTE: System with home directory encryption is not supported currently.
+<BR>
+<BR>FORUM: http://forum.ubuntu.org.cn/viewtopic.php?f=77&amp;t=176612
+<BR>
+<BR>简介¶
+<BR>
+<BR>UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具；
+<BR>
+<BR>可将 ubuntu 系统备份为 squashfs 映像文件，也可从映像文件中恢复系统，与 Norton Ghost 类似；
+<BR>
+<BR>可以直接将系统克隆到其它硬盘分区；
+<BR>
+<BR>可用来制作 Live-Ubuntu；
+<BR>
+<BR>同时具有命令行和图形界面，以满足不同用户需求；
+<BR><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/304cb52b-0e99-3216-82bf-8aed6f386248.png">
+<BR>
+<BR>
+<BR>UCloner 是自由软件，遵循 GPL v2 协议。
+<BR>
+<BR>具体使用方法和注意事项请看下载包中的“说明”。
+<BR>
+<BR>注意1：目前不支持加密主目录的系统。
+<BR>
+<BR>注意2：不要把 UCloner 解压到 Fat32 分区，否则会丢失可执行权限，导致无法运行。建议解压到用户主目录。
+<BR>
+<BR>注意3：如果您的系统是 Lubuntu 或 Kubuntu，请仔细看 说明 。
+<BR>
+<BR>论坛：http://forum.ubuntu.org.cn/viewtopic.php?f=77&amp;t=176612
+<BR>
+<BR>UCloner est une logiciel de sauvegarder / revenir /cloner pour Ubuntu Linux. Il est similaire sur la fonction de Norton Ghost pour Windows.
+<BR>
+<BR>Avec UCloner vous pouvez sauvegarder et transférer votre système Ubuntu à l'image de squashfs. Il peut aussi démarrer une environnement de live system par ce image. ( "Casper" paquet obligatoire ).
+<BR>
+<BR>Le système ubuntu activité peut se cloner dans un ou des partitions avec l'aide de UCloner. Rappelez-vous Agent Smith dans Matrix? Ouais, c'est ça!
+<BR>
+<BR>Il a en ligne de commande à la fois et l'interface graphique. Il est plus flexible lors de l'exécution dans l'interface de la ligne de commande.
+<BR>
+<BR>UCloner est un logiciel libre, distribué sous la licence GPL v2. 
+<BR><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/304cb52b-0e99-3216-82bf-8aed6f386248.png">
+<BR>
+  </DIV>
+
+  
+  <DIV class="attachments">
+    
+      
+        <UL style="display:none;">
+          <LI><A href="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/304cb52b-0e99-3216-82bf-8aed6f386248.png" target="_blank"><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/304cb52b-0e99-3216-82bf-8aed6f386248-thumb.png" class="magplus" title="点击查看原始大小图片"></A></LI>
+          
+          <LI>大小: 39.6 KB</LI>
+        </UL>
+      
+    
+    
+      <UL>
+        <LI><A href="http://jadeluo.javaeye.com/blog/846565#" onclick="$$(&#39;div.attachments ul&#39;).invoke(&#39;show&#39;);$(this).up(1).hide();return false;">查看图片附件</A></LI>
+      </UL>
+    
+  </DIV>
+
+
+  <H3><A style="color:green;" href="http://vip.csdn.net/2011/xinzi/main.html">【有奖】2011年软件行业技术人员薪资大调查——填写问卷有机会获得Bambook</A></H3>
+  
+  
+
+  <DIV class="blog_nav">
+    <DIV class="pre_next">
+      <A href="http://jadeluo.javaeye.com/blog/867296" class="next" title="生成zip文件">生成zip文件</A>
+      |
+      <A href="http://jadeluo.javaeye.com/blog/846561" class="pre" title="ubuntu man手册完善">ubuntu man手册完善</A>
+    </DIV>
+  </DIV>
+
+  <DIV class="blog_bottom">
+    <UL>
+      <LI>12:20</LI>
+      <LI>浏览 (36)</LI>
+            <LI><A href="http://jadeluo.javaeye.com/blog/846565#comments">评论</A> (0)</LI>
+      
+      
+      
+      
+      <LI class="last"><A href="http://www.javaeye.com/wiki/topic/846565" target="_blank" class="more">相关推荐</A></LI>
+    </UL>
+  </DIV>
+
+  <DIV class="blog_comment">
+    <H5>评论</H5>
+    <A id="comments" name="comments"></A>
+    
+    
+    
+  </DIV>
+
+  <DIV class="blog_comment">
+    <H5>发表评论</H5>
+          
+      
+        <FORM action="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站.html" id="comment_form" method="post" onsubmit="return false;">          
+
+
+  <INPUT type="hidden" id="editor_bbcode_flag">
+
+
+
+<DIV id="editor_main"><TEXTAREA class="validate-richeditor bad-words min-length-5" cols="40" id="editor_body" name="comment[body]" rows="20" style="width: 500px; height: 350px;"></TEXTAREA></DIV>
+
+
+<SCRIPT type="text/javascript">
+  var editor = new Control.TextArea.Editor("editor_body", "bbcode", false);
+</SCRIPT>
+          <P style="text-align:right;padding-right:30px;">您还没有登录，请<A href="http://jadeluo.javaeye.com/login">登录</A>后发表评论(快捷键 Alt+S / Ctrl+Enter) <INPUT class="submit" id="quick_reply_button" name="commit" type="submit" value="提交"></P>
+        </FORM>
+        <SCRIPT type="text/javascript">
+          new HotKey("s",function() {$('quick_reply_button').click();},{altKey: true, ctrlKey: false});
+          new HotKey(new Number(13),function() {$('quick_reply_button').click();},{altKey: false, ctrlKey: true});
+
+          new Validation("comment_form", {immediate: false, onFormValidate: function(result, form){
+    
+            if(confirm('您需要登录以后才能执行这个操作，现在要登录吗？')) window.location.href = '/login';
+    
+        }});
+        </SCRIPT>
+      
+      </DIV>
+</DIV>
+
+
+<SCRIPT type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  fix_image_size($$('div.blog_content img'), 700);
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'Post'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);}
+    });
+  }
+</SCRIPT>
+
+
+
+        </DIV>
+
+        <DIV id="local">
+          <DIV class="local_top"></DIV>
+          <DIV id="blog_owner">
+            <DIV id="blog_owner_logo"><A href="http://jadeluo.javaeye.com/"><IMG alt="JadeLuo的博客" class="logo" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/user-logo.gif" title="JadeLuo的博客: 集思广益"></A></DIV>
+            <DIV id="blog_owner_name">JadeLuo</DIV>
+          </DIV>
+          <DIV id="blog_actions">
+            <UL>
+              <LI>浏览: 3658 次</LI>
+              <LI>性别: <IMG alt="Icon_minigender_1" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/icon_minigender_1.gif" title="男"></LI>
+              <LI>来自: 珠海</LI>
+              <LI><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/offline.gif"></LI>
+              <LI>
+                <A href="http://jadeluo.javaeye.com/blog/profile" class="profile">详细资料</A>
+                <A href="http://jadeluo.javaeye.com/blog/guest_book" class="guest_book">留言簿</A>
+              </LI>
+              
+            </UL>
+            <H5>搜索本博客</H5>
+            <FORM action="http://jadeluo.javaeye.com/blog/search" method="get">              <INPUT class="text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text">
+              <INPUT class="submit" type="submit" value="搜索">
+            </FORM>          </DIV>
+          
+            <DIV id="user_visits" class="clearfix">
+              <H5>最近访客 <SPAN style="font-weight:normal;font-size:12px;padding-left:30px;"><A href="http://jadeluo.javaeye.com/blog/user_visits">&gt;&gt;更多访客</A></SPAN></H5>
+              
+                <DIV class="user_visit">
+                  <DIV class="logo"><A href="http://zhangyasong.javaeye.com/" target="_blank"><IMG alt="zhangyasong的博客" class="logo" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/user-logo-thumb.gif" title="zhangyasong的博客: "></A></DIV>
+                  <DIV class="left"><A href="http://zhangyasong.javaeye.com/" target="_blank">zhangyasong</A></DIV>
+                </DIV>
+              
+                <DIV class="user_visit">
+                  <DIV class="logo"><A href="http://wyshine-tom-com.javaeye.com/" target="_blank"><IMG alt="旋转的木马的博客" class="logo" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/c212445a-b3ce-3822-a124-15df939bdebe-thumb.jpg" title="旋转的木马的博客: "></A></DIV>
+                  <DIV class="left"><A href="http://wyshine-tom-com.javaeye.com/" target="_blank">旋转的木马</A></DIV>
+                </DIV>
+              
+                <DIV class="user_visit">
+                  <DIV class="logo"><A href="http://zhanghh321.javaeye.com/" target="_blank"><IMG alt="zhanghh321的博客" class="logo" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/user-logo-thumb.gif" title="zhanghh321的博客: "></A></DIV>
+                  <DIV class="left"><A href="http://zhanghh321.javaeye.com/" target="_blank">zhanghh321</A></DIV>
+                </DIV>
+              
+                <DIV class="user_visit">
+                  <DIV class="logo"><A href="http://lihuanxi.javaeye.com/" target="_blank"><IMG alt="lihuanxi的博客" class="logo" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/user-logo-thumb.gif" title="lihuanxi的博客: "></A></DIV>
+                  <DIV class="left"><A href="http://lihuanxi.javaeye.com/" target="_blank">lihuanxi</A></DIV>
+                </DIV>
+              
+            </DIV>
+          
+                      <DIV id="blog_menu">
+              <H5>博客分类</H5>
+              <UL>
+                <LI><A href="http://jadeluo.javaeye.com/">全部博客 (52)</A></LI>
+                
+              </UL>
+            </DIV>
+            
+              <DIV id="blog_album">
+                <H5>我的相册</H5>
+                <DIV class="picture_thumb" style="float: none">
+                  <DIV><SPAN class="thumb_box"><A href="http://jadeluo.javaeye.com/album"><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/d1e2baed-5488-39fd-8cf0-4cba920d200d-thumb.jpg"></A></SPAN></DIV>
+                  <SPAN>myphoto<BR> <A href="http://jadeluo.javaeye.com/album">共 1 张</A></SPAN>
+                </DIV>
+              </DIV>
+            
+            
+            <DIV id="blog_others">
+              <H5>其他分类</H5>
+              <UL>
+                <LI><A href="http://jadeluo.javaeye.com/blog/favorite">我的收藏</A> (9)</LI>
+                                                <LI><A href="http://jadeluo.javaeye.com/blog/topic">我的论坛主题贴</A> (0)</LI>
+                <LI><A href="http://jadeluo.javaeye.com/blog/post">我的所有论坛贴</A> (0)</LI>
+                <LI><A href="http://jadeluo.javaeye.com/blog/article">我的精华良好贴</A> (0)</LI>
+                              </UL>
+            </DIV>
+            
+            <DIV id="recent_groups">
+              <H5>最近加入圈子</H5>
+              <UL>
+                
+              </UL>
+            </DIV>
+            
+                          <DIV id="month_blogs">
+                <H5>存档</H5>
+                <UL>
+                  
+                    <LI><A href="http://jadeluo.javaeye.com/blog/monthblog/2011-01">2011-01</A> (1)</LI>
+                  
+                    <LI><A href="http://jadeluo.javaeye.com/blog/monthblog/2010-12">2010-12</A> (4)</LI>
+                  
+                    <LI><A href="http://jadeluo.javaeye.com/blog/monthblog/2010-11">2010-11</A> (1)</LI>
+                  
+                  <LI><A href="http://jadeluo.javaeye.com/blog/monthblog_more">更多存档...</A></LI>
+                </UL>
+              </DIV>
+                        <DIV id="comments_top">
+              <H5>评论排行榜</H5>
+              <UL>
+                
+                  <LI><A href="http://jadeluo.javaeye.com/blog/776712" title="如何使用PLSQL Developer从oracle数据库 导入导出数据">如何使用PLSQL Developer从oracle数据库  ...</A></LI>
+                
+                  <LI><A href="http://jadeluo.javaeye.com/blog/714505" title="MyEclipse s2sh框架的包冲突">MyEclipse s2sh框架的包冲突</A></LI>
+                
+                  <LI><A href="http://jadeluo.javaeye.com/blog/776714" title="如何写批处理文件自动将数据导入oracle数据库">如何写批处理文件自动将数据导入oracle数据 ...</A></LI>
+                
+                  <LI><A href="http://jadeluo.javaeye.com/blog/768779" title="  什么时候用抽象类,什么时候用接口 收藏 ">  什么时候用抽象类,什么时候用接口 收藏 ...</A></LI>
+                
+                  <LI><A href="http://jadeluo.javaeye.com/blog/768272" title="JBPM4常用错误汇总 收藏 ">JBPM4常用错误汇总 收藏 </A></LI>
+                
+              </UL>
+            </DIV>
+            <DIV id="rss">
+              <UL>
+                <LI><A href="http://jadeluo.javaeye.com/rss" target="_blank"><IMG alt="Rss" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/rss.png"></A></LI>
+                <LI><A href="http://fusion.google.com/add?feedurl=http://jadeluo.javaeye.com/rss" target="_blank"><IMG alt="Rss_google" src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/rss_google.gif"></A></LI>
+              </UL>
+            </DIV>
+            <DIV class="local_bottom"></DIV>
+          
+        </DIV>
+      </DIV>
+
+      <DIV id="footer" class="clearfix">
+        <DIV id="copyright">
+          <HR>
+          声明：JavaEye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<BR>
+          © 2003-2010 JavaEye.com.   All rights reserved. 上海炯耐计算机软件有限公司 [ 沪ICP备05023328号 ]
+        </DIV>
+      </DIV>
+    </DIV>
+    <SCRIPT type="text/javascript">
+  document.write("<img src='http://stat.javaeye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&logged_in=no" + "' width='0' height='0' />");
+</SCRIPT><IMG src="./UCloner 是一个针对 Ubuntu Linux 编写的系统备份、恢复、克隆工具 - 集思广益 - JavaEye技术网站_files/saved_resource" width="0" height="0">
+    
+  
+
+</BODY></HTML>

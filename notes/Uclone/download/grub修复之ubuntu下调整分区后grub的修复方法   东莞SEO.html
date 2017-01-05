@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0038)http://www.pcliver.cn/archives/54.html -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD profile="http://gmpg.org/xfn/11"><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<META http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+
+	<TITLE>grub修复之ubuntu下调整分区后grub的修复方法 | 东莞SEO</TITLE>
+	<LINK rel="alternate" type="application/rss+xml" title="RSS 2.0 - 所有文章" href="http://www.pcliver.cn/feed">
+	<LINK rel="alternate" type="application/rss+xml" title="RSS 2.0 - 所有评论" href="http://www.pcliver.cn/comments/feed">
+	<LINK rel="pingback" href="http://www.pcliver.cn/xmlrpc.php">
+
+	<!-- style START -->
+	<!-- default style -->
+	<STYLE type="text/css" media="screen">@import url( http://www.pcliver.cn/wp-content/themes/inove/style.css );</STYLE>
+	<!-- for translations -->
+			<LINK rel="stylesheet" href="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/chinese.css" type="text/css" media="screen">
+		<!--[if IE]>
+		<link rel="stylesheet" href="http://www.pcliver.cn/wp-content/themes/inove/ie.css" type="text/css" media="screen" />
+	<![endif]-->
+	<!-- style END -->
+
+	<!-- script START -->
+	<SCRIPT type="text/javascript" src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/base.js"></SCRIPT>
+	<SCRIPT type="text/javascript" src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/menu.js"></SCRIPT>
+	<!-- script END -->
+
+	<LINK rel="alternate" type="application/rss+xml" title="东莞SEO &raquo; 调整分区后修复grub引导小记 评论 feed" href="http://www.pcliver.cn/archives/54.html/feed">
+<LINK rel="stylesheet" id="wp-pagenavi-css" href="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/pagenavi-css.css" type="text/css" media="all">
+<LINK rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.pcliver.cn/xmlrpc.php?rsd">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.pcliver.cn/wp-includes/wlwmanifest.xml"> 
+<LINK rel="index" title="东莞SEO" href="http://www.pcliver.cn/">
+<LINK rel="start" title="wordpress建立第一天" href="http://www.pcliver.cn/archives/29.html">
+<LINK rel="prev" title="UltraEdit 32 v14 中文破解版" href="http://www.pcliver.cn/archives/42.html">
+<LINK rel="next" title="ubuntu下切换到root用户" href="http://www.pcliver.cn/archives/56.html">
+<META name="generator" content="WordPress 3.0.1">
+<LINK rel="shortlink" href="http://www.pcliver.cn/?p=54">
+				<SCRIPT type="text/javascript">
+					var alinks_link;
+					var trackImage = new Image();
+					function alinks_click(link) {
+						var keyphrase = link.innerHTML;
+						trackImage.src = 'http://www.pcliver.cn/wp-content/plugins/alinks/classes/aLinksAjax.php?log=' + keyphrase;
+						link.target = '_blank';
+						pause(1000);
+						return true;
+					}
+						
+					function pause(numberMillis) {
+					    var now = new Date();
+					    var exitTime = now.getTime() + numberMillis;
+					    while (true) {
+							now = new Date();
+							if (now.getTime() > exitTime) return;
+						}
+					}
+				</SCRIPT>
+				
+<!-- All in One SEO Pack 1.6.12.1 by Michael Torbert of Semper Fi Web Design[326,388] -->
+<META name="description" content="find /boot/grub/stage1 找到你的ubuntu分区位置，我的为hd0,9 1、Sudo grub 这里要求为超级用户的权限，所以要用sudo ，进入sudo后 2、root (hd0,x) x为你ubuntu分区位置，我的是hd0,9，如上面找到的 3、setup (hd0) 4、退出重启，成功修复引导。">
+<META name="keywords" content="grub,ubuntu">
+<LINK rel="canonical" href="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO.html">
+<!-- /all in one seo pack -->
+</HEAD><BODY>
+<!-- wrap START -->
+<DIV id="wrap">
+
+<!-- container START -->
+<DIV id="container">
+
+<!-- header START -->
+<DIV id="header">
+
+	<!-- banner START -->
+		<!-- banner END -->
+
+	<DIV id="caption">
+		<H1 id="title"><A href="http://www.pcliver.cn/">东莞SEO</A></H1>
+		<DIV id="tagline">致力于SEO算法研究，为东莞中小型企业提供专业的SEO服务</DIV>
+	</DIV>
+
+	<DIV class="fixed"></DIV>
+</DIV>
+<!-- header END -->
+
+<!-- navigation START -->
+<DIV id="navigation">
+	<!-- menus START -->
+	<UL id="menus">
+		<LI class="page_item"><A class="home" title="首页" href="http://www.pcliver.cn/">首页</A></LI>
+		<LI class="page_item page-item-2"><A href="http://www.pcliver.cn/about" title="东莞SEO服务/联系">东莞SEO服务/联系</A></LI>
+<LI class="page_item page-item-431"><A href="http://www.pcliver.cn/dg-seo" title="深邃荣耀记录">深邃荣耀记录</A></LI>
+<LI class="page_item page-item-348"><A href="http://www.pcliver.cn/wordpress-seo" title="WordPress SEO">WordPress SEO</A></LI>
+<LI class="page_item page-item-3"><A href="http://www.pcliver.cn/guestbook" title="留言板">留言板</A></LI>
+		<LI><A class="lastmenu" href="javascript:void(0);"></A></LI>
+	</UL>
+	<!-- menus END -->
+
+	<!-- searchbox START -->
+	<DIV id="searchbox">
+					<FORM action="http://www.pcliver.cn/" method="get">
+				<DIV class="content">
+					<INPUT type="text" class="textfield searchtip" name="s" size="24" value="">
+					<INPUT type="submit" class="button" value="">
+				</DIV>
+			</FORM>
+			</DIV>
+<SCRIPT type="text/javascript">
+//<![CDATA[
+	var searchbox = MGJS.$("searchbox");
+	var searchtxt = MGJS.getElementsByClassName("textfield", "input", searchbox)[0];
+	var searchbtn = MGJS.getElementsByClassName("button", "input", searchbox)[0];
+	var tiptext = "请输入关键字...";
+	if(searchtxt.value == "" || searchtxt.value == tiptext) {
+		searchtxt.className += " searchtip";
+		searchtxt.value = tiptext;
+	}
+	searchtxt.onfocus = function(e) {
+		if(searchtxt.value == tiptext) {
+			searchtxt.value = "";
+			searchtxt.className = searchtxt.className.replace(" searchtip", "");
+		}
+	}
+	searchtxt.onblur = function(e) {
+		if(searchtxt.value == "") {
+			searchtxt.className += " searchtip";
+			searchtxt.value = tiptext;
+		}
+	}
+	searchbtn.onclick = function(e) {
+		if(searchtxt.value == "" || searchtxt.value == tiptext) {
+			return false;
+		}
+	}
+//]]>
+</SCRIPT>
+	<!-- searchbox END -->
+
+	<DIV class="fixed"></DIV>
+</DIV>
+<!-- navigation END -->
+
+<!-- content START -->
+<DIV id="content">
+
+	<!-- main START -->
+	<DIV id="main">
+
+
+	<DIV id="postpath">
+		<A title="转到首页" href="http://www.pcliver.cn/">东莞SEO</A>
+		 &gt; <A href="http://www.pcliver.cn/archives/category/ubuntu" title="查看 Linux 的全部文章" rel="category tag">Linux</A>		 &gt; 调整分区后修复grub引导小记	</DIV>
+
+	<DIV class="post" id="post-54">
+		<H2>调整分区后修复grub引导小记</H2>
+		<DIV class="info">
+			<SPAN class="date">2008年7月7日</SPAN>
+			<SPAN class="author"><A href="http://www.pcliver.cn/archives/author/admin/" title="由 东莞SEO 发表">东莞SEO</A></SPAN>										<SPAN class="addcomment"><A href="http://www.pcliver.cn/archives/54.html#respond">发表评论</A></SPAN>
+				<SPAN class="comments"><A href="http://www.pcliver.cn/archives/54.html#comments">阅读评论</A></SPAN>
+						<DIV class="fixed"></DIV>
+		</DIV>
+		<DIV class="content">
+			<P>上次因为用pm修改ubuntu分区大小，然后导致grub不能引导。下面为我的解决方法<BR>
+使用ubuntu 7.10 livecd启动，进入桌面系统，打开终端<BR>
+在终端输入以下命令：<BR>
+find /boot/grub/stage1 找到你的ubuntu分区位置，我的为hd0,9<BR>
+<SPAN style="color: #ff0000;">1、Sudo grub </SPAN>这里要求为超级用户的权限，所以要用sudo ，进入sudo后<BR>
+<SPAN style="color: #ff0000;">2、root (hd0,x) </SPAN>x为你ubuntu分区位置，我的是hd0,9，如上面找到的<BR>
+<SPAN style="color: #ff0000;">3、setup (hd0)</SPAN><BR>
+4、退出重启，成功修复引导。<BR>
+<SPAN id="more-54"></SPAN></P>
+<BLOCKQUOTE><P>下面为我在ubuntu中文社区所找到的资料：<BR>
+hd0指第一块硬盘(不分串口SATA、并口PATA)，<BR>
+x是linux的主目录“/”所在分区号，编号从0开始，<BR>
+root命令是指定引导的分区，<BR>
+setup命令把引导信息写到硬盘MBR。</P>
+<P>下面是来之ubuntu论坛的终极解释：作者：lisir 帖子地址：http://forum.ubuntu.org.cn/about65991.html<BR>
+删除Linux与恢复grub，这是我等新手常遇到的两个问题，感觉Linux不好，想退出，就要删除Linux，覆盖Grub；而装了Windows与Linux双系统的用户，又会在重装Windows时把Grub覆盖掉，需要恢复Grub。这是后路，我们在做事之前需要先考虑好的。</P>
+<P>删除Linux，覆盖Grub，还原成XP自带的启动引导，这个很简单，只要你有<A href="http://www.pcliver.cn/archives/239.html" class="alinks_links" onclick="return alinks_click(this);" title="" style="padding-right: 13px; background: url(http://www.pcliver.cn/wp-content/plugins/alinks/images/external.png) center right no-repeat;" rel="external">Windows XP</A>盘（非Ghost），用它启动，至选择安装位置的地方退出重启就可以。或者用它启动故障修复台，运行fixboot或者fixmbr都可以。</P>
+<P>而恢复Grub，其实也很简单的：用Live CD（对于Ubuntu来说就是Desktop CD或者DVD）启动，打开终端（Applications──&gt;Accessory──&gt;Terminal），执行以下代码： 代码:<BR>
+sudo grub<BR>
+find /boot/grub/stage1<BR>
+root (hdX,Y)<BR>
+setup (hdX)<BR>
+quit</P>
+<P>注意：其中的X、Y是执行find /boot/grub/stage1命令后系统提示的。，比如： 代码:<BR>
+grub&gt; find /boot/grub/menu.lst<BR>
+(hd0,7)</P>
+<P>注意：这里的grub&gt;是执行sudo grub命令后进入grub环境得到的提示符，不用输入。这时，X就是0,Y就是7。</P>
+<P>下面详细解释一下这几条命令：</P>
+<P>sudo grub 以root用户身份启动grub，否则会出错，错误见后文<BR>
+find /boot/grub/stage1 寻找/boot所在分区，其实换用find /boot/grub/menu.lst也一样。<BR>
+这一步也可以跳过，在执行root （hdX,时连按两下Tab列出可用分区，自己确定是哪个分区。<BR>
+如果是将/boot单独分区，详见说明。<BR>
+root (hdX,Y) 设置硬盘hdX的根文件系统（root Device)，实际就是设置/boot所在的分区<BR>
+setup (hdX) 自动安装GRUB到硬盘hdX。<BR>
+quit 退出GRUB<BR>
+root、setup命令后都有空格，如果没有会出错误。<BR>
+如果不以root用户身份会出现什么样的错误呢？ 引用:<BR>
+ubuntu@ubuntu:~$grub</P>
+<P>[ Minimal BASH-like line editing is supported. For<BR>
+the first word, TAB lists possible command<BR>
+completions. Anywhere else TAB lists the possible<BR>
+completions of a device/filename. ]</P>
+<P>grub&gt; find /boot/grub/stage1</P>
+<P>Error 15: File not found</P>
+<P>grub&gt; find /boot/grub/menu.lst</P>
+<P>Error 15: File not found</P>
+<P>grub&gt; root(hd0,7)</P>
+<P>Error 27: Unrecognized command</P>
+<P>grub&gt; root (hd0,7)</P>
+<P>Error 21: Selected disk does not exist<BR>
+grub&gt; setup (hd0)</P>
+<P>Error 12: Invalid device requested</P>
+<P>一个成功例子： 引用:<BR>
+ubuntu@ubuntu:~$ sudo grub<BR>
+[ Minimal BASH-like line editing is supported. For<BR>
+the first word, TAB lists possible command<BR>
+completions. Anywhere else TAB lists the possible<BR>
+completions of a device/filename. ]</P>
+<P>grub&gt; find /boot/grub/menu.lst<BR>
+(hd0,7)</P>
+<P>grub&gt; root (hd0,7)</P>
+<P>grub&gt; setup (hd0)<BR>
+Checking if “/boot/grub/stage1″ exists… yes<BR>
+Checking if “/boot/grub/stage2″ exists… yes<BR>
+Checking if “/boot/grub/e2fs_stage1_5″ exists… yes<BR>
+Running “embed /boot/grub/e2fs_stage1_5 (hd0)”… 15 sectors are embedded.<BR>
+succeeded<BR>
+Running “install /boot/grub/stage1 (hd0) (hd0)1+15 p (hd0,7)/boot/grub/stage2 /boot/grub/menu.lst”… succeeded<BR>
+Done.<BR>
+grub&gt;quit</P>
+<P>这是最简单的方法，也有其它几个寻找/boot分区的方法，但稍麻烦点：<BR>
+在终端使用ls /dev/sd*和ls /hd*命令来查找系统的外部设置，用sudo mkdir命令来建立挂载目录，用sudo mount命令挂载，再用ls命令查看是否/boot所在的分区。</P>
+<P>也可以用sudo fdisk -l来找到启动分区（这里不涉及将/boot单独分区的情况，因为那种我没有实验过，不太清楚），如： 引用:<BR>
+ubuntu@ubuntu:~$ sudo fdisk -l</P>
+<P>Disk /dev/sda: 160.0 GB, 160041885696 bytes<BR>
+255 heads, 63 sectors/track, 19457 cylinders<BR>
+Units = cylinders of 16065 * 512 = 8225280 bytes</P>
+<P>Device Boot Start End Blocks Id System<BR>
+/dev/sda1 * 1 2295 18434556 7 HPFS/NTFS<BR>
+/dev/sda2 2296 19456 137845732+ f W95 Ext’d (LBA)<BR>
+/dev/sda5 2296 4845 20482843+ 7 HPFS/NTFS<BR>
+/dev/sda6 4846 8669 30716248+ 7 HPFS/NTFS<BR>
+/dev/sda7 8670 16557 63360328+ 7 HPFS/NTFS<BR>
+/dev/sda8 * 16558 17361 6458098+ 83 Linux<BR>
+/dev/sda9 17362 19393 16322008+ 83 Linux<BR>
+/dev/sda10 19394 19456 506016 82 Linux swap / Solaris</P>
+<P>就知道启动分区是/dev/sda8</P>
+<P>有人可能会有疑问，在Linux系统中是用sda8来表示这个启动分区，而GRUB中则是用(hd0,7)表示，这是因为在新版的Ubuntu中系统将串口硬盘和并口硬盘都识别为sd，a表示第一硬盘，8表示第4个逻辑分区（1──4被分配给主分区，扩展分区里的逻辑分区从5开始计算）。而Grub中则是用统一用hd代表硬盘，硬盘号与分区号都是从0开始计算的。<BR>
+这部分是凭记忆写的，可能不准确，请参考wiki。</P>
+<P>PS：<BR>
+看到有的帖子说Alterate CD可以在boot后输入linux rescue来启动救援盘，后面的操作则一样。我因手头没有Alterate CD无法验证。DVD虽说集成了Alterate CD与Desktop CD，但无法在以字符界面安装时启动救援盘。</P>
+<P>补充一点，上面讲的是在/boot下面的东西都还完好的,但如果RP不行，/boot都玩完了，可以试一下下面的：<BR>
+生成/etc/mtab 代码:<BR>
+sudo grep -v rootfs /proc/mounts &gt;sudo tee /etc/mtab</P>
+<P>安装grub到mbr 代码:<BR>
+grub-install –no-floppy /dev/hda</P>
+<P>然后就自己搞定menu.lst了.</P></BLOCKQUOTE>
+			<DIV class="fixed"></DIV>
+		</DIV>
+		<DIV class="under">
+			<SPAN class="categories">分类: </SPAN><SPAN><A href="http://www.pcliver.cn/archives/category/ubuntu" title="查看 Linux 的全部文章" rel="category tag">Linux</A></SPAN>			<SPAN class="tags">标签: </SPAN><SPAN><A href="http://www.pcliver.cn/archives/tag/grub" rel="tag">grub</A>, <A href="http://www.pcliver.cn/archives/tag/ubuntu" rel="tag">Linux</A>, <A href="http://www.pcliver.cn/archives/tag/%e4%bf%ae%e5%a4%8d" rel="tag">修复</A></SPAN>		</DIV>
+	</DIV>
+
+	<!-- related posts START -->
+	<DIV id="related_posts"><H4 class="related_post_title">或许你会感兴趣的文章</H4><UL class="related_post"><LI><A href="http://www.pcliver.cn/archives/168.html" title="Ubuntu系统目录结构">Ubuntu系统目录结构</A> (0)<BR><SMALL>一直都很想理清ubuntu文件目录的结构，今天偷空找个时间学习一下，google找到的文章，非原创，发上来一起学习下：
+
+转载：http://tech.ccidnet.com/...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/67.html" title="ubuntu最快更新源">ubuntu最快更新源</A> (2)<BR><SMALL>sudo cp /etc/apt/sources.list /etc/apt/sources.list-bak编辑sources.listsudo gedit /etc/apt/s...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/98.html" title="ubuntu安装微软雅黑字体">ubuntu安装微软雅黑字体</A> (0)<BR><SMALL>微软这个家伙有些东西还是不错的，比如说微软雅黑就是一个例子，在Vista看惯了微软雅黑以后在ubuntu下的字体看就来就是有那么一点的小不爽，所以rain将ubuntu下的默认字体...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/65.html" title="[转载]kiba-dock的安装">[转载]kiba-dock的安装</A> (0)<BR><SMALL>ubuntu算是装好了，更新也更新的差不多了，下面是雨在ubuntu论坛找的帖子，关于dock的安装的
+现在正在安装，中国的服务器也够慢的。期待ing，安装完dock之后就不再玩...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/61.html" title="firestarter自启动">firestarter自启动</A> (0)<BR><SMALL>复制firestarter到桌面快捷方式，然后属性，点击启动器
+
+复制命令的内容
+
+然后进入首选项的会话，添加会话，复制刚才命令，填写名称即可
+
+其他的ubuntu自启...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/59.html" title="firestarter启动提示错误的处理方法">firestarter启动提示错误的处理方法</A> (0)<BR><SMALL>今天安装了firestart，然后发觉启动不了，google了下还是来到了ubuntu中文社区，还算顺利，很快找到答案，并且解决了，以下是正解：
+
+sudo gedit /et...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/56.html" title="ubuntu下切换到root用户">ubuntu下切换到root用户</A> (2)<BR><SMALL>sudo su
+
+sudo -i
+
+su root
+
+以上三个命令为本人记忆的root用户切换命令
+使用上面任何一个都可以进入root用户
+
+同时，如果你想在文件...</SMALL></LI><LI><A href="http://www.pcliver.cn/archives/35.html" title="PHP服务器架设成功">PHP服务器架设成功</A> (1)<BR><SMALL>以下为ubuntu中文社区转载的教程：
+
+1、安装 Apache2+PHP5+MySQL
+
+sudo apt-get install apache2 libapache2-...</SMALL></LI></UL></DIV><DIV class="fixed"></DIV>	<!-- related posts END -->
+
+	<SCRIPT type="text/javascript" src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/comment.js"></SCRIPT>
+
+
+
+<DIV id="comments">
+
+<DIV id="cmtswitcher">
+			<A id="commenttab" class="curtab" href="javascript:void(0);" onclick="MGJS.switchTab(&#39;thecomments,commentnavi&#39;, &#39;thetrackbacks&#39;, &#39;commenttab&#39;, &#39;curtab&#39;, &#39;trackbacktab&#39;, &#39;tab&#39;);">评论 (0)</A>
+		<A id="trackbacktab" class="tab" href="javascript:void(0);" onclick="MGJS.switchTab(&#39;thetrackbacks&#39;, &#39;thecomments,commentnavi&#39;, &#39;trackbacktab&#39;, &#39;curtab&#39;, &#39;commenttab&#39;, &#39;tab&#39;);">Trackbacks (0)</A>
+				<SPAN class="addcomment"><A href="http://www.pcliver.cn/archives/54.html#respond">发表评论</A></SPAN>
+				<SPAN class="addtrackback"><A href="http://www.pcliver.cn/archives/54.html/trackback">Trackback</A></SPAN>
+		<DIV class="fixed"></DIV>
+</DIV>
+
+<DIV id="commentlist">
+	<!-- comments START -->
+	<OL id="thecomments">
+			<LI class="messagebox">
+			本文目前尚无任何评论.		</LI>
+		</OL>
+	<!-- comments END -->
+
+
+	<!-- trackbacks START -->
+			<OL id="thetrackbacks">
+							<LI class="messagebox">
+					本文目前尚无任何 trackbacks 和 pingbacks.				</LI>
+
+					</OL>
+		<DIV class="fixed"></DIV>
+	<!-- trackbacks END -->
+</DIV>
+
+</DIV>
+
+	<DIV id="comment_login" class="messagebox">
+				您必须在 <A href="http://www.pcliver.cn/wp-login.php">登录</A> 后才能发布评论.	</DIV>
+
+
+	<DIV id="postnavi">
+		<SPAN class="prev"><A href="http://www.pcliver.cn/archives/56.html" rel="next">ubuntu下切换到root用户</A></SPAN>
+		<SPAN class="next"><A href="http://www.pcliver.cn/archives/42.html" rel="prev">UltraEdit 32 v14 中文破解版</A></SPAN>
+		<DIV class="fixed"></DIV>
+	</DIV>
+
+
+	</DIV>
+	<!-- main END -->
+
+	<!-- sidebar START -->
+<DIV id="sidebar">
+
+<!-- sidebar north START -->
+<DIV id="northsidebar" class="sidebar">
+
+
+
+<DIV id="categories-385531161" class="widget widget_categories"><H3>东莞SEO的文章分类</H3>		<UL>
+	<LI class="cat-item cat-item-196"><A href="http://www.pcliver.cn/archives/category/dedecms" title="查看 dedecms 下的所有文章">dedecms</A>
+</LI>
+	<LI class="cat-item cat-item-234"><A href="http://www.pcliver.cn/archives/category/godaddy%e4%bd%bf%e7%94%a8%e5%bf%83%e5%be%97" title="查看 Godaddy使用心得 下的所有文章">Godaddy使用心得</A>
+</LI>
+	<LI class="cat-item cat-item-239"><A href="http://www.pcliver.cn/archives/category/html%e4%bb%a3%e7%a0%81%e4%bc%98%e5%8c%96" title="查看 HTML代码优化 下的所有文章">HTML代码优化</A>
+</LI>
+	<LI class="cat-item cat-item-5"><A href="http://www.pcliver.cn/archives/category/ubuntu" title="发布ubuntu心得文章">Linux</A>
+</LI>
+	<LI class="cat-item cat-item-37"><A href="http://www.pcliver.cn/archives/category/php%e5%ad%a6%e4%b9%a0%e6%89%8b%e5%86%8c" title="查看 PHP学习手册 下的所有文章">PHP学习手册</A>
+</LI>
+	<LI class="cat-item cat-item-23"><A href="http://www.pcliver.cn/archives/category/seo%e5%bb%ba%e7%ab%99" title="查看 SEO/盈利 下的所有文章">SEO/盈利</A>
+</LI>
+	<LI class="cat-item cat-item-4"><A href="http://www.pcliver.cn/archives/category/wordpress" title="发布wordpress文章">Wordpress</A>
+</LI>
+	<LI class="cat-item cat-item-172"><A href="http://www.pcliver.cn/archives/category/wordpress-seo%e6%95%99%e7%a8%8b" title="查看 Wordpress SEO教程 下的所有文章">Wordpress SEO教程</A>
+</LI>
+	<LI class="cat-item cat-item-68"><A href="http://www.pcliver.cn/archives/category/other" title="查看 其他文章 下的所有文章">其他文章</A>
+</LI>
+	<LI class="cat-item cat-item-230"><A href="http://www.pcliver.cn/archives/category/yiyuan-seo" title="查看 医院SEO 下的所有文章">医院SEO</A>
+</LI>
+	<LI class="cat-item cat-item-142"><A href="http://www.pcliver.cn/archives/category/wangzhan" title="囧，讨论怎么建站的">建站探讨</A>
+</LI>
+	<LI class="cat-item cat-item-190"><A href="http://www.pcliver.cn/archives/category/ue" title="这里发布rain关于用户体验优化的相关文章">用户体验优化</A>
+</LI>
+	<LI class="cat-item cat-item-191"><A href="http://www.pcliver.cn/archives/category/wlyx" title="这里发布网络营销的相关技巧">网络营销技巧</A>
+</LI>
+	<LI class="cat-item cat-item-29"><A href="http://www.pcliver.cn/archives/category/net" title="这里发布网络资源的相关文章">网络资源</A>
+</LI>
+	<LI class="cat-item cat-item-192"><A href="http://www.pcliver.cn/archives/category/ruanwen" title="这里发布软文写作技巧">软文写作</A>
+</LI>
+		</UL>
+</DIV><DIV id="archives-2" class="widget widget_archive"><H3>东莞SEO文章存档</H3>		<UL>
+			<LI><A href="http://www.pcliver.cn/archives/date/2010/11" title="2010 年 十一月">2010 年 十一月</A>&nbsp;(3)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/09" title="2010 年 九月">2010 年 九月</A>&nbsp;(5)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/08" title="2010 年 八月">2010 年 八月</A>&nbsp;(2)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/07" title="2010 年 七月">2010 年 七月</A>&nbsp;(3)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/06" title="2010 年 六月">2010 年 六月</A>&nbsp;(2)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/05" title="2010 年 五月">2010 年 五月</A>&nbsp;(2)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/04" title="2010 年 四月">2010 年 四月</A>&nbsp;(8)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/03" title="2010 年 三月">2010 年 三月</A>&nbsp;(3)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/02" title="2010 年 二月">2010 年 二月</A>&nbsp;(2)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2010/01" title="2010 年 一月">2010 年 一月</A>&nbsp;(4)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/12" title="2009 年 十二月">2009 年 十二月</A>&nbsp;(1)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/11" title="2009 年 十一月">2009 年 十一月</A>&nbsp;(3)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/10" title="2009 年 十月">2009 年 十月</A>&nbsp;(7)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/09" title="2009 年 九月">2009 年 九月</A>&nbsp;(3)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/08" title="2009 年 八月">2009 年 八月</A>&nbsp;(8)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/07" title="2009 年 七月">2009 年 七月</A>&nbsp;(7)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/06" title="2009 年 六月">2009 年 六月</A>&nbsp;(6)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/05" title="2009 年 五月">2009 年 五月</A>&nbsp;(9)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/04" title="2009 年 四月">2009 年 四月</A>&nbsp;(12)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/03" title="2009 年 三月">2009 年 三月</A>&nbsp;(12)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/02" title="2009 年 二月">2009 年 二月</A>&nbsp;(20)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2009/01" title="2009 年 一月">2009 年 一月</A>&nbsp;(9)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/12" title="2008 年 十二月">2008 年 十二月</A>&nbsp;(7)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/11" title="2008 年 十一月">2008 年 十一月</A>&nbsp;(11)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/10" title="2008 年 十月">2008 年 十月</A>&nbsp;(16)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/09" title="2008 年 九月">2008 年 九月</A>&nbsp;(13)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/08" title="2008 年 八月">2008 年 八月</A>&nbsp;(20)</LI>
+	<LI><A href="http://www.pcliver.cn/archives/date/2008/07" title="2008 年 七月">2008 年 七月</A>&nbsp;(32)</LI>
+		</UL>
+</DIV><DIV id="linkcat-2" class="widget widget_links"><H3>东莞SEO支持站点</H3>
+	<UL class="xoxo blogroll">
+<LI><A href="http://www.23332.cn/">丰胸产品排行榜</A></LI>
+<LI><A href="http://www.gubaiyoudm.com/">最有效的减肥药</A></LI>
+<LI><A href="http://www.glsph.com/">隔离霜</A></LI>
+<LI><A href="http://www.cigiking.com/">雪肌精官方网站</A></LI>
+
+	</UL>
+</DIV>
+</DIV>
+<!-- sidebar north END -->
+</DIV>
+<!-- sidebar END -->
+	<DIV class="fixed"></DIV>
+</DIV>
+<!-- content END -->
+
+<!-- footer START -->
+<DIV id="footer">
+	<A id="gotop" href="http://www.pcliver.cn/archives/54.html#" onclick="MGJS.goTop();return false;">回到顶部</A>
+	<A id="powered" href="http://wordpress.org/">WordPress</A>
+	<DIV id="copyright">
+		版权所有 © 2008-2010 东莞SEO   &nbsp;&nbsp; | &nbsp;&nbsp;<SCRIPT src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/stat.php" language="JavaScript" charset="gb2312"></SCRIPT><A href="http://www.cnzz.com/stat/website.php?web_id=1445167" target="_blank" title="站长统计">站长统计</A><IMG src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/stat.htm" border="0" width="0" height="0">
+	</DIV> 
+	<DIV id="themeinfo">
+		Theme by <A title="http://www.neoease.com/">NeoEase</A>. Valid <A title="http://validator.w3.org/check?uri=referer">XHTML 1.1</A> and <A title="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">CSS 3</A>. 旗下网站：<A href="http://www.deepsem.com/">深圳SEO</A> | <A href="http://www.pcliver.cn/">东莞SEO</A> | <A href="http://www.hospitalsem.com/">医院SEO</A>
+
+	</DIV>
+</DIV>
+<!-- footer END -->
+
+</DIV>
+<!-- container END -->
+</DIV>
+<!-- wrap END -->
+
+<SCRIPT type="text/javascript" src="./grub修复之ubuntu下调整分区后grub的修复方法   东莞SEO_files/kf.php"></SCRIPT>
+
+
+
+</BODY></HTML>

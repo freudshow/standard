@@ -1,0 +1,81 @@
+body { margin:0;}
+.top { height:35px; background-image:url(http://images.51cto.com/images/art/top_images/top_bg.gif); background-repeat:repeat-x;font-size:12px; font-family:"ËÎÌו";}
+.top_nav {background-image:url(http://images.51cto.com/images/art/top_images/top_bg.gif); width:960px; height:35px; margin-left:auto; margin-right:auto;}
+.top_nav_logo { width:222px; float:left; background:url(http://images.51cto.com/images/art/top_images/top_logo.gif) no-repeat; height:35px;}
+.top_nav_r { width:700px; float:right; padding:12px 0 3px 0; color:#696969; text-align:right;}
+.top_nav_r a{ padding:2px;color:#696969;text-decoration: none;}
+.top_nav_r a:hover{ padding:2px;text-decoration:none;background:#4A4A4A; color:#FFF;}
+.top_nav_r li { float:right;}
+
+
+.top_nav_r1 { background-image:url(http://images.51cto.com/images/art/top_images/nav_ico1.gif); background-repeat:no-repeat; background-position:right; width:100px;}
+.top_nav_r1 a{ width:100px; padding:2px 8px 2px 2px; color:#696969; text-decoration: none;}
+.top_nav_r1 a:hover{ width:100px; text-decoration:none;background:#4A4A4A; color:#FFF;}
+
+
+.subMenu1 {
+	width:70px;
+	border:1px solid #CECECE;
+	padding:0px 0px 0px 0px;
+	text-align:center;
+	position: absolute;
+	left: 812px;
+	top: 116px;
+	display:none;
+	background-color:#FFFFFF;
+}
+
+.subMenu2 {
+	width:60px;
+	border:1px solid #CECECE;
+	padding:0px 4px 0px 4px;
+	text-align:center;
+	position: absolute;
+	left: 883px;
+	top: 116px;
+	display:none;
+	background-color:#FFFFFF;
+}
+
+.subMenu3 {
+	width:60px;
+	border:1px solid #CECECE;
+	padding:0px 4px 0px 4px;
+	text-align:center;
+	position: absolute;
+	left: 883px;
+	top: 116px;
+	display:none;
+	background-color:#FFFFFF;
+}
+.subMenu4 {
+	width:60px;
+	border:1px solid #CECECE;
+	padding:0px 4px 0px 4px;
+	text-align:center;
+	position: absolute;
+	left: 883px;
+	top: 116px;
+	display:none;
+	background-color:#FFFFFF;
+}
+.subMenu1 a{ padding-left:10px; line-height:24px; text-align:left; display:block; width:60px; height:20px; padding-top:1px;color:#000;text-decoration: none; }
+.subMenu1 a.lcnew{text-decoration: none;}
+.subMenu1 a:hover{ text-decoration:none;background:#EEE; background-repeat:no-repeat; color:#C00;}
+.subMenu1 ul {margin:0;padding:0;}
+.subMenu1 li {padding:0px;list-style:none;background:url(http://images.51cto.com/images/art/images/dt.gif) no-repeat left; padding-top:1px; font-size:12px;background-color:#FFF;}
+.subMenu2 a{ line-height:18px; text-align:left; display:block; width:53px; height:17px; padding-top:1px;color:#000;text-decoration: none;}
+.subMenu2 a.lcnew{text-decoration: none;}
+.subMenu2 a:hover{ text-decoration:none;background-image:url(http://images.51cto.com/images/art/images/nav_bg1.gif); background-repeat:no-repeat; color:#C00;}
+.subMenu2 ul {margin:0;padding:0;}
+.subMenu2 li {list-style:none;background:url(http://images.51cto.com/images/art/images/dt.gif) no-repeat left; padding-left:8px; padding-top:1px; font-size:12px;}
+.subMenu3 a{ line-height:18px; text-align:left; display:block; width:53px; height:17px; padding-top:1px;color:#000;text-decoration: none;}
+.subMenu3 a.lcnew{text-decoration: none;}
+.subMenu3 a:hover{ text-decoration:none;background-image:url(http://images.51cto.com/images/art/images/nav_bg1.gif); background-repeat:no-repeat; color:#C00;}
+.subMenu3 ul {margin:0;padding:0;}
+.subMenu3 li {list-style:none;background:url(http://images.51cto.com/images/art/images/dt.gif) no-repeat left; padding-left:8px; padding-top:1px; font-size:12px;}
+.subMenu4 a{ line-height:18px; text-align:left; display:block; width:53px; height:17px; padding-top:1px;color:#000;text-decoration: none;}
+.subMenu4 a.lcnew{text-decoration: none;}
+.subMenu4 a:hover{ text-decoration:none;background-image:url(http://images.51cto.com/images/art/images/nav_bg1.gif); background-repeat:no-repeat; color:#C00;}
+.subMenu4 ul {margin:0;padding:0;}
+.subMenu4 li {list-style:none;background:url(http://images.51cto.com/images/art/images/dt.gif) no-repeat left; padding-left:8px; padding-top:1px; font-size:12px;}

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$( ps -A | grep ucloner_gui)" ] ; then
+    zenity --title="错误" --error --text="已经有一个 UCloner 在运行了！"
+else
+    gksu ./ucloner_gui.py
+fi

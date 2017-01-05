@@ -1,0 +1,13 @@
+/proc
+/sys
+/tmp
+/mnt
+/media
+/boot/grub
+/etc/fstab
+/etc/mtab
+/etc/blkid.tab
+/etc/udev/rules.d/70-persistent-net.rules
+/rofs
+/lost+found
+/home/*/.gvfs
