@@ -69,6 +69,30 @@ typedef union {//376.2-2009, AFN=03, F5: 载波主节点状态字和载波速率
 	} stSTR;
 } stUN;
 
+#define CTL_645_REV			0x00	//保留
+#define CTL_645_WTIME		0x08	//广播校时
+#define CTL_645_RDATA		0x11	//读数据
+#define CTL_645_RSUCD		0x12	//读后续数据
+#define CTL_645_RADDR		0x13	//读通信地址
+#define CTL_645_WDATA		0x14	//写数据
+#define CTL_645_WADDR		0x15	//写通信地址
+#define CTL_645_FRZ			0x16	//冻结命令
+#define CTL_645_WBAUD		0x17	//更改通信速率
+#define CTL_645_WPASSWD		0x18	//修改密码
+#define CTL_645_CLRDEM		0x19	//最大需量清零
+#define CTL_645_CLRMETER	0x1A	//电表清零
+#define CTL_645_CLRENT		0x1B	//事件清零
+
+typedef union {
+	u8 u8b;
+	struct {
+		u8 func		: 5;//功能码
+		u8 succeed	: 1;//有无后继帧
+		u8 slaveAsw	: 1;//从站应答
+		u8 dir		: 1;//传输方向
+	} ctlSTR;
+} 645ctlUN;
+
 #pragma pack(pop)
 
 int main(int argc, char* argv[])

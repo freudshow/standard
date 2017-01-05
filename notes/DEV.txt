@@ -1,0 +1,5 @@
+##安装串口调试工具cutecom
+sudo apt-get install cutecom
+
+##Linux下如何搭建stm32开发环境
+http://www.stmcu.org/module/forum/thread-606548-1-1.html
