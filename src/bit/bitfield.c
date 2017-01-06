@@ -87,9 +87,9 @@ typedef union {
 	u8 u8b;
 	struct {
 		u8 func		: 5;//功能码
-		u8 succeed	: 1;//有无后继帧
-		u8 slaveAsw	: 1;//从站应答
-		u8 dir		: 1;//传输方向
+		u8 succeed	: 1;//有无后继帧, 0: 无后续数据帧, 1: 有后续数据帧
+		u8 slaveAsw	: 1;//从站应答, 0: 从站正确应答, 1: 从站异常应答
+		u8 dir		: 1;//传输方向, 0: 主站发出的命令帧, 1: 从站发出的应答帧
 	} ctlSTR;
 } 645ctlUN;
 
