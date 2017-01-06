@@ -69,6 +69,16 @@ typedef union {//376.2-2009, AFN=03, F5: 载波主节点状态字和载波速率
 	} stSTR;
 } stUN;
 
+
+
+#pragma pack(pop)
+
+
+/*
+ * 以下为645-2007协议相关定义
+ * 
+ */
+ 
 #define CTL_645_REV			0x00	//保留
 #define CTL_645_WTIME		0x08	//广播校时
 #define CTL_645_RDATA		0x11	//读数据
@@ -83,7 +93,11 @@ typedef union {//376.2-2009, AFN=03, F5: 载波主节点状态字和载波速率
 #define CTL_645_CLRMETER	0x1A	//电表清零
 #define CTL_645_CLRENT		0x1B	//事件清零
 
-typedef union {
+
+#pragma pack(push)
+#pragma pack(1)
+
+typedef union {//645-07协议控制码结构
 	u8 u8b;
 	struct {
 		u8 func		: 5;//功能码
@@ -93,7 +107,9 @@ typedef union {
 	} ctlSTR;
 } 645ctlUN;
 
+
 #pragma pack(pop)
+
 
 int main(int argc, char* argv[])
 {
