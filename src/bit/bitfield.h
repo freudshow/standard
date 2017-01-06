@@ -13,6 +13,14 @@
 #define NO_ERR		0
 #define ERROR_1		1
 
+#define	FILE_LINE   __FILE__,__FUNCTION__,__LINE__
+#define STRLEN(c)	strlen((const char*)(c))
+
+#define HEX_TO_BCD(x) (((x)/0x0A)*0x10+((x)%0x0A))
+#define BCD_TO_HEX(x) (((x)/0x10)*0x0A+((x)%0x10))
+
+#define ASCII_TO_HEX(c) ((c >='0' && c <='9')?(c-'0'):((c>='A'&&c<='F')?(c-'A'+10):((c>='a'&&c<='f')?(c-'a'+10):0)))
+#define isdigit(c)	((unsigned) ((c)-'0') < 10)
 
 /*
  * 以下为645-2007协议相关定义
