@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052979.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/bundle-SimpleMemory.css">
+<link type="text/css" rel="stylesheet" href="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/66907.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/bundle-SimpleMemory-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/hnrainll/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/hnrainll/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/hnrainll/wlwmanifest.xml">
+<script src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'hnrainll', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/hnrainll/"><img id="blogLogo" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/hnrainll/">业精于勤，荒于嬉；行成于思，毁于随</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/hnrainll/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/Leo%20Chin">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/hnrainll/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/hnrainll/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 1404&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 269</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052979.html">linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1)</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>板子用的友善的mini2440, 起初按照光盘提供的手册, 照猫画虎,,,,,,,,,但是遇到各种问题, 
+很多未解决.....原因是还没理解每层目录的Makefile和Kconfig的关系, 以及在Kernel Configure菜单树中对应的选项,
+ 以及对nand_flash设备的结构体的意义没搞清楚,~ so~</p>
+<p>在<a href="http://www.kernel.org/">http://www.kernel.org/</a> 下载2.6.32的源代码. 编译器用的arm-linux-gcc 4.1.2 .</p>
+<p><span style="font-size: xx-large;"><strong>1 </strong></span></p>
+<p><span style="font-size: xx-large;"><strong>&nbsp;</strong></span>内核代码/uboot
+代码中中机器码的定义位置，在/root/linux-2.6.32/arch/arm/tools/mach-types 和 
+uboot/include/asm-arm/mach_type.h, 启动时bootloader向内核传递机器码. 
+如果bootloader传递给内核的机器码不匹配, 则,,,,,</p>
+<p><span style="font-size: xx-large;"><strong>2 </strong></span></p>
+<p><span style="font-size: small;"><strong>(1)</strong> </span>在/linux-2.6.32/arch/arm/mach-s3c2440/mach-smdk2440.c中的__init smdk2440_map_io函数中修改晶震频率:</p>
+
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">view plain</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">print</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">?</a></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt"><span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;__init&nbsp;smdk2440_map_io(</span><span class="keyword">void</span><span>)&nbsp;&nbsp;</span></span></li>
+<li><span>{&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s3c24xx_init_io(smdk2440_iodesc,&nbsp;ARRAY_SIZE(smdk2440_iodesc));&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s3c24xx_init_clocks(12000000);&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s3c24xx_init_uarts(smdk2440_uartcfgs,&nbsp;ARRAY_SIZE(smdk2440_uartcfgs));&nbsp;&nbsp;</span></li>
+<li><span>}&nbsp;&nbsp;</span></li>
+</ol></div>
+<p><span style="font-size: small;"><strong>(2)</strong>&nbsp;</span>&nbsp;找到MACHINE_STAR宏定义, 修改机器码; (未修改)</p>
+
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">view plain</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">print</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">?</a></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt"><span><span>MACHINE_START(S3C2440,&nbsp;</span><span class="string">"SMDK2440"</span><span>)&nbsp;</span><span class="comment">//改为"MINI2440"</span><span>&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/*&nbsp;Maintainer:&nbsp;Ben&nbsp;Dooks&nbsp;&lt;ben@fluff.org&gt;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.phys_io&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;S3C2410_PA_UART,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.io_pg_offst&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;(((u32)S3C24XX_VA_UART)&nbsp;&gt;&gt;&nbsp;18)&nbsp;&amp;&nbsp;0xfffc,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.boot_params&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;S3C2410_SDRAM_PA&nbsp;+&nbsp;0x100,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.init_irq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;s3c24xx_init_irq,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map_io&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;smdk2440_map_io,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.init_machine&nbsp;&nbsp;&nbsp;=&nbsp;smdk2440_machine_init,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.timer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&amp;s3c24xx_timer,&nbsp;&nbsp;</span></li>
+<li><span>MACHINE_END&nbsp;&nbsp;</span></li>
+</ol></div>
+<p><span style="font-size: small;"><strong>(3</strong> </span><span style="white-space: pre;"><span style="font-size: small;"><strong>)</strong> </span><span style="white-space: pre;">这个mach-smdk2440.c文件对应make menuconfig中的那个选项?</span> </span>&nbsp;</p>
+<p><span style="white-space: pre;">找到该目录的Makefile: obj-$(CONFIG_ARCH_S3C2440) += mach-smdk2440.o 找到该目录的Kconfig: config ARCH_S3C2440 bool "SMDK2440"</span> &nbsp;#这是在configure中显示的字符<span style="white-space: pre;"> select CPU_S3C2440 select S3C2440_XTAL_16934400 select MACH_SMDK select S3C_DEV_USB_HOST select S3C_DEV_NAND help<br></span></p>
+<p>在Configure菜单中按/查找,&nbsp;mach-smdk2440.o的连接条件在 System Type -&gt;S3C2440 
+Machines-&gt;SMDK2440, 如果想让刚才修改的mach-smdk2440.c部分代码被编译进image, 则必须选上这个选项,
+ &nbsp;</p>
+<p><span style="text-decoration: underline;">移植过程中的代码都是联动的, 改了某个.c文件的代码并想让这部分改动被编译进image, 则还要改动对应的makefile, 及kconfig文件, 最后还要在configure的菜单树中选择此选项.&nbsp;</span> </p>
+<p><span style="font-size: xx-large;"><strong>3 </strong></span></p>
+<p><span style="font-size: xx-large;"><strong>&nbsp;</strong></span>配置选项: 执行make&nbsp;s3c2410_defconfig, 以及make menuconfig, </p>
+<p><span style="font-size: small;"><strong>(1)</strong> </span>make&nbsp;s3c2410_defconfig
+命令会在arch/%处理器平台%/configs/下找名为s3c2410_defconfig的文件 
+然后将其复制到顶层目录并改名为.config,&nbsp;make&nbsp;s3c2410_defconfig命令会遍历arch/下的所有子目录吗? 不会, 
+因为在顶层的makefile中,&nbsp;</p>
+<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;ARCH&nbsp; ?= arm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;#指定在arch下的子目录</p>
+<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;CROSS_COMPILE&nbsp;?= arm-linux- #指定调用的编译器</p>
+<p><strong><span style="font-size: small;">(2)</span> </strong><span style="font-size: small;">随后执行的 make menuconfig 会读取linux-2.6.32/.config的内容,并显示出来. 以下是更多编译命令的说明:</span> </p>
+<p><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #008000;">make mrproper --- 清理全部文件，包括.config和一些备份文件</span> </span></p>
+<p><span style="font-size: x-small;"><span style="color: #008000;"><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make clean --- 清理生成文件，但会保留.config和一些模块文件</span> </span></span></p>
+<p><span style="font-size: small;"><span style="font-size: x-small;"><span style="color: #008000;"><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make config --- 基于文本的最为传统的配置界面，不推荐使用</span> </span></span></span></p>
+<p><span style="color: #008000;"><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make menuconfig --- 基于文本选单的配置界面，字符终端下推荐使用</span> </span></p>
+<p><span style="font-size: small;"><span style="color: #008000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make xconfig --- 基于图形窗口模式的配置界面，Xwindow下推荐使用</span> &nbsp;</span> </p>
+<p><span style="font-size: xx-large;"><strong>4 </strong></span></p>
+<p><span style="font-size: xx-large;"><span style="font-size: small;">主要涉及以下几个结构体, 其实这些代码在总体内核中的作用也不甚明白, 基本都是照搬, 所以才会有之后的映像错误, 比如那个结构体数组的作用 </span></span></p>
+<p><span style="font-size: xx-large;"><span style="font-size: small;">static struct platform_device __initdata *smdk_devs[] = ,</span> </span></p>
+<p><span style="font-size: xx-large;"><span style="font-size: small;">为什么要在里面注册&amp;s3c_device_nand, ? 这些都不清楚, 也是之后犯错的原因</span> </span></p>
+<p><span style="color: #0000ff;"><span style="font-size: x-small;"><br></span></span></p>
+<p><span style="font-size: small;"><strong>(1)</strong> </span>更改板载nand flash的分区, 打开文件: arch/arm/plat-s3c24xx/common-smdk.c , 修改为如下:</p>
+<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-family: monospace; font-size: small;"><span style="white-space: pre-wrap;">&nbsp;</span></span></p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">view plain</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">print</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">?</a></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt"><span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">struct</span><span>&nbsp;mtd_partition&nbsp;smdk_default_nand_part[]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"supervivi"</span><span>,&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.size&nbsp;&nbsp;&nbsp;=&nbsp;0x00040000,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.offset&nbsp;=&nbsp;0,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"param"</span><span>,&nbsp;&nbsp;</span></span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.offset&nbsp;=&nbsp;0x00040000,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.size&nbsp;&nbsp;&nbsp;=&nbsp;0x00020000,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"Kernel"</span><span>,&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.offset&nbsp;=&nbsp;0x00060000,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.size&nbsp;&nbsp;&nbsp;=&nbsp;0x00500000,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"root"</span><span>,&nbsp;&nbsp;</span></span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.offset&nbsp;=&nbsp;0x00560000,&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.size&nbsp;&nbsp;&nbsp;=&nbsp;1024&nbsp;*&nbsp;1024&nbsp;*&nbsp;1024,&nbsp;<span class="comment">//</span><span>&nbsp;&nbsp;</span></span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;&nbsp;</span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name&nbsp;&nbsp;&nbsp;=&nbsp;<span class="string">"nand"</span><span>,&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.offset&nbsp;=&nbsp;0x00000000,&nbsp;&nbsp;</span></li>
+<li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.size&nbsp;&nbsp;&nbsp;=&nbsp;1024&nbsp;*&nbsp;1024&nbsp;*&nbsp;1024,&nbsp;<span class="comment">//</span><span>&nbsp;&nbsp;</span></span></li>
+<li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li>
+<li class="alt"><span>};&nbsp;&nbsp;</span></li>
+</ol></div>
+
+<p><span style="font-family: monospace; font-size: small;"><span style="white-space: pre-wrap;"><br></span></span></p>
+<p><span style="font-size: small;"><strong>(2)</strong> 把s3c_device_nand注册进平台, 这里本来一致, 不用修改该<strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br></strong></span></p>
+<p><span style="font-size: small;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></span></p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><strong><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">view plain</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">print</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">?</a></strong></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt"><strong><span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">struct</span><span>&nbsp;platform_device&nbsp;__initdata&nbsp;*smdk_devs[]&nbsp;=&nbsp;{&nbsp;&nbsp;</span></span></strong></li>
+<li><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;s3c_device_nand,&nbsp;<span class="comment">//</span><span>&nbsp;&nbsp;</span></span></strong></li>
+<li class="alt"><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;smdk_led4,&nbsp;&nbsp;</span></strong></li>
+<li><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;smdk_led5,&nbsp;&nbsp;</span></strong></li>
+<li class="alt"><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;smdk_led6,&nbsp;&nbsp;</span></strong></li>
+<li><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;smdk_led7,&nbsp;&nbsp;</span></strong></li>
+<li class="alt"><strong><span>};<span class="comment">//not&nbsp;changed</span><span>&nbsp;&nbsp;</span></span></strong></li>
+</ol></div>
+<strong> <br></strong>
+
+<p>总结nand flash涉及到的结构体如下:&nbsp;</p>
+<p><span style="font-size: x-small;"><span style="color: #0000ff;"><span style="font-size: small;">&nbsp;&nbsp; &nbsp; struct mtd_partition&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; default_nand_part[]&nbsp;&nbsp;&nbsp;&nbsp; 单片flash对分区的定义</span> </span></span></p>
+<p><span style="font-size: x-small;"><span style="color: #0000ff;"><span style="font-size: small;">&nbsp;&nbsp; &nbsp; static struct s3c2410_nand_set&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; smdk_nand_sets[]&nbsp; &nbsp; &nbsp;&nbsp; 板子上所有flash的sets集</span> </span></span></p>
+<p><span style="font-size: x-small;"><span style="color: #0000ff;"><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp; static struct s3c2410_platform_nand &nbsp; &nbsp; smdk_nand_info&nbsp; <br></span></span></span></p>
+<p><span style="font-size: small;"><span style="color: #0000ff;">&nbsp;&nbsp;&nbsp;&nbsp; static struct platform_device __initdata&nbsp; *smdk_devs[]</span> </span></p>
+<p><strong>&nbsp;</strong></p>
+<p><span style="font-size: xx-large;"><strong>5</strong> &nbsp;</span> &nbsp; <br>修改drivers/mtd/nand/s3c2410.c, </p>
+<p>禁止flash ECC校验(友善的手册没有此项),&nbsp;注意, 
+这个去掉ECC校验的问题，在内核中明确说明是不建议这样做的，因为这样就等于忽略了对NAND FLASH坏块的检测. 
+But~&nbsp;据说vivi或uboot通过软件算法产生的ecc校验码于S3C2410 NAND Flash 
+控制器产生的ecc校验码不一致，所以在这里选择禁止内核ECC校验.&nbsp;<br>找到static void s3c2410_nand_init_chip函数，<span style="text-decoration: underline;">在该函数体最后一行加上</span> :&nbsp;</p>
+<div class="dp-highlighter">
+<div class="bar">
+<div class="tools"><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">view plain</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">copy to clipboard</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">print</a><a href="http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx#">?</a></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt"><span><span>chip-&gt;ecc.mode&nbsp;=&nbsp;NAND_ECC_NONE;&nbsp;&nbsp;</span></span></li>
+</ol></div>
+<p><strong><span style="font-size: xx-large;">6<span style="font-size: x-small;">(暂不做)</span> </span></strong></p>
+<p><strong>&nbsp;</strong>&nbsp;为2.6.32打上yaffs2补丁, </p>
+<p>早先的yaffs 仅支持小页(512byte/page)的nand flash，现在的开发板大都配备了更大容量的nand flash,它们一般是大页模式(2K/page)，使用 yaffs2 就可以支持大页的 nand flash. 步骤如下,</p>
+<p><strong><span style="font-size: small;">(1)</span> </strong>获取yaffs2代码</p>
+<p>&nbsp;&nbsp; &nbsp;mkdir yaffs2-src</p>
+<p>&nbsp;&nbsp; &nbsp;cd yaffs2-src</p>
+<p>&nbsp;&nbsp; &nbsp;git&nbsp; clone git://www.aleph1.co.uk/yaffs2 </p>
+<p><strong><span style="font-size: small;">(2)</span> </strong>下载yaffs2的最新源码.并打补丁:</p>
+<p>&nbsp; ./patch-ker.sh c /root/linux-2.6.32</p>
+<p>&nbsp; 此时已经成功更新2.6.32代码中的yaffs2部分,linux-2.6.32.2/fs下增加一个yaffs2目录</p>
+<p>&nbsp; 回到/root/linux2.6.32, 执行make menuconfig, File systems-&gt;Miscellaneous-&gt;选中yaffs2支持.</p>
+<p><span style="font-size: xx-large;"><strong>7<span style="font-size: x-small;">(暂不做)</span> </strong></span></p>
+<p><span style="font-size: x-small;"><span style="font-size: small;">为2.6内核增加devfs,linux2.6已经去掉devfs，为了内核支持devfs以及在启动时并在/sbin/init运行之前能自动挂载/dev为devfs文件系统(yaffs文件系统是不是需要devfs支持?)<br>vi fs/Kconfig,找到menu "Pseudo filesystems"处增加如下:<br></span><span style="color: #008000;"><span style="font-size: small;">config DEVFS_FS&nbsp;&nbsp;&nbsp;#config的标识<br>&nbsp;&nbsp;&nbsp; &nbsp;bool "/dev file system support (OBSOLETE)"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depends on EXPERIMENTAL<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;help</span> </span></span></p>
+<p><span style="font-size: x-small;"><span style="color: #008000;"><span style="font-size: small;">config DEVFS_MOUNT<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool "Automatically mount at boot"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depends on DEVFS_FS #依赖上面的DEVFS_FS<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;help</span> </span></span></p>
+<p><span style="font-size: x-small;"><span style="color: #008000;"><span style="font-size: small;">config DEVFS_DEBUG<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool "Debug devfs"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depends on DEVFS_FS #依赖上面的DEVFS_FS<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;help</span> </span></span></p>
+<p><span style="font-size: small;">&nbsp;</span> </p>
+<p><span style="font-size: small;">重新make menuconfig　在File systems-&gt;Pseudo filesystems目录里面可以后到devfs的配置选项如下：</span> </p>
+<p><span style="font-size: small;">[*] /proc file system support&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: small;">[*] /dev file system support (OBSOLETE)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: small;">[*]&nbsp;&nbsp;&nbsp;&nbsp; Automatically mount at boot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: small;">[*]&nbsp;&nbsp;&nbsp;&nbsp; Debug devfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p><span style="font-size: small;">[*] Virtual memory file system support (former shm fs)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> </p>
+<p><span style="font-size: small;">[&nbsp; ] Relayfs file system support</span> </p>
+<p><span style="font-size: small;">&nbsp;</span> </p>
+<p><strong><span style="font-size: xx-large;">8</span> </strong></p>
+<p>修改内核启动选项,&nbsp;make menuconfig,&nbsp;<br>这里绝大部分选项都先采用默认设置，待移植成功后我们再进一步裁减, 以上(3)中修改了common-smdk.c, 为了让修改生效, 必须选上</p>
+<p><br>还有启动参数 Boot Options ---&gt; Default kernel command string: &nbsp;(注意, )</p>
+<p>&nbsp;<span style="color: #008000;"><span style="word-spacing: 0px; font: medium Simsun; text-transform: none; text-indent: 0px; white-space: normal; letter-spacing: normal; border-collapse: separate; orphans: 2; widows: 2;"><span style="font-size: 14px; line-height: 21px; font-family: verdana,sans-serif; text-align: left;">noinitrd root=/dev/mtdblock4 console=ttySAC0,115200</span> </span><br></span>解释, 也就是mtdblock3是存放cramfs根文件系统的分区，故设置 root=/dev/mtdblock3.&nbsp;console=ttySAC0指kernel启动期间的信息都输出到串口1上. </p>
+
+<p>转自:http://blog.csdn.net/dos5gw/archive/2010/08/11/5804587.aspx</p></div><div id="MySignature" style="display: block;"><div id="AllanboltSignature">    
+        <div>作者：<a href="http://www.cnblogs.com/hnrainll/" target="_blank">Leo Chin</a></div>
+        <div>出处：<a href="http://www.cnblogs.com/hnrainll/" target="_blank">http://www.cnblogs.com/hnrainll/</a></div>
+        <div>本博客文章,大多系网络中收集,转载请注明出处</div>  
+<div>相关标签：<a href="http://emb.sunplusedu.com/" target="_blank">嵌入式培训</a>、<a href="http://emb.sunplusedu.com/" target="_blank">嵌入式开发</a>、<a href="http://emb.sunplusedu.com/" target="_blank">嵌入式学习</a></div>
+    </div>
+
+<br>
+<div>
+
+ </div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/hnrainll/category/269785.html" target="_blank">ARM9</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2052979,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;b044ca99-3220-df11-ba8f-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/hnrainll/" target="_blank"><img src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/u115749.jpg" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/hnrainll/">Leo Chin</a><br>
+            <a href="http://home.cnblogs.com/u/hnrainll/followees">关注 - 10</a><br>
+            <a href="http://home.cnblogs.com/u/hnrainll/followers">粉丝 - 1196</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;b044ca99-3220-df11-ba8f-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(2052979,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(2052979,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052977.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052977.html" title="发布于2011-05-21 17:22">什么是uCLinux？</a><br><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052980.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052980.html" title="发布于2011-05-21 17:29">linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(2)</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2011-05-21 17:28</span> <a href="http://www.cnblogs.com/hnrainll/">Leo Chin</a> 阅读(<span id="post_view_count">1077</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=2052979" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052979.html#" onclick="AddToWz(2052979);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=66907,cb_entryId=2052979,cb_blogApp=currentBlogApp,cb_blogUserGuid='b044ca99-3220-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2011/5/21 17:28:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052979.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21/2052979.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://arcapp.anruichina.com/arctrac/trac?tid=smb_azure_1212_CNBlog" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br><a href="http://rongcloud.cn/reports/journal2" target="_blank">【推荐】融云发布 App 社交化白皮书 IM 提升活跃超 8 倍</a><br><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank">【推荐】自开发 零实施的BPM</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"><a href="http://www.gcpowertools.com.cn/products/activereports_overview.htm?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=AR&amp;utm_campaign=community" target="_blank"><img width="300" height="250" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/24442-20161115165230123-1587531896.png" alt=""></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/560544/" target="_blank">“百度大脑”挑战最强大脑 AI再次碾压人类</a><br> ·  <a href="http://news.cnblogs.com/n/560543/" target="_blank">苹果营业额15年来首次下滑 库克总薪酬减少150万美元</a><br> ·  <a href="http://news.cnblogs.com/n/560542/" target="_blank">美的宣布已经完成收购德国库卡集团</a><br> ·  <a href="http://news.cnblogs.com/n/560530/" target="_blank">孙陶然：要相信上级</a><br> ·  <a href="http://news.cnblogs.com/n/560541/" target="_blank">董明珠：一个电话让王健林投资5个亿</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/35695-20161213142353073-1602158633.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br> ·  <a href="http://kb.cnblogs.com/page/553682/" target="_blank">陈皓：什么是工程师文化？</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><br>
+<p>
+把每天看过的，有意义的文章发表出来。总结自己！
+<br></p>
+<div id="weibo"><iframe width="100%" height="350" class="share_self" frameborder="0" scrolling="no" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/index.html"></iframe></div>
+
+
+<!--
+<div style="display: none" id="__document_write_ajax_div-2"></div><script  language="JavaScript">window['__document_write_ajax_callbacks__']['2']();</script>
+--><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/hnrainll/">Leo Chin</a><br>园龄：<a href="http://home.cnblogs.com/u/hnrainll/" title="入园时间：2010-02-23">6年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/hnrainll/followers/">1196</a><br>关注：<a href="http://home.cnblogs.com/u/hnrainll/followees/">10</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;b044ca99-3220-df11-ba8f-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2011/04/01&#39;);return false;">&lt;</a></td><td align="center">2011年5月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2011/06/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/01.html"><u>1</u></a></td><td align="center">2</td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/03.html"><u>3</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/04.html"><u>4</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/05.html"><u>5</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/06.html"><u>6</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/07.html"><u>7</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/08.html"><u>8</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/09.html"><u>9</u></a></td><td align="center">10</td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/11.html"><u>11</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/12.html"><u>12</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/13.html"><u>13</u></a></td><td class="CalWeekendDay" align="center">14</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/15.html"><u>15</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/16.html"><u>16</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/17.html"><u>17</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/18.html"><u>18</u></a></td><td align="center">19</td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/20.html"><u>20</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/21.html"><u>21</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/22.html"><u>22</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/23.html"><u>23</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/24.html"><u>24</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/25.html"><u>25</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/26.html"><u>26</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/27.html"><u>27</u></a></td><td class="CalWeekendDay" align="center">28</td></tr><tr><td class="CalWeekendDay" align="center">29</td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/30.html"><u>30</u></a></td><td align="center"><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/31.html"><u>31</u></a></td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/hnrainll/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/hnrainll/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/hnrainll/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/hnrainll/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/hnrainll/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/hnrainll/category/325748.html">Android(221)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/hnrainll/category/269785.html">ARM9(113)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/hnrainll/category/305020.html">BootLoader(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/hnrainll/category/234348.html">C(98)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/hnrainll/category/234345.html">C++(42)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/hnrainll/category/337781.html">FreeBSD(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/hnrainll/category/270869.html">IT(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/hnrainll/category/324474.html">Java(94)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/hnrainll/category/283519.html">Linux(228)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/hnrainll/category/304463.html">Linux 根文件系统(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/hnrainll/category/304462.html">Linux 内核移植(11)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/hnrainll/category/295463.html">Linux 驱动开发(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/hnrainll/category/297419.html">Linux 网络编程(140)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/hnrainll/category/271015.html">MCU(54)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/hnrainll/category/478190.html">PHP(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/hnrainll/category/382895.html">PPT(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/hnrainll/category/316581.html">Python(9)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/hnrainll/category/300398.html">QT(35)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/hnrainll/category/439101.html">Ruby(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/hnrainll/category/276460.html">STM32(50)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/hnrainll/category/297178.html">UCOS-II(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_21" href="http://www.cnblogs.com/hnrainll/category/303144.html">Web(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_22" href="http://www.cnblogs.com/hnrainll/category/325747.html">关于职场(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_23" href="http://www.cnblogs.com/hnrainll/category/318809.html">路由(38)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_24" href="http://www.cnblogs.com/hnrainll/category/295516.html">数据库(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_25" href="http://www.cnblogs.com/hnrainll/category/234344.html">网络文摘(255)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_26" href="http://www.cnblogs.com/hnrainll/category/329138.html">心理学(2)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/hnrainll/archive/2015/03.html">2015年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/hnrainll/archive/2015/02.html">2015年2月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/hnrainll/archive/2015/01.html">2015年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/hnrainll/archive/2014/12.html">2014年12月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/hnrainll/archive/2014/11.html">2014年11月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/hnrainll/archive/2014/07.html">2014年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/hnrainll/archive/2014/05.html">2014年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/hnrainll/archive/2014/04.html">2014年4月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/hnrainll/archive/2014/03.html">2014年3月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/hnrainll/archive/2014/02.html">2014年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/hnrainll/archive/2014/01.html">2014年1月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/hnrainll/archive/2013/12.html">2013年12月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/hnrainll/archive/2013/11.html">2013年11月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/hnrainll/archive/2013/10.html">2013年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/hnrainll/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/hnrainll/archive/2013/07.html">2013年7月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/hnrainll/archive/2013/06.html">2013年6月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/hnrainll/archive/2013/05.html">2013年5月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/hnrainll/archive/2013/04.html">2013年4月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/hnrainll/archive/2013/03.html">2013年3月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/hnrainll/archive/2013/02.html">2013年2月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/hnrainll/archive/2013/01.html">2013年1月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/hnrainll/archive/2012/12.html">2012年12月 (40)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/hnrainll/archive/2012/11.html">2012年11月 (31)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/hnrainll/archive/2012/10.html">2012年10月 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/hnrainll/archive/2012/09.html">2012年9月 (22)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/hnrainll/archive/2012/08.html">2012年8月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/hnrainll/archive/2012/07.html">2012年7月 (27)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/hnrainll/archive/2012/06.html">2012年6月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/hnrainll/archive/2012/05.html">2012年5月 (43)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/hnrainll/archive/2012/04.html">2012年4月 (22)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/hnrainll/archive/2012/03.html">2012年3月 (32)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/hnrainll/archive/2012/02.html">2012年2月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/hnrainll/archive/2012/01.html">2012年1月 (50)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/hnrainll/archive/2011/12.html">2011年12月 (39)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_35" href="http://www.cnblogs.com/hnrainll/archive/2011/11.html">2011年11月 (86)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_36" href="http://www.cnblogs.com/hnrainll/archive/2011/10.html">2011年10月 (118)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_37" href="http://www.cnblogs.com/hnrainll/archive/2011/09.html">2011年9月 (76)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_38" href="http://www.cnblogs.com/hnrainll/archive/2011/08.html">2011年8月 (69)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_39" href="http://www.cnblogs.com/hnrainll/archive/2011/07.html">2011年7月 (54)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_40" href="http://www.cnblogs.com/hnrainll/archive/2011/06.html">2011年6月 (141)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_41" href="http://www.cnblogs.com/hnrainll/archive/2011/05.html">2011年5月 (148)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_42" href="http://www.cnblogs.com/hnrainll/archive/2011/04.html">2011年4月 (63)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_43" href="http://www.cnblogs.com/hnrainll/archive/2011/03.html">2011年3月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_44" href="http://www.cnblogs.com/hnrainll/archive/2011/02.html">2011年2月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_45" href="http://www.cnblogs.com/hnrainll/archive/2011/01.html">2011年1月 (59)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_46" href="http://www.cnblogs.com/hnrainll/archive/2010/12.html">2010年12月 (66)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_47" href="http://www.cnblogs.com/hnrainll/archive/2010/11.html">2010年11月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_48" href="http://www.cnblogs.com/hnrainll/archive/2010/02.html">2010年2月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_blog" class="catListBlog sidebar-block">
+<h3 class="catListTitle">Blog</h3>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	1259197
+	</li>
+	<li class="liRank">
+		排名 -	38
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hnrainll/p/3597758.html#3596966">1. Re:年入百万的表弟给我上一课：互联网思维该怎么接地气</a></li>
+        <li class="recent_comment_body">说得像讲故事，不过确实很是吃惊。</li>
+        <li class="recent_comment_author">--jamesK4W</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hnrainll/p/3514637.html#3585460">2. Re:Markdown 11种基本语法</a></li>
+        <li class="recent_comment_body">footnote<br>试了又试.  基本不能用</li>
+        <li class="recent_comment_author">--wxf4150</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hnrainll/archive/2013/05/07/3064874.html#3576788">3. Re:PHP ServerPush (推送) 技术的探讨</a></li>
+        <li class="recent_comment_body">文章对 PHP ServerPush（推送）技术的探讨很赞~Web 端的实时消息推送，可以通过简单的 RESTful API 来实现，不过这种情况只用于发布消息。我们有 PHP 的 SDK 可供开发者......</li>
+        <li class="recent_comment_author">--云巴</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hnrainll/p/3514637.html#3572895">4. Re:Markdown 11种基本语法</a></li>
+        <li class="recent_comment_body">感谢分享，11条下划线没有效果。使用&lt;u&gt;Underlined Text&lt;/u&gt;是可以的。</li>
+        <li class="recent_comment_author">--翰弟</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hnrainll/archive/2011/06/07/2074593.html#3566135">5. Re:Form表单中method="post/get'的区别</a></li>
+        <li class="recent_comment_body">1、Get是用来从服务器上获得数据，而Post是用来向服务器上传递数据。<br>这他妈谁教你的啊？傻叉</li>
+        <li class="recent_comment_author">--lanmanck</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/10/11/2206804.html">1. JAVA帮助文档全系列 JDK1.5 JDK1.6 JDK1.7 官方中英完整版下载(384439)</a></li><li><a href="http://www.cnblogs.com/hnrainll/p/3514637.html">2. Markdown 11种基本语法(134778)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/02/16/1956538.html">3. linux FTP配置详解(124393)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/12/29/2305582.html">4. java常用设计模式(100599)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/10/14/2212415.html">5. TCP三次握手及四次挥手详细图解(97083)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/06/08/2074957.html">6. 查看Linux内核版本的命令(78246)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/07/04/2097408.html">7. 小技巧：让linux程序在后台运行(74013)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/05/11/2043361.html">8. linux stat函数讲解(73890)</a></li><li><a href="http://www.cnblogs.com/hnrainll/archive/2011/09/06/2168604.html">9. Linux man命令的使用方法(68093)</a></li><li><a href="http://www.cnblogs.com/hnrainll/p/3410042.html">10. Java 内存区域和GC机制(61928)</a></li></ul></div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 Leo Chin
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<!--PageEndHtml Block Begin-->
+&nbsp;&nbsp;&nbsp;
+
+<script src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/stat.php" language="JavaScript"></script><script src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=5299104" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/pic2.gif"></a>
+
+&nbsp;&nbsp;&nbsp;
+
+<script language="javascript" type="text/javascript" src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/4385490.js.下载"></script><a href="http://www.51.la/?4385490" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+
+<noscript>&lt;a href="http://www.51.la/?4385490" target="_blank"&gt;&lt;img alt="&amp;#x6211;&amp;#x8981;&amp;#x5566;&amp;#x514D;&amp;#x8D39;&amp;#x7EDF;&amp;#x8BA1;" src="http://img.users.51.la/4385490.asp" style="border:none" /&gt;&lt;/a&gt;</noscript>
+<!--PageEndHtml Block End-->
+
+
+<div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./linux 2.6.32 在arm9（s3c2440）平台的移植 - 标题要长(1) - Leo Chin - 博客园_files/saved_resource.html"></iframe></div></body></html>

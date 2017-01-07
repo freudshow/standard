@@ -8,9 +8,10 @@
 #include <string.h>
 #include "bitfield.h"
 
-void printBuf(u8 *data, u16 len)
+void printBuf(u8 *data, u16 len, char* file, char* func, int line)
 {
 	u16 i;
+	printf("[%s][%s][%d]", file, func, line);
 	for (i = 0; i < len; i++)
 		printf("%02X ", data[i]);
 	printf("\n");
@@ -95,6 +96,6 @@ int main(int argc, char* argv[])
 	frame.len = 4;
 
 	createFrm(buf, &bufSize, &frame);
-	printBuf(buf, bufSize);
+	printBuf(buf, bufSize, FILE_LINE);
 	return 0;
 }

@@ -7,6 +7,10 @@
 #ifndef BITFIELD_H
 #define BITFIELD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define	CHN_BUSY	0
 #define	CHN_FREE	1
 
@@ -141,5 +145,9 @@ typedef struct {
 typedef frm645STR* frm645PTR;
 
 #pragma pack(pop)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif// BITFIELD_H
