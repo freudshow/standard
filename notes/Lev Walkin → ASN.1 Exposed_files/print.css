@@ -1,0 +1,12 @@
+	.menu, .path, .hosted, .phide {
+		display: none;
+		position: fixed;
+		visibility: hidden;
+	}
+	.contents {
+		float: none;
+		width: 100%;
+	}
+	BODY {
+		margin: 0.5in;
+	}

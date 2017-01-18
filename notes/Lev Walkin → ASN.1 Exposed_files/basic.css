@@ -1,0 +1,157 @@
+	HTML { height: 95%; }
+	BODY {
+		height: 100%;
+		background: white;
+		font-size: 10pt;
+		font-family: sans-serif;
+		margin-left: 0px;
+	}
+
+	.page {
+		height: 85%;
+	}
+	.contents {
+		float: left;
+		width: 75%;
+	}
+	.content {
+		text-align: justify;
+	}
+
+	TD {
+		font-size: 10pt;
+		font-family: sans-serif;
+	}
+	H2 {
+		text-align: center;
+	}
+	H3 {
+		margin-top: 0px; padding-top: 0px;
+	}
+	PRE {
+		font-size: 10pt;
+		font-family: monospace;
+	}
+	CODE {
+		font-size: 10pt;
+		font-family: monospace;
+	}
+	ADDRESS {
+		color: #404040;
+		font-family: "Courier", monospace;
+	}
+
+	.path { margin-left: 8pt; font-family: "Courier"; font-size: 8pt; }
+
+	.req-by {
+		padding-left: 30px;
+		font-size: 8pt;
+		float: right;
+		padding-bottom: 8pt;
+		color: #808080;
+	}
+	.example {
+		margin: 8pt;
+		padding: 5px;
+		border: dashed 1px #c0c0c0;
+	}
+	.module {
+		padding: 10pt;
+		margin: 0px;
+	}
+	.modname {
+		position: relative;
+		float: right;
+		width: 30%;
+		text-align: center;
+		font-size: 9pt;
+		font-family: "Verdana", "Helvetica", sans-serif;
+		font-weight: bold;
+		font-stretch: expanded;
+		border-top: solid 1px #A0A0A0;
+		border-left: solid 1px #A0A0A0;
+		border-right: solid 1px #A0A0A0;
+		padding: 4pt;
+		background: #fafaf0;
+		margin-bottom: -1px;
+		z-index: 3;
+	}
+	.modtext {
+		z-index: 2;
+		clear: right;
+		background: #fafaf0;
+		border: solid 1px #A0A0A0;
+		margin-bottom: 5px;
+		padding: 5px;
+		margin: 0px;
+		font-size: 8pt;
+		font-family: monospace;
+		white-space: pre;
+	}
+	.red { color: darkred; }
+	.menu {
+		position: relative;
+		float: left;
+		font-size: 16px;
+		font-weight: bold;
+		font-family: "Copperplate", Verdana, Helvetica;
+		color: rgb(40,40,40);
+		margin-left: 0px;
+		margin-right: 10pt;
+		margin-top: 10pt;
+		border-bottom: dashed 1px rgb(200,150,150);
+		border-right: dashed 1px rgb(200,150,150);
+		cursor: pointer;
+	}
+	.menuitem {
+		display: block;
+		text-decoration: none;
+		color: #201010;
+		position: relative;
+		padding: 6pt;
+		background: #f0e0d0;
+		border-top: dashed 1px rgb(200, 150, 150);
+	}
+	.pin {
+		display: inline;
+		visibility: hidden;
+		color: #204000;
+	}
+
+	.docwrap {
+		min-width: 100px;
+		width: 32%;
+		position: relative;
+		float: left;
+		text-align: center;
+		border: solid 1px #ffffff;
+	}
+	.docwrap:hover {
+		border: dotted 1px #c0c0c0;
+	}
+	.doc { position: relative; padding: 10pt; margin: 2px;
+		border: solid 1px #ffffff; }
+	.doc:hover {
+		border: dashed 1px #e0e0e0;
+	}
+
+	.lname {
+		display: block;
+	}
+	.ldescr {
+		color: #404040;
+		font-size: 8pt;
+		font-family: monospace;
+	}
+	.compar {
+		border: solid 1px rgb(200, 200, 200);
+	}
+	.ahid { color: #202020; text-decoration: none; }
+	.ahid:hover { color: #000080; }
+	.ahid:hover .lname { color: #000080; text-decoration: underline; }
+
+	.auth {
+		clear:both;
+		font-style: italic;
+		padding-left: 50pt;
+	}
