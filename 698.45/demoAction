@@ -1,0 +1,129 @@
+
+68 9D 00 43 05 08 00 00 00 00 00 10 8C 32 
+07 	Client-APDU∷=CHOICE:...	ACTION-Request         (APDU_TYPE)
+01 	ACTION-Request∷=CHOICE:... 	ActionRequest    (操作一个对象方法请求)   
+	
+	ActionRequest∷=SEQUENCE
+	01 	piid
+	60 00 	OMD-OI (集合类)
+	80 00 	OMD-128 方法：批量添加采集档案配置单元   00：操作模式
+		01 //Data:array  （Data∷=CHOICE）
+		02 //array:num个数 
+..................................................
+		(一)	02 //struct （基本类型）
+			04 //个数
+				(1)	12 // long unsigned（基本类型）
+					00 01 （序号）
+				(2)	02 //struct（基本类型）
+					08 个数 
+					55 //TSA（基本类型）
+			  		07 //TSA:SIZE 
+						05 00 00 00 00 00 01 
+
+					16//enum （基本类型）
+					03//2400bps 
+					16//enum（基本类型）
+					03//698.45 
+					51//OAD	 （基本类型）
+					   F2 01 02 01    //  F201:RS485   0201 
+					09//octet-string（基本类型）
+					06//长度 6 
+					00 00 00 00 00 00 
+					11//unsigned（基本类型）
+					04 //费率个数4
+					11 //unsigned（基本类型）
+					00 //用户类型 
+					16 //enum（基本类型）
+					00 //界限方式未知
+
+				(3)	02 //struct
+					04 //个数
+					55 //TSA
+					07 //TSA-SIZE
+						05 00 00 00 00 00 00 
+					09//octet-string
+					06//长度 6 
+					00 00 00 00 00 00 //资产号
+					12 //long unsigned
+					00 01 //pt
+					12 
+					00 01 //ct
+				(4)	01 //array
+					00 //array-num
+......................................
+		（二）	02 //struct
+				04 //个数
+				(1)	12 //long unsigned
+					00 02 //序号
+				(2)	02 //struct
+					08 //??
+					55 //TSA
+					07 //TSA:NUM 
+					05 00 00 00 00 00 02 
+					16  //ENUM 
+					03  //2400BPS 
+					16 //enum
+					03 //protocol  698
+					51 //OAD
+						F2 01 02 01 //RS485-1
+					09 //octet-string
+					06 //length = 6
+					00 00 00 00 00 00 
+					11 //unsigned
+					04 //费率个数4
+					11 //unsigned
+					00 //用户类型
+					16 //enum
+					00 //界限方式未知
+				(3)	02 //struct
+					04 //？？？个数
+					55 TSA
+					07 
+					05 00 00 00 00 00 00 
+					09 //octet-string
+					06 
+					00 00 00 00 00 00 //资产号
+					12 //long unsigned
+					00 01 
+					12 
+					00 01 
+				(4)	01 //array 
+					00 //array-num
+00 //clinet-apdu(no time )
+2C F8 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
