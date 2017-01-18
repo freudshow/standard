@@ -1,0 +1,47 @@
+body{color:#333333;}
+.fc00{color:#33383c;}
+.fc01{color:#4f5557;}
+.fc02,.fc02 a{color:#33383c;}
+.fc03,.fc03 a,.fc11 a{color:#37708b;}
+.fc04,.fc04 a{color:#63a7b5;}
+.fc05{color:#333333;}
+.fc06{color:#777777;}
+.fc07{color:#aaaaaa;}
+.fc08{color:#aaaaaa;}
+.fc09{color:#33383c;}
+.fc10{color:#dddddd;}
+.bdc0{border-color:#dddddd;}
+.bdc1{border-color:#d8dfe6;}
+.bdc9t{border-top-color:#FFFFFF;}
+.bdc9r{border-right-color:#FFFFFF;}
+.bdc9b{border-bottom-color:#FFFFFF;}
+.bdc9l{border-left-color:#FFFFFF;}
+.bgc0,.bgc9:hover, .bgc9.js-bgc9-hover{background-color:#eeeeee;}
+.bgc1{background-color:#ffffff;}
+.bgc2{background-color:#a7bbcf;}
+.bgp0{background-image:url(img/-1.gif);}
+.nb-body{background-color:#4f5557;}
+.nb-wrap{background:url(img/top_bg.jpg) no-repeat center top;}
+.nb-bar{background:#a7bbcf;}
+.nb-top .h{height:87px;}
+.nb-top .t{color:#33383c;top:25px;left:150px;font-family:Tahoma,"ËÎÌו",Arial,Verdana,Helvetica,Sans-Serif;font-size:12px;}
+.nb-top .n{font-size:24px;}
+.nb-nav .wkg{background:url(img/bg_tab.jpg) no-repeat center top;}
+.nb-nav .h{height:32px;line-height:32px;}
+.nb-nav .l{width:170px;}
+.nb-nav .r{width:60px;}
+.nb-nav .c{margin:0 60px 0 170px;}
+.nb-nav .selected{background:url(img/tab_on.gif) no-repeat center center;}
+.nb-nav .selected .i, .nb-nav .selected .i:hover{color:#4f5557;font-weight:bold;}
+.nb-cnt .wkg{background:#cbd8e1 none no-repeat left top;}
+.nb-cnt .wc{margin:0 5px;}
+.nb-fot .wkg{background:url(img/bg_bottom.gif) repeat-x left top;}
+.nb-fot .h{height:110px;}
+.nb-fot .k{padding-top:25px;}
+.nb-mdl{margin:10px 5px;border-bottom:1px #9ab0bb solid;}
+.nb-mdl .th{height:25px;line-height:25px;}
+.nb-mt .tl{width:10px;background:url(img/bg_titlebar_c_l.gif) no-repeat left top;}
+.nb-mt .tc{margin:0 35px 0 10px;background:url(img/bg_titlebar.gif) repeat-x left top;}
+.nb-mt .tr{width:35px;background:url(img/bg_titlebar_c_r.gif) no-repeat left top;}
+.nb-mc{background-color:#ffffff;border-left:1px #9ab0bb solid;border-right:1px #9ab0bb solid;}
+.nb-mc .cl.nb-mc .cr,.nb-mb{display:none;}
