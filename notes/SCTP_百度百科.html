@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://baike.baidu.com/view/323714.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./SCTP_百度百科_files/element.min.js.下载"></script><script async="" src="./SCTP_百度百科_files/monkey.min.js.下载"></script><script async="" src="./SCTP_百度百科_files/dp.min.js.下载"></script><script charset="utf-8" async="" src="./SCTP_百度百科_files/snippetcacher.php"></script><script type="text/javascript" async="" src="./SCTP_百度百科_files/ucwm"></script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="referrer" content="always">
+<meta name="description" content="SCTP（Stream Control Transmission Protocol，流量控制传输协议）是IETF（Internet Engineering Task Force，因特网工程任务组）在2000年定义的一个传输层（Transport Layer）协议，是提供基于不可靠传输业务的协议之上的可靠的数据报传输协议。SCTP的设计用于通过IP网传输SCN（Signaling Communication Network，信令通信网）窄带信...">
+<title>SCTP_百度百科</title>
+<link rel="shortcut icon" href="http://baike.baidu.com/favicon.ico" type="image/x-icon">
+<link rel="icon" sizes="any" mask="" href="http://www.baidu.com/img/baidu.svg">
+
+<meta name="keywords" content="SCTP SCTP背景知识 SCTP简介 SCTP应用 SCTP关系 SCTPSCTP包结构 SCTPSCTP数据交换 SCTPSCTP关闭关联 SCTP特性 SCTPSCTP四路握手及抵抗SYN Flooding攻击的原理 SCTPSCTP的未来发展">
+<meta name="image" content="http://baike.bdimg.com/cms/static/baike.png">
+<script async="" src="./SCTP_百度百科_files/alog.min.js.下载"></script><script type="text/javascript">
+  // 配置 PD 监控。
+  window.alogObjectConfig = {
+    product: '103',
+    page: '103_1',
+    speed: {
+      sample: '0.008'
+    },
+    monkey: {
+      sample: '1',
+      hid: '1533'
+    },
+    exception: { 
+      sample: '0.004'
+    },
+    feature: {
+      sample: '0.004'
+    },
+    csp: {
+      sample: '0.008',
+      'default-src': [
+        {match: '*.baidu.com,*.bdimg.com,localhost', target: 'Accept'},
+        {match: '*', target: 'Accept,Warn'}
+      ]
+    }
+  };
+
+  void function(a,b,c,d,e,f,g){a.alogObjectName=e,a[e]=a[e]||function(){(a[e].q=a[e].q||[]).push(arguments)},a[e].l=a[e].l||+new Date,d="https:"===a.location.protocol?"https://fex.bdstatic.com"+d:"http://fex.bdstatic.com"+d;var h=!0;if(a.alogObjectConfig&&a.alogObjectConfig.sample){var i=Math.random();a.alogObjectConfig.rand=i,i>a.alogObjectConfig.sample&&(h=!1)}h&&(f=b.createElement(c),f.async=!0,f.src=d+"?v="+~(new Date/864e5)+~(new Date/864e5),g=b.getElementsByTagName(c)[0],g.parentNode.insertBefore(f,g))}(window,document,"script","/hunter/alog/alog.min.js","alog"),void function(){function a(){}window.PDC={mark:function(a,b){alog("speed.set",a,b||+new Date),alog.fire&&alog.fire("mark")},init:function(a){alog("speed.set","options",a)},view_start:a,tti:a,page_ready:a}}();
+  void function(n){var o=!1;n.onerror=function(n,e,t,c){var i=!0;return!e&&/^script error/i.test(n)&&(o?i=!1:o=!0),i&&alog("exception.send","exception",{msg:n,js:e,ln:t,col:c}),!1},alog("exception.on","catch",function(n){alog("exception.send","exception",{msg:n.msg,js:n.path,ln:n.ln,method:n.method,flag:"catch"})})}(window);
+</script>
+<meta name="csrf-token" content="">
+
+<!--[if lte IE 9]>
+<script>
+    (function() {
+      var e = "abbr,article,aside,audio,canvas,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(","),
+        i = e.length;
+      while (i--) {
+        document.createElement(e[i]);
+      }
+    })();
+  </script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/wiki-lemma_7850da5.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/wiki-common-base_b4e62b7.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/userbar_9fb5389.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/searchbar_main_f9c7c20.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/navbar_0697c78.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/announcement_b0d7681.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/unameFiller_d631c34.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/label_461cbe0.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/sideShare_ebee986.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/praise_2120cd2.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/pageMask_ff9a193.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/wiki-lemma-module_1709cbf.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/userCard_2402f1f.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/mainContent_1a67233.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/lemmaRelation_9f629f5.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/zhixin_1c34583.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/footer_main_eb7bd79.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/toolButtons-o_a2c470f.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/userInfo-o_9ba20c1.css"><link rel="stylesheet" type="text/css" href="./SCTP_百度百科_files/searchHeader-o_e786bfb.css"><script type="text/javascript">
+    alog('speed.set', 'ht', +new Date);
+</script><script type="text/javascript" src="./SCTP_百度百科_files/lemmaReferenceTip_d50e02d.js.下载"></script><link rel="stylesheet" href="./SCTP_百度百科_files/share_style0_16.css"><link rel="stylesheet" href="./SCTP_百度百科_files/share_style0_32.css"><script src="./SCTP_百度百科_files/qc.php" type="text/javascript" charset="utf-8"></script></head>
+
+
+
+<body class="wiki-lemma normal"><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./SCTP_百度百科_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div>
+
+
+
+<div class="header-wrapper">
+<ul class="wgt-userbar"><li class="userbar_user" data-action="showUserMenu">
+<a href="javascript:;" nslog="normal" nslog-type="10080105"><span>floydshow</span><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-up"></em></a>
+</li>
+<li class="userbar_message" data-action="showUserMsg">
+<a href="javascript:;" nslog="normal" nslog-type="10080107"><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-message"></em><em class="cmn-icon cmn-icons cmn-icons_userbar-new userbar_message_new"></em>消息</a>
+</li>
+<li class="userbar_mall">
+<a href="http://baike.baidu.com/mall/" target="_blank" nslog="normal" nslog-type="10080106"><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-shop"></em>商城</a>
+</li>
+<li class="split">|</li>
+<li>
+<a href="http://www.baidu.com/" nslog="normal" nslog-type="10080104">百度首页</a>
+</li></ul>
+<div class="header">
+<div class="layout">
+<div class="wgt-searchbar wgt-searchbar-main cmn-clearfix">
+<div class="logo-container">
+<a class="logo cmn-inline-block" title="到百科首页" href="http://baike.baidu.com/">
+<span class="cmn-baike-logo">
+<em class="cmn-icon cmn-icons cmn-icons_logo-bai"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-du"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-baike"></em>
+</span>
+</a>
+</div>
+<div class="search">
+<div class="nav">
+<a href="http://news.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://news.baidu.com/ns?tn=news&amp;cl=2&amp;rn=20&amp;ct=1&amp;fr=bks0000&amp;ie=utf-8&amp;word=">新闻</a>
+<a href="http://www.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://www.baidu.com/s?ie=utf-8&amp;fr=bks0000&amp;wd=">网页</a>
+<a href="http://tieba.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://tieba.baidu.com/f?ie=utf-8&amp;fr=bks0000&amp;kw=">贴吧</a>
+<a href="http://zhidao.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://zhidao.baidu.com/search?pn=0&amp;&amp;rn=10&amp;lm=0&amp;fr=bks0000&amp;word=">知道</a>
+<a href="http://music.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://music.baidu.com/search?f=ms&amp;ct=134217728&amp;ie=utf-8&amp;rn=&amp;lm=-1&amp;pn=30fr=bks0000&amp;key=">音乐</a>
+<a href="http://image.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://image.baidu.com/search/index?tn=baiduimage&amp;ct=201326592&amp;lm=-1&amp;cl=2&amp;nc=1&amp;ie=utf-8&amp;word=">图片</a>
+<a href="http://v.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://v.baidu.com/v?ct=301989888&amp;rn=20&amp;pn=0&amp;db=0&amp;s=22&amp;ie=utf-8&amp;fr=bks0000&amp;word=">视频</a>
+<a href="http://map.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://map.baidu.com/m?ie=utf-8&amp;fr=bks0000&amp;word=">地图</a>
+<a class="baike" nslog="normal" nslog-type="10080001">百科</a>
+<a href="http://wenku.baidu.com/" nslog="normal" nslog-type="10080001" data-href="http://wenku.baidu.com/search?lm=0&amp;od=0&amp;ie=utf-8&amp;fr=bks0000&amp;word=">文库</a>
+</div>
+<div class="form">
+<form id="searchForm" action="http://baike.baidu.com/search/word" method="GET" target="_self">
+<input id="query" nslog="normal" nslog-type="10080005" name="word" type="text" autocomplete="off" autocorrect="off" value="SCTP"><button id="search" nslog="normal" nslog-type="10080002" type="button">进入词条</button><button id="searchLemma" nslog="normal" nslog-type="10080003" type="button">搜索词条</button><a class="help" nslog="normal" nslog-type="10080004" href="http://baike.baidu.com/help" target="_blank">帮助</a>
+</form>
+<form id="searchLemmaForm" action="http://baike.baidu.com/search" method="GET" target="_self">
+<input id="searchLemmaQuery" name="word" type="hidden">
+<input name="pn" type="hidden" value="0">
+<input name="rn" type="hidden" value="0">
+<input name="enc" type="hidden" value="utf8">
+</form>
+<ul id="suggestion" class="suggestion">
+<div class="sug"></div>
+<li class="extra">
+<span id="close" nslog="normal" nslog-type="10080006">关闭</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<a target="_blank" class="oldTopA" nslog-type="10002202" nslog-params="{&quot;adId&quot;:&quot;1404&quot;, &quot;adTitle&quot;: &quot;非遗年画&quot;, &quot;adPos&quot;: 3}" href="https://baike.baidu.com/feiyi" title="" style="background:url(http://baike.bdimg.com/cms/static/feiyi_html/nianhua-youshang.png) 0px 0px no-repeat; width:200px; height:100px;outline:0; font-size:0; text-indent:-999em;display:block;position:absolute;right:0px;top:-5px;"></a></div>
+</div>
+</div>
+<div class="navbar-wrapper">
+<div class="wgt-navbar">
+<div class="navbar-bg">
+<div class="navbar-bg-top">
+<div class="navbar-content layout">
+<div class="navbar-content-box">
+<dl class="index ">
+<dt><a href="http://baike.baidu.com/">首页</a></dt>
+</dl>
+<dl class="cat ">
+<dt><a>分类</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/art" target="_blank" class="art">艺术</a></div>
+<div><a href="http://baike.baidu.com/science" target="_blank" class="technology">科学</a></div>
+<div><a href="http://baike.baidu.com/ziran" target="_blank">自然</a></div>
+<div><a href="http://baike.baidu.com/wenhua" target="_blank">文化</a></div>
+<div><a href="http://baike.baidu.com/dili" target="_blank">地理</a></div>
+<div><a href="http://baike.baidu.com/shenghuo" target="_blank">生活</a></div>
+<div><a href="http://baike.baidu.com/shehui" target="_blank">社会</a></div>
+<div><a href="http://baike.baidu.com/renwu" target="_blank">人物</a></div>
+<div><a href="http://baike.baidu.com/jingji" target="_blank">经济</a></div>
+<div><a href="http://baike.baidu.com/tiyu" target="_blank">体育</a></div>
+<div><a href="http://baike.baidu.com/lishi" target="_blank">历史</a></div>
+</dd>
+</dl>
+<dl class="special ">
+<dt><a>特色百科</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/calendar/" target="_blank">历史上的今天</a></div>
+<div><a href="http://baike.baidu.com/museum/" target="_blank">数字博物馆</a></div>
+<div><a href="http://baike.baidu.com/item/%E5%8F%B2%E8%AE%B0%C2%B72016?fr=navbar" target="_blank">史记·2016</a></div>
+<div><a href="http://baike.baidu.com/city/" target="_blank">城市百科</a></div>
+<div><a href="http://baike.baidu.com/operation/worldwar2" target="_blank">二战百科</a></div>
+<div><a href="http://baike.baidu.com/feiyi?fr=dhlfeiyi" target="_blank">非遗百科</a></div>
+</dd>
+</dl>
+<dl class="user">
+<dt><a>用户</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/kedou/" target="_blank">蝌蚪团</a></div>
+<div><a href="http://baike.baidu.com/event/ranmeng/" target="_blank">燃梦计划</a></div>
+<div><a href="http://baike.baidu.com/task/" target="_blank">百科任务</a></div>
+<div><a href="http://baike.baidu.com/mall/" target="_blank">百科商城</a></div>
+</dd>
+</dl>
+<dl class="cooperation">
+<dt><a>权威合作</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/operation/cooperation#joint" target="_blank">合作模式</a></div>
+<div><a href="http://baike.baidu.com/operation/cooperation#issue" target="_blank">常见问题</a></div>
+<div><a href="http://baike.baidu.com/operation/cooperation#connection" target="_blank">联系方式</a></div>
+</dd>
+</dl>
+<dl class="mobile">
+<dt><a>手机百科</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/m#wap" target="_blank">网页版</a></div>
+</dd>
+</dl>
+<div class="usercenter">
+<div><a href="http://baike.baidu.com/usercenter" target="_blank"><em class="cmn-icon cmn-icons cmn-icons_navbar-usercenter"></em>个人中心</a></div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="body-wrapper">
+<div class="before-content">
+</div>
+<div class="content-wrapper">
+<div class="content">
+<div class="personal-content">
+</div>
+<div class="main-content">
+<div class="top-tool">
+<a class="add-sub-icon" href="javascript:;" title="添加义项" nslog-type="50000101" style="display: inline-block;"></a>
+<a href="http://baike.baidu.com/divideload/SCTP" title="拆分词条" target="_blank" class="split-icon" style="display:none;" nslog-type="50000104"></a>
+<div class="top-collect" nslog="area" nslog-type="50000102">
+<span class="collect-text">收藏</span>
+<div class="collect-tip">查看<a href="http://baike.baidu.com/uc/favolemma" target="_blank">我的收藏</a></div>
+</div>
+<a href="javascript:void(0);" class="top-vote" nslog-type="50000103">
+<span class="vote-count">262</span>
+<span class="vote-tip">有用+1</span>
+<span class="voted-tip">已投票</span>
+</a>
+<div class="bdsharebuttonbox top-share bdshare-button-style0-32" data-tag="top-share" data-bd-bind="1484718482666">
+<a class="bds_more top-share-icon" data-cmd="more" nslog-type="9067">
+<span class="bds_count share-count" id="j-topShareCount" data-cmd="count" title="累计分享8次">8</span>
+</a>
+</div>
+</div>
+<div style="width:0;height:0;clear:both"></div><dl class="lemmaWgt-lemmaTitle lemmaWgt-lemmaTitle-">
+<dd class="lemmaWgt-lemmaTitle-title">
+<h1>SCTP</h1>
+<a href="javascript:;" class="edit-lemma cmn-btn-hover-blue cmn-btn-28 j-edit-link" style="display: inline-block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+<a class="lock-lemma" target="_blank" href="http://baike.baidu.com/view/10812319.htm" title="锁定"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_lock-lemma"></em>锁定</a>
+</dd>
+</dl><div class="promotion-declaration">
+</div><div class="lemma-summary" label-module="lemmaSummary">
+<div class="para" label-module="para">SCTP（Stream Control Transmission Protocol，流量控制传输协议）是IETF（Internet Engineering Task Force，因特网工程任务组）在2000年定义的一个传输层（Transport Layer）协议，是提供基于不可靠传输业务的协议之上的可靠的数据报传输协议。SCTP的设计用于通过IP网传输SCN（Signaling Communication Network，信令通信网）窄带信令消息。后期广泛用于EPC网络中的S6a/S1/Sgs/Sv等接口中。</div>
+</div>
+<div class="configModuleBanner">
+</div><div class="basic-info cmn-clearfix">
+<dl class="basicInfo-block basicInfo-left">
+<dt class="basicInfo-item name">中文名</dt>
+<dd class="basicInfo-item value">
+流控制传输协议
+</dd>
+</dl><dl class="basicInfo-block basicInfo-right">
+<dt class="basicInfo-item name">外文名</dt>
+<dd class="basicInfo-item value">
+Stream Control Transmission Protocol&nbsp;
+</dd>
+<dt class="basicInfo-item name">特&nbsp;&nbsp;&nbsp;&nbsp;点</dt>
+<dd class="basicInfo-item value">
+支持多流和多宿
+</dd>
+</dl></div>
+<div class="lemmaWgt-lemmaCatalog">
+<div class="lemma-catalog">
+<h2 class="block-title">目录</h2>
+<div class="catalog-list column-3">
+<ol>
+<li class="level1">
+<span class="index">1</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#1">背景知识</a></span>
+</li>
+<li class="level1">
+<span class="index">2</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#2">简介</a></span>
+</li>
+<li class="level1">
+<span class="index">3</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#3">应用</a></span>
+</li>
+<li class="level1">
+<span class="index">4</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#4">关系</a></span>
+</li>
+</ol><ol><li class="level1">
+<span class="index">5</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#5">SCTP包结构</a></span>
+</li>
+<li class="level1">
+<span class="index">6</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#6">SCTP数据交换</a></span>
+</li>
+<li class="level1">
+<span class="index">7</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#7">SCTP关闭关联</a></span>
+</li>
+<li class="level1">
+<span class="index">8</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#8">特性</a></span>
+</li>
+</ol><ol><li class="level1">
+<span class="index">9</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#9">SCTP四路握手及抵抗SYN Flooding攻击的原理</a></span>
+</li>
+<li class="level1">
+<span class="index">10</span>
+<span class="text"><a href="http://baike.baidu.com/view/323714.htm#10">SCTP的未来发展</a></span>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="anchor-list">
+<a name="1" class="lemma-anchor para-title"></a>
+<a name="sub323714_1" class="lemma-anchor "></a>
+<a name="背景知识" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>背景知识</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="1" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">SCTP协议是众多网络通信协议中的一种，为更好的理解SCTP协议，我们先来介绍协议栈的概念。</div>
+<div class="para" label-module="para">协议栈是指网络中各层协议的总和，它形象的反映了网络中消息的传输过程：即由上层应用协议到底层协议，再由底层传输协议到上层协议。</div>
+<div class="para" label-module="para">例如MSCS（Mobile Switching Center Server，移动交换中心服务器）与MGW（Media GateWay，媒体网关）网元之间是由H.248协议进行控制的，它通过SCTP协议进行消息的传输，这两个网元接口上的协议栈有两种情形，如图1所示。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic layout-right" style="width:220px; float: right;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/79f0f736afc3793125af749ce8c4b74542a911bb?fr=lemma&amp;ct=single" target="_blank" title="图1 MSCS和MGW网元的接口协议栈示例" style="width:220px;height:122px;">
+<img class="" src="./SCTP_百度百科_files/79f0f736afc3793125af749ce8c4b74542a911bb.jpg" alt="图1 MSCS和MGW网元的接口协议栈示例" style="width:220px;height:122px;">
+</a>
+<span class="description">
+图1 MSCS和MGW网元的接口协议栈示例
+</span>
+</div></div>
+<div class="para" label-module="para">具体来说，MSCS网元发送的H.248消息向下经过SCTP的处理，增加了消息头、本端地址、对端地址等信息，经过IP传输到对方，对端收到之后，则像剥洋葱一样一层一层的剥开，最终解出H.248消息交给MGW网元上层应用进行处理。</div><div class="anchor-list">
+<a name="2" class="lemma-anchor para-title"></a>
+<a name="sub323714_2" class="lemma-anchor "></a>
+<a name="简介" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>简介</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="2" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">SCTP是一个面向连接的流传输协议，它可以在两个端点之间提供稳定、有序的数据传递服务。SCTP可以看做是TCP协议的改进，它继承了TCP较为完善的拥塞控制并改进TCP的一些不足之处：</div>
+<div class="para" label-module="para">l SCTP与TCP的最大不同之处在于它是多宿主（Multi-homing）连接，而TCP是单地址连接。</div>
+<div class="para" label-module="para">l 一个TCP连接只能支持一个流，一个SCTP连接可以支持多个流（Multi-streaming）。在SCTP协议中，流（Stream）是指从一个SCTP端点到另一端点之间建立的单向逻辑通路，通常情况下所有用户消息在流中按序传递。</div>
+<div class="para" label-module="para">l SCTP有更好的安全性。</div>
+<div class="para" label-module="para">SCTP实际上是一个面向连接的协议，但SCTP偶联的概念要比TCP的连接具有更广的概念，SCTP对TCP的缺陷进行了一些完善，使得信令传输具有更高的可靠性，SCTP的设计包括适当的拥塞控制、防止泛滥和伪装攻击、更优的实时性能和多归属性支持。</div>
+<div class="para" label-module="para">SCTP最初是被设计用于在IP上传输电话，把SS7（Signaling System No. 7，七号信令系统）信令网络的一些可靠特性引入IP。IETF的这方面的工作称为信令传输SIGTRAN。与此期间，也提出了这个协议的其他一些用途。</div>
+<div class="para" label-module="para">SCTP提供如下服务：</div>
+<div class="para" label-module="para">l 确认用户数据的无错误和无复制传输；</div>
+<div class="para" label-module="para">l 数据分段以符合发现路径最大传输单元的大小；</div>
+<div class="para" label-module="para">l 在多数据流中用户信息的有序发送，带有一个选项，用户信息可以按到达顺序发送；</div>
+<div class="para" label-module="para">l 选择性的将多个用户信息绑定到单个SCTP包；</div>
+<div class="para" label-module="para">l 通过关联的一个终端或两个终端多重宿主支持来为网络故障规定容度。</div><div class="anchor-list">
+<a name="3" class="lemma-anchor para-title"></a>
+<a name="sub323714_3" class="lemma-anchor "></a>
+<a name="应用" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>应用</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="3" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">移动通信网络中，SCTP协议在IP承载连接的情况下广泛得到应用，网络示意图中多条网元连接均有SCTP协议的运用，如图2所示。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic layout-right" style="width:220px; float: right;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/91ef76c6a7efce1b5f52357fac51f3deb48f650e?fr=lemma&amp;ct=single" target="_blank" title="图2 SCTP协议应用示例图" style="width:220px;height:148px;">
+<img class="" src="http://c.hiphotos.baidu.com/baike/s%3D220/sign=7444f2763987e9504617f46e2039531b/91ef76c6a7efce1b5f52357fac51f3deb48f650e.jpg" alt="图2 SCTP协议应用示例图" style="width:220px;height:148px;">
+</a>
+<span class="description">
+图2 SCTP协议应用示例图
+</span>
+</div></div>
+<div class="para" label-module="para">l RNS（Radio Network Subsystem，无线网络子系统）与MSCS之间：如果采用M3UA（MTP3-User Adaptation layer protocol，MTP第三层的用户适配层协议），协议栈为IP/SCTP/M3UA/SCCP/RANAP；</div>
+<div class="para" label-module="para">l MGW与MSCS之间，如果采用M3UA，协议栈为IP/SCTP/M3UA/H.248，同时H.248也可以直接承载在SCTP之上；</div>
+<div class="para" label-module="para">l HLR（Home Location Register，归属位置寄存器）与MSCS/VLR之间，如果采用M3UA，协议栈为IP/SCTP/M3UA/SCCP/TCAP/MAP；</div>
+<div class="para" label-module="para">l PSTN（Public Switched Telephone Network，公共交换电话网）与MSCS之间，SCTP协议在完成传统的七号信令和IP网络之间信息传输起到了重要作用。<sup>[1]</sup><a class="sup-anchor" name="ref_[1]_323714">&nbsp;</a>
+</div><div class="anchor-list">
+<a name="4" class="lemma-anchor para-title"></a>
+<a name="sub323714_4" class="lemma-anchor "></a>
+<a name="关系" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>关系</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="4" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">作为一个传输层协议，SCTP兼有TCP及UDP两者的特点。SCTP可以称为是TCP的改进协议，但它们之间仍然存在着较大的差别。</div>
+<div class="para" label-module="para">l 首先SCTP和TCP之间的最大区别是SCTP的连接可以是多宿主连接的，TCP则一般是单地址连接的。在进行SCTP建立连接时，双方均可声明若干IP地址（IPv4，IPv6或主机名）通知对方本端所有的地址。若当前连接失效，则可切换到另一个地址，而不需要重新建立连接。</div>
+<div class="para" label-module="para">l 其次SCTP是基于消息流，而TCP则是基于字节流。所谓基于消息流，是指发送数据和应答数据的最小单位是消息包（chunk）。一个SCTP连接（Association）同时可以支持多个流（stream），每个流包含一系列用户所需的消息数据（chunk）。而TCP则只能支持一个流。</div>
+<div class="para" label-module="para">l 在网络安全方面，SCTP增加了防止恶意攻击的措施。不同于TCP连接采用的三次握手机制，SCTP连接采用四次握手机制，有效的防止了类似于SYN Flooding的防范拒绝服务攻击。SCTP主要的贡献是对多重联外线路的支持，一个端点可以由多于一个IP地址组成，使得传输可在主机间或网卡间做到透明的网络容错备援。</div><div class="anchor-list">
+<a name="5" class="lemma-anchor para-title"></a>
+<a name="sub323714_5" class="lemma-anchor "></a>
+<a name="SCTP包结构" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>SCTP包结构</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="5" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic layout-right" style="width:220px; float: right;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/0b7b02087bf40ad11b0c50c75e2c11dfa9ecce2e?fr=lemma&amp;ct=single" target="_blank" title="" style="width:220px;height:112px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://b.hiphotos.baidu.com/baike/s%3D220/sign=322e59f9a264034f0bcdc5049fc27980/0b7b02087bf40ad11b0c50c75e2c11dfa9ecce2e.jpg" alt="" style="width:220px;height:112px;">
+</a>
+</div></div>
+<div class="para" label-module="para">一个数据SCTP包首部可跟一个或多个可变长的块。块采用TLV（Type/Length/Value，类型/长度/值）的格式。</div>
+<div class="para" label-module="para">源端口、目的端口、校验码的意义同TCP中的意义相似。确认标签保存着在SCTP握手中第一次交换的初始标签的值。在关联中，任何SCTP数据包若不包含这样一个标签，当到达时会被接收端丢弃。</div>
+<div class="para" label-module="para">在每个块中，TLV包括块类型、传输处理标记、块长度。不同的块类型可用来传输控制信息或数据。</div>
+<div class="para" label-module="para">TSN（Transmission Sequence Number，传输顺序号）和SSN（Stream Sequence Number，流顺序号）是两种不同的序列号，TSN保证整个关联的可靠性，而SSN保证整个流的有序性，这样，在传输中，将数据的可靠性与有序性独立分开。</div><div class="anchor-list">
+<a name="6" class="lemma-anchor para-title"></a>
+<a name="sub323714_6" class="lemma-anchor "></a>
+<a name="SCTP数据交换" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>SCTP数据交换</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="6" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">在两个SCTP主机间的正常数据交换。SCTP主机发送SACK（Selective Acknowledgement，选择性确认）块，用来确认每一个收到的SCTP包。因为SACK能完整地描述接收端的状态，因此，依据SACK，发送端能做出重传判决。SCTP支持类似于TCP中的快速重传和time-out重传算法。</div>
+<div class="para" label-module="para">对于数据包丢失发现，SCTP和TCP采用截然不同的机制：当TCP发现接收序号有缺口时，会等到该缺口被填上后，才发送序列号高于丢失数据包的数据。然而，SCTP即使发现接收序号有缺口或顺序错乱，仍会发送后面的数据。</div><div class="anchor-list">
+<a name="7" class="lemma-anchor para-title"></a>
+<a name="sub323714_7" class="lemma-anchor "></a>
+<a name="SCTP关闭关联" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>SCTP关闭关联</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="7" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">作为面向连接的传输协议，SCTP也运用三路握手来关闭一个关联，但与TCP有一点不同：一个TCP终端在“关联关闭”的过程中能够保持连接开启，并从对端接收新的数据，而SCTP不支持TCP的这种“半关闭”状态。</div>
+<div class="para" label-module="para">1．主机A发出“关闭”（SHUTDOWN）块来终止与主机B的关联，主机A进入“SHUTDOWN-PENDING”状态，对应的动作是：不再接受上层应用的数据，只发送队列中剩余的数据，进入“SHUTDOWN-SENT”状态。</div>
+<div class="para" label-module="para">2．主机B一旦接收到“关闭”块，就进入“SHUTDOWN-RECEIVED”状态，同主机A一样，不再接受上层应用的数据，只发送队列中剩余的数据。</div>
+<div class="para" label-module="para">3．主机A再次发送“关闭”块，通知主机B所发送的剩余数据已到达，并且重申了关联正在关闭。</div>
+<div class="para" label-module="para">4．当第二次收到“关闭”块时，主机B发送“确认关闭”块。</div>
+<div class="para" label-module="para">5．主机A随后发送“关闭结束”块，完成本次关联的关闭。</div><div class="anchor-list">
+<a name="8" class="lemma-anchor para-title"></a>
+<a name="sub323714_8" class="lemma-anchor "></a>
+<a name="特性" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>特性</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="8" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para"><b>多宿主</b></div>
+<div class="para" label-module="para">多宿主为应用程序提供了比TCP更高的可用性。多宿主主机就是一台具有多个网络接口的主机，因此可以通过多个IP地址来访问这台主机。在TCP中，连接（connection）是指两个端点之间的一个通道（在这种情况下，就是两台主机的网络接口之间的一个套接字）。SCTP引入了联合（association）的概念，它也是存在于两台主机之间，但可以使用每台主机上的多个接口进行协作。图2阐述了TCP连接与SCTP联合之间的区别。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic " style="width:220px; display: inline;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/2cf5e0fe9925bc31e6b7ea785cdf8db1ca13706c?fr=lemma&amp;ct=single" target="_blank" title="" style="width:220px;height:150px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://c.hiphotos.baidu.com/baike/s%3D220/sign=dfefd207932397ddd2799f066980b216/2cf5e0fe9925bc31e6b7ea785cdf8db1ca13706c.jpg" alt="" style="width:220px;height:150px;">
+</a>
+</div></div>
+<div class="para" label-module="para">图2TCP连接与SCTP联合</div>
+<div class="para" label-module="para">该图的上面部分是TCP连接，每个主机都只包含一个网络接口；连接是在每个客户机和服务器之间的单个接口之间建立的。在建立连接时，就被绑定到了每个接口上。在该图的下面部分中，您可以看到这样一个架构：每台主机上都包含两个网络接口。通过独立网络提供了两条路径，一条是从接口C0到S0，另外一条是从接口C1到S1。在SCTP中，这两条路径可以合并到一个联合中。</div>
+<div class="para" label-module="para">SCTP负责使用内嵌的heartbeat机制来监视联合的路径；在检测到一条路径失效时，协议就会通过另外一条路径来发送通信数据。应用程序甚至都不必知道发生了故障恢复。故障转移也可以用于维护网络应用程序的连通性。例如，让我们来考虑一台包含一个无线802.11接口和一个以太网接口的笔记本的例子。当笔记本放到固定的位置上时，我们倾向于使用高速的以太网接口（在SCTP中称为主地址（primaryaddress））；但是在这个连接丢失时（例如离开了固定位置），连接可迁移到无线接口上。在返回固定位置时，以太网连接会被重新检测到，通信就可以在这个接口上恢复。这是一种能提供更高的可用性和可靠性的强大机制。</div>
+<div class="para" label-module="para"><b>多流</b></div>
+<div class="para" label-module="para">从某种意义上来讲，SCTP连接与TCP连接类似，不同之处只是SCTP能够在一个联合中支持多流机制。一个联合中的所有流都是独立的，但均与该联合相关（参见图3）。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic " style="width:250px; display: inline;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/0b46f21fbe096b639314b4b00e338744eaf8acc5?fr=lemma&amp;ct=single" target="_blank" title="" style="width:250px;height:80px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://f.hiphotos.baidu.com/baike/s%3D250/sign=c4bb5806257f9e2f74351a0d2f31e962/0b46f21fbe096b639314b4b00e338744eaf8acc5.jpg" alt="" style="width:250px;height:80px;">
+</a>
+</div></div>
+<div class="para" label-module="para">图3.SCTP联合与流之间的关系</div>
+<div class="para" label-module="para">每个流都给定了一个流编号，它被编码到SCTP报文中，通过联合在网络上传送。多流非常重要，因为阻塞的流（例如等待重传的流会导致报文的丢失）不会影响同一联合中的其他流。这个问题统称为head-of-lineblocking（对头阻塞）。TCP很容易出现这类阻塞问题。</div>
+<div class="para" label-module="para">多流如何在传输数据时提供更好的响应性呢？例如，HTTP协议会在相同套接字上共享控制和数据。Web客户机从服务器上请求一个文件，服务器通过相同的连接将这个文件发回给客户机。多流的HTTP服务器可以提供更好的交互能力，因为在联合中各单独的流上可以处理多个请求。这种功能可以并行化响应，尽管速度不一定会更快，但可以同时加载HTML和图像映像，从而表现出更好的响应性。</div>
+<div class="para" label-module="para">多流处理是SCTP的一个重要特性，尤其是在协议的设计中考虑一些控制和数据的问题时更是如此。在TCP中，控制和数据通常都是通过相同的连接进行共享的，这可能会产生问题，因为控制报文可能会在数据报之后延时。如果控制和数据被划分成单独的流，控制数据就可以以一种更及时的方式进行处理，从而可以更好地利用可用资源。</div>
+<div class="para" label-module="para"><b>初始化保护</b></div>
+<div class="para" label-module="para">TCP和SCTP中对新连接的初始化是通过报文握手来完成的。在TCP中，这种机制称为三次握手（three-wayhandshake）。客户机向服务器首先发送一个SYN报文（Synchronize的简写），服务器使用一个SYN-ACK报文进行响应（Synchronize-Acknowledge）。最后，客户机使用一个ACK报文确认已接收到报文（请参见图4）。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic " style="width:250px; display: inline;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/83025aafa40f4bfbea4874b4014f78f0f63618b1?fr=lemma&amp;ct=single" target="_blank" title="" style="width:250px;height:119px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://b.hiphotos.baidu.com/baike/s%3D250/sign=2a6240edfadcd100c99cff24428a47be/83025aafa40f4bfbea4874b4014f78f0f63618b1.jpg" alt="" style="width:250px;height:119px;">
+</a>
+</div></div>
+<div class="para" label-module="para">图4.TCP和STCP握手使用的报文交换</div>
+<div class="para" label-module="para">当恶意客户机使用虚假的源地址来伪造一个IP报文时，TCP就会出现问题了，这会大量TCPSYN报文攻击服务器。服务器在接收SYN报文之前，要为连接分配资源，但是在大量产生SYN报文的情况下，最终会耗尽自己的资源，从而无法处理新的请求。这种情况就称为服务拒绝（DenialofService）（DoS）攻击。</div>
+<div class="para" label-module="para">SCTP可以通过一种4次握手的机制并引入cookie的概念来有效地防止这种攻击的产生。在SCTP中，客户机使用一个INIT报文发起一个连接。服务器使用一个INIT-ACK报文进行响应，其中就包括了cookie（标识这个连接的惟一上下文）。客户机然后就使用一个COOKIE-ECHO报文进行响应，其中包含了服务器所发送的cookie。服务器要为这个连接分配资源，并通过向客户机发送一个COOKIE-ACK报文对其进行响应。</div>
+<div class="para" label-module="para">要解决使用这种4次握手机制解决延时数据移动的问题，SCTP允许把数据包含到COOKIE-ECHO和COOKIE-ACK报文中。</div>
+<div class="para" label-module="para"><b>消息分帧</b></div>
+<div class="para" label-module="para">使用消息分帧机制，就可以保护消息只在一个边界内通过socket进行通信；这意味着如果客户机向服务器先发送100个字节，然后又发送50个字节。那么服务器就会在两次读取操作中分别读取到100个字节和50个字节。UDP也是这样进行操作，这对于面向消息的协议非常有益。</div>
+<div class="para" label-module="para">与此不同，TCP是按照字节流的方式进行操作。如果没有分帧机制，一端接收到的数据可能比另外一端发送的数据多或少（这会将一次写操作划分成多次操作，或者将多次写操作合并到一个读操作中）。这种行为需要在TCP之上进行操作的面向消息的协议可以在应用层中提供数据缓冲和消息分帧机制（这可能是一项复杂的任务）。</div>
+<div class="para" label-module="para">SCTP在数据传输中提供了消息分帧功能。当一端对一个套接字执行写操作时，可确保对等端读出的数据大小与此相同（请参见图5）。对于面向流的数据来说，例如音频和视频数据，可以没有分帧机制。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic " style="width:250px; display: inline;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/ca1349540923dd54970e4d88d309b3de9d8248d5?fr=lemma&amp;ct=single" target="_blank" title="" style="width:250px;height:112px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://b.hiphotos.baidu.com/baike/s%3D250/sign=11e2d32433adcbef053479039cae2e0e/ca1349540923dd54970e4d88d309b3de9d8248d5.jpg" alt="" style="width:250px;height:112px;">
+</a>
+</div></div>
+<div class="para" label-module="para">图5.UDP/SCTP中的消息分帧与面向字节流协议的比较</div>
+<div class="para" label-module="para"><b>可配置的无序发送</b></div>
+<div class="para" label-module="para">SCTP中的消息的传输十分可靠，但未必是按照想要的次序来传输的。TCP可以确保数据是按照次序发送的（考虑到TCP是一种流协议，这是一件好事）。UDP无法确保有序地发送数据。但是如果需要，您也可以在SCTP中配置流来接受无序的消息。这种特性在面向消息的协议中可能非常有用，因为其中的消息都是独立的，次序并不重要。另外，您可以在一个联合中按照逐个流配置无序发送。</div>
+<div class="para" label-module="para"><b>平滑关闭</b></div>
+<div class="para" label-module="para">TCP和SCTP都是基于连接的协议，而UDP则是一种无连接的协议。TCP和SCTP都需要在对等的两端建立和拆除连接。SCTP与TCP中关闭连接的不同之处在于TCP中连接的删除是半关闭（half-close）的。图6给出了TCP和SCTP的关闭序列。</div>
+<div class="para" label-module="para"><div class="lemma-picture text-pic " style="width:250px; display: inline;">
+<a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/SCTP/5867122/0/18d8bc3eb13533fa4c5c79ceaad3fd1f40345b6c?fr=lemma&amp;ct=single" target="_blank" title="" style="width:250px;height:121px;">
+<img class="lazy-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF9fX1AAAA0VQI3QAAAAxJREFUeNpiYAAIMAAAAgABT21Z4QAAAABJRU5ErkJggg==" data-src="http://g.hiphotos.baidu.com/baike/s%3D250/sign=efe867de79ec54e745ec1d1b893a9bfd/18d8bc3eb13533fa4c5c79ceaad3fd1f40345b6c.jpg" alt="" style="width:250px;height:121px;">
+</a>
+</div></div>
+<div class="para" label-module="para">图6TCP和SCTP的连接结束序列</div>
+<div class="para" label-module="para">TCP中，一端可以关闭自己这端的socket（这样会导致发送一个FIN报文），但是仍然可以继续接收数据。FIN说明这个端点不会再发送数据，但是在这一端关闭自己这端的套接字之前，它一直可以继续传输数据。应用程序很少使用这种半关闭状态，因此SCTP的设计者就选择放弃这种状态，并将其替换成了一个显式的终结序列。当一端关闭自己的套接字时（导致产生一个SHUTDOWN原语），对等的两端全部需要关闭，将来任何一端都不允许再进行数据的移动了。</div><div class="anchor-list">
+<a name="9" class="lemma-anchor para-title"></a>
+<a name="sub323714_9" class="lemma-anchor "></a>
+<a name="SCTP四路握手及抵抗SYN Flooding攻击的原理" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>SCTP四路握手及抵抗SYN Flooding攻击的原理</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="9" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">一个SCTP关联定义为：[主机A的一组IP地址]+[主机A的端口]+ [主机B的一组IP地址]+[主机B的端口]。因此，每一端对应组中的任何一个IP地址都可作为相应的源/目的地址来标示本次关联，通过四路握手，两端SCTP主机交换通信状态。</div>
+<div class="para" label-module="para">SYN Flooding利用了TCP/IP的固有漏洞，面向连接的TCP三次握手是SYN Flooding存在的基础。</div>
+<div class="para" label-module="para">SYN Flooding攻击的原理是：恶意的攻击者大量向服务器发送SYN报文，服务器在发出SYN+ACK应答报文后无法收到客户端的ACK报文（第三次握手无法完成），服务器端将为维护一个非常大的半连接列表而消耗非常多的CPU时间和内存资源，还要不断对这个列表中的IP进行SYN+ACK的重试。服务器端将忙于处理攻击者伪造的TCP连接请求而无暇理睬客户的正常请求，此时从正常客户的角度看来，服务器失去响应。</div>
+<div class="para" label-module="para">而在一次SCTP四路握手中，INIT（Initiation，开始）消息的接收端不必保存任何状态信息或者分配任何资源，这样就可防范SYN Flooding等DoS攻击。它在发送INIT-ACK消息时，采用了一种机制“状态Cookie”，该Cookie具有发送端要建立自己状态所需的全部信息。</div>
+<div class="para" label-module="para">SCTP产生一个状态Cookie的过程如下：</div>
+<div class="para" label-module="para">1．使用收到的INIT和发出的INIT-ACK块中的信息创建一个关联的TCB（Transmission Control Block，传输控制块）。</div>
+<div class="para" label-module="para">2．在TCB中，将当前日期设为创建日期，将协议参数“有效Cookie时间”设为生存期间。</div>
+<div class="para" label-module="para">3．根据TCB，收集重建TCB所需的最小信息子集，将该子集和密钥产生一个MAC（Message Authentication Code，消息验证码）。</div>
+<div class="para" label-module="para">4．结合上述最小信息子集和MAC产生状态Cookie。</div>
+<div class="para" label-module="para">5．在发送完INIT ACK（包含状态Cookie参数）后，发送方必须删除TCB以及任何与新关联有关的本地资源。</div>
+<div class="para" label-module="para">INIT和INIT-ACK都必须包含建立初始状态所需的参数：一组IP地址，保证可靠传输的初始TSN，每个被接收的SCTP包中必须含有的初始标签，每一端请求发出的流数目和每一端能支持接收的流数目。</div>
+<div class="para" label-module="para">交换完这些消息之后，INIT的发送端以COOKIE-ECHO消息的方式发送回状态Cookie。接收端根据所接收到的COOKIE-ECHO中的状态Cookie，完整地重建自己的状态，并回送COOKIE-ACK来确认关联已建立。COOKIE-ECHO和COOKIE-ACK都可将用户数据消息绑定到各自的包中。</div>
+<div class="para" label-module="para">由此可见，采用以上这种方式，即使接收再多的INIT消息，接收端也没有任何资源的消耗：它既不分配任何系统资源，也不保存此次新关联的状态，它只是把相应重建状态所用的状态Cookie作为参数，包含在每一个回送的INIT-ACK消息中，最后该状态Cookie会被COOKIE-ECHO消息发送回来。</div><div class="anchor-list">
+<a name="10" class="lemma-anchor para-title"></a>
+<a name="sub323714_10" class="lemma-anchor "></a>
+<a name="SCTP的未来发展" class="lemma-anchor "></a>
+</div><div class="para-title level-2" label-module="para-title">
+<h2 class="title-text"><span class="title-prefix">SCTP</span>SCTP的未来发展</h2>
+<a class="edit-icon j-edit-link" data-edit-dl="10" href="javascript:;" style="display: block;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">SCTP是一个相当新的协议，它在2000年10月份才成为一个RFC规范。从那以后，它开始进入所有的主流操作系统，包括GNU/Linux、BSD和Solaris。在Microsoft Windows操作系统上也有第三方的商业包可以使用。</div>
+<div class="para" label-module="para">在获得高可用性的同时，应用程序也已经开始使用SCTP作为自己的主要传输机制。诸如FTP（File Transfer Protocol，文件传输协议）和HTTP（Hypertext Transfer Protocol，超文本传输协议）之类的传统应用程序已经在SCTP的特性基础上进行了构建。其他一些协议也正在开始使用SCTP，例如SIP（Session Initiation Protocol，会话初始化协议）和SS7（Signaling System No.7，七号信令系统）。在商业领域中，您可以在Cisco的IOS（Inter-Operation Specification，互操作规范）中找到SCTP的影子。</div>
+<div class="para" label-module="para">随着SCTP 被吸纳到2.6版本的Linux内核中，我们可以构建并部署高可用性、高可靠性的网络应用程序。作为一种基于IP的协议，SCTP不但可以无缝地替换TCP和UDP，而且扩展了很多新服务，例如多宿主、多流，并且对安全性也有了很大的提高。<sup>[2]</sup><a class="sup-anchor" name="ref_[2]_323714">&nbsp;</a>
+</div>
+<div class="anchor-list">
+<a name="a" class="lemma-anchor a"></a>
+</div><div class="album-list">
+<div class="header">
+<span class="title">词条图册</span>
+<a class="more-link" href="http://baike.baidu.com/pic/SCTP/5867122?fr=lemma" target="_blank" nslog-type="10000204">更多图册<em></em></a>
+</div>
+<div class="scroller">
+<div class="list">
+</div>
+</div>
+<div class="footer">
+</div>
+</div>
+<dl class="lemma-reference collapse nslog-area log-set-param" data-nslog-type="2" log-set-param="ext_reference">
+<dt class="reference-title">参考资料<em class="toggle"></em></dt>
+<dd class="reference-list-wrap">
+<ul class="reference-list">
+<li class="reference-item " id="reference-[1]-323714-wrap">
+<span class="index">1.</span>
+<a class="gotop anchor" name="refIndex_1_323714" id="refIndex_1_323714" title="向上跳转" href="http://baike.baidu.com/view/323714.htm#ref_[1]_323714">&nbsp;&nbsp;</a>
+<span class="text">《信息通讯技术百科全书》</span>
+</li><li class="reference-item " id="reference-[2]-323714-wrap">
+<span class="index">2.</span>
+<a class="gotop anchor" name="refIndex_2_323714" id="refIndex_2_323714" title="向上跳转" href="http://baike.baidu.com/view/323714.htm#ref_[2]_323714">&nbsp;&nbsp;</a>
+<a rel="nofollow" href="http://baike.baidu.com/redirect/52bdF79WS8EAzHD-WRILig_cKIr7qXYywRoi_Q3OuzHg_dbfMABETnG5tTQOEc3R9i-2j5eBB-8sRSX_PPr31mHLF9GPL3r5NOfSJ0kCYG6j4w" target="_blank" class="text">SCTP介绍<span class="linkout">&nbsp;</span></a>
+<span class="site">．中国软件开发联盟</span><span>．2013-08-18</span><span>[引用日期2014-06-2]</span></li></ul>
+</dd>
+</dl>
+<div id="open-tag">
+<div class="open-tag-title">词条标签：</div>
+<dd id="open-tag-item">
+<span class="taglist">
+科技产品
+</span>
+，<span class="taglist">
+科学
+</span>
+，<span class="taglist">
+互联网
+</span>
+</dd>
+<div class="open-tag-collapse" id="open-tag-collapse" style="display: none;"></div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="side-content">
+<div class="summary-pic">
+<a href="http://baike.baidu.com/pic/SCTP/5867122/0/622762d0f703918f5ce238e4533d269759eec4e9?fr=lemma&amp;ct=single" target="_blank" nslog-type="10002401">
+<img src="./SCTP_百度百科_files/622762d0f703918f5ce238e4533d269759eec4e9.jpg">
+<button class="picAlbumBtn"><em></em><span>图集</span></button>
+<div>SCTP图册</div>
+</a>
+</div>
+<div id="promotion_xunke"></div>
+<div class="lemmaWgt-promotion-vbaike" style="display: block;">
+<div class="promotion_title">V百科<a href="http://baike.baidu.com/vbaike#gallary" target="_blank">往期回顾</a></div>
+<div class="promotion_viewport">
+<dl style="position: absolute; width: 536px; height: 152px; left: -259.791px;"><dd class="wgt_carousel_aniUnit" style="float: left;">
+<a href="http://click.hm.baidu.com/clk?28d12e4b532f7d5fc1568fe6a5879b3f" target="_blank" title="" nslog-type="10002202" nslog-params="{&quot;adId&quot;:&quot;1421&quot;, &quot;adTitle&quot;:&quot;蔡英文专程路过美国&quot;, &quot;adPos&quot;: 1}">
+<img src="./SCTP_百度百科_files/9213b07eca8065386dfd6f499edda144ad348251.jpg">
+</a>
+</dd><dd class="wgt_carousel_aniUnit" style="float: left;">
+<a href="http://click.hm.baidu.com/clk?4a4f687007aa807b96a68341650148a7" target="_blank" title="" nslog-type="10002202" nslog-params="{&quot;adId&quot;:&quot;1441&quot;, &quot;adTitle&quot;:&quot;吉卜力工作室变迁史&quot;, &quot;adPos&quot;: 1}">
+<img src="http://d.hiphotos.baidu.com/baike/whfpf%3D268%2C152%2C50/sign=7930f8dbad0f4bfb8c85cd1465724ac6/574e9258d109b3de67b0732cc5bf6c81800a4c63.jpg">
+</a>
+</dd></dl>
+<div class="promotion_viewport_pager wgt_horPager">
+<span class="pTagBox">
+<a href="javascript:;" class="pTag prev" p-index="4"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_arrow-left"></em></a>
+<a href="javascript:;" class="pTag next" p-index="5"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_arrow-right"></em></a>
+</span>
+</div>
+</div>
+</div><div class="lemmaWgt-promotion-rightPreciseAd" data-lemmaid="5867122" data-lemmatitle="SCTP"></div><div class="lemmaWgt-sideRecommend" style="display: block;">
+<a name="zhixinWrap" class="qnAnchor"></a>
+<div class="zhixin-box" id="zhixinWrap" data-source="aladdin" data-newlemmaid="5867122"><div class="zhixin-group js-group" data-datatype="async">
+<h6 class="js-cardTitle">
+<span>相关术语</span>
+</h6>
+<div class="zhixin-fixBtn js-fixBtn">
+<div class="openFix" title="若推荐内容有误，请点击纠错进行反馈">纠错</div>
+<div class="closeFix">关闭纠错</div>
+</div>
+<div class="zhixin-list">
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/6303236.htm&quot;,&quot;targetId&quot;:&quot;1441391&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/6303236.htm" target="_blank">
+<img src="./SCTP_百度百科_files/d50735fae6cd7b89056646160f2442a7d9330e18.jpg" alt="七层模型">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/6303236.htm" target="_blank" title="七层模型">七层模型</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="1441391">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/495922.htm&quot;,&quot;targetId&quot;:&quot;9008855&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/495922.htm" target="_blank">
+<img src="./SCTP_百度百科_files/4e4a20a4462309f75783ed66720e0cf3d6cad6d2.jpg" alt="流媒体技术">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/495922.htm" target="_blank" title="流媒体技术">流媒体技术</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="9008855">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/1616826.htm&quot;,&quot;targetId&quot;:&quot;2829458&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/1616826.htm" target="_blank">
+<img src="./SCTP_百度百科_files/5ab5c9ea15ce36d35a69718839f33a87e950b11d.jpg" alt="cscf">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/1616826.htm" target="_blank" title="cscf">cscf</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="2829458">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/subview/50652/5074234.htm&quot;,&quot;targetId&quot;:&quot;1881&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/subview/50652/5074234.htm" target="_blank">
+<img src="./SCTP_百度百科_files/8694a4c27d1ed21b56416095ad6eddc451da3f31.jpg" alt="mimo">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/subview/50652/5074234.htm" target="_blank" title="mimo">mimo</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="1881">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/3114384.htm&quot;,&quot;targetId&quot;:&quot;5821731&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/3114384.htm" target="_blank">
+<img src="./SCTP_百度百科_files/dbb44aed2e738bd41baae0cba38b87d6267ff945.jpg" alt="sinr">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/3114384.htm" target="_blank" title="sinr">sinr</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="5821731">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/1385104.htm&quot;,&quot;targetId&quot;:&quot;10738144&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/1385104.htm" target="_blank">
+<img src="./SCTP_百度百科_files/9a504fc2d56285359e7eed0692ef76c6a7ef637e.jpg" alt="epoll">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/1385104.htm" target="_blank" title="epoll">epoll</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="10738144">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/5470.htm&quot;,&quot;targetId&quot;:&quot;176200&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/5470.htm" target="_blank">
+<img src="./SCTP_百度百科_files/f31fbe096b63f62496e644008544ebf81a4ca37e.jpg" alt="无线局域网">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/5470.htm" target="_blank" title="无线局域网">无线局域网</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="176200">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/61730.htm&quot;,&quot;targetId&quot;:&quot;1119559&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/61730.htm" target="_blank">
+<img src="./SCTP_百度百科_files/d058ccbf6c81800ae201127db33533fa838b47d9.jpg" alt="城域网">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/61730.htm" target="_blank" title="城域网">城域网</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="1119559">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/2224124.htm&quot;,&quot;targetId&quot;:&quot;1908883&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/2224124.htm" target="_blank">
+<img src="./SCTP_百度百科_files/8326cffc1e178a826471698af403738da977e84f.jpg" alt="teredo">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/2224124.htm" target="_blank" title="teredo">teredo</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="1908883">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+</div>
+</div>
+<div class="zhixin-group js-group" data-datatype="async">
+<h6 class="js-cardTitle">
+<span>计算机类书籍</span>
+</h6>
+<div class="zhixin-fixBtn js-fixBtn">
+<div class="openFix" title="若推荐内容有误，请点击纠错进行反馈">纠错</div>
+<div class="closeFix">关闭纠错</div>
+</div>
+<div class="zhixin-list">
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/2697178.htm&quot;,&quot;targetId&quot;:&quot;9095103&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/2697178.htm" target="_blank">
+<img src="./SCTP_百度百科_files/34fae6cd7b899e51209fbc6b41a7d933c8950dbf.jpg" alt="unix网络编程">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/2697178.htm" target="_blank" title="unix网络编程">unix网络编程</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="9095103">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/11238072.htm&quot;,&quot;targetId&quot;:&quot;12249184&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/11238072.htm" target="_blank">
+<img src="./SCTP_百度百科_files/d000baa1cd11728bf023b434cafcc3cec3fd2c9d.jpg" alt="linux多线程服务端编程">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/11238072.htm" target="_blank" title="linux多线程服务端编程">linux多线程服务端编程</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="12249184">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/2812484.htm&quot;,&quot;targetId&quot;:&quot;208284&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/2812484.htm" target="_blank">
+<img src="./SCTP_百度百科_files/72f082025aafa40f477e1ec6ab64034f78f01974.jpg" alt="深入理解linux网络技术内幕">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/2812484.htm" target="_blank" title="深入理解linux网络技术内幕">深入理解linux网络技术内幕</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="208284">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+<div class="zhixin-item" nslog="area" nslog-type="10000101" nslog-params="{&quot;source&quot;:&quot;aladdin&quot;,&quot;url&quot;:&quot;http://baike.baidu.com/view/2291851.htm&quot;,&quot;targetId&quot;:&quot;2946320&quot;}">
+<div class="portraitbox">
+<a href="http://baike.baidu.com/view/2291851.htm" target="_blank">
+<img src="./SCTP_百度百科_files/b8389b504fc2d56262cc7f51e21190ef77c66c42.jpg" alt="tcp/ip详解">
+</a>
+</div>
+<p class="item-title js-name"><a href="http://baike.baidu.com/view/2291851.htm" target="_blank" title="tcp/ip详解">tcp/ip详解</a></p>
+<div class="zhixinErrorBox js-fixBox hidden" data-lemma-id="2946320">
+<a class="submit-trigger" href="javascript:;">有错误</a>
+<span class="js-text hidden">已反馈</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<form id="zhixinErrorForm" class="hidden" action="http://f3.baidu.com/index.php/feedback/zx/baikeJC" target="zhixinSubErr" method="post">
+<input class="js-url" name="fb_html_url" type="hidden">
+<input class="js-query" name="fb_query" type="hidden">
+<input class="js-title" name="fb_card_title" type="hidden">
+<input class="js-content" name="fb_content" type="hidden">
+<input class="js-souceId" name="fb_source_id" type="hidden">
+</form>
+<iframe id="zhixinSubErr" name="zhixinSubErr" style="display:none" frameborder="0" src="./SCTP_百度百科_files/saved_resource.html"></iframe>
+</div><div class="lemmaWgt-promotion-slide" style="display: block;">
+<div class="promotion_viewport">
+<dl><dd class="wgt_carousel_aniUnit">
+<a href="http://wenjuan.baidu.com/?code=939o13" target="_blank" title="" nslog-type="10002202" nslog-params="{&quot;adId&quot;:&quot;1431&quot;, &quot;adTitle&quot;:&quot;UER调研&quot;, &quot;adPos&quot;: 2}">
+<img src="./SCTP_百度百科_files/8b82b9014a90f6038ff5a9043012b31bb051ed28.jpg">
+</a>
+</dd>
+</dl>
+
+</div>
+</div><div class="lemmaWgt-promotion-rightBigAd">
+</div><dl class="side-box lemma-statistics">
+<dt class="title">词条统计</dt>
+<dd class="description">
+<ul>
+<li>浏览次数：<span id="j-lemmaStatistics-pv">132303</span>次</li>
+<li>编辑次数：39次<a href="http://baike.baidu.com/historylist/SCTP/5867122" class="nslog:1021" target="_blank">历史版本</a></li>
+<li>最近更新：<span class="j-modified-time" style="">2016-11-23</span></li>
+<li>创建者：<a class="show-userCard" data-uid="7197696" title="查看此用户资料" target="_blank" href="http://www.baidu.com/p/Elvie" nslog-type="1022">Elvie</a></li>
+</ul>
+</dd>
+</dl>
+<div class="side-catalog" style="visibility: hidden; bottom: 10px;">
+<div class="side-bar">
+<em class="circle start"></em>
+<em class="circle end"></em>
+</div>
+<div class="catalog-scroller">
+<dl class="catalog-list">
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#1" class="title-link">
+<span class="text">
+<span class="title-index">1</span>
+<span class="title-link" nslog-type="10002802">背景知识</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#2" class="title-link">
+<span class="text">
+<span class="title-index">2</span>
+<span class="title-link" nslog-type="10002802">简介</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#3" class="title-link">
+<span class="text">
+<span class="title-index">3</span>
+<span class="title-link" nslog-type="10002802">应用</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#4" class="title-link">
+<span class="text">
+<span class="title-index">4</span>
+<span class="title-link" nslog-type="10002802">关系</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#5" class="title-link">
+<span class="text">
+<span class="title-index">5</span>
+<span class="title-link" nslog-type="10002802">SCTP包结构</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#6" class="title-link">
+<span class="text">
+<span class="title-index">6</span>
+<span class="title-link" nslog-type="10002802">SCTP数据交换</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#7" class="title-link">
+<span class="text">
+<span class="title-index">7</span>
+<span class="title-link" nslog-type="10002802">SCTP关闭关联</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#8" class="title-link">
+<span class="text">
+<span class="title-index">8</span>
+<span class="title-link" nslog-type="10002802">特性</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#9" class="title-link">
+<span class="text">
+<span class="title-index">9</span>
+<span class="title-link" nslog-type="10002802">SCTP四路握手及抵抗SYN Flooding攻击的原理</span>
+</span>
+</a>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<a href="http://baike.baidu.com/view/323714.htm#10" class="title-link">
+<span class="text">
+<span class="title-index">10</span>
+<span class="title-link" nslog-type="10002802">SCTP的未来发展</span>
+</span>
+</a>
+</dt>
+<a class="arrow" href="javascript:void(0);" style="top: 42.5058px;"></a>
+</dl>
+</div>
+<div class="right-wrap" style="display: none;">
+<a class="go-up disable" href="javascript:void(0);"></a>
+<a class="go-down disable" href="javascript:void(0);"></a>
+</div>
+<div class="bottom-wrap">
+<a class="toggle-button" href="javascript:void(0);"></a>
+<a class="gotop-button" href="javascript:void(0);"></a>
+</div>
+</div>
+<div class="unionAd_fromPs side-box" id="unionAd_fromPs">
+<script type="BAIDU_HH" runed="true">
+    {
+        type : 'pageembed',
+        di   : 'u2140330',
+        rsi0 : 270,
+        rsi1 : 175
+    }
+    </script><iframe src="./SCTP_百度百科_files/home.html" style="width:270px;height:175px;background-color:transparent" align="center,center" marginwidth="0" marginheight="0" class="BAIDU_SS_HHIFRAME" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+</div>
+
+<div id="side_box_unionAd" class="unionAd side-box union" style="display: block;">
+<div class="union-content" id="cpro_u1997633"><iframe id="iframeu1997633_0" src="./SCTP_百度百科_files/ucwm.html" width="250" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</div>
+</div>
+</div>
+</div>
+<div class="after-content">
+<div class="fc-guess-like new" id="fc_guess_like_new" style="display: block;">
+<span class="logo-du">
+<em class="cmn-icon cmn-icons cmn-icons_logo-du"></em>
+</span>
+<h6>猜你喜欢</h6>
+<ul class="cmn-clearfix"><li><a href="https://www.baidu.com/s?wd=%B0%D7%B0%DF%B3%F5%C6%DA%D6%A2%D7%B4%CD%BC%C6%AC&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=-1&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">白斑初期症状图片</a></li>
+<li><a href="https://www.baidu.com/s?wd=sctp&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=0&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">sctp</a></li>
+<li><a href="https://www.baidu.com/s?wd=%CA%D6%C9%CF%D3%D0%B0%D7%B0%DF%CD%BC%C6%AC&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=-1&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">手上有白斑图片</a></li>
+<li><a href="https://www.baidu.com/s?wd=%B0%D7%B0%DF%CD%BC%C6%AC&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=-1&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">白斑图片</a></li>
+<li><a href="https://www.baidu.com/s?wd=%CA%D6%B3%D6%CA%BD%B1%A8%CE%C4%B7%D6%CE%F6%D2%C7&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=2&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">手持式报文分析仪</a></li>
+<li><a href="https://www.baidu.com/s?wd=%D1%A7linux%C4%DC%B8%C9%C9%B6&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=2&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">学linux能干啥</a></li>
+<li><a href="https://www.baidu.com/s?wd=linux%D1%A7%CF%B0%B5%C4%CD%F8%D5%BE&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=2&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">linux学习的网站</a></li>
+<li><a href="https://www.baidu.com/s?wd=linux%D0%D6%B5%DC%C1%AC%C5%E0%D1%B5&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=2&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">linux兄弟连培训</a></li>
+<li><a href="https://www.baidu.com/s?wd=linux%B7%FE%CE%F1%C6%F7%D3%D0%C4%C4%D0%A9&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=2&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">linux服务器有哪些</a></li>
+<li><a href="https://www.baidu.com/s?wd=%CD%F8%C5%CC&amp;tn=SE_baikepcxf02_fcetbk02&amp;lqsource=-1&amp;dmaseid=dmaseid202&amp;qid=02cec8944e5d3597" target="_blank">网盘</a></li>
+</ul>
+</div>
+<div class="bottom-promotion" id="bottom-promotion" style="display: block;">
+<div id="BOTTOM_PRO_AD"><iframe id="iframe1120393_0" onload="BAIDU_SSP_cacheRequest(&#39;ae223ec17d8a2668&#39;, this);" src="./SCTP_百度百科_files/ucwm(1).html" width="960" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</div></div>
+</div>
+
+<div class="wgt-footer-main">
+<div class="content">
+<dl class="fresh">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-fresh"></em>新手上路</dt>
+<dd>
+<div><a target="_blank" href="http://baike.baidu.com/usercenter/tasks#guide">成长任务</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main01">编辑入门</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main06">编辑规则</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main05">百科术语</a></div>
+</dd>
+</dl>
+<dl class="question">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-question"></em>我有疑问</dt>
+<dd>
+<div><a target="_blank" href="http://baike.baidu.com/wikiui/doubt?lemmaId=5867122&amp;fr=lemma" nslog-type="10070001">我要质疑</a></div>
+<div><a target="_blank" href="http://ikefu.baidu.com/baidubaike/chat.html" nslog-type="10000003">我要提问</a></div>
+<div><a target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&amp;fr=bks0000&amp;kw=%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91">参加讨论</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/feedback">意见反馈</a></div>
+</dd>
+</dl>
+<dl class="suggestion">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-suggestion"></em>投诉建议</dt>
+<dd>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SCTP&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Fview%2F323714.htm#1">举报不良信息</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SCTP&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Fview%2F323714.htm#2">未通过词条申诉</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SCTP&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Fview%2F323714.htm#4">投诉侵权信息</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SCTP&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Fview%2F323714.htm#3">封禁查询与解封</a></div>
+</dd>
+</dl>
+</div>
+<div class="copyright">©2017Baidu&nbsp;<a href="http://www.baidu.com/duty/" target="_blank">使用百度前必读</a>&nbsp;|&nbsp;<a href="http://help.baidu.com/question?prod_en=baike&amp;class=159&amp;id=1047" target="_blank">百科协议</a>&nbsp;|&nbsp;<a href="http://baike.baidu.com/operation/cooperation" target="_blank">百度百科合作平台</a></div>
+</div>
+
+<div class="lemmaWgt-searchHeader" style="display: block; opacity: 1;">
+<div class="layout">
+<div class="logo-container">
+<a class="logo cmn-inline-block" title="到百科首页" href="http://baike.baidu.com/">
+<span class="cmn-baike-logo">
+<em class="cmn-icon cmn-icons cmn-icons_logo-bai"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-du"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-baike"></em>
+</span>
+</a>
+</div>
+<div class="search">
+<div class="form">
+<form id="searchForm" action="http://baike.baidu.com/search/word" method="GET" target="_self">
+<input id="query" name="word" type="text" autocomplete="off" autocorrect="off" value="SCTP"><a id="search" href="javascript:;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_search" nslog-type="10010004"></em></a>
+</form>
+<ul id="suggestion" class="suggestion">
+<div></div>
+<li class="extra">
+<span id="close">关闭</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="tool-buttons">
+<a class="toolButtons-edit button j-edit-link" href="javascript:;" nslog-type="10010001"></a>
+<a class="toolButtons-collect button" href="javascript:;" nslog-type="10010002"></a>
+<a class="toolButtons-vote button" href="javascript:;" nslog-type="10010003"></a>
+</div>
+<div class="user-info">
+<a class="user-link unlogin" href="http://baike.baidu.com/usercenter" nslog-type="10010005" target="_blank">floydshow</a>
+</div>
+</div></div>
+<div class="new-bdsharebuttonbox new-side-share" id="side-share">
+<span class="title">分享</span>
+<div class="side-border">
+<div class="triangle"></div>
+<a class="bds_qzone" href="javascript:void(0);" nslog-type="10060101">
+<em class="cmn-icon cmn-icons cmn-icons_logo-qzone"></em>
+</a>
+<a class="bds_tsina" href="javascript:void(0);" nslog-type="10060301">
+<em class="cmn-icon cmn-icons cmn-icons_logo-sina-weibo"></em>
+</a>
+<a class="bds_wechat" href="javascript:void(0);" nslog-type="10060001">
+<em class="cmn-icon cmn-icons cmn-icons_logo-wechat"></em>
+</a>
+<a class="bds_tqq" href="javascript:void(0);" nslog-type="10060201">
+<em class="cmn-icon cmn-icons cmn-icons_logo-qq"></em>
+</a>
+</div>
+</div>
+<div class="qrcode-wrapper" id="layer" style="display: none">
+<div class="bd_weixin_popup_header">
+<em class="cmn-icon cmn-icons cmn-icons_close"></em>
+<span>分享到微信朋友圈</span>
+</div>
+<div id="wechat-qrcode-img"></div>
+<div class="bd_weixin_popup_footer">打开微信“扫一扫”即可将网页分享至朋友圈</div>
+</div>
+<div></div><div></div>
+<script type="text/javascript" src="./SCTP_百度百科_files/wiki-common_sync_js_0_6be349d.js.下载"></script>
+<script type="text/javascript">require.resourceMap({"res":{"wiki-lemma:widget/lemma_content/mainContent/lemmaRelation/lemmaInsert.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaRelation/lemmaInsert_17d225d.js","pkg":"wiki-lemma:p5","deps":["wiki-common:widget/component/nslog/nslog.js"]},"wiki-lemma:widget/lemma_content/mainContent/lemmaRelation/tangram.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaRelation/tangram_1e4b3aa.js","pkg":"wiki-lemma:p5"},"wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip_d50e02d.js","deps":["wiki-common:widget/lib/jquery/jquery.js","wiki-common:widget/util/string.js"]}},"pkg":{"wiki-lemma:p5":{"url":"http://baike.bdimg.com/static/wiki-lemma/pkg/wiki-lemma-module-lemmaRelation_782158b.js"}}});</script><script type="text/javascript" src="./SCTP_百度百科_files/PHPJS_3347e0a.js.下载"></script>
+<script type="text/javascript" src="./SCTP_百度百科_files/wiki-common_sync_js_1_ec0cd21.js.下载"></script>
+<script type="text/javascript" src="./SCTP_百度百科_files/wiki-common_sync_js_2_7a24e62.js.下载"></script>
+<script type="text/javascript" src="./SCTP_百度百科_files/wiki-common_sync_js_5_62d9343.js.下载"></script>
+<script type="text/javascript" src="./SCTP_百度百科_files/wiki-lemma_07c6dc4.js.下载"></script>
+<script type="text/javascript" src="./SCTP_百度百科_files/zhixin_d2befc8.js.下载"></script>
+<script type="text/javascript">!function(){  var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+    userbar = require('wiki-common:widget/component/userbar/userbar.js');
+    
+  $(function() {
+    userbar.buildUserbar($('.wgt-userbar'), null);
+  });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+      initSearchbar = require('wiki-common:widget/component/searchbar/searchbar.js');  
+    initSearchbar($('.wgt-searchbar-main'));
+  }();
+!function(){  var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+
+  var timer = '';
+
+  $('.wgt-navbar').on('mouseenter', 'dl', function() {
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+  $('.wgt-navbar').addClass('wgt-navbar-hover');
+}, 300);
+}).on('mouseleave', function() {
+clearTimeout(timer);
+$('.wgt-navbar').removeClass('wgt-navbar-hover');
+}).on('click', 'a', function() {
+clearTimeout(timer);
+$('.wgt-navbar').removeClass('wgt-navbar-hover');
+});
+}();
+!function(){                var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+                var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+                // 展现策略
+                rightCheck.editView('5867122', function(res) {
+                    if (!res.errno) {
+                        if (res.data.edit) {
+                            $('.lemmaWgt-lemmaTitle .add-subLemma').css('display', 'inline-block');
+                            $('.top-tool .add-sub-icon').css('display', 'inline-block');
+                        }
+                    } else {
+                        if ('1') {
+                            $('.lemmaWgt-lemmaTitle .add-subLemma').css('display', 'inline-block');
+                            $('.top-tool .add-sub-icon').css('display', 'inline-block');
+                        }
+                    }
+                });
+                require('wiki-lemma:widget/basicElement/addSub/addSub.js')({                    lemmaId: '5867122',                    lemmaTitle: 'SCTP',                    lemmaDesc: '',                    versionId: '114469128',                    subLemmaId: '323714'                });
+            }();
+!function(){        var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+        var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+        // 展现策略
+        rightCheck.editView('5867122', function(res) {
+            if (!res.errno) {
+                if (res.data.divide) {
+                    $('.top-tool .split-icon').css('display', 'block');
+                }
+            }
+        });
+    }();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	require.async("wiki-lemma:widget/basicElement/collect/collect.js",function(collect){
+		collect({
+            newLemmaId:"5867122",
+			lemmaId:"323714",
+			subLemmaId:"323714"
+		});
+	});
+}();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	require.async("wiki-lemma:widget/basicElement/vote/vote.js",function(vote){
+		vote({
+			lemmaId:"323714",
+            subLemmaId:"323714",
+            newLemmaId:"5867122"
+		});
+	});
+}();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	!!window.BKShare && window.BKShare.regist({
+		"tag" : "top-share",
+		"bdSize" : 32,
+		"bdMini":1
+	});
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.lemmaWgt-lemmaTitle .edit-lemma').css('display', 'inline-block');
+            } else {
+                $('.lemmaWgt-lemmaTitle .lock-lemma').show();
+            }
+        } else {
+            if ('1') {
+                $('.lemmaWgt-lemmaTitle .edit-lemma').css('display', 'inline-block');
+            } else {
+                $('.lemmaWgt-lemmaTitle .lock-lemma').show();
+            }
+        }
+    });
+}();
+!function(){	require('wiki-lemma:widget/lemma_content/mainContent/basicInfo/basicInfo.js')();
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+    nslog(10002701);
+    $('.lemmaWgt-lemmaCatalog a').on('click', function () {
+           nslog(10002702);
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('5867122', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){	require.async(["wiki-common:widget/lib/jquery/jquery.js", "wiki-lemma:widget/lemma_content/mainContent/albumList/albumList.js", "wiki-common:widget/component/nslog/nslog.js"],function($,AlbumList,nslog){
+		var list=new AlbumList({
+			newLemmaId:"5867122",
+			lemmaTitle:"SCTP",
+			lemmaId:"323714",
+			subLemmaId:"323714",
+			data:[{"coverpic":"622762d0f703918f5ce238e4533d269759eec4e9","desc":"\u8bcd\u6761\u56fe\u7247","total":10,"coverurl":"http:\/\/e.hiphotos.baidu.com\/baike\/s%3D235\/sign=e219ba9cbb014a90853e41be9c773971\/622762d0f703918f5ce238e4533d269759eec4e9.jpg"}]
+		});
+		!!window.ScriptLazyLoad && window.ScriptLazyLoad.regist({
+			dom:$('.album-list'),
+			loadFunc:function(){
+				list.load();
+				nslog(1258);
+			},
+			distance:500
+		});
+	});
+}();
+!function(){		require.async(["wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReference.js", "wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip.js"],function(Reference,ReferenceTip){
+			new Reference({
+				subLemmaId:"323714"
+			});
+			new ReferenceTip({
+				subLemmaId:"323714"
+			});
+		});
+	}();
+!function(){        require.async("wiki-common:widget/lib/jquery/jquery.js",function($){
+            function openTagToggle(node) {
+                if ($(node).hasClass("collapse")) {
+                    $(node).removeClass("collapse");
+                    $("#open-tag").css("height", '22px');
+                } else {
+                    $(node).addClass("collapse");
+                    $("#open-tag").css("height", $("#open-tag-item").css("height"));
+                }
+            }
+            if (parseInt($("#open-tag-item").css("height")) <= 30) {
+                $('#open-tag-collapse').hide();
+            }
+            $("#open-tag-collapse").on("click", function () {
+                openTagToggle($("#open-tag")[0]);
+            });
+        });
+    }();
+!function(){    require.async('wiki-lemma:widget/promotion/xunke/xunke.js', function (app) {
+        app.init({
+            lemmaTitle: 'SCTP',
+            adManager: null
+        });
+    });
+}();
+!function(){        require('wiki-lemma:widget/lemma_content/configModule/zhixin/zhixin.js')(
+            5867122,
+            'SCTP'
+        );
+    }();
+!function(){    require.async("wiki-lemma:widget/lemma_content/mainContent/lemmaStatistics/lemmaStatistics.js",function(init){
+        init({
+            newLemmaIdEnc:"02c9b5732f54c3dc821a99a3"
+        });
+    });
+}();
+!function(){	require.async("wiki-lemma:widget/lemma_content/mainContent/sideCatalog/sideCatalog.js",function(SideCatalog){
+		new SideCatalog();
+	});
+}();
+!function(){        require.async(['wiki-lemma:widget/promotion/unionAdFromPs/unionAdFromPs.js'], function (init) {
+            init({
+                adManager: null
+            });
+        });
+    }();
+!function(){    require.async(["wiki-lemma:widget/promotion/fengchao/fengchao.js", "wiki-lemma:widget/promotion/unionAd/unionAd.js"], function (init, unionAd) {
+        init({
+            newLemmaId: "5867122",
+            lemmaTitle: "SCTP",
+            encodeLemmaTitle: "SCTP",
+            adManager: null
+        }, {
+            errFn: unionAd,
+            dom: $('#side_box_unionAd')
+        });
+    });
+}();
+!function(){    require.async('wiki-lemma:widget/promotion/guessLike/guessLike.js', function (app) {
+        app.init({
+            lemmaTitle: 'SCTP',
+            adManager: null
+        });
+    });
+}();
+!function(){        require.async('wiki-lemma:widget/promotion/bottomAd/bottomAd.js', function (init) {
+            init({
+                sId: 'BOTTOM_PRO_AD',
+                adManager: null
+            });
+        });
+    }();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var Dialog = require("wiki-common:widget/ui/dialog/dialog.js");
+    var userLogin = require('wiki-common:widget/component/userLogin/userLogin.js');
+    var unameFiller = require('wiki-common:widget/component/unameFiller/unameFiller.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+            var isEnterprise = false;
+        var enterpriseOwnerUserId = 0;
+    
+    var userId = 0;
+    var editUrl = '/edit/' + encodeURIComponent('SCTP') + '/' + '5867122';
+    var pgcUrl = '/enterprise/editpgc?lemmaId=5867122';
+
+    userLogin.regist({
+        onLogin: function(user) {
+            userId = user ? user.uid : 0;
+        }
+    });
+
+    function gotoEdit(url, isMidNight) {
+        if (isMidNight) {
+            Dialog.alert({
+                title: '编辑提示',
+                subMsg: '晚23:00至次日8:00，因审核系统例行维护，您提交的版本可能需要较长时间才能通过，望您谅解。',
+                onConfirm: function() {
+                    window.location.href = url;
+                }
+            });
+        } else {
+            window.location.href = url;
+        }    
+    }
+
+    function showChoseEditDialog(pgcCallback, ugcCallback) {
+        new Dialog({
+            title: '编辑提示',
+            subMsg: '<p>您已开通企业百科服务，推荐您直接编辑“官方资料”，官方资料仅限企业百科绑定的百科账号修改，其他用户账号不可修改。</p><p>如果您想修改其他网友编辑的普通词条内容，请注意遵守百科百科编辑规则。<p>',
+            btns: [{
+            key: 'pgc',
+            text: '编辑官方资料'
+            }, {
+            style: 'white',
+            text: '修改普通词条',
+            key: 'ugc'
+            }],
+            onBtnClick: function(btnKey){
+                if (btnKey === 'pgc') {
+                    pgcCallback && pgcCallback();
+                } else if (btnKey === 'ugc') {
+                    ugcCallback && ugcCallback();
+                }
+            }
+        }).show();
+    }
+
+    function checkUserLegal(res) {
+        var legal = false;
+        switch (res.errno) {
+            case 100001:
+                userLogin.showLoginPop();
+                break;
+            case 100006:
+                unameFiller.show();
+                break;
+            default:
+                legal = true;
+        }
+        return true;
+    }
+
+    function checkUgc(res, url) {
+        if (res.errno) {
+            switch (res.errno) {
+                case 100005:
+                    alert('对不起，您目前被封禁');
+                    break;
+                case 110001:
+                    alert('对不起，该词条被锁定');
+                    break;
+                case 110007:
+                    alert('对不起，消歧页无法编辑');
+                    break;
+                case 110005:
+                    Dialog.alert({
+                    title: '编辑提示',
+                    mainMsg: '对不起，您暂时没有权限编辑该词条。',
+                    subMsg: '<p>您好，该词条内容已较丰富，现仅对百科等级达到<b>四级</b>且通过率达到<b>85%</b>的科友开放编辑。</p><p>当您通过努力达到以上要求，就可以参与编辑该词条了。</p><p><img src="http://img.baidu.com/img/baike/usercenter/growuptask/star.gif" class="star" />参加<a target="_blank" href="/usercenter#guide">成长任务</a>，更快掌握百科编辑技巧，加速升级！</p>'
+                    });
+                    break;
+                case 110008:
+                    Dialog.alert({
+                    title: '编辑提示',
+                    mainMsg: '对不起，您暂时没有权限编辑该词条。',
+                    subMsg: '<p>您好，该词条内容已较丰富，现仅对百科等级达到<b>六级</b>且通过率达到<b>85%</b>的科友开放编辑。</p><p>当您通过努力达到以上要求，就可以参与编辑该词条了。</p><p><img src="http://img.baidu.com/img/baike/usercenter/growuptask/star.gif" class="star" />参加<a target="_blank" href="/usercenter#guide">成长任务</a>，更快掌握百科编辑技巧，加速升级！</p>'
+                    });
+                    break;
+                case 470001:
+                    alert('系统错误，请刷新重试');
+                    break;
+            }
+        } else {
+            if (!res.data.right.noAudit) {
+                Dialog.alert({
+                    title: '编辑提示',
+                    subMsg: '很抱歉，该词条有其他用户编辑的版本正在提交，您暂时无法编辑。<br/>百科建议您晚些时候再编辑该词条，或者尝试编辑其他的词条。'
+                });
+                return;
+            }
+            gotoEdit(url, res.data.notice.isMidNight);
+        }
+    }
+
+    $(document.body).on('click', '.j-edit-link', function() {
+        var dl = $(this).attr('data-edit-dl');
+        if (dl) {
+            var url = editUrl + '?dl=' + dl;
+        } else {
+            var url = editUrl;
+        }
+
+        rightCheck.preeditCheck('5867122', 'SCTP', 'SCTP', '114469128', function(res) {
+            if (!checkUserLegal(res)) {
+                return;
+            }
+            if (isEnterprise && enterpriseOwnerUserId === userId) {
+                showChoseEditDialog(function() {
+                    location.href = pgcUrl;
+                }, function() {
+                    checkUgc(res, url);
+                });
+            } else {
+                checkUgc(res, url);
+            }
+        });
+    });
+}();
+!function(){    require.async("wiki-lemma:widget/tools/searchHeader/toolButtons/toolButtons.js",function(init){
+        init({
+            lemmaId:"323714",
+            subLemmaId:"323714",
+            newLemmaId:"5867122"
+        });
+    });
+}();
+!function(){    require('wiki-lemma:widget/tools/searchHeader/toolButtons/userInfo.js')();
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+      animation = require('wiki-common:widget/util/animation.js'),
+      nslog = require('wiki-common:widget/component/nslog/nslog.js'),
+      initSearchbar = require('wiki-common:widget/component/searchbar/searchbar.js');
+
+    var isFadeIn = false,
+        isFadeOut = false;
+
+    var fadeInAni, fadeOutAni;
+
+    $(window).on('scroll', function(e) {
+        var scrollTop = $(this).scrollTop();
+
+        if (scrollTop > 200 && !isFadeIn && $('.lemmaWgt-searchHeader').css('display') == 'none') {
+            fadeOutAni && fadeOutAni.stop();
+            fadeInAni = animation({
+                duration: 200,
+                easing: 'linear',
+                onStart: function() {
+                    isFadeOut = false;
+                    isFadeIn = true;
+                    $('.lemmaWgt-searchHeader').css('display', 'block');
+                },
+                onStep: function(progress) {
+                    $('.lemmaWgt-searchHeader').css('opacity', progress)
+                },
+                onComplete: function(progress) {
+                    isFadeIn = false;
+                    nslog(10010006);
+                }
+            });
+        } else if (scrollTop <= 200 && !isFadeOut && $('.lemmaWgt-searchHeader').css('display') == 'block') {
+            fadeInAni && fadeInAni.stop();
+            fadeOutAni = animation({
+                duration: 300,
+                easing: 'linear',
+                onStart: function() {
+                    $('.lemmaWgt-searchHeader #suggestion').hide();
+                    isFadeIn = false;
+                    isFadeOut = true;
+                },
+                onStep: function(progress) {
+                    $('.lemmaWgt-searchHeader').css('opacity', 1 - progress);
+                },
+                onComplete: function(progress) {
+                    isFadeOut = false;
+                    $('.lemmaWgt-searchHeader').css('display', 'none');
+                }
+            });
+        }
+    });
+
+    initSearchbar($('.lemmaWgt-searchHeader'));
+}();
+!function(){    require('wiki-lemma:widget/tools/newSideShare/qzopensl.js');
+    require.async("wiki-lemma:widget/tools/newSideShare/taskSideShare.js",function(taskShare){
+        taskShare.init({
+            title: 'SCTP',
+            desc: "SCTP\uff08Stream Control Transmission Protocol\uff0c\u6d41\u91cf\u63a7\u5236\u4f20\u8f93\u534f\u8bae\uff09\u662fIETF\uff08Internet Engineering Task Force\uff0c\u56e0\u7279\u7f51\u5de5\u7a0b\u4efb\u52a1\u7ec4\uff09\u57282000\u5e74\u5b9a\u4e49\u7684\u4e00\u4e2a\u4f20\u8f93\u5c42\uff08Transport Layer\uff09\u534f\u8bae\uff0c\u662f\u63d0\u4f9b\u57fa\u4e8e\u4e0d\u53ef\u9760\u4f20\u8f93\u4e1a\u52a1\u7684\u534f\u8bae\u4e4b\u4e0a\u7684\u53ef\u9760\u7684\u6570\u636e\u62a5\u4f20\u8f93\u534f\u8bae\u3002SCTP\u7684\u8bbe\u8ba1\u7528\u4e8e\u901a\u8fc7IP\u7f51\u4f20\u8f93SCN\uff08Signaling Communication Network\uff0c\u4fe1\u4ee4\u901a\u4fe1\u7f51\uff09\u7a84\u5e26\u4fe1",
+            pic: 'http:\/\/e.hiphotos.baidu.com\/baike\/w%3D268\/sign=c51c8305b251f819f125044ce2b44a76\/622762d0f703918f5ce238e4533d269759eec4e9.jpg',
+            url: '',
+            qqPic: 'http:\/\/e.hiphotos.baidu.com\/baike\/whfpf%3D300%2C300%2C50\/sign=2cac3cea33adcbef01612d46ca921ded\/622762d0f703918f5ce238e4533d269759eec4e9.jpg'
+        });
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var nslog = require("wiki-common:widget/component/nslog/nslog.js");
+    var testElem = require('wiki-common:widget/component/testElem/testElem.js');
+    var cmsModuleLoader = require('wiki-common:widget/component/cmsModuleLoader/cmsModuleLoader.js');
+
+    function requireAsync() {
+        require.async('wiki-lemma:widget/tools/announcement/announcement.js');
+    }
+
+    cmsModuleLoader('/cms/global/lemma_config.json', [{
+        name: 'announcement',
+        script: 'wiki-lemma:widget/tools/announcement/announcement.js'
+    }]);
+
+    require.async("wiki-lemma:widget/tools/lazyLoad/lazyLoad.js", function(LazyLoad) {
+        new LazyLoad();
+    });
+
+    require.async(['wiki-common:widget/component/nslog/nslog.js', 'wiki-common:widget/lib/jquery/jquery.js'], function(nslog, $) {
+        nslog().setGlobal({
+            lemmaId: "323714",
+            newLemmaId: "5867122",
+            subLemmaId: "323714",
+            lemmaTitle: "SCTP"
+        });
+
+        // 词条页 pv
+        nslog(9322);
+
+        // 新版头部pv（小流量）
+        if ($('.pc-header-new').length > 0) {
+            nslog(9069);
+        }
+
+        // 链接点击 pv
+        var lemmaPageRegExp = new RegExp(/\/subview\/\d+|\/view\/\d+|\/item\//i);
+        $('body').on('mousedown', 'a', function() {
+            var href = $(this).attr('href');
+            if (href && href.indexOf('/') >= 0 && href.indexOf('#') !== 0) {
+                // 链接点击 pv
+                nslog(10000001);
+                if (lemmaPageRegExp.test(href)) {
+                    // 词条页链接点击 pv
+                    nslog(10000002, window.location.href, {
+                        targetTitle: $(this).text()
+                    });
+                }
+            }
+        });
+
+        /****** 词条页站内流转需求统计 start ******/
+        (function () {
+            // 各种统计配置
+            var circulationLinkCfg = {
+                innerLink: [ // 内链
+                    '.para',
+                    '.lemmaWgt-baseInfo-simple-largeMovie',
+                    '.lemmaWgt-baseInfo-simple-largeStar',
+                    '.basic-info .basicInfo-block',
+                    '.lemma-summary',
+                    '.lemmaWgt-lemmaSummary',
+                    '.view-tip-panel',
+                    '.horizontal-module',
+                    '.lemmaWgt-roleIntroduction',
+                    '.dramaSeries .dramaSerialList',
+                    '.module-music',
+                    '.table-view',
+                    '[log-set-param="table_view"]',
+                    '.list-module',
+                    '.cell-module',
+                    '.baseBox .dl-baseinfo', // 配置后台字段
+                    '.pvBtn-box .leadPVBtnWrapper',
+                    '.drama-actor',
+                    '#staffList',
+                    '.starMovieAndTvplay',
+                    '.main_tab:not(.main_tab-defaultTab)' // 除去词条tab外的tab
+                ],
+                relationTable: '.rs-container-foot', // 关系表
+                peopleRelation: '.star-info-block.relations, .lemmaWgt-focusAndRelation', // 人物关系（明星+普通）
+                moduleActors: '.featureBaseInfo .actors, .lemmaWgt-majorActors', // 主要演员、嘉宾、主持人
+                moduleWorks: '.featureBaseInfo .works, .large-feature .works', // 代表作品
+                moduleQuarterly: '.featureBaseInfo .po_quarterly, .mian_quarterly', // 分季介绍
+                rankStar: '.rank-list.stars-rank', // 明星榜
+                rankDrama: '.drama-rank-list', // 电视剧榜
+                specialTopic: '.special-topic', // 专题模块
+                modDetailTable: '#modDetailTable', // 关系表出图
+                chuizhitu: '.chuizhitu', // 垂直化模块
+                polysemantList: '.polysemantList-wrapper' // 义项切换
+            };
+            /****** 连接统计 ******/
+            function clickNslogFn() {
+                for (var k in circulationLinkCfg) {
+                    if (k === 'innerLink') {
+                        // 词条内链到词条页
+                        var tempArr = circulationLinkCfg[k];
+                        for (var i = 0, l = tempArr.length; i < l; i++) {
+                            tempArr[i] += ' a';
+                        }
+                        var sSelector = tempArr.join(', ');
+
+                        $('body').on('mousedown', sSelector, {key: k},function(e) {
+                            var key = e.data.key;
+                            var href = $(this).attr('href');
+                            var tar = $(this).attr('target') || '';
+                            if (href && href.indexOf('/') >= 0 && href.indexOf('#') !== 0
+                            && tar === '_blank' && lemmaPageRegExp.test(href)) {
+                                // 词条页普通内链点击 pv
+                                nslog(10000004, null ,{division: key});
+                            }
+                        });
+                    } else {
+                        // 模块到词条页链接
+                        $(circulationLinkCfg[k]).on('mousedown', 'a', {key: k}, function (e) {
+                            var key = e.data.key;
+                            var href = $(this).attr('href');
+                            if (href && href.indexOf('#') !== 0 && lemmaPageRegExp.test(href)) {
+                                // 词条页配置模块链接点击 pv
+                                nslog(10000004, null, {division: key});
+                            }
+                        });
+                    }
+                }
+            }
+            // 发起统计请求
+            clickNslogFn();
+
+            /****** 各模块展现量pv ******/
+            function checkModuleIsShow() {
+                var result = [];
+                for (var k in circulationLinkCfg) {
+                    if (k !== 'innerLink' && k !== 'relationTable') {
+                        !!$(circulationLinkCfg[k]).html() && result.push(k);
+                    }
+                }
+                if (result.length > 0) {
+                    nslog(10000005, null, {showModules: result.join(',')});
+                }
+            }
+            checkModuleIsShow();
+
+        })();
+        /****** 词条页站内流转需求统计 end ******/
+
+    });
+
+    // 广告接入 wikiad 统一加载
+    // log 词条页广告被拦截情况（此处 log 请求行为）
+    nslog(70000101, window.location.href, {
+        api: 'lemma-ad',
+        action: 'request'
+    });
+    $.ajax({
+        type: 'GET',
+        url: '/api/wikiad/getsquirrels',
+        data: {
+            lemmaId: 5867122
+        },
+        cache: false,
+        dataType: 'JSON',
+        success: function (res) {
+            // log 词条页广告被拦截情况（此处 log 请求成功）
+            nslog(70000101, window.location.href, {
+                api: 'lemma-ad',
+                action: 'success'
+            });
+
+            if (!res.errno) {
+                if (res.data[5]) {
+                    require.async(['wiki-lemma:widget/promotion/rightPreciseAd/rightPreciseAd.js'], function(rightPreciseAd) {
+                        rightPreciseAd(res.data[5]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[5][0].adId,
+                            adTitle: res.data[5][0].name,
+                            adPos: 5
+                        });
+                    });
+                } else if (res.data[1]) {
+                    require.async(['wiki-lemma:widget/promotion/vbaike/vbaike.js'], function(vbaike) {
+                        vbaike(res.data[1]);
+                        for(var i in res.data[1]) {
+                            nslog(10002201, location.href, {
+                                adId: res.data[1][i].adId,
+                                adTitle: res.data[1][i].name,
+                                adPos: 1
+                            });
+                        }
+                    });
+                }
+                if (res.data[9]) {
+                    require.async(['wiki-lemma:widget/promotion/rightBigAd/rightBigAd.js'], function(rightBigAd) {
+                        rightBigAd(res.data[9]);
+                            nslog(10002201, location.href, {
+                                adId: res.data[9][0].adId,
+                                adTitle: res.data[9][0].name,
+                                adPos: 9
+                            });
+                    });
+                } else if(res.data[2]) {
+                    require.async(['wiki-lemma:widget/promotion/slide/slide.js'], function(slide) {
+                        slide(res.data[2]);
+                        for(var i in res.data[2]) {
+                            nslog(10002201, location.href, {
+                                adId: res.data[2][i].adId,
+                                adTitle: res.data[2][i].name,
+                                adPos: 2
+                            });
+                        }
+                    });
+                }
+                if (res.data[3]) {
+                    require.async(['wiki-lemma:widget/promotion/topAd/topAd.js'], function(topAd) {
+                        topAd(res.data[3]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[3][0].adId,
+                            adTitle: res.data[3][0].name,
+                            adPos: 3
+                        });
+                    });
+                }
+                if (res.data[4]) {
+                    require.async(['wiki-lemma:widget/promotion/rightAd/rightAd.js'], function(rightAd) {
+                        rightAd(res.data[4]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[4][0].adId,
+                            adTitle: res.data[4][0].name,
+                            adPos: 4
+                        });
+                    });
+                }
+                if (res.data[15]) {
+                    require.async(['wiki-lemma:widget/promotion/banner/banner.js'], function(banner) {
+                        banner(res.data[15]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[15][0].adId,
+                            adTitle: res.data[15][0].name,
+                            adPos: 15
+                        });
+                    });
+                }
+                if (res.data[16]) {
+                    require.async(['wiki-lemma:widget/promotion/declaration/declaration.js'], function(declaration) {
+                        declaration(res.data[16]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[16][0].adId,
+                            adTitle: res.data[16][0].name,
+                            adPos: 16
+                        });
+                    })
+                }
+            } else {
+                return;
+            }
+
+            setTimeout(function () {
+                var elemArr = {};
+                res.data[1] && res.data[1].length > 0 && (elemArr['lemma-vbaike-ad'] = $('.lemmaWgt-promotion-vbaike .promotion_viewport a:eq(0) img').get(0));
+                res.data[2] && res.data[2].length > 0 && (elemArr['lemma-slide-ad'] = $('.lemmaWgt-promotion-slide .promotion_viewport a:eq(0) img').get(0));
+                res.data[3] && res.data[3].length > 0 && (elemArr['lemma-navbar-ad'] = {
+                    node: $('.header [nslog-type="10002202"]').get(0),
+                    validations: {
+                        'noBackgroundImage': function() {
+                            return $('.header [nslog-type="10002202"]').css('background-image').indexOf(res.data[3][0].picUrl) < 0
+                        }
+                    }
+                });
+                res.data[4] && res.data[4].length > 0 && (elemArr['lemma-side-ad'] = {
+                    node: $('.right-ad img').get(0),
+                    validations: {
+                        'noBackgroundImage': function() {
+                            return $('.right-ad img').attr('src').indexOf(res.data[4][0].picUrl) < 0
+                        }
+                    }
+                });
+                res.data[15] && res.data[15].length > 0 && (elemArr['lemma-configModule-banner'] = $('.configModuleBanner').get(0));
+                res.data[16] && res.data[16].length > 0 && (elemArr['lemma-configModule-declaration'] = $('.lemmaWgt-declaration').get(0));
+
+                testElem.log(elemArr, 70000102);
+            }, 1000);
+        },
+        error: function () {
+            // log 词条页广告被拦截情况（此处 log 请求失败）
+            nslog(70000101, window.location.href, {
+                api: 'lemma-ad',
+                action: 'error'
+            });
+        }
+    });
+
+    // 设置分享内容
+    window.BKShare.setCommon({
+        bdText: "\u3010SCTP_\u767e\u5ea6\u767e\u79d1\u3011SCTP\uff08Stream Control Transmission Protocol\uff0c\u6d41\u91cf\u63a7\u5236\u4f20\u8f93\u534f\u8bae\uff09\u662fIETF\uff08Internet Engineering Task Force\uff0c\u56e0\u7279\u7f51\u5de5\u7a0b\u4efb\u52a1\u7ec4\uff09\u57282000\u5e74\u5b9a\u4e49\u7684\u4e00\u4e2a\u4f20\u8f93\u5c42\uff08Transport Layer\uff09\u534f\u8bae\uff0c\u662f\u63d0\u4f9b\u57fa\u4e8e\u4e0d\u53ef\u9760\u4f20\u8f93\u4e1a\u52a1\u7684\u534f\u8bae\u4e4b\u4e0a\u7684\u53ef\u9760\u7684\u6570\u636e\u62a5\u4f20\u8f93\u534f\u8bae\u3002SCTP\u7684\u8bbe\u8ba1\u7528\u4e8e\u901a\u8fc7IP\u7f51\u4f20\u8f93SCN\uff08Signaling Communication Network\uff0c\u4fe1\u4ee4\u901a\u4fe1\u7f51\uff09\u7a84\u5e26\u4fe1.....\uff08\u5206\u4eab\u81ea@\u767e\u5ea6\u767e\u79d1\uff09",
+        bdDesc: '',
+        bdUrl: 'http:\/\/baike.baidu.com\/subview\/323714\/323714.htm',
+        bdPic: '',
+        onBeforeClick: function (){
+            $('.bdshare_dialog_box').hide();
+        }
+    });
+
+    // 底部投诉带入当前页面 url
+    var map = [1, 2, 4, 3];
+    $('.wgt-footer-main .suggestion').find('a').each(function(i) {
+        $(this).attr('href', 'http://tousu.baidu.com/baike/add?word=SCTP' + '&&submit_link=' + encodeURIComponent(window.location.href) + '#' + map[i]);
+    });
+}();
+!function(){      require('wiki-common:widget/component/psLink/psLink.js');
+    }();</script><div class="wgt_overlay" style="opacity: 0; position: fixed;"></div><dl class="wgt_dialog modal add-sub-dialog" style="display: none;">
+<dt>添加义项描述<a href="http://baike.baidu.com/view/10811633.htm" target="_blank">义项命名规则</a></dt>
+<dd class="close dialog-btn" title="关闭" btn-key="close"><em class="cmn-icon cmn-icons cmn-icons_close"></em></dd>
+<dd class="con no-icon no-sub-msg">
+<div class="add-sub">                        <div class="content-inner">                            <div class="tip">您需要给原有的义项和新增加的义项都写一个“义项描述”，让读者能分清楚同名的两个事物。</div>                            <div class="example">                                <div class="example-tit">示例</div>                                <div class="example-show">                                    <ul>                                        <li class="show-li clearfix"><div class="tit">词条名</div><div class="content">环太平洋</div></li>                                        <li class="show-li clearfix"><div class="tit">原有义项描述</div><div class="content">地理区域</div></li>                                        <li class="show-li clearfix"><div class="tit">新增义项描述</div><div class="content">2013年美国科幻电影</div></li>                                    </ul>                                </div>                            </div>                            <form action="http://baike.baidu.com/createsub/SCTP" method="get">                                <div class="form-item name-lemma clearfix"><label for="">词条名</label><input type="text" value="SCTP" disabled="disabled"></div>                                <div class="form-item clearfix"><label for="">原有义项描述(不大于20字)</label><input type="text" value="" name="ori_desc"></div>                                <div class="form-item clearfix"><label for="">新增义项描述(不大于20字)</label><input type="text" value="" name="desc"></div>                                <div class="form-item form-notice"><strong>[注意]</strong>如果原义项中已经罗列了多个义项的内容，那么建议您不要直接添加义项，而是<a href="http://tieba.baidu.com/p/4152042379" target="_blank">报告未拆分多义词。</a></div>                                <div class="add-sub-main-footer"><input type="submit" class="add-sub-main-button add-sub-main-accept" value="确定"><span class="add-sub-main-button add-sub-main-cancel">取消</span></div>                            </form>                        </div>                    </div>
+</dd>
+</dl>
+<script type="text/javascript">
+  var Hunter = window.Hunter || {};
+  Hunter.userConfig = Hunter.userConfig || [];
+  </script>
+<script type="text/javascript" src="./SCTP_百度百科_files/baike.js.下载" defer=""></script><script type="text/javascript">
+  // DOM Ready时，统计用户可操作时间。
+  alog('speed.set', 'drt', +new Date);
+
+  void function(a,b,c,d,e,f){function g(b){a.attachEvent?a.attachEvent("onload",b,!1):a.addEventListener&&a.addEventListener("load",b)}function h(a,c,d){d=d||15;var e=new Date;e.setTime((new Date).getTime()+1e3*d),b.cookie=a+"="+escape(c)+";path=/;expires="+e.toGMTString()}function i(a){var c=b.cookie.match(new RegExp("(^| )"+a+"=([^;]*)(;|$)"));return null!=c?unescape(c[2]):null}function j(){var a=i("PMS_JT");if(a){h("PMS_JT","",-1);try{a=a.match(/{["']s["']:(\d+),["']r["']:["']([\s\S]+)["']}/),a=a&&a[1]&&a[2]?{s:parseInt(a[1]),r:a[2]}:{}}catch(c){a={}}a.r&&b.referrer.replace(/#.*/,"")!=a.r||alog("speed.set","wt",a.s)}}if(a.alogObjectConfig){var k=a.alogObjectConfig.sample,l=a.alogObjectConfig.rand;d="https:"===a.location.protocol?"https://fex.bdstatic.com"+d:"http://fex.bdstatic.com"+d,k&&l&&l>k||(g(function(){alog("speed.set","lt",+new Date),e=b.createElement(c),e.async=!0,e.src=d+"?v="+~(new Date/864e5)+~(new Date/864e5),f=b.getElementsByTagName(c)[0],f.parentNode.insertBefore(e,f)}),j())}}(window,document,"script","/hunter/alog/dp.min.js");
+</script>
+
+<div class="reference-tip"><table><tbody><tr><td class="content"></td><td class="title" valign="middle">参考资料</td></tr></tbody></table><em class="triangle-bg"></em><em class="triangle-border"></em></div><div class="wgt_bubble wgt-bubble-userMenu" style="display: none;"><ul>
+<li class="top"><a href="http://baike.baidu.com/usercenter" target="_blank">我的百科</a></li>
+<li><a href="http://baike.baidu.com/usercenter/tasks#mine" target="_blank">我的任务</a></li>
+<li><a href="http://baike.baidu.com/usercenter/lemmas" target="_blank">我的词条</a></li>
+<li><a href="http://passport.baidu.com/center" target="_blank">账号设置</a></li>
+<li class="bottom logout"><a data-action="logout" href="javascript:;">退出</a></li>
+</ul><em class="tail"></em></div><div class="right-ad"><a class="rightAd-link" nslog-type="10002202" nslog-params="{&quot;adId&quot;:&quot;1423&quot;, &quot;adTitle&quot;: &quot;安利&quot;, &quot;adPos&quot;: 4}" title="" href="http://baike.baidu.com/vbaike/%E7%A9%BA%E6%B0%94%E6%B1%A1%E6%9F%93%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%EF%BC%9F/13676" target="_blank"><img src="./SCTP_百度百科_files/80cb39dbb6fd5266cfc6bd50a218972bd5073680.jpg" alt=""></a><a class="rightAd-close" href="javascript:;"></a></div><div class="wgt_bubble wgt-bubble-userMsg" style="display: none;"><ul>
+<li class="top"><a href="http://baike.baidu.com/messages" target="_blank"><span class="userMsgType">通知</span></a></li><li class="bottom"><a href="http://msg.baidu.com/" target="_blank"><span class="userMsgType">私信</span></a></li>
+</ul><em class="tail"></em></div><div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./SCTP_百度百科_files/saved_resource(1).html"></iframe></div></body></html>
