@@ -1,0 +1,1833 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/ga.js" async="" type="text/javascript"></script><script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/bcbm.js" async="" type="text/javascript"></script><script>
+var ua = navigator.userAgent.toLowerCase();
+if(ua.match(/MicroMessenger/i)=="micromessenger") {
+    location.href='http://blog.chinaunix.net/article.php?url='+ window.location.href;
+}
+</script>
+        <style>
+    .Blog_nav1_2 a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/style.css">
+<link rel="stylesheet" type="text/css" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/qqFace.css">
+<link rel="stylesheet" type="text/css" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/asyncbox.css">
+<link rel="stylesheet" type="text/css" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/pager.css">
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/jquery_003.js"></script>
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/jquery.js"></script>
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/AsyncBox.js"></script>
+<title>CCITT CRC-16计算原理与实现-chaoshua-ChinaUnix博客</title>
+<meta name="description" content="
+								CRC的全称为Cyclic Redundancy
+Check，中文名称为循环冗余校验。它是一类重要的线性分组码，编码和解码方法简单，检错和纠错能力强，在通信领域广泛地用于实现差错控制。实际上，除
+数据通信外，CRC在">
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/h600.js"></script><script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/h600_002.js"></script>
+
+<script type="text/javascript">
+if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+	try{
+		if(!/iPad/i.test(navigator.userAgent)){
+			var oldurl=window.location.href;
+			if(window.location.hostname.indexOf('m.blog.chinaunix.net')==-1){
+			var wapUrl= oldurl.replace('blog.chinaunix.net', "m.blog.chinaunix.net") ;
+			window.location.href = wapUrl;
+			}
+		}
+	}catch(e){}
+}
+</script>
+
+
+<script language="javascript">
+//用户是否在线
+var isOnLine = '';
+$(document).ready(function(){
+	var blog = {'name': '', 'name_url': '', 'brief': ''};
+	//消息通知显示和隐藏控制
+	$('#show_message_slide_button').hover(
+		function(){
+			$('#message_slide_div').slideDown(100);											   
+		},
+		function(){
+			
+		}
+	);
+
+	$('#message_slide_div').hover(
+		function(){
+			
+		},
+		function(){
+			$('#message_slide_div').slideUp(100);
+		}
+	);
+	
+	//编辑博客名
+	$('#editbna').click(function(){
+		blog.name = $('#bnaspan a').text();
+		var val = '<input id="bnainput" type="text" style="float:left" value="" rel="' +$(this).attr('rel') + '" /><input id="bnasub" type="button" style="float:left" class="btn1"><input id="bnacanl" type="button" style="float:left" class="btn2"><div class="clear"></div>';
+		$('#bnaspan').html(val);
+		$('#bnainput').val(blog.name);
+		$(this).parent().hide();
+	});
+	
+	$('#bnasub').live('click', function(){
+	    var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		var name = $('#bnainput').val();
+		if(name != blog.name){
+	        $.ajax({
+			    type: "POST",
+			    url: rel.url,	
+			    data: {
+				    'name' : name
+			    },
+			    success:function(data){
+				    if(data == 0){
+						$('#bnaspan').html(blog.name);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }else if(data == -1){
+                                        showErrorMsg('名称中含有违禁词，请从新编辑!', '消息提示');
+                                    }else{
+						$('#bnaspan').html(data);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }
+					$('#editbna').parent().show();
+				}
+			});
+		}else{
+		    $('#bnaspan').text(blog.name).html();
+			$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+			$('#editbna').parent().show();
+		}
+	});
+	
+	$('#bnacanl').live('click', function(){
+		var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		$('#bnaspan').html('<a href="' + rel.href + '">' + blog.name + '</a>');
+		$('#editbna').parent().show();
+	});
+	
+	//编辑签名
+	$('#editbrief').click(function(){
+	    blog.brief = $('#briefem').text();
+		var val = '<input id="brfinput" type="text" style="float:left" value="" rel="' + $(this).attr('rel') + '" /><input id="brfsub" style="float:left"  type="button" class="btn1"><input style="float:left"  id="brfcanl" type="button" class="btn2"><div class="clear"></div>';
+		$('#briefem').html(val);
+		$('#brfinput').val(blog.brief);
+		$(this).parent().hide();
+	});
+	
+	$('#brfsub').live('click', function(){
+	    var url = $('#brfinput').attr('rel');
+		var brief = $('#brfinput').val();
+		if(brief != blog.brief){
+	        $.ajax({
+			    type: "POST",
+			    url: url,	
+			    data: {
+				    'brief' : brief
+			    },
+			    success:function(data){
+				    if(data == 0){
+				        $('#briefem').html(blog.brief);
+				    }else if(data == -1){
+                                        showErrorMsg('签名中含有违禁词，请从新编辑!', '消息提示');
+                                    }else{
+						$('#briefem').html(data);
+				    }
+					$('#editbrief').parent().show();
+				}
+			});
+		}else{
+		    $('#briefem').text(blog.brief).html();
+			$('#editbrief').parent().show();
+		}
+	});
+	
+	$('#brfcanl').live('click', function(){
+		$('#briefem').html(blog.brief);
+		$('#editbrief').parent().show();
+	});
+
+});
+</script>
+<script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/share.js"></script><link href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/share_style0_16.css" rel="stylesheet"></head>
+<body><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/o.html" id="BAIDU_DUP_fp_iframe"></iframe></div>
+<div class="box">
+  <!-- 一级导航 -->
+  <div class="Blog_nav1">
+    <div class="Blog_nav1_2"><a href="http://blog.chinaunix.net/"><img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/1.png"></a><a href="http://www.chinaunix.net/" class="Blog_a1">Chinaunix首页</a> | <a href="http://bbs.chinaunix.net/" target="_blank">论坛</a> | <a href="http://u.it168.com/vip/"><font color="red">认证专区</font></a> | <a href="http://blog.chinaunix.net/" target="_blank">博客</a><span class="Blog_span1"></span>
+              <a href="http://blog.chinaunix.net/site/login.html" class="Blog_a1" onclick="linkto()">登录</a> | <a href="http://u.it168.com/Register?webid=5&amp;returnUrl=http%3A%2F%2Fblog.chinaunix.net%2Fuid-20416869-id-173134.html" class="Blog_a1">注册</a>
+          </div>
+	<!--自动提示层-->
+	<style>
+	.bor13221{border:1px #bbb solid;width:206px;position:absolute;top:34px;left:0;background:#fff; z-index:9999;display:none}
+	.bor13221 li{height:26px;line-height:26px;padding-left:6px;color:#555;font-size:14px;cursor:pointer;}
+	.here{background:#f3f3f3;}
+    </style>
+
+	<!--自动提示层-->
+    <div class="Blog_nav1_3" style="position:relative; z-index:9999;">
+	 <div style="display: none;" class="bor13221">
+      <ul>
+      </ul>
+    </div>
+	  <form action="/site/search.html" method="post">
+		<input autocomplete="off" class="Blog_txt1" id="search_input_id" name="keywords" type="text">
+		<select class="Bolg_sel1" name="type" id="search_type_blog">
+		  <option selected="selected" value="blog">博文</option>
+		  <option value="author">博主</option>
+		</select>
+		<input value="" name="submit" class="Blog_btn1" type="submit">
+	 </form>
+    </div>
+    <div class="clear"></div>
+    <div class="Blog_nav1_layer1" id="message_slide_div" style="display:none;">
+	    <ul>
+	    	<li><a href="http://blog.chinaunix.net/message/private.html">私人消息()</a></li>
+	    	<li><a href="http://blog.chinaunix.net/message/system.html">系统消息()</a></li>
+	    	<li><a href="http://blog.chinaunix.net/member/request.html">好友请求()</a></li>
+	    	<li><a href="http://blog.chinaunix.net/member/notification.html">通知管理()</a></li>
+	    </ul>
+    </div>
+  </div>
+   <script type="text/javascript">
+  	$(function(){
+		//点击添加进文本框
+		$(".bor13221 li").live( 'click' , function(e){
+			if ( e && e.stopPropagation )
+			{
+				//因此它支持W3C的stopPropagation()方法
+				e.stopPropagation();
+			}
+			else
+			{
+				//否则，我们需要使用IE的方式来取消事件冒泡
+				window.event.cancelBubble = true; 
+			}
+			$('#search_input_id').val($(this).text());
+			$(".bor13221 ul").html('');
+			$(".bor13221").hide();
+		});
+		$(".bor13221 ul li").live({
+			mouseenter:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).addClass('here');
+			},
+			mouseleave:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).removeClass('here');
+			}
+		});
+		//自动提示
+		$('#search_input_id').keyup(function(event){
+			//取消博主的提示
+			var search_type_blog = $('#search_type_blog').val();
+			if(search_type_blog == 'author') return false;
+
+			var key = $(this).val();
+			//获取键值
+			var keycode = event.which; //38 上 40 下
+			var count = $('.bor13221 ul li').length;
+			if(key != '' && keycode != 38 && keycode != 40)
+			{
+				$.getJSON("http://api.sou.it168.com/autoWenKuCloud?jsoncallback=?",{"ty":"json","offset":"0","limit":"10","q":key}, function(result)
+					{
+						var arr = result.data;
+
+						var html ='';
+						for (i=0;i<arr.length ;i++ )   
+						{   
+							html += '<li>'+arr[i]+'</li>';
+						} 
+						
+						$('.bor13221 ul').html(html);
+						(arr.length > 1) ?  $(".bor13221").show() : $(".bor13221").hide();
+					}
+				);
+			}
+			else if(keycode == 38)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = count - 1;
+					}
+					else
+					{
+						if(curr_li_num == 0)
+						{
+							next_li_num = count - 1;
+						}
+						else
+						{
+							next_li_num = curr_li_num - 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+			else if(keycode == 40)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = 0;
+					}
+					else
+					{
+						if(curr_li_num == count - 1)
+						{
+							next_li_num = 0;
+						}
+						else
+						{
+							next_li_num = curr_li_num + 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+		});
+		$(document).click(function(e){
+			$(".bor13221").hide();
+		});
+
+	});
+  </script>
+  <!-- 头 -->
+  <!-- 推荐博客-->
+  <div class="Blog_header1">
+	    <div class="Blog_header1_1">
+      <p class="Blog_p1"><em><a href="http://blog.chinaunix.net/uid/20416869.html">探索未知，挖掘未然</a></em><a href="http://chaoshua.blog.chinaunix.net/">chaoshua.blog.chinaunix.net</a></p>      <p class="Blog_p2" style="color:#125A94">路漫漫其修远兮...</p>
+    </div>
+        <div class="Blog_header1_2" id="hide_div1">
+    	<span class="Blog_span3"></span>
+    	<div class="float_div1" style="white-space:nowrap;" onmouseover="javascript:isMove=false" onmouseout="javascript:isMove=true">
+	    <ul style="line-height: 25px; margin-top: -36px;" id="noticev2">  
+		    		    <li><a href="http://blog.chinaunix.net/uid-30204791-id-5752644.html" target="_blank">2016中国系统架构师大会门票申请 </a></li>
+		    		    <li><a href="http://blog.chinaunix.net/uid-24789255-id-5568211.html" target="_blank">新注册用户开通“博客写作”功能，需要申请与实名认证 </a></li>
+		    		    <li><a href="http://blog.chinaunix.net/uid-10718265-id-5141960.html" target="_blank"> 互动：数据分析与云计算应用案例 （征集|参与）</a></li>
+		    	    </ul>
+	    </div>
+    </div>
+            <div class="Blog_header1_3"><a href="http://blog.chinaunix.net/uid/20416869.html">首页</a>　| 　<a href="http://blog.chinaunix.net/uid/20416869/abstract/1.html">博文目录</a>　| 　<a href="http://blog.chinaunix.net/member/profile/uid/20416869.html">关于我</a></div>
+  </div>
+    
+  <!-- 内容部分 -->
+  	<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/shCore.js"></script>
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/shThemeDefault.css">
+<link href="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/fck_editorarea.css" rel="stylesheet" type="text/css">
+<style>
+.Blog_p5 em{ display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+  <div class="Blog_contain"> 
+    <!-- 左 -->
+	<style>
+    .Blog_left1_1 p a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+
+<script language="javascript">
+$(document).ready(function(){
+	$('#ConcernBtn').bind('click',function(){
+			var cuid = '20416869';
+			var url =  '/member/concern.html';
+			var type = $(this).attr('rel');
+		
+			if(type == 'addConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxadd' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){	
+					   if(msg == -1){
+						   showErrorMsg('参数错误！');
+					   } else if (msg == 0){
+						   showErrorMsg('关注失败，没有该用户！');
+					   } else if (msg == 1){
+						   showErrorMsg('关注失败，您已经关注了该用户！');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('已关注');
+						   $('#ConcernBtn').attr('rel','delConcern');
+						   showSucceedMsg('关注成功!');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误');
+					   }
+					}
+				});	
+			} else if ( type == 'delConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxdel' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){
+					   if(msg == 0){
+						   showErrorMsg('参数错误！','消息提示');
+					   } else if (msg == 1){
+						   showErrorMsg('操作失败，请尝试刷新页面重试！','消息提示');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('加关注');
+						   $('#ConcernBtn').attr('rel','addConcern');
+						   showSucceedMsg('成功取消关注！','消息提示');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误！','消息提示'); 
+					   }
+					}
+				});	
+			}
+	});					   
+});
+
+//加好友
+function addFriend(fuid, url){
+	if(fuid == '' || fuid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	$.ajax({
+		   type : 'get',
+		   url : url,
+		   data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('参数错误！','消息提示');
+				} else if (msg == -2){
+					showErrorMsg('添加好友失败,没有该用户的信息！','消息提示');
+				} else if (msg == -3){
+					showErrorMsg('添加好友失败,你不能添加自己为好友！','消息提示');
+				} else if (msg == -4){
+					showErrorMsg('添加好友未知错误,该错误已被记录！','消息提示');
+				} else if (msg == -5){
+					showErrorMsg('添加好友失败,你之前已经发送过好友请求,请耐心等待对方同意申请！','消息提示');
+				} else if (msg == -6){
+					showErrorMsg('添加好友失败,你们已经是好友了！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'addFriend',
+						title : '添加好友',
+						url : url,
+						data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+						width : 490,
+						height : 180,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+	
+}
+
+//发送短消息
+function postMessage(msguid, url){
+	if(msguid == '' || msguid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	
+	$.ajax({
+		   type : 'post',
+		   url : url,
+		   data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('发送失败，缺少收件人对象！','消息提示');
+				} else if(msg == -2){
+					showErrorMsg('发送失败，自己不能给自己发送短消息！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'postMessage',
+						title : '发送短消息',
+						url : url,
+						data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+						width : 510,
+						height : 255,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+}
+
+</script>
+<div class="Blog_left">
+      <div class="Blog_left1 Blog_bg1">
+        <div class="Blog_left1_1">
+			<!-- 专家博客-->
+			<a href="http://blog.chinaunix.net/uid/20416869.html">                            <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_002.jpeg">
+                        </a>
+                        <p><a href="http://blog.chinaunix.net/uid/20416869.html">chaoshua</a></p>
+                     </div>
+        <ul class="Blog_ul1 Blog_noline1">
+          <li>博客访问： 459594 </li>
+          <li>博文数量： 108 </li>
+          <li>博客积分： 3257 </li>
+          <!--<li>专家积分： 180</li>-->
+          <li>博客等级： 中校 </li>
+		  <li>技术积分： 964 </li>
+          <li>用  户  组：  普通用户</li>
+          <li>注册时间： 2008-07-15 17:19 </li>
+                            </ul>  
+
+
+        
+                <div class="HT_line3 HT_line3_1"></div>
+        <ul class="Blog_ul2">
+          <li><input value="加关注" id="ConcernBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')" type="button"></li>
+          <li><input value="短消息" id="postMessageBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')" type="button"></li>
+          <li><input value="论坛" onclick="location.href='http://bbs.chinaunix.net'" type="button"></li>
+          <li><input value="加好友" id="addFriendBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html')" type="button"></li>
+        </ul>
+              </div>
+        
+         
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章分类</div>
+        <div class="Blog_left2_1">
+          <p class="Blog_p4"><a href="http://blog.chinaunix.net/uid/20416869/list/1.html">全部博文</a>（108）</p>
+          <ul id="blogCla">
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-163015-list-1.html" title="全球科技趋势">全球科技趋势</a>（6）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-152561-list-1.html" title="算法与编程">算法与编程</a>（6）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-129003-list-1.html" title="Moodle教育技术">Moodle教育技术</a>（2）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-84911-list-1.html" title="DM与机器学习">DM与机器学习</a>（20）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14414-list-1.html" title="羽球与健身">羽球与健身</a>（5）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14404-list-1.html" title="IT项目管理">IT项目管理</a>（4）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14409-list-1.html" title="系统网络维护">系统网络维护</a>（4）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14405-list-1.html" title="Linux与开源">Linux与开源</a>（10）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14406-list-1.html" title="Java编程">Java编程</a>（8）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14410-list-1.html" title="计算机网络">计算机网络</a>（5）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14407-list-1.html" title="心情随笔">心情随笔</a>（10）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14411-list-1.html" title="高级office应用">高级office应用</a>（7）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid-14408-list-1.html" title="Web开发与可视化">Web开发与可视化</a>（1）
+                                </li>
+                            <li><a href="http://blog.chinaunix.net/uid/20416869/cid--1-list-1.html" title="未分配的博文">未分配的博文</a>（20）
+                                </li>
+                      </ul>
+        </div>
+      </div>
+      	              <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章存档</div>
+        <div class="Blog_left2_1" id="blogdtr">
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2016-list-1.html">2016年</a>（2）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201611-list-1.html">2016年11月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201603-list-1.html">2016年03月</a>（1）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2015-list-1.html">2015年</a>（2）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201511-list-1.html">2015年11月</a>（2）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2013-list-1.html">2013年</a>（4）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201309-list-1.html">2013年09月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201307-list-1.html">2013年07月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201303-list-1.html">2013年03月</a>（1）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2012-list-1.html">2012年</a>（29）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201212-list-1.html">2012年12月</a>（7）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201211-list-1.html">2012年11月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201210-list-1.html">2012年10月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201209-list-1.html">2012年09月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201208-list-1.html">2012年08月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201204-list-1.html">2012年04月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201203-list-1.html">2012年03月</a>（5）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201202-list-1.html">2012年02月</a>（7）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201201-list-1.html">2012年01月</a>（2）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2011-list-1.html">2011年</a>（28）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201112-list-1.html">2011年12月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201111-list-1.html">2011年11月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201109-list-1.html">2011年09月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201108-list-1.html">2011年08月</a>（6）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201104-list-1.html">2011年04月</a>（6）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201103-list-1.html">2011年03月</a>（9）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201102-list-1.html">2011年02月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201101-list-1.html">2011年01月</a>（1）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2010-list-1.html">2010年</a>（4）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201011-list-1.html">2010年11月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201009-list-1.html">2010年09月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-201005-list-1.html">2010年05月</a>（1）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2009-list-1.html">2009年</a>（11）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200906-list-1.html">2009年06月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200904-list-1.html">2009年04月</a>（1）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200902-list-1.html">2009年02月</a>（5）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200901-list-1.html">2009年01月</a>（4）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="http://blog.chinaunix.net/uid/20416869/year-2008-list-1.html">2008年</a>（28）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200812-list-1.html">2008年12月</a>（2）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200810-list-1.html">2008年10月</a>（3）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200809-list-1.html">2008年09月</a>（5）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200808-list-1.html">2008年08月</a>（12）</li>
+                        <li><a href="http://blog.chinaunix.net/uid/20416869/year-200807-list-1.html">2008年07月</a>（6）</li>
+                      </ul>
+                  </div>
+      </div>
+      	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">我的朋友</div>
+        <ul class="Blog_ul4">
+                    <li><a href="http://blog.chinaunix.net/uid/7812252.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_003.jpeg">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/7812252.html" title="xy1121">xy1121</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/24462432.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_005.jpeg">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/24462432.html" title="小雅贝贝">小雅贝贝</a></p>
+          </li>
+                  </ul>
+      </div>
+	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">最近访客</div>
+        <ul class="Blog_ul4">
+                    <li><a href="http://blog.chinaunix.net/uid/31423860.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_004.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/31423860.html" title="glassstone">glasssto</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/30233702.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_007.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/30233702.html" title="kangle0224">kangle02</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/24527900.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar.jpeg">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/24527900.html" title="asker160">asker160</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/29799402.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_006.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/29799402.html" title="zhoujin826">zhoujin8</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/29288382.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_005.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/29288382.html" title="率性而为33">率性而为</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/31381755.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_002.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/31381755.html" title="zgchenhongjun">zgchenho</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/30512847.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_004.jpeg">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/30512847.html" title="theKernel">theKerne</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/31359798.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/31359798.html" title="waiyou1">waiyou1</a></p>
+          </li>
+                    <li><a href="http://blog.chinaunix.net/uid/29839300.html">              <img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/avatar_003.gif">
+              </a>
+            <p><a href="http://blog.chinaunix.net/uid/29839300.html" title="铃溪">铃溪</a></p>
+          </li>
+                  </ul>
+      </div>
+	           <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">微信关注</div>
+        <div class="">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img alt="" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/IT168.jpg" height="90" width="90">
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         IT168企业级官微
+                </p>
+                 <p class="">
+
+                 <br><br>
+                 微信号：IT168qiye
+                </p>
+                </div>
+        </div>
+<hr style="clear:both;" size="1">
+        <div class="" style="clear:both;">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img alt="" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/itpub.jpg" height="90" width="90">
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         系统架构师大会
+                </p>
+                 <p class="">
+
+                 <br><br>
+                 微信号：SACC2013
+                </p>
+                </div>
+        </div>
+
+</div>
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">订阅</div>
+        <ul class="Blog_ul5">
+          <li><a href="http://blog.chinaunix.net/blog/rss/uid/20416869.html" class="Blog_a4"></a></li>
+          <li><a href="http://www.google.com/ig/add?feedurl=http%3A%2F%2Fblog.chinaunix.net%2Fuid%2F20416869.html" class="Blog_a5"></a></li>
+        </ul>
+      </div>
+      <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">推荐博文</div>
+        <ul class="Blog_ul6">
+				  			<li>·<a href="http://blog.chinaunix.net/uid-7270462-id-5758498.html" title="Postgresql通过td_fdw连接查询 MS SQL Serever 2008 表">Postgresql通过td_fdw连接查...</a></li>
+		  			<li>·<a href="http://blog.chinaunix.net/uid-31385748-id-5758486.html" title="再谈互斥锁与条件变量！（终于搞清楚了啊！！！！！）">再谈互斥锁与条件变量！（终...</a></li>
+		  			<li>·<a href="http://blog.chinaunix.net/uid-20726500-id-5758450.html" title="基于Pacemaker的PostgreSQL一主多从读负载均衡集群搭建">基于Pacemaker的PostgreSQL一...</a></li>
+		  			<li>·<a href="http://blog.chinaunix.net/uid-15866552-id-5758426.html" title="网站访问量和服务器带宽的选择">网站访问量和服务器带宽的选...</a></li>
+		  			<li>·<a href="http://blog.chinaunix.net/uid-30902316-id-5758414.html" title="MySQL 时间戳（Timestamp）函数">MySQL 时间戳（Timestamp）函...</a></li>
+		  						  			<li>·<a href="http://blog.itpub.net/7728585/viewspace-2132521" title="MYSQL的CHAR和VARCHAR注意事项 以及binary和varbinary存储方式">MYSQL的CHAR和VARCHAR注意事...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/26015009/viewspace-2132471" title="Oracle ASM ACFS disk group rebalance">Oracle ASM ACFS disk group ...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/23718752/viewspace-2132288" title="使用shell自动化诊断性能问题(一)（r11笔记第41天）">使用shell自动化诊断性能问题...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/26015009/viewspace-2132215" title="Oracle ASM Rebalance执行过程">Oracle ASM Rebalance执行过...</a></li>
+		  			<li>·<a href="http://blog.itpub.net/7192724/viewspace-2132072" title="一个执行计划异常变更的案例 - 外传之ASH">一个执行计划异常变更的案例 ...</a></li>
+		  				
+        </ul>
+      </div>
+      <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">热词专题</div>
+        <ul class="Blog_ul6">
+                        <li>·<a href="http://blog.chinaunix.net/zt/1062/fl2440hjtagcantdownloaddrivertospeci_1062900.shtml" target="blank" title="driver">driver</a></li>
+                        <li>·<a href="http://blog.chinaunix.net/zt/1000/linux_1000000.shtml" target="blank" title="lua编译(linux)">lua编译(linux)</a></li>
+                        <li class="no_line1">·<a href="http://blog.chinaunix.net/zt/1000/linuxarmg_1000001.shtml" target="blank" title="linux+ARM学习路线">linux+ARM学习路线</a></li>
+          <!--              <li>·<a href="http://www.dataguru.cn/zhuanti/hadoop220peizhi.shtml" target='blank' title='配置hadoop2.2.0格式化namenode问题'></a></li>
+              <li>·<a href="http://www.dataguru.cn/zhuanti/hadoopshouce.shtml" target='blank' title='hadoop2.2.0安装手册'></a></li>-->
+        </ul>
+      </div>
+	  
+
+	</div>
+<script language="javascript">
+$(document).ready(function(){
+    /*目录树JS效果*/
+	$('#blogCla li > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogCla li > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogCla li > .zk').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().children('.zk').css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().children('.zk').css('display', 'none');
+		}
+	});
+		
+	$('#blogdtr > p > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogdtr > .Blog_p4 > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogdtr ul').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().next().css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().next().css('display', 'none');
+		}
+	});
+});
+</script>    <!-- 右 -->
+    <div class="Blog_right1">
+      <div class="Blog_right1_1 Blog_right1_11">
+        <div class="Blog_right1_2 ">
+			<!--推荐博文-->
+          <div class="Blog_tit4 Blog_tit5">
+                        <b class="Blog_b2"></b>
+            <a href="http://blog.chinaunix.net/uid-20416869-id-173134.html">CCITT CRC-16计算原理与实现</a>
+            <em>2008-08-26 22:47:51</em>
+          </div>
+          <div class="Blog_con2">
+            <div class="Blog_con3">
+              <p>分类： <span>C/C++</span></p>
+			                <p></p>
+            </div>
+           <div class="Blog_wz1" style="word-wrap: break-word;">
+						
+								<p><font size="2" face="宋体"><table&#160; id="table4" border="0" cellpadding="0" cellspacing="0"></table&#160;></font></p><p align="left"><font size="2" face="宋体">CRC的全称为Cyclic Redundancy
+Check，中文名称为循环冗余校验。它是一类重要的线性分组码，编码和解码方法简单，检错和纠错能力强，在通信领域广泛地用于实现差错控制。实际上，除
+数据通信外，CRC在其它很多领域也是大有用武之地的。例如我们读软盘上的文件，以及解压一个ZIP文件时，偶尔会碰到“Bad
+CRC”错误，由此它在数据存储方面的应用可略见一斑。</font></p>
+<p align="left"><font size="2" face="宋体">差错控制理论是在代数理论基础上建立起来的。这里我们着眼于介绍CRC的算法与实现，对原理只能捎带说明一下。若需要进一步了解线性码、分组码、循环码、纠错编码等方面的原理，可以阅读有关资料。</font></p>
+<p align="left"><font size="2" face="宋体">利用CRC进行检错的过程可简单描述为：在发送端根据要传送的k位二进制码序列，以一定的规则产生一个校验用的r位监督
+码(CRC码)，附在原始信息后边，构成一个新的二进制码序列数共k+r位，然后发送出去。在接收端，根据信息码和CRC码之间所遵循的规则进行检验，以
+确定传送中是否出错。这个规则，在差错控制理论中称为“生成多项式”。</font></p>
+<p align="left"><font size="2" face="宋体"><br>　</font></p>
+<p align="left"><font size="2" face="宋体"><strong>1 代数学的一般性算法</strong></font></p>
+<p align="left"><font size="2" face="宋体">在代数编码理论中，将一个码组表示为一个多项式，码组中各码元当作多项式的系数。例如 1100101 表示为<br>1·x<sup>6</sup>+1·x<sup>5</sup>+0·x<sup>4</sup>+0·x<sup>3</sup>+1·x<sup>2</sup>+0·x+1，即 x<sup>6</sup>+x<sup>5</sup>+x<sup>2</sup>+1。</font></p>
+<p align="left"><font size="2" face="宋体">设编码前的原始信息多项式为P(x)，P(x)的最高幂次加1等于k；生成多项式为G(x)，G(x)的最高幂次等于r；CRC多项式为R(x)；编码后的带CRC的信息多项式为T(x)。</font></p>
+<p align="left"><font size="2" face="宋体">发送方编码方法：将P(x)乘以xr(即对应的二进制码序列左移r位)，再除以G(x)，所得余式即为R(x)。用公式表示为<br>T(x)=x<sup>r</sup>P(x)+R(x)</font></p>
+<p align="left"><font size="2" face="宋体">接收方解码方法：将T(x)除以G(x)，如果余数为0，则说明传输中无错误发生，否则说明传输有误。</font></p>
+<p align="left"><font size="2" face="宋体">举例来说，设信息码为1100，生成多项式为1011，即P(x)=x<sup>3</sup>+x<sup>2</sup>，G(x)=x<sup>3</sup>+x+1，计算CRC的过程为</font></p>
+<div align="left"><pre><font size="2" face="宋体">      x<sup>r</sup>P(x)     x<sup>3</sup>(x<sup>3</sup>+x<sup>2</sup>)     x<sup>6</sup>+x<sup>5</sup>                    x<br>     -------- = ---------- = -------- = (x<sup>3</sup>+x<sup>2</sup>+x) + --------<br>       G(x)       x<sup>3</sup>+x+1      x<sup>3</sup>+x+1                 x<sup>3</sup>+x+1<br></font></pre></div>
+<p align="left"><font size="2" face="宋体">即 R(x)=x。注意到G(x)最高幂次r=3，得出CRC为010。</font></p>
+<p align="left"><font size="2" face="宋体">如果用竖式除法，计算过程为</font></p>
+<div align="left"><pre><font size="2" face="宋体">               1110<br>            -------   <br>      1011 /1100000     (1100左移3位)<br>            1011<br>            ----<br>             1110<br>             1011<br>             -----<br>              1010<br>              1011<br>              -----<br>               0010<br>               0000<br>               ----<br>                010<br></font></pre></div>
+<p align="left"><font size="2" face="宋体">因此，T(x)=(x<sup>6</sup>+x<sup>5</sup>)+(x)=x<sup>6</sup>+x<sup>5</sup>+x, 即 1100000+010=1100010</font></p>
+<p align="left"><font size="2" face="宋体">如果传输无误，</font></p>
+<div align="left"><pre><font size="2" face="宋体">       T(x)     x<sup>6</sup>+x<sup>5</sup>+x<br>      ------ = --------- = x<sup>3</sup>+x<sup>2</sup>+x,<br>       G(x)     x<sup>3</sup>+x+1<br></font></pre></div>
+<p align="left"><font size="2" face="宋体">无余式。回头看一下上面的竖式除法，如果被除数是1100010，显然在商第三个1时，就能除尽。</font></p>
+<p align="left"><font size="2" face="宋体">上述推算过程，有助于我们理解CRC的概念。但直接编程来实现上面的算法，不仅繁琐，效率也不高。实际上在工程中不会直接这样去计算和验证CRC。</font></p>
+<p align="left"><font size="2" face="宋体">下表中列出了一些见于标准的CRC资料：</font></p>
+<table id="table9" style="" align="center" border="1" width="396" cellpadding="1" cellspacing="1">
+<tbody>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;名称&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;生成多项式&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;简记式<sup>*</sup>&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;应用举例&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-4&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>4</sup>+x+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;ITU G.704&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-12&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>12</sup>+x<sup>11</sup>+x<sup>3</sup>+x+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-16&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>16</sup>+x<sup>12</sup>+x<sup>2</sup>+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;1005&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;IBM SDLC&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-ITU<sup>**</sup>&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>16</sup>+x<sup>12</sup>+x<sup>5</sup>+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;1021&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;ISO HDLC, ITU X.25, V.34/V.41/V.42, PPP-FCS&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-32&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>32</sup>+x<sup>26</sup>+x<sup>23</sup>+...+x<sup>2</sup>+x+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;04C11DB7&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;ZIP, RAR, IEEE 802 LAN/FDDI, IEEE 1394, PPP-FCS&nbsp;</p></td></tr>
+<tr>
+<td style="font-size: 9pt;" width="58">
+<p align="left">&nbsp;CRC-32c&nbsp;</p></td>
+<td style="font-size: 9pt;" width="136">
+<p align="left">&nbsp;x<sup>32</sup>+x<sup>28</sup>+x<sup>27</sup>+...+x<sup>8</sup>+x<sup>6</sup>+1&nbsp;</p></td>
+<td style="font-size: 9pt;" width="54">
+<p align="left">&nbsp;1EDC6F41&nbsp;</p></td>
+<td style="font-size: 9pt;" width="120">
+<p align="left">&nbsp;SCTP&nbsp;</p></td></tr></tbody></table>
+<div align="left"><pre><font size="2" face="宋体">    *  生成多项式的最高幂次项系数是固定的1，故在简记式中，将最高的1统一去掉了，<br>如04C11DB7实际上是104C11DB7。<br>    ** 前称CRC-CCITT。ITU的前身是CCITT。</font></pre></div><font size="2" face="宋体"></font><p></p>
+<p><font size="2"><br></font><font size="2" face="宋体">4.CRC算法的实现<br>---------------<br>要用程序实现CRC算法，考虑对第2节的长除法做一下变换，依然是M = 11100110，G = 1011，<br>其系数r为3。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+11001100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; -------------</font><font size="2" face="宋体">-----------</font><font size="2" face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>1011 )11100110000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font size="2" face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+1011.......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+----.......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp; &nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+1010......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1011......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+----......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp; &nbsp; 
+1110...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+1011...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+------...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+1010..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+1011..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+-------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp; &nbsp;&nbsp; 100&nbsp; 
+&lt;---校验码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>程序可以如下实现：<br>&nbsp;&nbsp;&nbsp; 1)将Mx^r的前r位放入一个长度为r的寄存器；<br>&nbsp;&nbsp;&nbsp; 2)如果寄存器的首位为1，将寄存器左移1位(将Mx^r剩下部分的MSB移入寄存器的LSB)，<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 再与G的后r位异或，否则仅将寄存器左移1位(将Mx^r剩下部分的MSB移入寄存器的LSB)；<br>&nbsp;&nbsp;&nbsp; 3)重复第2步，直到M全部Mx^r移入寄存器；<br>&nbsp;&nbsp;&nbsp; 4)寄存器中的值则为校验码。&nbsp;&nbsp;&nbsp;&nbsp; <br></font></p><p><font size="2" face="宋体">基于以上算法，我们可以看一下上面例子的程序计算过程：（r＝3）</font></p><p><font size="2" face="宋体"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 首先，111 00110000前三位进入寄存器，即111</font></p><p><font size="2" face="宋体"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这时寄存器首位为1，执行第2步,移位成110 0110000,这时寄存器中为前三位110，将其与011（生成多项式后三位）异或，得101 0110000.</font></p><p><font size="2" face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 然后继续第2步，101首位为1，移位010 110000,然后010与011异或，得&nbsp; 001 110000<br>前面两个0，连续以为2次且不用计算异或，得111 0000，接着移位110 000，异或得101 000<br>&nbsp; &nbsp; &nbsp;&nbsp; 第一位为1，移位得010 00，前三位异或得001 00</font></p><p><font size="2" face="宋体">&nbsp; &nbsp; &nbsp;&nbsp; 最后因为前面两个0，直接移位两次后得寄存器中的内容100,这时Mx^r位的所有内容都移入寄存器，运算结束，记得检验码为100。（关键先判断首位是否为1，然后移位，然后计算）</font></p><p><font size="2" face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 111 00110000移位－&gt;1 110 0110000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp; 011</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 101 0110000&nbsp; --&gt;101第一位为1，移位且计算<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 1 010 110000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;">&nbsp; 011</span> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 001 110000--&gt;001第一位第二位均为0，移位2次<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 00 111 0000--&gt;111第一位为1，移位且计算<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 1 110 000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp; &nbsp; &nbsp;<span style="text-decoration: underline;"> 011</span><br>&nbsp;
+ &nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 101 000--&gt;101</font><font size="2" face="宋体">第一位为1，移位且计算<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 1 010 00<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-decoration: underline;"> 011<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 001 
+00--&gt;移位2次得100<span style="text-decoration: underline;"> <br></span></font></p><font size="2" face="宋体">用CRC16-CCITT的生成多项式0x1021，其C代码(本文所有代码假定系统为32位，且都在VC6上编译通过)如下：</font>
+<p><font size="2" face="宋体">unsigned short do_crc(unsigned char *message, unsigned int len)<br>{<br>&nbsp;&nbsp;&nbsp; int i, j;<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; crc_reg = (message[0] &lt;&lt; 8) + message[1];<br>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; len; i++) <br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (i &lt; len - 2)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 0; j &lt;= 7; j++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((short)crc_reg &lt; 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = ((crc_reg &lt;&lt; 1) + (message[i + 2] &gt;&gt; (7 - i))) ^ 
+0x1021;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &lt;&lt; 1) + (message[i + 2] &gt;&gt; (7 - 
+i));&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 0; j &lt;= 7; j++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((short)crc_reg &lt; 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &lt;&lt; 1) ^ 0x1021;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg &lt;&lt;= 
+1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>}&nbsp; </font></p>
+<p><font size="2" face="宋体">显然，每次内循环的行为取决于寄存器首位。由于异或运算满足交换率和结合律，以及与0异或无影响，消息可以不移入寄存器，而在每次内循环的时候，寄存器首位再与对应的消息位异或。改进的代码如下：</font></p>
+<p><font size="2" face="宋体">unsigned short do_crc(unsigned char *message, unsigned int len) <br>{<br>&nbsp;&nbsp;&nbsp; int i, j;<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg = 0;<br>&nbsp;&nbsp;&nbsp; unsigned short current;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; len; i++) <br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; current = message[i] &lt;&lt; 8;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 0; j &lt; 8; j++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((short)(crc_reg ^ current) &lt; 0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &lt;&lt; 1) ^ 0x1021;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc_reg &lt;&lt;= 1; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ current &lt;&lt;= 
+1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>} </font></p>
+<p><font size="2" face="宋体">以上的讨论中，消息的每个字节都是先传输MSB，CRC16-CCITT标准却是按照先传输LSB，消息右移进寄存器来计算的。只需将代码改成判断寄存器的LSB，将0x1021按位颠倒后(0x8408)与寄存器异或即可，如下所示：</font></p>
+<p><font size="2" face="宋体">unsigned short do_crc(unsigned char *message, unsigned int len) <br>{<br>&nbsp;&nbsp;&nbsp; int i, j;<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg = 0;<br>&nbsp;&nbsp;&nbsp; unsigned short current;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; len; i++) <br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; current = message[i];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 0; j &lt; 8; j++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ((crc_reg ^ current) &amp; 0x0001)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &gt;&gt; 1) ^ 0x8408;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc_reg &gt;&gt;= 1; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ current &gt;&gt;= 
+1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>}&nbsp;&nbsp;&nbsp; </font></p>
+<p><font size="2" face="宋体">该算法使用了两层循环，对消息逐位进行处理，这样效率是很低的。为了提高时间效率，通常的思想是以空间换时间。考虑到内循环只与当前的消息字节和crc_reg的低字节有关，对该算法做以下等效转换：</font></p>
+<p><font size="2" face="宋体">unsigned short do_crc(unsigned char *message, unsigned int len) <br>{<br>&nbsp;&nbsp;&nbsp; int i, j;<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg = 0;<br>&nbsp;&nbsp;&nbsp; unsigned char&nbsp; index;<br>&nbsp;&nbsp;&nbsp; unsigned short to_xor;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; len; i++) <br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index = (crc_reg ^ message[i]) &amp; 0xff; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to_xor = index;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 0; j &lt; 8; j++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (to_xor &amp; 0x0001)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ to_xor = (to_xor &gt;&gt; 1) ^ 0x8408;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ to_xor &gt;&gt;= 
+1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc_reg = (crc_reg &gt;&gt; 8) ^ to_xor;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>} </font></p>
+<p><font size="2" face="宋体">现在内循环只与index相关了，可以事先以数组形式生成一个表crc16_ccitt_table，使得to_xor = crc16_ccitt_table[index]，于是可以简化为：</font></p>
+<p><font size="2" face="宋体">unsigned short do_crc(unsigned char *message, unsigned int len) <br>{<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg = 0; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; while (len--) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &gt;&gt; 8) ^ crc16_ccitt_table[(crc_reg ^ 
+*message++) &amp; 0xff];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>}&nbsp;&nbsp; </font></p>
+<p><font size="2" face="宋体">crc16_ccitt_table通过以下代码生成：</font></p>
+<p><font size="2" face="宋体">int main()<br>{<br>&nbsp;&nbsp;&nbsp; unsigned char index = 0;<br>&nbsp;&nbsp;&nbsp; unsigned short to_xor;<br>&nbsp;&nbsp;&nbsp; int i;</font></p>
+<p><font size="2" face="宋体">&nbsp;&nbsp;&nbsp; printf("unsigned short crc16_ccitt_table[256] =\n{");<br>&nbsp;&nbsp;&nbsp; while (1) <br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!(index % 8))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to_xor = index;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; 8; i++) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (to_xor &amp; 0x0001)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ to_xor = (to_xor &gt;&gt; 1) ^ 0x8408;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ to_xor &gt;&gt;= 
+1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("0x%04x", to_xor);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (index == 255)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(", ");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index++;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; printf("};");<br>&nbsp;&nbsp;&nbsp; return 0;<br>}</font></p>
+<p><font size="2" face="宋体">生成的表如下：</font></p>
+<p><font size="2" face="宋体">unsigned short crc16_ccitt_table[256] =<br>{<br>0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,<br>0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,<br>0x1081, 0x0108, 0x3393, 0x221a, 0x56a5, 0x472c, 0x75b7, 0x643e,<br>0x9cc9, 0x8d40, 0xbfdb, 0xae52, 0xdaed, 0xcb64, 0xf9ff, 0xe876,<br>0x2102, 0x308b, 0x0210, 0x1399, 0x6726, 0x76af, 0x4434, 0x55bd,<br>0xad4a, 0xbcc3, 0x8e58, 0x9fd1, 0xeb6e, 0xfae7, 0xc87c, 0xd9f5,<br>0x3183, 0x200a, 0x1291, 0x0318, 0x77a7, 0x662e, 0x54b5, 0x453c,<br>0xbdcb, 0xac42, 0x9ed9, 0x8f50, 0xfbef, 0xea66, 0xd8fd, 0xc974,<br>0x4204, 0x538d, 0x6116, 0x709f, 0x0420, 0x15a9, 0x2732, 0x36bb,<br>0xce4c, 0xdfc5, 0xed5e, 0xfcd7, 0x8868, 0x99e1, 0xab7a, 0xbaf3,<br>0x5285, 0x430c, 0x7197, 0x601e, 0x14a1, 0x0528, 0x37b3, 0x263a,<br>0xdecd, 0xcf44, 0xfddf, 0xec56, 0x98e9, 0x8960, 0xbbfb, 0xaa72,<br>0x6306, 0x728f, 0x4014, 0x519d, 0x2522, 0x34ab, 0x0630, 0x17b9,<br>0xef4e, 0xfec7, 0xcc5c, 0xddd5, 0xa96a, 0xb8e3, 0x8a78, 0x9bf1,<br>0x7387, 0x620e, 0x5095, 0x411c, 0x35a3, 0x242a, 0x16b1, 0x0738,<br>0xffcf, 0xee46, 0xdcdd, 0xcd54, 0xb9eb, 0xa862, 0x9af9, 0x8b70,<br>0x8408, 0x9581, 0xa71a, 0xb693, 0xc22c, 0xd3a5, 0xe13e, 0xf0b7,<br>0x0840, 0x19c9, 0x2b52, 0x3adb, 0x4e64, 0x5fed, 0x6d76, 0x7cff,<br>0x9489, 0x8500, 0xb79b, 0xa612, 0xd2ad, 0xc324, 0xf1bf, 0xe036,<br>0x18c1, 0x0948, 0x3bd3, 0x2a5a, 0x5ee5, 0x4f6c, 0x7df7, 0x6c7e,<br>0xa50a, 0xb483, 0x8618, 0x9791, 0xe32e, 0xf2a7, 0xc03c, 0xd1b5,<br>0x2942, 0x38cb, 0x0a50, 0x1bd9, 0x6f66, 0x7eef, 0x4c74, 0x5dfd,<br>0xb58b, 0xa402, 0x9699, 0x8710, 0xf3af, 0xe226, 0xd0bd, 0xc134,<br>0x39c3, 0x284a, 0x1ad1, 0x0b58, 0x7fe7, 0x6e6e, 0x5cf5, 0x4d7c,<br>0xc60c, 0xd785, 0xe51e, 0xf497, 0x8028, 0x91a1, 0xa33a, 0xb2b3,<br>0x4a44, 0x5bcd, 0x6956, 0x78df, 0x0c60, 0x1de9, 0x2f72, 0x3efb,<br>0xd68d, 0xc704, 0xf59f, 0xe416, 0x90a9, 0x8120, 0xb3bb, 0xa232,<br>0x5ac5, 0x4b4c, 0x79d7, 0x685e, 0x1ce1, 0x0d68, 0x3ff3, 0x2e7a,<br>0xe70e, 0xf687, 0xc41c, 0xd595, 0xa12a, 0xb0a3, 0x8238, 0x93b1,<br>0x6b46, 0x7acf, 0x4854, 0x59dd, 0x2d62, 0x3ceb, 0x0e70, 0x1ff9,<br>0xf78f, 0xe606, 0xd49d, 0xc514, 0xb1ab, 0xa022, 0x92b9, 0x8330,<br>0x7bc7, 0x6a4e, 0x58d5, 0x495c, 0x3de3, 0x2c6a, 0x1ef1, 0x0f78<br>};</font></p>
+<p><font size="2" face="宋体">这样对于消息unsigned char message[len]，校验码为：<br>&nbsp;&nbsp;&nbsp; unsigned short code = do_crc(message, len);<br>并且按以下方式发送出去：<br>&nbsp;&nbsp;&nbsp; message[len] = code &amp; 0x00ff;<br>&nbsp;&nbsp;&nbsp; message[len + 1] = (code &gt;&gt; 8) &amp; 0x00ff; <br>&nbsp;&nbsp;&nbsp; <br>接收端对收到的len + 2字节执行do_crc，如果没有差错发生则结果应为0。</font></p>
+<p><font size="2" face="宋体">在一些传输协议中，发送端并不指出消息长度，而是采用结束标志，考虑以下几种差错：<br>&nbsp;&nbsp;&nbsp; 1)在消息之前，增加1个或多个0字节；<br>&nbsp;&nbsp;&nbsp; 2)消息以1个或多个连续的0字节开始，丢掉1个或多个0；<br>&nbsp;&nbsp;&nbsp; 3)在消息(包括校验码)之后，增加1个或多个0字节； <br>&nbsp;&nbsp;&nbsp; 4)消息(包括校验码)以1个或多个连续的0字节结尾，丢掉1个或多个0； <br>&nbsp;&nbsp;&nbsp; <br>显然，这几种差错都检测不出来，其原因就是如果寄存器值为0，处理0消息字节(或位)，寄存器值不变。为了解决前2个问题，只需寄存器的初值非0即可，对do_crc作以下改进：<br>&nbsp;<br>unsigned short do_crc(unsigned short reg_init, unsigned char *message, unsigned int len) <br>{<br>&nbsp;&nbsp;&nbsp; unsigned short crc_reg = reg_init; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; while (len--) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ crc_reg = (crc_reg &gt;&gt; 8) ^ crc16_ccitt_table[(crc_reg ^ 
+*message++) &amp; 0xff];<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; return crc_reg;<br>} </font></p>
+<p><font size="2" face="宋体">在CRC16-CCITT标准中reg_init = 0xffff，为了解决后2个问题，在CRC16-CCITT标准中将计算出的校验码与0xffff进行异或，即：<br>&nbsp;&nbsp;&nbsp; unsigned short code = do_crc(0xffff, message, len);<br>&nbsp;&nbsp;&nbsp; code ^= 0xffff;<br>&nbsp;&nbsp;&nbsp; message[len] = code &amp; 0x00ff;<br>&nbsp;&nbsp;&nbsp; message[len + 1] = (code &gt;&gt; 8) &amp; 0x00ff;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>显然，现在接收端对收到的所有字节执行do_crc，如果没有差错发生则结果应为某一常值GOOD_CRC。其满足以下关系：<br>&nbsp;&nbsp;&nbsp; unsigned char p[]= {0xff, 0xff}; <br>&nbsp;&nbsp;&nbsp; GOOD_CRC = do_crc(0, p, 2); <br>其结果为GOOD_CRC = 0xf0b8。</font></p><p><font size="2" face="宋体">在同一程序中验证如下（放在main函数中可试验）：</font></p><p><font size="2" face="宋体">&nbsp;unsigned char p[]= {0xa0,0xb0,0xff, 0xff};<br>&nbsp;&nbsp;&nbsp; unsigned short crc;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp; crc= do_crc(0xffff, p, 2);&nbsp; //计算前两位的CRC码<br>&nbsp;&nbsp;&nbsp; crc^=0xffff;&nbsp;&nbsp;&nbsp;&nbsp; //对其取反<br>&nbsp;&nbsp;&nbsp; p[2]=crc&amp;0x00ff;&nbsp;&nbsp; //将计算的CRC码加到信息序列后面<br>&nbsp;&nbsp;&nbsp; p[3]=crc&gt;&gt;8&amp;0x00ff;<br>&nbsp;&nbsp;&nbsp; printf("p[2]=%x,p3=%x\n",p[2],p[3]);<br>&nbsp;&nbsp;&nbsp; crc=do_crc(0xffff,p,4);&nbsp;&nbsp; //对信息码＋CRC码共同计算得出CRC=0xf0b8<br>&nbsp;&nbsp;&nbsp; printf("crc is %x\n",crc);<br>假设发送的信息是p[0],p[1]；低位先发，对其计算的CRC加到信息码后面</font></p><p><font size="2" face="宋体">然后对信息码＋CRC码共同计算CRC值，此时应该是常数0xf0b8。不管信息码如何变化，内容和长度都可变，只要把计算的CRC码加进去一起计算CRC，就应该是得该常数GOOD_CRC。<br></font></p><p><font size="2" face="宋体"><br></font></p>
+<font size="2" face="宋体">参考文献<br>--------<br>[1] Ross N. Williams，"A PAINLESS GUIDE TO CRC ERROR DETECTION ALGORITHMS"，Version 3，<br>&nbsp;&nbsp;&nbsp; </font><font size="2"><a href="http://www.ross.net/crc/crcpaper.html"><font face="宋体">http://www.ross.net/crc/crcpaper.html</font></a></font><font size="2" face="宋体">，August 1993<br>[2] Simpson, W., Editor, "PPP in HDLC Framing"，RFC 1549, December 1993<br>[3]
+ P. E. Boudreau，W. C. Bergman and D. R. lrvin，"Performance of a cyclic 
+redundancy&nbsp; check and its interaction with a data scrambler"，IBM J.
+ RES. DEVELOP.，VOL.38&nbsp;&nbsp;&nbsp; NO.6，November 1994</font>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		                                   </div>
+            <!-- <div class="Blog_con3_1">管理员在2009年8月13日编辑了该文章文章。</div> -->
+            <div class="Blog_con2_1 Blog_con3_2">
+              <div>
+			  <!--<img src="/image/default/tu_8.png">-->
+			  <!-- JiaThis Button BEGIN -->
+				<div data-bd-bind="1484786752213" class="bdsharebuttonbox bdshare-button-style0-16"><a class="bds_more" href="#" data-cmd="more"></a><a class="bds_qzone" title="分享到QQ空间" href="#" data-cmd="qzone"></a><a class="bds_tsina" title="分享到新浪微博" href="#" data-cmd="tsina"></a><a class="bds_tqq" title="分享到腾讯微博" href="#" data-cmd="tqq"></a><a class="bds_renren" title="分享到人人网" href="#" data-cmd="renren"></a><a class="bds_weixin" title="分享到微信" href="#" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+				<!-- JiaThis Button END -->
+			  </div>
+              阅读(12393) | 评论(2) | 转发(0) |
+			                <div class="HT_line3"></div>
+            </div>
+            <div class="Blog_con3_3">
+              <div><span id="digg_num">0</span><a href="javascript:void(0)" id="digg" bid="173134" url="/blog/digg.html"></a></div>
+              <p>上一篇：<a href="http://blog.chinaunix.net/uid-20416869-id-173133.html">ubuntu8.04中virtualBox的分辨率等问题</a></p>
+              <p>下一篇：<a href="http://blog.chinaunix.net/uid-20416869-id-173135.html">CCITT标准CRC-16计算C源代码</a></p>
+            </div>
+          </div>
+          <div class="Blog_con3_4">
+            <div class="Blog_tit2 Blog_tit6">相关热门文章</div>
+			            <ul class="Blog_ul7">
+						  <li><span class="Blog_span7"></span><a href="http://blog.chinaunix.net/uid-26615473-id-3056538.html" title="test123" target="blank">test123</a></li>
+						  <li><span class="Blog_span7"></span><a href="http://blog.chinaunix.net/uid-23629988-id-3018793.html" title="编写安全代码——小心有符号数的右移操作" target="blank">编写安全代码——小心有符号数...</a></li>
+						  <li><span class="Blog_span7"></span><a href="http://blog.chinaunix.net/uid-22889411-id-59688.html" title="彻底搞定C语言指针详解-完整版-时候初学者-必备" target="blank">彻底搞定C语言指针详解-完整版...</a></li>
+						  <li><span class="Blog_span7"></span><a href="http://blog.chinaunix.net/uid-233938-id-162619.html" title="使用openssl api进行加密解密" target="blank">使用openssl api进行加密解密...</a></li>
+						  <li><span class="Blog_span7"></span><a href="http://blog.chinaunix.net/uid-233938-id-162628.html" title="一段自己打印自己的c程序" target="blank">一段自己打印自己的c程序...</a></li>
+			            </ul>
+            <ul class="Blog_ul7">
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785970" title="linux dhcp  peizhi roc" target="blank">linux dhcp  peizhi roc</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785964" title="关于Unix文件的软链接" target="blank">关于Unix文件的软链接</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785935" title="求教这个命令什么意思，我是新手，刚刚学习solaris" target="blank">求教这个命令什么意思，我是新...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785919" title="sed -e &quot;/grep/d&quot; 是什么意思？谢谢" target="blank">sed -e "/grep/d" 是什么意思...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://ask.chinaunix.net/question/785702" title="谁能够帮我解决LINUX  2.6  10版本驱动" target="blank">谁能够帮我解决LINUX  2.6  10...</a></li>
+			            </ul>
+            <div class="clear"></div>
+          </div>
+		  <!--
+          <div class="Blog_con3_4 Blog_con3_5">
+            <div class="Blog_tit2 Blog_tit7">热门推荐</div>
+            <ul>
+			              <li><a href="" title="" target='blank' ></a></li>
+			            </ul>
+          </div>
+		  -->
+        </div>
+      </div>
+      <div class="Blog_right1_7" id="replyList">
+		<div class="Blog_tit3">给主人留下些什么吧！~~</div>
+														<!--不包含引用-->
+					<div class="Blog_right1_8">
+					  <div class="Blog_right_img1"><a href="http://blog.chinaunix.net/uid/20416869.html"><img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/69_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'"></a></div>
+					  <div class="Blog_right_font1">
+                                              						<p class="Blog_p5"><span><a href="http://blog.chinaunix.net/uid/20416869.html"><span>chaoshua</span></a></span>2010-09-12 14:49:01</p>
+                                              						<p class="Blog_p6">好久没来博客，现在才看到，我自己折腾了好久，基本可行的</p>                                     
+						<div class="div1"><a href="javascript:void(0);" class="Blog_a10" toid="20416869" bid="173134" cid="94426" tname="chaoshua">回复</a> | <a href="javascript:;" onclick="linkto();showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');" class="box_report">举报</a></div>
+						<!-- 评论占位框-->
+						<div class="z_move_comment" style="display:none">
+						</div>
+					  </div>
+					  <div class="Blog_line1"></div>
+					</div>
+																<!--不包含引用-->
+					<div class="Blog_right1_8">
+					  <div class="Blog_right_img1"><a href="http://blog.chinaunix.net/uid/0.html"><img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/00_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'"></a></div>
+					  <div class="Blog_right_font1">
+                                                                                            <p class="Blog_p5"><span><a href="http://blog.chinaunix.net/uid/0.html"><span style="color:#c80000">chinaunix网友<em></em></span></a></span>2010-07-21 08:45:23</p>
+                                              						<p class="Blog_p6">您的这个方法，得到实践的验证了吗？我想现在使用。</p>                                     
+						<div class="div1"><a href="javascript:void(0);" class="Blog_a10" toid="0" bid="173134" cid="94427" tname="chinaunix网友">回复</a> | <a href="javascript:;" onclick="linkto();showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');" class="box_report">举报</a></div>
+						<!-- 评论占位框-->
+						<div class="z_move_comment" style="display:none">
+						</div>
+					  </div>
+					  <div class="Blog_line1"></div>
+					</div>
+											<!-- 评论分页-->
+		<div class="Blog_right1_6 Blog_right1_12">
+        		</div>
+		<!-- 评论分页-->
+        <div class="Blog_right1_10">
+          <div class="Blog_tit3">评论热议</div>
+		  		 <!--未登录 -->
+        <div class="Blog_right1_8">
+          <div class="nologin_con1"> 请登录后评论。
+            <p><a href="http://blog.chinaunix.net/site/login.html" onclick="linkto()">登录</a> <a href="http://sso.chinaunix.net/Register?return_url=http%3A%2F%2Ft.cublog.com%2F">注册</a></p>
+          </div>
+        </div>
+        <br>
+        <div>
+            <div style="float:left;margin-left:70px;margin-right:10px;">
+             <script type="text/javascript">
+            var cpro_id = "u1625692";
+            </script>
+            <script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/c.js" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1625692_0"><iframe id="iframeu1625692_0" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/bcbm.html" vspace="0" hspace="0" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true" align="center,center" height="60" scrolling="no" width="468" frameborder="0"></iframe></div>
+            </div>
+            <div style="margin-left:10px;">
+            <script type="text/javascript">
+            var cpro_id = "u1625694";
+            </script>
+            <script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/c.js" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1625694_0"><iframe id="iframeu1625694_0" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/bcbm_002.html" vspace="0" hspace="0" marginwidth="0" marginheight="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true" align="center,center" height="60" scrolling="no" width="468" frameborder="0"></iframe></div>
+            </div>
+        </div>
+		
+        </div>
+      </div>
+    </div>
+  </div>
+  <input id="report_url" value="/blog/ViewReport.html" type="hidden">
+
+<script type="text/javascript">
+  	//测试字符串的长度 一个汉字算2个字节
+	function mb_strlen(str)
+	{
+		var len=str.length;
+		var totalCount=0;
+		for(var i=0;i<len;i++)
+		{
+			var c = str.charCodeAt(i);
+			if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+				totalCount++;
+			}else{
+				totalCount+=2;
+			}
+		}
+		return totalCount;
+	}
+	/*
+	var Util = {};
+	Util.calWbText = function (text, max){
+		if(max === undefined)
+			max = 500;
+		var cLen=0;
+		var matcher = text.match(/[^\x00-\xff]/g),
+			wlen  = (matcher && matcher.length) || 0;
+		//匹配url链接正则 http://***
+		var pattern = /http:\/\/([\w-]+\.)+[\w-]+(\/*[\w-\.\/\?%&=][^\s^\u4e00-\u9fa5]*)?/gi;
+		//匹配的数据存入数组
+		var arrPt = new Array();
+		var i = 0;
+		while((result = pattern.exec(text)) != null){
+			arrPt[i] = result[0];
+			i++;
+		}
+		//替换掉原文本中的链接
+		for(var j = 0;j<arrPt.length;j++){
+			text = text.replace(arrPt[j],"");
+		}
+		//减掉链接所占的长度
+		return Math.floor((max*2 - text.length - wlen)/2 - 12*i);
+	};
+	*/
+	var allowComment = '0';
+	
+	//举报弹出层
+	function showJuBao(url, cid){
+		
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 ,
+                                        'blogurl' : window.location.href
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+	}
+
+	$(function(){
+
+		//创建管理员删除的弹出层
+		$('#admin_article_del').click(function(){
+			$.cover(false);
+			asyncbox.open({
+				id : 'class_thickbox',
+				html : '<div class="HT_layer3_1"><ul><li class="HT_li1">操作原因：<select class="HT_sel7" id="del_type" name="del_type"><option value="广告文章">广告文章</option><option value="违规内容">违规内容</option><option value="标题不明">标题不明</option><option value="文不对题">文不对题</option></select></li><li class="HT_li1" ><input class="HT_btn4" id="admin_delete"  type="button" /></li></ul></div>',
+				title : '选择类型',
+				width : 300,
+				height : 150,
+				scroll : 'no',
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		$('#admin_delete').live('click' , function(){
+			///blog/logicdel/id/3480184/url/%252Fblog%252Findex.html.html
+			var type = $('#del_type').val();
+			var url = '/blog/logicdel/id/173134/url/%252Fuid%252F20416869.html.html';
+			window.location.href= url + '?type=' + type;
+		});
+
+
+		//顶  js中暂未添加&过滤 
+		$('#digg').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			var bid = $('#digg').attr('bid');
+			var url = $('#digg').attr('url');
+
+			var digg_str = $.cookie('digg_id');
+			if(digg_str != null)
+			{
+				var arr= new Array(); //定义一数组
+
+				arr = digg_str.split(","); //字符分割     
+				for( i=0 ; i < arr.length ; i++ )   
+				{   
+					if(bid == arr[i])
+					{
+						showErrorMsg('已经赞过该文章', '消息提示'); 
+						return false;
+					}
+				} 
+			}
+			$.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+					if(msg.error == 0)
+					{
+						var num = parseInt($('#digg_num').html(),10);
+						num += 1;
+						$('#digg_num').html(num);
+						$('#digg').die();
+
+						if(digg_str == null)
+						{
+							$.cookie('digg_id', bid, {expires: 30 , path: '/'});
+						}
+						else
+						{
+							$.cookie('digg_id', digg_str + ',' + bid, {expires: 30 , path: '/'});
+						}
+						showSucceedMsg('谢谢' , '消息提示');
+					}
+					else if(msg.error == 1)
+					{
+						//showErrorMsg(msg.error_content , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+					}
+					else if(msg.error == 2)
+					{
+						showErrorMsg(msg.error_content , '消息提示'); 
+					}
+				}
+			});
+		});
+		//举报弹出层
+		/*$('.box_report').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+			var url = $('#report_url').val();
+			var cid = $(this).attr('cid');
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});*/
+
+
+		//评论相关代码
+		
+		//点击回复显示评论框
+		$('.Blog_a10').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var tid = $(this).attr('toid');//留言作者id
+			var bid = $(this).attr('bid');//blogid
+			var cid = $(this).attr('cid');//留言id
+			var tname = $(this).attr('tname');
+                         			var tpl  = '<div class="Blog_right1_9">';
+				tpl +=	 '<div class="div2">';
+				tpl +=     '<textarea name="" cols="" rows="" class="Blog_ar1_1" id="rmsg">文明上网，理性发言...</textarea>';
+				tpl +=	 '</div>';
+				tpl +=   '<div class="div3">';
+				tpl +=		'<div class="div3_2"><a href="javascript:void(0);" class="Blog_a11" id="quota_sbumit" url="/Comment/PostComment.html" tid="'+tid+'" bid="'+bid+'" cid="'+cid+'" tname="'+tname+'" ></a><a href="javascript:void(0)" id="qx_comment" class="Blog_a12"></a></div>';
+				tpl +=		'<div class="div3_1"><a href="javascript:void(0);" id="mface"><span></span>表情</a></div>';
+				tpl +=		'<div class="clear"></div>';
+				tpl +=	 '</div>';
+				tpl +=  '</div>';
+                                 			$('.z_move_comment').html('');
+			$(this).parents('.Blog_right1_8').find('.z_move_comment').html(tpl).show();
+		});
+		//引用的评论提交
+		$('#quota_sbumit').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+
+			var bid   = $(this).attr('bid');
+			var tid   = $(this).attr('tid');//被引用人的id
+			var qid   = $(this).attr('cid');//引用的id
+			var url = $(this).attr('url');
+			var text = $('#rmsg').val();
+			var tname = $(this).attr('tname');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : tid , 'qid' : qid , 'text': text , 'tname' : tname },
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1){
+						var tpl =  '<div class="Blog_right1_8">';
+							tpl+=     '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl+=     '<div class="Blog_right_font1">';
+							tpl+=         '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl+=         '<p class="Blog_p7"><a href="' + data.info.quota.url + '">' + data.info.quota.username + '</a>：'+ data.info.quota.content + '</p>';
+							tpl+=         '<p class="Blog_p8">' + data.info.content + '</p><span class="span_text1"><a href="javascript:void(0);" class="Blog_a10" toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '  tname = ' + data.info.username + ' >回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '" >删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport.html\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '" >举报</a></span></div>';
+							tpl+=         '<div class="z_move_comment" style="display:none"></div>';
+							tpl+=	      '<div class="Blog_line1"></div></div>';
+							$('#replyList .Blog_right1_8:first').before(tpl);
+							$('.z_move_comment').html('').hide();
+				    }
+					else if(data.code == -1){
+						//showErrorMsg(data.info , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+			});
+		});
+		//底部发表评论
+		$('#submitmsg').click(function(){
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var bid   = $(this).attr('bid');
+			var toid  = $(this).attr('toid');
+			var text = $('#reply').val();
+			var url = $(this).attr('url');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : toid ,'text': text},
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1)
+					{
+						var tpl   = '<div class="Blog_right1_8">';
+							tpl  +=   '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl  +=	  '<div class="Blog_right_font1">';
+							tpl  +=       '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl  +=       '<p class="Blog_p6">' + data.info.content + '</p>';
+							tpl  +=		  '<div class="div1"><a href="javascript:void(0);" class="Blog_a10"  toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '>回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '">删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport.html\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '">举报</a></div>';
+							tpl  +=		  '<div class="z_move_comment" style="display:none"></div>';
+							tpl  +=    '</div><div class="Blog_line1"></div></div>';
+							$('.Blog_tit3:first').after(tpl);
+							$('#reply').val('文明上网，理性发言...');
+					}
+					else if(data.code == -1)
+					{
+						showErrorMsg(data.info , '消息提示'); 
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+		    });
+			
+		});
+		//底部评论重置
+		$('#reset_comment').click(function(){
+			$('#reply').val('文明上网，理性发言...');
+		});
+		//取消回复
+		$('#qx_comment').live('click' , function(){
+			$('.z_move_comment').html('').hide();
+		});
+
+
+		$('#rmsg, #reply').live({
+		    focus:function(){
+			    if($(this).val() == '文明上网，理性发言...'){
+			        $(this).val('');
+			    }
+			},
+			blur:function(){
+		        if($(this).val() == ''){
+			        $(this).val('文明上网，理性发言...');
+			    }
+			}
+		});
+		//删除留言确认
+		$('.comment_del_mark').live('click' , function(){
+			var url = $(this).attr('url');
+			asyncbox.confirm('删除留言','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = url;
+				}
+			});
+		});
+		//删除时间确认
+		$('.del_article_id').click(function(){
+			var delurl = $(this).attr('delurl');
+			asyncbox.confirm('删除文章','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = delurl;
+				}
+			});
+		});
+		/*
+		//字数限制
+		$('#rmsg, #reply').live('keyup', function(){
+			var id = $(this).attr('id');
+			var left = Util.calWbText($(this).val(), 500);
+			var eid = '#errmsg';
+			
+			if(id == 'reply') eid =  '#rerrmsg';
+			if (left >= 0)
+		        $(eid).html('您还可以输入<span>' + left + '</span>字');
+		    else
+		        $(eid).html('<font color="red">您已超出<span>' + Math.abs(left) + '</span>字 </font>');
+		});
+		*/
+		//加载表情
+	    $('#face').qqFace({id : 'facebox1', assign : 'reply', path : '/image/qqface/'});
+	    $('#mface').qqFace({id : 'facebox', assign : 'rmsg', path:'/image/qqface/'});
+	    
+		/*
+		$('#class_one_id').change(function(){
+			alert(123213);
+			var id = parseInt($(this).val() , 10);
+			if(id == 0) return false;
+			$('.hidden_son_class span').each(function( index , dom ){
+				if( dom.attr('cid')  == id )
+				{
+				}
+			});
+		});
+		*/
+		//转载文章
+		var turn_url = "/blog/viewClassPart.html";
+		$('#repost_bar').click(function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+			var id = $(this).attr('bid');
+			asyncbox.open({
+				id  : 'turn_class_thickbox',
+				url : turn_url,
+				title : '转载文章',
+				width : 330,
+				height : 131,
+				scroll : 'no',
+				data : {
+					'id'	 : id
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		/*
+	    //转发文章
+	    $('#repost_bar').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				return false;
+			}
+	    	var bid  = $(this).attr('bid');
+	    	var url  = $(this).attr('url');
+	    	asyncbox.confirm('转载文章','确认', function(action){
+	    	  if(action == 'ok'){
+	    	    $.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+				  if(msg.error == 0){
+				    showSucceedMsg('转发成功！', '消息提示');
+				  }else if(msg.error == 1){
+				    //location.href = '/index.php?r=site/login';
+					showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login.html');
+				  }else{
+				    showErrorMsg(msg.error_content, '消息提示');
+			      }
+				}
+			  });
+	    	  }
+	    	});
+
+		});
+		*/
+
+	});
+</script>
+<!--该部分应该放在输出代码块的后面才起作用 -->
+<script type="text/javascript">
+
+SyntaxHighlighter.autoloader(
+	'applescript			/highlight/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/highlight/scripts/shBrushAS3.js',
+	'bash shell				/highlight/scripts/shBrushBash.js',
+	'coldfusion cf			/highlight/scripts/shBrushColdFusion.js',
+	'cpp c					/highlight/scripts/shBrushCpp.js',
+	'c# c-sharp csharp		/highlight/scripts/shBrushCSharp.js',
+	'css					/highlight/scripts/shBrushCss.js',
+	'delphi pascal			/highlight/scripts/shBrushDelphi.js',
+	'diff patch pas			/highlight/scripts/shBrushDiff.js',
+	'erl erlang				/highlight/scripts/shBrushErlang.js',
+	'groovy					/highlight/scripts/shBrushGroovy.js',
+	'java					/highlight/scripts/shBrushJava.js',
+	'jfx javafx				/highlight/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/highlight/scripts/shBrushJScript.js',
+	'perl pl				/highlight/scripts/shBrushPerl.js',
+	'php					/highlight/scripts/shBrushPhp.js',
+	'text plain				/highlight/scripts/shBrushPlain.js',
+	'py python				/highlight/scripts/shBrushPython.js',
+	'ruby rails ror rb		/highlight/scripts/shBrushRuby.js',
+	'scala					/highlight/scripts/shBrushScala.js',
+	'sql					/highlight/scripts/shBrushSql.js',
+	'vb vbnet				/highlight/scripts/shBrushVb.js',
+	'xml xhtml xslt html	/highlight/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+
+
+function code_hide(id){
+	var code = document.getElementById(id).style.display;
+	if(code == 'none'){
+		document.getElementById(id).style.display = 'block';
+	}else{
+		document.getElementById(id).style.display = 'none';
+	}
+}
+</script>
+<!--回顶部js2011.12.30-->
+<script language="javascript">
+ lastScrollY=0;
+ function heartBeat(){
+ var diffY;
+ if (document.documentElement && document.documentElement.scrollTop)
+     diffY = document.documentElement.scrollTop;
+ else if (document.body)
+     diffY = document.body.scrollTop
+ else
+     {/*Netscape stuff*/}
+ percent=.1*(diffY-lastScrollY);
+ if(percent>0)percent=Math.ceil(percent);
+ else percent=Math.floor(percent);
+ document.getElementById("full").style.top=parseInt(document.getElementById("full").style.top)+percent+"px";
+ lastScrollY=lastScrollY+percent;
+ if(lastScrollY<200)
+ {
+ document.getElementById("full").style.display="none";
+ }
+ else
+ {
+ document.getElementById("full").style.display="block";
+ }
+ }
+ var gkuan=document.body.clientWidth;
+ var ks=(gkuan-960)/2-30;
+ suspendcode="<div id=\"full\" style='right:4px;POSITION:absolute;TOP:500px;z-index:100;width:20px; height:50px;cursor:pointer;'><a href=\"javascript:void(0)\" onclick=\"window.scrollTo(0,0);\"><img src=\"\/image\/top.png\" /></a></div>"
+ document.write(suspendcode);
+ window.setInterval("heartBeat()",1);
+ </script><div id="full" style="right: 4px; position: absolute; top: 4547px; z-index: 100; width: 20px; height: 50px; cursor: pointer; display: block;"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);"><img src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/top.png"></a></div>  <!-- footer -->
+  <div class="Blog_footer" style="clear:both">
+    <div><a href="http://www.chinaunix.net/about/index.shtml" target="_blank" rel="nofollow">关于我们</a> | <a href="http://www.it168.com/bottomfile/it168.shtml" target="_blank" rel="nofollow">关于IT168</a> | <a href="http://www.chinaunix.net/about/connect.html" target="_blank" rel="nofollow">联系方式</a> | <a href="http://www.chinaunix.net/about/service.html" target="_blank" rel="nofollow">广告合作</a> | <a href="http://www.it168.com//bottomfile/flgw/fl.htm" target="_blank" rel="nofollow">法律声明</a> | <a href="http://sso.chinaunix.net/Register?return_url=http%3A%2F%2Fblog.chinaunix.net%2F" target="_blank" rel="nofollow">免费注册</a>
+      <p>Copyright  2001-2010 ChinaUnix.net All Rights Reserved 北京皓辰网域网络信息技术有限公司. 版权所有 </p>
+      <div>感谢所有关心和支持过ChinaUnix的朋友们
+        <p>京ICP证041476号 京ICP证060528号</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+
+//全局错误提示弹出框
+function showErrorMsg(content, title, url){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span1"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="login_btn1" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	   asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//全局正确提示
+function showSucceedMsg(content, title , url ){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span2"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//关闭指定id的窗口
+function close_windows(id){
+	$.cover(false);
+	$.close(id);
+}
+
+
+//公告
+var tID;
+var tn;                        // 高度
+var nStopTime = 5000;        // 不同行间滚动时间隔的时间，值越小，移动越快
+var nSpeed = 50;            // 滚动时，向上移动一像素间隔的时间，值越小，移动越快
+var isMove = true;
+var nHeight = 25;
+var nS = 0;
+var nNewsCount = 3;
+
+/**
+ * n 用于表示是否为第一次运行
+ **/
+function moveT(n)
+{
+    clearTimeout(tID)
+    var noticev2 = document.getElementById("noticev2")
+    nS = nSpeed;
+    
+    // 只在第一次调用时运行，初始化环境（有没有参数）
+    if (n)
+    {
+        // 设置行高
+        noticev2.style.lineHeight = nHeight + "px";
+        // 初始化显示位置
+        tn = 0;
+        // 刚进入时在第一行停止时间
+        nS = nStopTime;
+    }
+    
+    // 判断鼠标是否指向层
+    if (isMove)
+    {
+        // 向上移动一像素
+        tn--;
+        // 如果移动到最下面一行了，则移到顶行
+        if (Math.abs(tn) == nNewsCount * nHeight)
+        {
+            tn = 0;
+        }
+        // 设置位置
+        noticev2.style.marginTop = tn + "px";
+        // 完整显示一行时，停止一段时间
+        if (tn % nHeight == 0)
+        {
+            nS = nStopTime;
+        }
+    }
+
+    tID = setTimeout("moveT()", nS);
+}
+moveT(1);    // 此处可以传入任何参数
+</script>
+<script language="javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/pv.js"></script>
+<script>
+function sendPV(){
+    var pvTrack = new PvTrack();
+    pvTrack.type = 35; // 频道类别ID
+    pvTrack.channel = 189; // 频道ID
+    pvTrack.pageType = 0;
+    pvTrack.track();
+}
+window.setTimeout("sendPV()", 1000);
+</script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20237423-2']);
+  _gaq.push(['_setDomainName', '.chinaunix.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ee5e8cdc4d43389b3d1bfd76e83216b' type='text/javascript'%3E%3C/script%3E"));
+
+function linkto(){
+    setCookie("returnUrl", location.href, 1484873146, "/");
+}
+function linktoOut(){
+    setCookie("returnOutUrl", location.href, 1484873146, "/");
+}
+//JS写COOKIE
+function setCookie(name, value, expires, path, domain){
+	if(!arguments[2]) expires = 3600 * 24;
+	if(!arguments[3]) path = "";
+	if(!arguments[4]) domain = "";
+	var str=name+"="+escape(value);
+	if(expires!=""){
+		var date=new Date();
+		date.setTime(date.getTime()+expires*1000);
+		str+=";expires="+date.toGMTString();
+	}
+	if(path!=""){
+		str+=";path="+path;//指定可访问cookie的目录
+	}
+	if(domain!=""){
+		str+=";domain="+domain;//指定可访问cookie的域
+	}
+	document.cookie = str;
+}
+
+</script><script src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/h.js" type="text/javascript"></script>
+<script type="text/javascript" src="CCITT%20CRC-16%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0-chaoshua-ChinaUnix%E5%8D%9A%E5%AE%A2_files/jquery_002.js"></script>
+
+
+<div id="asyncbox_cover" unselectable="on" style="opacity:0.1;filter:alpha(opacity=10);background:#000"></div><div id="asyncbox_clone"></div><div id="asyncbox_focus"></div><div id="asyncbox_load"><div><span></span></div></div></body></html>
