@@ -1,0 +1,7 @@
+TestModule DEFINITIONS ::= BEGIN 	-- Module parameters preamble
+	Circle ::= SEQUENCE { 				-- Definition of Circle type
+		position-x INTEGER, 						-- Integer position
+		position-y INTEGER, -- Position along Y-axis
+		radius INTEGER (0..MAX) -- Positive radius
+	} 							-- End of Circle type
+END

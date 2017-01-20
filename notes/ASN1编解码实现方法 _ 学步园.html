@@ -1,0 +1,1026 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0036)http://www.xuebuyuan.com/840580.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>ASN1编解码实现方法 | 学步园</title> 
+<meta name="description" content=" ">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="./ASN1编解码实现方法 _ 学步园_files/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="./ASN1编解码实现方法 _ 学步园_files/css.css">
+<link rel="stylesheet" href="./ASN1编解码实现方法 _ 学步园_files/highlight.css">
+<link rel="stylesheet" href="./ASN1编解码实现方法 _ 学步园_files/img.css">
+<link rel="pingback" href="http://www.xuebuyuan.com/xmlrpc.php">
+<link rel="shortcut icon" href="http://cdn.xuebuyuan.com/wp-content/themes/HotNewspro/images/favicon.ico">
+<script type="text/javascript" async="" src="./ASN1编解码实现方法 _ 学步园_files/dynamicFloat.js.下载"></script><script type="text/javascript" async="" src="./ASN1编解码实现方法 _ 学步园_files/nczm"></script><script type="text/javascript" async="" src="./ASN1编解码实现方法 _ 学步园_files/nczm(1)"></script><script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/jquery.min.js.下载"></script>
+<link rel="alternate" type="application/rss+xml" title="学步园 » Feed" href="http://www.xuebuyuan.com/feed">
+<link rel="alternate" type="application/rss+xml" title="学步园 » 评论Feed" href="http://www.xuebuyuan.com/comments/feed">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./ASN1编解码实现方法 _ 学步园_files/wp-syntax.css" type="text/css" media="all">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.xuebuyuan.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.xuebuyuan.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="C# 结构的重要差异 初探" href="http://www.xuebuyuan.com/932060.html">
+<link rel="next" title="陈光标称今晚将从东京赶赴云南地震灾区" href="http://www.xuebuyuan.com/874778.html">
+<meta name="generator" content="WordPress 3.8">
+<link rel="canonical" href="http://www.xuebuyuan.com/840580.html">
+<link rel="shortlink" href="http://www.xuebuyuan.com/?p=840580">
+		<link href="./ASN1编解码实现方法 _ 学步园_files/4-blue.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+.banner img{
+	margin: 0 0 5px 0;
+}
+</style>
+
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/comments-ajax.js.下载"></script>
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/reply.js.下载"></script>
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/custom.js.下载"></script>
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/superfish.js.下载"></script>
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/mousewheel.js.下载"></script>
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/fancybox.js.下载"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$("a[rel=example_group]").fancybox({
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'titlePosition' 	: 'over',
+			'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+				return '<span id="fancybox-title-over">共 ' + currentArray.length + ' 张图片，当前第 ' + (currentIndex + 1) +' 张 '+ (title.length ? ' &nbsp; ' + title : '') + '</span>';
+			}
+		});
+
+		$("#various").fancybox({
+			'padding'			: 0,
+			'autoScale'			: false,
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+		$("#download").fancybox({
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+	});
+</script>
+<script type="text/javascript">
+$(function () {
+$('.thumbnail img,.thumbnail_t img,.box_comment img,#slideshow img,.cat_ico,.cat_name,.r_comments img,.v_content_list img').hover(
+function() {$(this).fadeTo("fast", 0.5);},
+function() {$(this).fadeTo("fast", 1);
+});
+});
+</script>
+<!-- PNG -->
+<!--[if lt IE 7]>
+<script type="text/javascript" src="http://www.xuebuyuan.com/wp-content/themes/HotNewspro/js/pngfix.js"></script>
+<script type="text/javascript">
+DD_belatedPNG.fix('.boxCaption,.top_box,.logo,.reply,.imgcat,.banner img,#fancybox-left-ico,#fancybox-right-ico,#fancybox-close');
+</script>
+<![endif]-->
+<!-- 图片延迟加载 -->
+<script type="text/javascript" src="./ASN1编解码实现方法 _ 学步园_files/lazyload.js.下载"></script>
+<script type="text/javascript">
+	$(function() {          
+    	$(".entry_box img,.entry_box_h img,#entry img,.entry_b img").lazyload({
+            effect:"fadeIn",
+			failurelimit : 30
+          });
+    	});
+</script>
+<!-- IE6菜单 -->
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+sfHover = function() {
+	if (!document.getElementsByTagName) return false;
+	var sfEls = document.getElementById("menu").getElementsByTagName("li");
+
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}	
+	var sfEls = document.getElementById("topnav").getElementsByTagName("li");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+//--><!]]></script>
+<!-- 预加载 -->
+</head>
+<body class="single single-post postid-840580 single-format-standard zh"><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./ASN1编解码实现方法 _ 学步园_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div>
+<div id="wrapper">
+	<div id="top">
+		<div id="topnav">
+			<div class="left_top ">
+				<div class="home_h"><a href="http://www.xuebuyuan.com/" title="首  页" class="home_h"></a></div>
+				<div class="menu-%e5%af%bc%e8%88%aa-container"><ul id="menu-%e5%af%bc%e8%88%aa" class="menu sf-js-enabled sf-shadow"><li id="menu-item-1703978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703978"><a href="http://www.xuebuyuan.com/category/web%e5%89%8d%e7%ab%af">web前端</a></li>
+<li id="menu-item-1703980" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703980"><a href="http://www.xuebuyuan.com/category/%e6%95%b0%e6%8d%ae%e5%ba%93">数据库</a></li>
+<li id="menu-item-1703982" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703982"><a href="http://www.xuebuyuan.com/category/%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80">编程语言</a></li>
+<li id="menu-item-1703979" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703979"><a href="http://www.xuebuyuan.com/category/%e6%90%9c%e7%b4%a2%e6%8a%80%e6%9c%af">搜索技术</a></li>
+<li id="menu-item-1810308" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1810308"><a href="http://www.xuebuyuan.com/aboutus">关于本站</a></li>
+</ul></div> 
+			</div>
+			<!-- end: left_top --> 
+			<div id="searchbar">
+								<form action="http://www.xuebuyuan.com/search" id="cse-search-box">
+	<div>
+	<input type="hidden" name="cx" value="007504628711321185124:w-wufhldrhc">
+	<input type="hidden" name="cof" value="FORID:10">
+	<input type="text" onclick="this.value=&#39;&#39;;" name="q" id="q" class="swap_value">
+	<input type="image" src="./ASN1编解码实现方法 _ 学步园_files/go.gif" id="go" alt="Search" title="搜索">
+	</div>
+</form>							</div>
+			<!-- end: searchbar -->
+		</div>
+		<!-- end: topnav -->
+	</div>
+	<!-- end: top -->
+	<div id="header">
+		<div class="header_c">
+			<div class="login_t"><a id="showbtn" onclick="showid(&#39;smallLay&#39;);">登录</a>  <div id="smallLay">
+	<div id="smallLay_box">
+	<!-- if not logged -->
+	<form action="http://www.xuebuyuan.com/wp-login.php?redirect_to=http%3A%2F%2Fwww.xuebuyuan.com%2F840580.html" method="post" id="loginform">
+		<div class="loginblock">
+			<p class="login"><input type="text" name="log" id="log" size="" tabindex="11" data-form-un="1484807947958.46"></p>
+			<p class="password"><input type="password" name="pwd" id="pwd" size="" tabindex="12" data-form-pw="1484807947958.46"></p>
+			<p class="lefted"><button value="Submit" id="submit_t" type="submit" tabindex="13" data-form-sbm="1484807947958.46">登&nbsp;录</button></p>
+		</div>
+		<input type="hidden" name="redirect_to" value="/840580.html">
+		<input type="checkbox" name="rememberme" id="modlogn_remember" value="yes" checked="checked" alt="Remember Me">下次自动登录
+	</form>
+	<!-- end if not logged -->
+	</div>
+</div>
+</div>
+			<div class="time">
+<script type="text/javascript">
+today=new Date();
+var day; var date; var hello;
+hour=new Date().getHours()
+if(hour < 6)hello='  凌晨好! '
+else if(hour < 9)hello=' 早上好! '
+else if(hour < 12)hello=' 上午好! '
+else if(hour < 14)hello=' 中午好! '
+else if(hour < 17)hello=' 下午好! '
+else if(hour < 19)hello=' 傍晚好! '
+else if(hour < 22)hello=' 晚上好! '
+else {hello='夜深了! '}
+var webUrl = webUrl;
+document.write(' '+hello);
+</script>  下午好! 
+<span id="localtime">
+<script type="text/javascript">
+today=new Date(); var tdate,tday, x,year; var x = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六");
+var MSIE=navigator.userAgent.indexOf("MSIE");
+if(MSIE != -1)
+year =(today.getFullYear());
+else
+year = (today.getYear()+1900);
+tdate= year+ "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日" + " " + x[today.getDay()];
+document.write(tdate);
+</script>2017年1月19日 星期四
+</span>
+</div>			<a href="http://www.xuebuyuan.com/" title="学步园"><h1 class="logo">学步园</h1></a>		</div>
+		<div class="clear"></div>
+		<!-- end: header_c -->
+
+<script type="text/javascript">
+var cpro_id="u2275153";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"980",rsi1:"250",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u2275153_0"><iframe id="iframeu2275153_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm.html" width="980" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+	</div>
+	<!-- end: header -->
+			<!-- header_image -->
+		<div class="banner">
+					</div>
+		<!-- end:header_image -->
+		<!-- scroll -->
+	<ul class="scroll">
+	<li class="sct">
+		<a href="http://www.xuebuyuan.com/840580.html#">&nbsp;&nbsp;&nbsp;</a>
+		<div><a class="scroll_t">返回顶部</a></div>
+	</li>
+		<li class="scc">
+		<a href="http://www.xuebuyuan.com/840580.html#">&nbsp;&nbsp;&nbsp;</a>
+		<div><a class="scroll_c">查看留言</a></div>
+	</li>
+		<li class="scb">
+		<a href="http://www.xuebuyuan.com/840580.html#">&nbsp;&nbsp;&nbsp;</a>
+		<div><a class="scroll_b">转到底部</a></div>
+	</li>
+</ul><script type="text/javascript">
+    function doZoom(size) {
+        var zoom = document.all ? document.all['entry'] : document.getElementById('entry');
+        zoom.style.fontSize = size + 'px';
+    }
+</script>
+<div id="content">
+			 <!-- menu -->
+		<div id="map">
+			<div class="browse">现在的位置: <a title="返回首页" href="http://www.xuebuyuan.com/">首页</a> &gt; 综合 &gt; 正文</div>
+			<div id="feed"><a href="http://www.xuebuyuan.com/feed" title="RSS">RSS</a></div>
+		</div>
+		<!-- end: menu -->
+		<div class="entry_box_s">
+			<div class="context">
+				<div class="context_t" style="display: block;">
+					<span class="prev"></span>
+					<span class="next"></span>
+				</div>
+			</div>
+			<div class="entry_title_box">
+				<!-- 分类图标 -->
+				<div class="ico"></div>
+				<!-- end: 分类图标 -->
+				<h2 class="entry_title">ASN1编解码实现方法</h2>
+				<div class="archive_info">
+					<span class="date">2013年09月16日</span>
+					<span class="category"> ⁄ 综合</span>
+										⁄ 共 9768字					⁄ 字号 <span class="font"><a href="javascript:doZoom(12)">小</a> <a href="javascript:doZoom(13)">中</a> <a href="javascript:doZoom(18)">大</a></span>
+					<span class="comment"> ⁄ <span>评论关闭</span></span>
+										<span class="edit"></span>
+				</div>
+			</div>
+			<!-- end: entry_title_box -->
+			<div class="entry">
+				<div id="entry">
+					<div class="ad_r">
+	<script type="text/javascript">
+    /*正文右侧中大矩形*/
+    var cpro_id = "u1788635";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1788635_0"><iframe id="iframeu1788635_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(2).html" width="336" height="280" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</div>					<div id="article_content" class="article_content">
+<div class="Section0">
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><a name="_Toc4526">目&nbsp;&nbsp;录</a></p>
+</div>
+<div class="Section1">
+<p class="p22"><span><span><a href="http://www.xuebuyuan.com/840580.html#_Toc2490%20"><span>版本记录</span><span> </span><span><span>1</span></span></a></span></span></p>
+<p class="p22"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc4526%20"><span>目&nbsp;&nbsp;录</span><span> </span><span><span>1</span></span></a></span></p>
+<p class="p22"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc13719%20"><span>第<span style="font-family: Arial;">1</span><span style="font-family: 黑体;">章&nbsp;</span></span><span>概述</span><span> </span><span><span>3</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc24577%20"><span>1.1&nbsp;</span><span>背景</span><span> </span><span><span>3</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc515%20"><span>1.2&nbsp;</span><span>ASN.1<span style="font-family: 宋体;">概念</span></span><span> </span><span><span>3</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc19754%20"><span>1.3&nbsp;</span><span>TAG</span><span> </span><span><span>4</span></span></a></span></p>
+<p class="p22"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc22874%20"><span>第<span style="font-family: Arial;">2</span><span style="font-family: 黑体;">章&nbsp;</span></span><span>开发工具</span><span> </span><span><span>4</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc10319%20"><span>2.1&nbsp;</span><span>开发库</span><span> </span><span><span>4</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc27543%20"><span>2.2&nbsp;</span><span>辅助工具</span><span> </span><span><span>5</span></span></a></span></p>
+<p class="p22"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc12601%20"><span>第<span style="font-family: Arial;">3</span><span style="font-family: 黑体;">章&nbsp;</span></span><span>JavaAsn1Compiler</span><span> </span><span><span>6</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc4628%20"><span>3.1&nbsp;</span><span>定义<span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span><span style="font-family: 宋体;">描述文件</span></span><span> </span><span><span>6</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc31151%20"><span>3.2&nbsp;</span><span>生成<span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;"><span class="wp_keywordlink"></span></span></span></a><a href="http://www.xuebuyuan.com/" title="代码" target="_blank">代码</a></span><span> </span><span><span>6</span></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc1545%20"><span>3.2.1&nbsp;</span><span>代码生成</span><span> </span><span><span>6</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc12907%20"><span>3.2.2&nbsp;</span><span>代码案例</span><span> </span><span><span>6</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc10272%20"><span>3.2.3&nbsp;</span><span>编解码</span><span> </span><span><span>7</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc18661%20"><span>3.3&nbsp;</span><span>总结</span><span> </span><span><span>8</span></span></a></span></p>
+<p class="p22"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc18846%20"><span>第<span style="font-family: Arial;">4</span><span style="font-family: 黑体;">章&nbsp;</span></span><span>bouncycastle</span><span> </span><span><span>8</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc9289%20"><span>4.1&nbsp;</span><span>编码</span><span> </span><span><span>8</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc11253%20"><span>4.1.1&nbsp;</span><span>确定编码的文件格式</span><span> </span><span><span>8</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc853%20"><span>4.1.2&nbsp;</span><span>构造<span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">映射类</span></span><span> </span><span><span>9</span></span></a></span></p>
+<p class="p16"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc20921%20"><span>4.2&nbsp;</span><span>解码</span><span> </span><span><span>11</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc18931%20"><span>4.2.1&nbsp;</span><span>定义实体结构</span><span> </span><span><span>11</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc21571%20"><span>4.2.2&nbsp;</span><span>定义实体解析类</span><span> </span><span><span>11</span></span></a></span></p>
+<p class="p19"><span><a href="http://www.xuebuyuan.com/840580.html#_Toc17606%20"><span>4.2.3&nbsp;</span><span>外部调用接口</span><span> </span><span><span>12</span></span></a></span></p>
+<p class="p0">&nbsp;</p>
+<h1><span>第1章&nbsp;</span><span><a name="_Toc13719"></a></span><span>概述</span></h1>
+<h2><a name="_Toc24577"></a><span>1.1&nbsp;</span><span>背景</span></h2>
+<p class="p0"><span>系统与充值平台的接口是文件的方式，充值平台将文件内容以</span><span>ASN.1<span style="font-family: 宋体;">方式进行编码，</span></span><span>系统需要根据</span><span>ASN.1<span style="font-family: 宋体;">协议进行解码</span></span><span>。</span></p>
+<p class="p0"><span>关于<span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span><span style="font-family: 宋体;">开发的资料，网上资料非常少，特别是涉及到具体的语言，如</span><span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">，资料、案例及第三方库更是少之又少。从无到有是很困难的，为了防止后期其他系统还需要做类似接口，将其记录为<span class="wp_keywordlink"><a href="http://www.it-crazy.com/" title="文章" target="_blank">文章</a></span>以便后查，文章会以充值接口作为案例进行介绍。</span></span></p>
+<h2><a name="_Toc515"></a><span>1.2&nbsp;</span><span>ASN.1</span><span>概念</span></h2>
+<p class="p0"><span>在</span><span><a href="http://zh.wikipedia.org/wiki/%E7%94%B5%E4%BF%A1"><span>电信</span></a></span><span>和</span><span><a href="http://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span>计算机网络</span></a></span><span>领域，</span><span>ASN.1</span><span>(</span><span>Abstract&nbsp;Syntax&nbsp;Notation&nbsp;one</span><span>)&nbsp;<span style="font-family: 宋体;">是一套</span></span><span><a href="http://zh.wikipedia.org/wiki/%E6%A0%87%E5%87%86"><span>标准</span></a></span><span>，是描述</span><span><a href="http://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE"><span>数据</span></a></span><span>的表示、编码、传输、解码的灵活的记法。它提供了一套正式、无歧义和精确的规则以描述独立于特定计算机硬件的对象结构。</span><span>&nbsp;</span></p>
+<p class="p0"><span>ASN.1&nbsp;</span><span>包括</span><span>几个标准化编码规则，如基本编码规则（<span style="font-family: Arial;">BER</span><span style="font-family: 宋体;">）&nbsp;</span><span style="font-family: Arial;">-X.209&nbsp;</span><span style="font-family: 宋体;">、规范编码规则（</span><span style="font-family: Arial;">CER</span><span style="font-family: 宋体;">）、识别名编码规则（</span><span style="font-family: Arial;">DER</span><span style="font-family: 宋体;">）、压缩编码规则（</span><span style="font-family: Arial;">PER</span><span style="font-family: 宋体;">）和&nbsp;</span><span style="font-family: Arial;">XML</span><span style="font-family: 宋体;">编码规则（</span><span style="font-family: Arial;">XER</span><span style="font-family: 宋体;">）。这些编码规则描述了如何对&nbsp;</span><span style="font-family: Arial;">ASN.1&nbsp;</span><span style="font-family: 宋体;">中定义的数值进行编码，以便用于传输，而不管计算机、<span class="wp_keywordlink"><a href="http://www.xuebuyuan.com/" title="编程语言" target="_blank">编程语言</a></span>或它在应用<span class="wp_keywordlink"><a href="http://www.xuebuyuan.com/" title="程序" target="_blank">程序</a></span>中如何表示等因素。</span><span style="font-family: Arial;">ASN.1&nbsp;</span><span style="font-family: 宋体;">的编码方法比许多与之相竞争的标记系统更先进，它支持可扩展信息快速可靠的传输&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">—&nbsp;</span><span style="font-family: 宋体;">在无线宽带中，这是一种优势。</span><span style="font-family: Arial;">1984</span><span style="font-family: 宋体;">年，</span><span style="font-family: Arial;">ASN.1&nbsp;</span><span style="font-family: 宋体;">就已经成为了一种国际标准，它的编码规则已经成熟并在可靠性和兼容性方面拥有更丰富的历程。</span></span><span>　　</span></p>
+<p class="p0"><span>简洁的二进制编码规则（<span style="font-family: &#39;Times New Roman&#39;;">BER</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">CER</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">DER</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">PER</span><span style="font-family: 宋体;">，但不包括&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">XER</span><span style="font-family: 宋体;">）可当作更现代&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">XML&nbsp;</span><span style="font-family: 宋体;">的替代。然而，</span><span style="font-family: &#39;Times New Roman&#39;;">ASN.1&nbsp;</span><span style="font-family: 宋体;">支持对数据的语义进行描述，所以它是比&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">XML&nbsp;</span><span style="font-family: 宋体;">更为高级的语言。　　</span></span></p>
+<p class="p0"><span>ASN.1&nbsp;<span style="font-family: 宋体;">的描述可以容易地被映射成&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">C&nbsp;</span><span style="font-family: 宋体;">或&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">C++&nbsp;</span><span style="font-family: 宋体;">或&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">Java&nbsp;</span><span style="font-family: 宋体;">的数据结构，并可以被应用程序代码使用，并得到运行时程序库的支持，进而能够对编码和解码&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">XML&nbsp;</span><span style="font-family: 宋体;">或&nbsp;</span><span style="font-family: &#39;Times New Roman&#39;;">TLV&nbsp;</span><span style="font-family: 宋体;">格式的，或一种非常紧凑的压缩编码格式的描述。同时，</span><span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span></span><span>也</span><span>是一种用于描述结构化</span><span>实</span><span>体的结构和内容的语言。&nbsp;</span></p>
+<p class="p0"><span>如：使用</span><span>ASN.1<span style="font-family: 宋体;">语法可以这样定义一个类：</span></span></p>
+<table border="0" align="center">
+<tbody>
+<tr>
+<td width="539" valign="top">
+<p class="p0"><span>Report&nbsp;::=&nbsp;SEQUENCE&nbsp;{</span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>author&nbsp;OCTET&nbsp;STRING,<span style="font-family: 宋体;">　　</span></span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>title&nbsp;OCTET&nbsp;STRING,<span style="font-family: 宋体;">　　</span></span><span>&nbsp;</span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>body&nbsp;OCTET&nbsp;STRING,<span style="font-family: 宋体;">　　</span></span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>biblio&nbsp;</span><span>INTEGER</span><span>　　</span></p>
+<p class="p0"><span>}&nbsp;</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>详见《</span><span>ASN.1<span style="font-family: 宋体;">编码规则详解</span></span><span>》：</span><span><a href="http://wenku.baidu.com/view/33ba22d276eeaeaad1f3304c.html"><span>http://wenku.baidu.com/view/33ba22d276eeaeaad1f3304c.html</span></a></span><span>&nbsp;</span></p>
+<p class="p0"><span>注：在进行</span><span>ASN1<span style="font-family: 宋体;">开发前，需要先阅读上述文章，了解其中的一些基本概念。</span></span></p>
+<h2><a name="_Toc19754"></a><span>1.3&nbsp;</span><span>TAG</span></h2>
+<p class="p0"><span>由于</span><span>TAG<span style="font-family: 宋体;">在</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">中非常之重要，而且在对文件进行解析时就是因为</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">的问题导致浪费了很多时间，因此这里对其单独介绍，不过只是提出概念，详细描述还需参见相关规范。</span></span></p>
+<p class="p0"><span>TAG<span style="font-family: 宋体;">是对</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">协议中每个数据域的标识，通过</span><span style="font-family: &#39;Times New Roman&#39;;">2.2</span><span style="font-family: 宋体;">的截图可以看到，每个结点名称后面都有一个数字，这个就</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值。</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">有可分为四大类：</span><span style="font-family: &#39;Times New Roman&#39;;">UNIVERSAL</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">Context</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">Private</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">Application</span><span style="font-family: 宋体;">。详见：</span></span><span><a href="http://wenku.baidu.com/view/33ba22d276eeaeaad1f3304c.html"><span>http://wenku.baidu.com/view/33ba22d276eeaeaad1f3304c.html</span></a></span><span>&nbsp;</span></p>
+<h1><a name="_Toc22874"></a><span>第2章&nbsp;</span><span>开发工具</span></h1>
+<p class="p0"><span>通常情况下，如果使用该协议进行交互，双方应该规定出一个以</span><span>ASN.1<span style="font-family: 宋体;">语法描述的协议文件，类似</span><span style="font-family: &#39;Times New Roman&#39;;">webservice</span><span style="font-family: 宋体;">开发中的</span><span style="font-family: &#39;Times New Roman&#39;;">wsdl</span><span style="font-family: 宋体;">，然后各自系统使用相关工具进行编解码</span></span><span>。&nbsp;</span></p>
+<h2><a name="_Toc10319"></a><span>2.1&nbsp;</span><span>开发库</span></h2>
+<p class="p0"><span>目前网上能查到的第三方免费工具，主要有</span><span>JavaAsn1Comiler<span style="font-family: 宋体;">和</span><span style="font-family: &#39;Times New Roman&#39;;">bouncycastle</span><span style="font-family: 宋体;">子库</span></span><span>：</span></p>
+<p class="p0"><span>l&nbsp;</span><span>JavaAsn1Comiler<span style="font-family: 宋体;">（</span><span style="font-family: &#39;Times New Roman&#39;;">JAC.jar</span><span style="font-family: 宋体;">）</span></span><span>：</span></p>
+<p class="p0"><span>n&nbsp;</span><span>该工具可根据<span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span><span style="font-family: 宋体;">协议描述文件，生成对应的</span><span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">类，同时提供的</span><span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">接口非常友好，命名概念同理论基本一致，使用非常方便，但是前提是必须要有完整的</span><span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span><span style="font-family: 宋体;">描述文件，而且非常重要的一点使用限制是，</span></span><span>该库目前支持<span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值在</span><span style="font-family: &#39;Times New Roman&#39;;">0-127</span><span style="font-family: 宋体;">之间，即：如果协议中的数据使用了超过</span><span style="font-family: &#39;Times New Roman&#39;;">127</span><span style="font-family: 宋体;">的</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值，则该库无法支持，不可使用（否则会出现编码错误，无法解析）</span></span><span>。</span></p>
+<p class="p0"><span>n&nbsp;</span><span>该库提供了相当丰富的使用案例，可参考其工程下的<span style="font-family: &#39;Times New Roman&#39;;">test</span><span style="font-family: 宋体;">目录。</span></span></p>
+<p class="p0"><span>l&nbsp;</span><span>bouncycastle(bcprov-jdk16-1.46.jar)</span></p>
+<p class="p0"><span>n&nbsp;</span><span>该工具没有提供自动生成<span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">代码的能力，如果要进行编解码，则需要手动对协议中的类进行定义，并且自己调用相应的</span><span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">实现编解码。使用起来较</span><span style="font-family: &#39;Times New Roman&#39;;">JAC</span><span style="font-family: 宋体;">复杂，但是该库对</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值没有限制，适合用在</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值大于</span><span style="font-family: &#39;Times New Roman&#39;;">127</span><span style="font-family: 宋体;">的场景。</span></span></p>
+<p class="p0"><span>n&nbsp;</span><span>在使用该类进行解析时，由于没有提供方便的<span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">进行自动解析，因此需要手工编写解析代码，比较郁闷的是其帮助文档也没有比较详细的案例，最后的解码操作还是通过阅读其</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1Dump</span><span style="font-family: 宋体;">类的实现方才完成。</span></span></p>
+<h2><a name="_Toc27543"></a><span>2.2&nbsp;</span><span>辅助工具</span></h2>
+<p class="p0"><span>由于经<span style="font-family: &#39;Times New Roman&#39;;">ASN.1</span><span style="font-family: 宋体;">编码后的文件是二进制格式，无法直接阅读，因此在开发过程中，为了能够比较直观的阅读到其编码后的记录，需要借助第三方工具来查看编码后的文件内容。</span></span></p>
+<p class="p0"><span>网上有几个查看工具，但是最方便、最直观的工具则是<span style="font-family: &#39;Times New Roman&#39;;">ASN1VE&nbsp;2.1</span><span style="font-family: 宋体;">（未注册版有功能限制，只能查看编码后的文件），通过该软件可以很轻松的查看到文件内容，截图如下：</span></span></p>
+<p class="p0"><span>l&nbsp;</span><span>二进制视图：</span></p>
+<p class="p0">
+</p><p class="p0"><img alt="" width="513" height="328" original="file:///C:/DOCUME~1/ycxiong/LOCALS~1/Temp/ksohtml/wps_clip_image-17064.png"></p>
+<p class="p0"><span>l&nbsp;</span><span>XML<span style="font-family: 宋体;">视图</span></span></p>
+<p class="p0"><img alt="" width="507" height="324" original="file:///C:/DOCUME~1/ycxiong/LOCALS~1/Temp/ksohtml/wps_clip_image-14010.png"></p>
+<p class="p0">&nbsp;</p>
+<h1><a name="_Toc12601"></a><span>第3章&nbsp;</span><span>JavaAsn1Compiler</span></h1>
+<h2><a name="_Toc4628"></a><span>3.1&nbsp;</span><span>定义</span><span>ASN.1<span style="font-family: 黑体;">描述文件</span></span></h2>
+<p class="p0"><span>通过通信双方约定的数据格式，使用</span><span>ASN.1<span style="font-family: 宋体;">语法对其进行定义（参见</span><span style="font-family: &#39;Times New Roman&#39;;">1.2</span><span style="font-family: 宋体;">百度文库），形成</span><span style="font-family: &#39;Times New Roman&#39;;">.asn</span><span style="font-family: 宋体;">文件，如</span><span style="font-family: &#39;Times New Roman&#39;;">vc.asn</span></span><span>。</span></p>
+<h2><a name="_Toc31151"></a><span>3.2&nbsp;</span><span>生成</span><span>java<span style="font-family: 黑体;">代码</span></span></h2>
+<h3><a name="_Toc1545"></a><span>3.2.1&nbsp;</span><span>代码生成</span></h3>
+<p class="p0"><span>将编写好的</span><span>.asn<span style="font-family: 宋体;">文件放到</span><span style="font-family: &#39;Times New Roman&#39;;">JAC.jar</span><span style="font-family: 宋体;">目录，执行：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>java&nbsp;-jar&nbsp;JAC.jar&nbsp;-d&nbsp;c:/jac_test&nbsp;-p&nbsp;</span><span>vc</span><span>&nbsp;vc.asn</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0"><span>参数描述：</span></p>
+<p class="p0"><span>-d<span style="font-family: 宋体;">：生成</span><span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">代码文件的保存目录；</span></span></p>
+<p class="p0"><span>-p<span style="font-family: 宋体;">：生成</span><span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">代码的</span><span style="font-family: &#39;Times New Roman&#39;;">package</span><span style="font-family: 宋体;">；</span></span></p>
+<h3><a name="_Toc12907"></a><span>3.2.2&nbsp;</span><span>代码案例</span></h3>
+<p class="p0"><span>以下代码可从<span style="font-family: &#39;Times New Roman&#39;;">JavaAsn1Compiler</span><span style="font-family: 宋体;">工程的</span><span style="font-family: &#39;Times New Roman&#39;;">test</span><span style="font-family: 宋体;">目录下获取，</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">文件内容：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>MiddleSeq&nbsp;::=&nbsp;SEQUENCE</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>status</span><span> </span><span>[22]</span><span> </span><span>&nbsp;</span><span> </span><span>INTEGER,</span></p>
+<p class="p0"><span>location</span><span> </span><span>[APPLICATION&nbsp;11]</span><span> </span><span>INTEGER</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0"><span>生成的<span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">代码如下：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>import</span><span>&nbsp;com.turkcelltech.jac.*;</span></p>
+<p class="p0"><span>import</span><span>&nbsp;com.chaosinmotion.asn1.Tag;</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>public</span><span>&nbsp;</span><span>class</span><span>&nbsp;MiddleSeq&nbsp;</span><span>extends</span><span>&nbsp;Sequence</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>public</span><span>&nbsp;ASN1Integer&nbsp;</span><span>status</span><span>&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ASN1Integer(</span><span>"status"</span><span>);</span></p>
+<p class="p0"><span>public</span><span>&nbsp;ASN1Integer&nbsp;</span><span>location</span><span>&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ASN1Integer(</span><span>"location"</span><span>);</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>public</span></p>
+<p class="p0"><span>MiddleSeq()</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>super</span><span>();</span></p>
+<p class="p0"><span>setUpElements();</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>public</span></p>
+<p class="p0"><span>MiddleSeq(String&nbsp;name)</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>super</span><span>(name);</span></p>
+<p class="p0"><span>setUpElements();</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>protected</span><span>&nbsp;</span><span>void</span></p>
+<p class="p0"><span>setUpElements()</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>super</span><span>.addElement(</span><span>status</span><span>);</span></p>
+<p class="p0"><span>status</span><span>.setTagClass(Tag.</span><span>CONTEXT</span><span>);</span></p>
+<p class="p0"><span>status</span><span>.setTagNumber(22);</span></p>
+<p class="p0"><span>super</span><span>.addElement(</span><span>location</span><span>);</span></p>
+<p class="p0"><span>location</span><span>.setTagClass(Tag.</span><span>APPLICATION</span><span>);</span></p>
+<p class="p0"><span>location</span><span>.setTagNumber(11);</span></p>
+<p class="p0"><span>/*&nbsp;end&nbsp;of&nbsp;element&nbsp;setup&nbsp;*/</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="_Toc10272"></a><span>3.2.3&nbsp;</span><span>编解码</span></h3>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>//&nbsp;<span style="font-family: 宋体;">编码</span></span></p>
+<p class="p0"><span>ByteArrayOutputStream&nbsp;outStream&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ByteArrayOutputStream();</span><span> </span></p>
+<p class="p0"><span>BerOutputStream&nbsp;out&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;BerOutputStream(outStream);</span></p>
+<p class="p0"><span>MiddleSeq</span><span>&nbsp;ms&nbsp;=&nbsp;new&nbsp;</span><span>MiddleSeq</span><span>();</span></p>
+<p class="p0"><span>ms.status.setValue(2);</span></p>
+<p class="p0"><span>ms.location.setValue(314);</span></p>
+<p class="p0"><span>ms.encode(out);</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>//&nbsp;<span style="font-family: 宋体;">解码</span></span></p>
+<p class="p0"><span>ByteArrayInputStream&nbsp;</span><span>inputStream</span><span>;</span></p>
+<p class="p0"><span>BerInputStream&nbsp;in;</span></p>
+<p class="p0"><span>inputStream&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ByteArrayInputStream(outStream.</span><span>toByteArray</span><span>());</span></p>
+<p class="p0"><span>in&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;BerInputStream(inputStream);</span></p>
+<p class="p0"><span>MiddleSeq</span><span>&nbsp;decode_ms&nbsp;=&nbsp;new&nbsp;</span><span>MiddleSeq</span><span>("decode_ms");</span></p>
+<p class="p0"><span>decode_ms.decode(in);</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>System.out.println("ms.status="&nbsp;+&nbsp;decode_ms.status.getValue());</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0"><span>可见编解码非常简单，如果是嵌套结构，只要对最外层对象执行<span style="font-family: &#39;Times New Roman&#39;;">encode/decode</span><span style="font-family: 宋体;">操作即可。</span></span></p>
+<h2><a name="_Toc18661"></a><span>3.3&nbsp;</span><span>总结</span></h2>
+<p class="p0"><span>使用该库在有</span><span>ASN1<span style="font-family: 宋体;">协议描述文件时，</span></span><span>开发</span><span>ASN1<span style="font-family: 宋体;">编解码非常容易，缺点就是不支持超过</span><span style="font-family: &#39;Times New Roman&#39;;">127</span><span style="font-family: 宋体;">的</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值</span></span><span>。</span></p>
+<h1><a name="_Toc18846"></a><span>第4章&nbsp;</span><span>bouncycastle</span></h1>
+<p class="p0"><span>bouncycastle(<span style="font-family: 宋体;">简称</span><span style="font-family: &#39;Times New Roman&#39;;">bc)</span><span style="font-family: 宋体;">包含了一系列的</span><span style="font-family: &#39;Times New Roman&#39;;">java</span><span style="font-family: 宋体;">编解码工具，</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">只是其中的一类。在没有</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">协议描述文件的情况下，结合</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1VE</span><span style="font-family: 宋体;">工具，可以进行相关的编解码开发，云南服务质量管理系统与</span><span style="font-family: &#39;Times New Roman&#39;;">VC</span><span style="font-family: 宋体;">充值平台正是使用这种方式开发的。</span></span></p>
+<h2><a name="_Toc9289"></a><span>4.1&nbsp;</span><span>编码</span></h2>
+<p class="p0"><span>在云南服务质量管理系统中，实际上并没用用到</span><span>ASN1</span><span>编码的知识，但是在从零开始的背景下，为了更好的学习和理解</span><span>ASN1<span style="font-family: 宋体;">的编码格式，这里便开发了一个编码模型。</span></span></p>
+<h3><a name="_Toc11253"></a><span>4.1.1&nbsp;</span><span>确定编码的文件格式</span></h3>
+<p class="p0"><span>由于没有</span><span>ASN1<span style="font-family: 宋体;">文件，只有编码后的文件，因此需要通过</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1VE</span><span style="font-family: 宋体;">来查看编码后是什么格式，如图所示：</span></span></p>
+<p class="p0"><img alt="" width="507" height="324" original="file:///C:/DOCUME~1/ycxiong/LOCALS~1/Temp/ksohtml/wps_clip_image-11605.png"></p>
+<p class="p0"><span>通过上图可以看出整个文件的组织结构、每个数据域对应的<span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">值以及</span><span style="font-family: &#39;Times New Roman&#39;;">TAG</span><span style="font-family: 宋体;">的类型</span><span style="font-family: &#39;Times New Roman&#39;;">(Application)</span><span style="font-family: 宋体;">。但是</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">的编码有多种方式，如：</span><span style="font-family: &#39;Times New Roman&#39;;">BER/DER/PER</span><span style="font-family: 宋体;">等，</span><span style="font-family: &#39;Times New Roman&#39;;">bc</span><span style="font-family: 宋体;">库提供的</span><span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">就包含了</span><span style="font-family: &#39;Times New Roman&#39;;">BER</span><span style="font-family: 宋体;">和</span><span style="font-family: &#39;Times New Roman&#39;;">DER</span><span style="font-family: 宋体;">两种类型，为了确定具体的编码格式，利用</span><span style="font-family: &#39;Times New Roman&#39;;">bc</span><span style="font-family: 宋体;">库自带的</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1Dump</span><span style="font-family: 宋体;">工具，可以将该文件通过文本的方式输出出来（略），最后获取的方式为</span><span style="font-family: &#39;Times New Roman&#39;;">DER</span><span style="font-family: 宋体;">，下面就利用</span><span style="font-family: &#39;Times New Roman&#39;;">bc</span><span style="font-family: 宋体;">库提供的</span><span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">来构造上述的结构。</span></span></p>
+<h3><a name="_Toc853"></a><span>4.1.2&nbsp;</span><span>构造</span><span>ASN1<span style="font-family: 宋体;">映射类</span></span></h3>
+<p class="p0"><span>有了上面分析出的结构再结合对方提供的</span><span>word<span style="font-family: 宋体;">文档，即可以定义出大概结构，这里只给出其中</span><span style="font-family: &#39;Times New Roman&#39;;">Header</span><span style="font-family: 宋体;">的定义，其他可参考具体代码：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>import</span><span>&nbsp;java.io.IOException;</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>import</span><span>&nbsp;org.bouncycastle.asn1.ASN1EncodableVector;</span></p>
+<p class="p0"><span>import</span><span>&nbsp;org.bouncycastle.asn1.DERApplicationSpecific;</span></p>
+<p class="p0"><span>import</span><span>&nbsp;org.bouncycastle.asn1.DEREncodable;</span></p>
+<p class="p0"><span>import</span><span>&nbsp;org.bouncycastle.asn1.DERIA5String;</span></p>
+<p class="p0"><span>import</span><span>&nbsp;org.bouncycastle.asn1.DERInteger;</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>public</span><span>&nbsp;</span><span>class</span><span>&nbsp;RecordHeader&nbsp;</span><span>extends</span><span>&nbsp;</span><span>DERApplicationSpecific</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>public</span><span>&nbsp;RecordHeader(</span><span>boolean</span><span>&nbsp;explicit,&nbsp;</span><span>int</span><span>&nbsp;tag,&nbsp;DEREncodable&nbsp;object)&nbsp;</span><span>throws</span><span>&nbsp;IOException&nbsp;{</span></p>
+<p class="p0"><span>super</span><span>(explicit,&nbsp;tag,&nbsp;object);</span></p>
+<p class="p0"><span>//&nbsp;</span><span>TODO</span><span>&nbsp;Auto-generated&nbsp;constructor&nbsp;stub</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>public</span><span>&nbsp;RecordHeader(</span><span>int</span><span>&nbsp;tagNo,&nbsp;ASN1EncodableVector&nbsp;vec)&nbsp;{</span></p>
+<p class="p0"><span>super</span><span>(tagNo,&nbsp;vec);</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>public</span><span>&nbsp;RecordHeader(</span><span>int</span><span>&nbsp;tag,&nbsp;</span><span>byte</span><span>[]&nbsp;octets)&nbsp;{</span></p>
+<p class="p0"><span>super</span><span>(tag,&nbsp;octets);</span></p>
+<p class="p0"><span>//&nbsp;</span><span>TODO</span><span>&nbsp;Auto-generated&nbsp;constructor&nbsp;stub</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>public</span><span>&nbsp;RecordHeader(</span><span>int</span><span>&nbsp;tag,&nbsp;DEREncodable&nbsp;object)&nbsp;</span><span>throws</span><span>&nbsp;IOException&nbsp;{</span></p>
+<p class="p0"><span>super</span><span>(tag,&nbsp;object);</span></p>
+<p class="p0"><span>//&nbsp;</span><span>TODO</span><span>&nbsp;Auto-generated&nbsp;constructor&nbsp;stub</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>public</span><span>&nbsp;</span><span>static</span><span>&nbsp;RecordHeader&nbsp;createHeader(</span><span>int</span><span>&nbsp;recodeType,&nbsp;String&nbsp;senderCode,&nbsp;String&nbsp;accepterCode,</span></p>
+<p class="p0"><span>String&nbsp;fileSerialNo,&nbsp;String&nbsp;fileCreateTime,&nbsp;</span><span>int</span><span>&nbsp;fileVersionNo)</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>DERInteger&nbsp;d_recodeType&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERInteger(recodeType);</span></p>
+<p class="p0"><span>DERIA5String&nbsp;d_senderCode&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(senderCode);</span></p>
+<p class="p0"><span>DERIA5String&nbsp;d_accepterCode&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(accepterCode);</span></p>
+<p class="p0"><span>DERIA5String&nbsp;d_fileSerialNo&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(fileSerialNo);</span></p>
+<p class="p0"><span>DERIA5String&nbsp;d_fileCreateTime&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(fileCreateTime);</span></p>
+<p class="p0"><span>DERInteger&nbsp;d_fileVersionNo&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERInteger(fileVersionNo);</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>ASN1EncodableVector&nbsp;vec&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ASN1EncodableVector();</span></p>
+<p class="p0"><span>try</span><span>{</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;50,&nbsp;d_recodeType));</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;51,&nbsp;d_senderCode));</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;52,&nbsp;d_accepterCode));</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;53,&nbsp;d_fileSerialNo));</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;54,&nbsp;d_fileCreateTime));</span></p>
+<p class="p0"><span>vec.add(</span><span>new</span><span>&nbsp;DERApplicationSpecific(</span><span>false</span><span>,&nbsp;55,&nbsp;d_fileVersionNo));</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>catch</span><span>(IOException&nbsp;e){</span></p>
+<p class="p0"><span>e.printStackTrace();</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>RecordHeader&nbsp;header&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;RecordHeader(33,&nbsp;vec);</span></p>
+<p class="p0"><span>return</span><span>&nbsp;header;</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>代码中几个重要概念</span></p>
+<p class="p0"><span>l&nbsp;</span><span>类定义：理论上一个类的定义应该是一个<span style="font-family: &#39;Courier New&#39;;">SEQUENCE</span><span style="font-family: 宋体;">，但是通过</span><span style="font-family: &#39;Courier New&#39;;">ASN1Dump</span><span style="font-family: 宋体;">出来的数据显示其并不是一个</span><span style="font-family: &#39;Courier New&#39;;">Sequence</span><span style="font-family: 宋体;">，而只是一个普通的结点，因此这里不能继承</span><span style="font-family: &#39;Courier New&#39;;">DERSequence</span><span style="font-family: 宋体;">，否则编码出的文件将会在</span><span style="font-family: &#39;Courier New&#39;;">Application</span><span style="font-family: 宋体;">的上或者下多出一个</span><span style="font-family: &#39;Courier New&#39;;">Sequence</span><span style="font-family: 宋体;">结点。</span></span></p>
+<p class="p0"><span>l&nbsp;</span><span>DERApplicationSpecific</span><span>：</span><span>这个是表示构造</span><span>Application类型Tag的类，如果协议中没有规定Tag类型，默认的可以使用</span><span>DERTaggedObject</span><span>来定义节点。（说明：而在</span><span>JAC<span style="font-family: 宋体;">库中，如果要定义</span><span style="font-family: &#39;Courier New&#39;;">TAG</span><span style="font-family: 宋体;">的类型，实际上只要调用一个</span><span style="font-family: &#39;Courier New&#39;;">set</span><span style="font-family: 宋体;">方法即可，这里定义了一个单独的类，在没有说明的情况下是很难找到的</span></span><span>）</span></p>
+<p class="p0"><span>l&nbsp;</span><span>结构的模拟：为了实现</span><span>ASN1VE<span style="font-family: 宋体;">中查看出的结构（一个结点下面的多个</span><span style="font-family: &#39;Courier New&#39;;">App</span><span style="font-family: 宋体;">子结点），可以通过</span><span style="font-family: &#39;Courier New&#39;;">bc</span><span style="font-family: 宋体;">库提供的</span></span><span>ASN1EncodableVector</span><span>来进行模拟</span><span>(<span style="font-family: 宋体;">见代码</span><span style="font-family: &#39;Courier New&#39;;">)</span></span><span>。</span></p>
+<h2><a name="_Toc20921"></a><span>4.2&nbsp;</span><span>解码</span></h2>
+<p class="p0"><span>由于<span style="font-family: &#39;Times New Roman&#39;;">bc</span><span style="font-family: 宋体;">库没有提供直接解析成对象的</span><span style="font-family: &#39;Times New Roman&#39;;">API</span><span style="font-family: 宋体;">（也可能是我没找到），因此需要自行定义业务实体以及解码代码。</span></span></p>
+<h3><a name="_Toc18931"></a><span>4.2.1&nbsp;</span><span>定义实体结构</span></h3>
+<p class="p0"><span>根据文档<span style="font-family: &#39;Times New Roman&#39;;">(word)</span><span style="font-family: 宋体;">提供的协议的业务描述结合</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1VE</span><span style="font-family: 宋体;">查看出的结构，定义出业务对象，其实就是普通的</span><span style="font-family: &#39;Times New Roman&#39;;">javabean</span><span style="font-family: 宋体;">，如：</span><span style="font-family: &#39;Times New Roman&#39;;">Root</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">Header</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">Tail</span><span style="font-family: 宋体;">和</span><span style="font-family: &#39;Times New Roman&#39;;">Body</span><span style="font-family: 宋体;">等，</span><span style="font-family: &#39;Times New Roman&#39;;">Root</span><span style="font-family: 宋体;">结构如下：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>public</span><span>&nbsp;</span><span>class</span><span>&nbsp;Root&nbsp;{</span></p>
+<p class="p0"><span>private</span><span>&nbsp;Header&nbsp;</span><span>header</span><span>;</span></p>
+<p class="p0"><span>private</span><span>&nbsp;List&lt;Body&gt;&nbsp;</span><span>bodys</span><span>;</span></p>
+<p class="p0"><span>private</span><span>&nbsp;Tail&nbsp;</span><span>tail</span><span>;</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="_Toc21571"></a><span>4.2.2&nbsp;</span><span>定义实体解析类</span></h3>
+<p class="p0"><span>为了将数据解析出一个复合对象，需要针对每个实体定义一个解析类，将二进制数据解析成类对象，如：<span style="font-family: &#39;Times New Roman&#39;;">RootDecoder</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">HeaderDecoder</span><span style="font-family: 宋体;">、</span><span style="font-family: &#39;Times New Roman&#39;;">BodyDecoder</span><span style="font-family: 宋体;">和</span><span style="font-family: &#39;Times New Roman&#39;;">TailDecoder</span><span style="font-family: 宋体;">等</span><span style="font-family: &#39;Times New Roman&#39;;">,</span><span style="font-family: 宋体;">其中</span><span style="font-family: &#39;Times New Roman&#39;;">HeaderDecoder</span><span style="font-family: 宋体;">代码如下：</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>public</span><span>&nbsp;</span><span>class</span><span>&nbsp;HeaderDecoder&nbsp;{</span></p>
+<p class="p0"><span>private</span><span>&nbsp;Header&nbsp;</span><span>header</span><span>&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;Header();</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>/**</span></p>
+<p class="p0"><span>&nbsp;*&nbsp;按Sequence顺序解析包头</span></p>
+<p class="p0"><span>&nbsp;*&nbsp;</span><span>@param</span><span>&nbsp;nodeHeader</span></p>
+<p class="p0"><span>&nbsp;*&nbsp;</span><span>@throws</span><span>&nbsp;IOException</span></p>
+<p class="p0"><span>&nbsp;*/</span></p>
+<p class="p0"><span>public</span><span>&nbsp;HeaderDecoder(DERApplicationSpecific&nbsp;derHeader)&nbsp;</span><span>throws</span><span>&nbsp;IOException</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>ASN1Sequence&nbsp;s&nbsp;=&nbsp;ASN1Sequence.</span><span>getInstance</span><span>(derHeader.getObject(DERTags.</span><span>SEQUENCE</span><span>));</span></p>
+<p class="p0"><span>for</span><span>&nbsp;(Enumeration&nbsp;e&nbsp;=&nbsp;s.getObjects();&nbsp;e.hasMoreElements();)</span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</span></p>
+<p class="p0"><span>DERApplicationSpecific&nbsp;derObj&nbsp;=&nbsp;(DERApplicationSpecific)e.nextElement();</span></p>
+<p class="p0"><span>System.</span><span>out</span><span>.println(derObj.getApplicationTag());</span></p>
+<p class="p0"><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;50)</span><span> </span><span>{</span></p>
+<p class="p0"><span>DERInteger&nbsp;recodeType&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERInteger(derObj.getContents());</span><span> </span></p>
+<p class="p0"><span>header</span><span>.setRecodeType(recodeType.getValue().intValue());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>else</span><span>&nbsp;</span><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;51){</span></p>
+<p class="p0"><span>DERIA5String&nbsp;senderCode&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(derObj.getContents());&nbsp;</span></p>
+<p class="p0"><span>header</span><span>.setSenderCode(senderCode.getString());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>else</span><span>&nbsp;</span><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;52){</span></p>
+<p class="p0"><span>DERIA5String&nbsp;accepterCode&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(derObj.getContents());</span><span> </span></p>
+<p class="p0"><span>header</span><span>.setAccepterCode(accepterCode.getString());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>else</span><span>&nbsp;</span><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;53){</span></p>
+<p class="p0"><span>DERIA5String&nbsp;fileSerialNo&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(derObj.getContents());</span></p>
+<p class="p0"><span>header</span><span>.setFileSerialNo(fileSerialNo.getString());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>else</span><span>&nbsp;</span><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;54){</span></p>
+<p class="p0"><span>DERIA5String&nbsp;fileCreateTime&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERIA5String(derObj.getContents());</span></p>
+<p class="p0"><span>header</span><span>.setFileCreateTime(fileCreateTime.getString());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>else</span><span>&nbsp;</span><span>if</span><span>&nbsp;(derObj.getApplicationTag()&nbsp;==&nbsp;55){</span></p>
+<p class="p0"><span>DERInteger&nbsp;fileVersionNo&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;DERInteger(derObj.getContents());</span></p>
+<p class="p0"><span>header</span><span>.setFileVersionNo(fileVersionNo.getValue().intValue());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>/**</span></p>
+<p class="p0"><span>&nbsp;*&nbsp;</span><span>@return</span><span>&nbsp;the&nbsp;header</span></p>
+<p class="p0"><span>&nbsp;*/</span></p>
+<p class="p0"><span>public</span><span>&nbsp;Header&nbsp;getHeader()&nbsp;{</span></p>
+<p class="p0"><span>return</span><span>&nbsp;</span><span>header</span><span>;</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0"><span>代码简介：</span></p>
+<p class="p0"><span>该<span style="font-family: &#39;Times New Roman&#39;;">Decoder</span><span style="font-family: 宋体;">在构造函数中读取外部传来的</span></span><span>DERApplicationSpecific&nbsp;</span><span>对象（该对象使其上层</span><span>root<span style="font-family: 宋体;">解析子节点获取得到的</span></span><span>），在利用</span><span>bc<span style="font-family: 宋体;">库的</span><span style="font-family: &#39;Courier New&#39;;">API</span><span style="font-family: 宋体;">根据</span><span style="font-family: &#39;Courier New&#39;;">TAG</span><span style="font-family: 宋体;">值将其所有的子节点的二进制数据读出来，最后通过</span><span style="font-family: &#39;Courier New&#39;;">bc</span><span style="font-family: 宋体;">库内置的基本类型将二进制数据再解码成原始数据。</span></span></p>
+<h3><a name="_Toc17606"></a><span>4.2.3&nbsp;</span><span>外部调用接口</span></h3>
+<p class="p0"><span>为了方便的实现文件解析，单独提供一个类（<span style="font-family: &#39;Times New Roman&#39;;">DecodeMan</span><span style="font-family: 宋体;">）：输入为需要解码的</span><span style="font-family: &#39;Times New Roman&#39;;">ASN1</span><span style="font-family: 宋体;">二进制文件，输出为定义的复合类型</span><span style="font-family: &#39;Times New Roman&#39;;">Root</span><span style="font-family: 宋体;">，最后相关人员再通过对</span><span style="font-family: &#39;Times New Roman&#39;;">Root</span><span style="font-family: 宋体;">的数据进行格式化转换成项目需要用的数据格式。</span></span></p>
+<table border="0">
+<tbody>
+<tr>
+<td width="581" valign="top">
+<p class="p0"><span>public</span><span>&nbsp;</span><span>class</span><span>&nbsp;DecodeMan&nbsp;{</span></p>
+<p class="p0"><span>public</span><span>&nbsp;</span><span>static</span><span>&nbsp;</span><span>void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;</span><span>throws</span><span>&nbsp;IOException&nbsp;{</span></p>
+<p class="p0"><span>Root&nbsp;root&nbsp;=&nbsp;</span><span>decode</span><span>(</span><span>"c:/IVCRECORD_20110324871.0058"</span><span>);</span></p>
+<p class="p0"><span>System.</span><span>out</span><span>.println(root.toString());</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>/**</span></p>
+<p class="p0"><span>&nbsp;*&nbsp;文件解码</span></p>
+<p class="p0"><span>*&nbsp;</span><span>@param</span><span>&nbsp;encodeFile&nbsp;文件绝对路径</span></p>
+<p class="p0"><span>*&nbsp;</span><span>@return</span><span>&nbsp;填充数据的Root实例</span></p>
+<p class="p0"><span>*&nbsp;</span><span>@throws</span><span>&nbsp;IOException</span></p>
+<p class="p0"><span>&nbsp;*/</span></p>
+<p class="p0"><span>public</span><span>&nbsp;</span><span>static</span><span>&nbsp;Root&nbsp;decode(String&nbsp;encodeFile)&nbsp;</span><span>throws</span><span>&nbsp;IOException</span></p>
+<p class="p0"><span>{</span></p>
+<p class="p0"><span>System.</span><span>out</span><span>.println(</span><span>"Starting&nbsp;decode&nbsp;file:&nbsp;["</span><span>&nbsp;+&nbsp;encodeFile&nbsp;+&nbsp;</span><span>"]"</span><span>);</span></p>
+<p class="p0"><span>File&nbsp;file&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;File(encodeFile);</span></p>
+<p class="p0"><span>byte</span><span>[]&nbsp;byteContents&nbsp;=&nbsp;FileUtils.</span><span>readFileToByteArray</span><span>(file);</span></p>
+<p class="p0">&nbsp;</p>
+<p class="p0"><span>ByteArrayInputStream&nbsp;inputStream&nbsp;=&nbsp;</span><span>null</span><span>;</span></p>
+<p class="p0"><span>try</span><span>{</span></p>
+<p class="p0"><span>inputStream&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ByteArrayInputStream(byteContents);</span></p>
+<p class="p0"><span>ASN1StreamParser&nbsp;asn1Parser&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;ASN1StreamParser(inputStream);</span></p>
+<p class="p0"><span>DERApplicationSpecific&nbsp;derRoot&nbsp;=&nbsp;(DERApplicationSpecific)asn1Parser.readObject();</span></p>
+<p class="p0"><span>RootDecoder&nbsp;rootDecoder&nbsp;=&nbsp;</span><span>new</span><span>&nbsp;RootDecoder(derRoot);</span></p>
+<p class="p0"><span>System.</span><span>out</span><span>.println(</span><span>"Decode&nbsp;file&nbsp;succ:&nbsp;["</span><span>&nbsp;+&nbsp;encodeFile&nbsp;+&nbsp;</span><span>"]"</span><span>);</span></p>
+<p class="p0"><span>return</span><span>&nbsp;rootDecoder.getRoot();</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>finally</span><span>{</span></p>
+<p class="p0"><span>IOUtils.</span><span>closeQuietly</span><span>(inputStream);</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>}</span></p>
+<p class="p0"><span>}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+<p class="p0">&nbsp;</p>
+</div>
+</div>
+
+<div style="font-size:0px;height:0px;line-height:0px;margin:0;padding:0;clear:both"></div>														</div>
+							</div>
+			<div class="back_b">
+				<a href="javascript:void(0);" onclick="history.back();">返回</a>
+			</div>
+			<div class="clear"></div>
+			<!-- end: entry -->
+			<i class="lt"></i>
+			<i class="rt"></i>
+		</div>
+		<div class="entry_sb">
+			<i class="lb"></i>
+			<i class="rb"></i>
+		</div>
+
+                <!-- ad_down -->
+                <div class="ad_h">
+		<div class="ad_h_c">
+<table>
+<tbody><tr>
+<td>
+<script type="text/javascript">
+    /*500宽矩形*/
+    var cpro_id = "u1507413";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1507413_0"><iframe id="iframeu1507413_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(3).html" width="500" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+</td>
+<td>
+
+<script type="text/javascript">
+    /*右侧小矩形*/
+    var cpro_id = "u1507403";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1507403_0"><iframe id="iframeu1507403_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(4).html" width="220" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+
+</td>
+</tr>
+</tbody></table>
+			<div class="clear"></div>
+		</div>
+	<i class="lt"></i>
+	<i class="rt"></i>
+</div>
+<div class="entry_box_b">
+	<i class="lb"></i>
+	<i class="rb"></i>
+</div>
+
+		<!-- ad -->
+		<div class="ad_h">
+		<div class="ad_h_c">
+			<p align="center"></p><table align="center" width="90%">
+<tbody><tr>
+<td>
+<script type="text/javascript">
+var cpro_id = "u1507366";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1507366_0"><iframe id="iframeu1507366_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(5).html" width="300" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</td>
+<td>
+<script type="text/javascript">
+var cpro_id = "u1507366";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1507366_1"><iframe id="iframeu1507366_1" src="./ASN1编解码实现方法 _ 学步园_files/nczm(6).html" width="300" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</td>
+</tr>
+</tbody></table>
+
+<script type="text/javascript">
+/*双侧飘窗*/
+var cpro_id = "u1507394";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/f.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1507394_0"></div>
+
+<script type="text/javascript">
+    /*右下角悬浮视窗*/
+var cpro_id = "u1533898";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/f.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1533898_0"></div>
+
+<p></p>
+			<div class="clear"></div>
+		</div>
+	<i class="lt"></i>
+	<i class="rt"></i>
+</div>
+<div class="entry_box_b">
+	<i class="lb"></i>
+	<i class="rb"></i>
+</div>
+                <!-- tuijian -->
+                <div class="ad_h">
+		<div class="ad_h_c">
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;推荐文章:</h4> <table width="90%" style="margin:auto;">
+<tbody><tr>
+<td width="50%">
+<li><a href="http://www.xuebuyuan.com/2061480.html">五子棋算法</a></li>
+<li><a href="http://www.xuebuyuan.com/2061482.html">汇编与逆向学习汇总</a></li>
+<li><a href="http://www.xuebuyuan.com/2061484.html">Mac逆向工程起步</a></li>
+<li><a href="http://www.xuebuyuan.com/2061486.html">Eclipse 中Tomcat debug启动报错，启动不了</a></li>
+<li><a href="http://www.xuebuyuan.com/2061488.html">Linux 下安装、配置、汉化JIRA6.1.5</a></li>
+<li><a href="http://www.xuebuyuan.com/2061490.html">Oracle获取系统时间及格式化</a></li>
+<li><a href="http://www.xuebuyuan.com/2061492.html">c++ hash_map 详细介绍</a></li>
+<li><a href="http://www.xuebuyuan.com/2061494.html">使用eclipse插件创建一个web project</a></li>
+</td>
+<td>
+<li><a href="http://www.xuebuyuan.com/2061481.html">学着用photoshop处理图片</a></li>
+<li><a href="http://www.xuebuyuan.com/2061483.html">80X86汇编寄存器汇总</a></li>
+<li><a href="http://www.xuebuyuan.com/2061485.html">可以增加和删除行的table（可以编辑表格中内容）</a></li>
+<li><a href="http://www.xuebuyuan.com/2061487.html">JavaMail发送带多个附件的邮件，多个收件人，多个抄送人</a></li>
+<li><a href="http://www.xuebuyuan.com/2061489.html">Eclipse快捷键大全</a></li>
+<li><a href="http://www.xuebuyuan.com/2061491.html">计词unigram和bigram的频次</a></li>
+<li><a href="http://www.xuebuyuan.com/2061493.html">查看tomcat版本</a></li>
+<li><a href="http://www.xuebuyuan.com/2061495.html">Oracle数据库操作命令总结</a></li>
+</td>
+</tr>
+</tbody></table>
+			<div class="clear"></div>
+		</div>
+	<i class="lt"></i>
+	<i class="rt"></i>
+</div>
+<div class="entry_box_b">
+	<i class="lb"></i>
+	<i class="rb"></i>
+</div>
+
+<!--
+                <div class="ad_h">
+		<div class="ad_h_c">
+                        <h4>&nbsp;&nbsp;&nbsp;&nbsp;友情推荐:</h4> <table width="95%" style="margin:auto;">
+<tr>
+<td>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu077_Vtfe_qrnY19yzyQ==.html">骐达空调开关总成</a>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu077_VtffJosjIxvc=.html">骐达空调散热器</a>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu077_Vtfe159fTyci157v6.html">骐达空调电子扇电机</a>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu077_Vtfe53A==.html">骐达空调管</a>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu077_Vtfe439G5udw=.html">骐达空调高压管</a>
+&nbsp;&nbsp;<a style="color: #0196e3;" href = "http://www.carcube.com.cn/chanpin/5uu079fpus-_qrnY.html">骐达组合开关</a>
+
+</td>
+</tr>
+</table>
+			<div class="clear"></div>
+		</div>
+	<i class="lt"></i>
+	<i class="rt"></i>
+</div>
+<div class="entry_box_b">
+	<i class="lb"></i>
+	<i class="rb"></i>
+</div>
+
+-->
+		<div class="context_b">
+			【上篇】<a href="http://www.xuebuyuan.com/932060.html" rel="prev">C# 结构的重要差异 初探</a><br>【下篇】<a href="http://www.xuebuyuan.com/874778.html" rel="next">陈光标称今晚将从东京赶赴云南地震灾区</a>			<i class="lt"></i>
+			<i class="rt"></i>
+			<i class="lb"></i>
+			<i class="rb"></i>
+		</div>
+		<!-- relatedposts -->
+								<!-- end: relatedposts -->
+		<!-- entrymeta -->
+
+		<div class="entrymeta">
+			<div class="authorbio">
+				<div class="author_pic">
+<!--
+					<img alt='' src='http://0.gravatar.com/avatar/2a7f5129d7866d2529a41fe26a0b7004?s=48&amp;d=wavatar&amp;r=G' class='avatar avatar-48 photo' height='48' width='48' />-->
+				</div>
+				<div class="clear"></div>
+				<div class="author_text">
+					<h4>作者: <span><a href="http://www.xuebuyuan.com/author/stacker" title="由stacker发布" rel="author">stacker</a></span></h4>
+				</div>
+			</div>
+			<span class="spostinfo">
+				<ul>
+					<li>该日志由 stacker 于3年前发表在综合分类下，最后更新于 2013年09月16日.</li>
+					<li>转载请注明: <a href="http://www.xuebuyuan.com/840580.html" rel="bookmark" title="本文固定链接 http://www.xuebuyuan.com/840580.html">ASN1编解码实现方法 | 学步园</a><a href="http://www.xuebuyuan.com/840580.html#" onclick="copy_code(&#39;http://www.xuebuyuan.com/840580.html&#39;); return false;"> +复制链接</a></li>
+					<li class="content_tag"></li>
+				</ul>
+			</span>
+			<i class="lt"></i>
+			<i class="rt"></i>
+			<div class="clear"></div>
+		</div>
+		<div class="entry_sb">
+			<i class="lb"></i>
+			<i class="rb"></i>
+		</div>
+		<!-- end: entrymeta -->
+	<div class="ct"></div>
+	<!-- You can start editing here. -->
+			<!-- If comments are closed. -->
+		<p class="nocomments">抱歉!评论已关闭.</p>
+							</div>
+<!-- end: content -->
+<div id="sidebar">
+	
+						
+		<div class="widget">
+					</div>
+		<div class="widget">
+		<h3>本站推荐</h3>
+<div class="box">
+	<div class="scat_img"></div>
+	<div id="scat">
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2201282.html" rel="bookmark" title="详细阅读作业的提交和监控（二）">作业的提交和监控（二）</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2201280.html" rel="bookmark" title="详细阅读作业的提交和监控（一）">作业的提交和监控（一）</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198208.html" rel="bookmark" title="详细阅读Electric-fence 介绍">Electric-fence 介绍</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198206.html" rel="bookmark" title="详细阅读原子操作浅谈">原子操作浅谈</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198205.html" rel="bookmark" title="详细阅读C++模板显式实例化">C++模板显式实例化</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198204.html" rel="bookmark" title="详细阅读Hadoop Local 模式运行 Pipes 程序">Hadoop Local 模式运行 Pipes 程</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198202.html" rel="bookmark" title="详细阅读Hadoop I/O 上 SequenceFile 类在 Pipes 上的应用">Hadoop I/O 上 SequenceFile 类</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198273.html" rel="bookmark" title="详细阅读Boost – Function 分析">Boost – Function 分析</a></li>
+		</ul>
+			
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2201282.html" rel="bookmark" title="详细阅读作业的提交和监控（二）">作业的提交和监控（二）</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2201280.html" rel="bookmark" title="详细阅读作业的提交和监控（一）">作业的提交和监控（一）</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198208.html" rel="bookmark" title="详细阅读Electric-fence 介绍">Electric-fence 介绍</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198206.html" rel="bookmark" title="详细阅读原子操作浅谈">原子操作浅谈</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198205.html" rel="bookmark" title="详细阅读C++模板显式实例化">C++模板显式实例化</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198204.html" rel="bookmark" title="详细阅读Hadoop Local 模式运行 Pipes 程序">Hadoop Local 模式运行 Pipes 程</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198202.html" rel="bookmark" title="详细阅读Hadoop I/O 上 SequenceFile 类在 Pipes 上的应用">Hadoop I/O 上 SequenceFile 类</a></li>
+		</ul>
+				<ul>
+			<li><a href="http://www.xuebuyuan.com/2198273.html" rel="bookmark" title="详细阅读Boost – Function 分析">Boost – Function 分析</a></li>
+		</ul>
+			</div>
+	<div class="clear"></div>
+</div>
+<div class="box-bottom">
+	<i class="lb"></i>
+	<i class="rb"></i>
+</div>
+<script type="text/javascript">
+var c,_=Function;
+with(o=document.getElementById("scat")){ innerHTML+=innerHTML; onmouseover=_("c=1"); onmouseout=_("c=0");}
+(F=_("if(#%26||!c)#++,#%=o.scrollHeight>>1;setTimeout(F,#%26?10:3500);".replace(/#/g,"o.scrollTop")))();
+</script><div class="random_r">
+	<h3>随便看看</h3>
+	<div class="box_r">
+		<ul><ul class="random-post-link">
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8852011.html" title="oracle 32 64">oracle 32 64</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8852930.html" title="openstack 安装">openstack 安装</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8854552.html" title="opengl 开发">opengl 开发</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8854850.html" title="原因是出现以下错误: 80040154">原因是出现以下错误: 80040154</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8856030.html" title="后缀名为bin">后缀名为bin</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8857029.html" title="打印源码">打印源码</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8857831.html" title="怎样让一个程序开机自动启动">怎样让一个程序开机自动启动</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8857912.html" title="易语言c++">易语言c++</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8858089.html" title="重定位表">重定位表</a>
+</li>
+<li class="random-post-link">
+<a href="http://www.xuebuyuan.com/zt/8860080.html" title="因为计算机中丢失storm.dll">因为计算机中丢失storm.dll</a>
+</li>
+<ul>
+</ul>
+		<div class="clear"></div>
+	</ul></ul></div>
+	<div class="box-bottom">
+		<i class="lb"></i>
+		<i class="rb"></i>
+	</div>
+</div><div class="ad">
+	<div class="ads">
+	<div class="box_top">
+		<i class="rt"></i>
+		<i class="lt"></i>
+	</div>
+		<div class="ads_c"><p align="center"><script type="text/javascript">
+var cpro_id="u2385005";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"220",rsi1:"500",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script></p><div id="BAIDU_SSP__wrapper_u2385005_0" style="text-align: left;"><iframe id="iframeu2385005_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(7).html" width="220" height="500" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+<script type="text/javascript">
+    /*右侧悬停广告*/
+    var cpro_id = "u2386663";
+</script>
+<script src="./ASN1编解码实现方法 _ 学步园_files/c.js.下载" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u2386663_0" style="width: 200px; height: 200px; display: inline-block;"><iframe id="iframeu2386663_0" src="./ASN1编解码实现方法 _ 学步园_files/nczm(8).html" width="200" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+<p></p>
+			<div class="clear"></div>
+		</div>
+		<div class="box-bottom">
+			<i class="lb"></i>
+			<i class="rb"></i>
+		</div>
+	</div>
+</div>	</div>
+
+	
+	
+			
+	<div class="widget">
+			</div>
+
+		<div class="widget">
+					</div>
+	
+				<div class="clear"></div>
+
+							</div><div class="clear"></div>
+<div class="footer_top">
+	<div id="menu">
+		<div class="menu-%e5%af%bc%e8%88%aa-container"><ul id="menu-%e5%af%bc%e8%88%aa-1" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703978"><a href="http://www.xuebuyuan.com/category/web%e5%89%8d%e7%ab%af">web前端</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703980"><a href="http://www.xuebuyuan.com/category/%e6%95%b0%e6%8d%ae%e5%ba%93">数据库</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703982"><a href="http://www.xuebuyuan.com/category/%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80">编程语言</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1703979"><a href="http://www.xuebuyuan.com/category/%e6%90%9c%e7%b4%a2%e6%8a%80%e6%9c%af">搜索技术</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1810308"><a href="http://www.xuebuyuan.com/aboutus">关于本站</a></li>
+</ul></div>	</div>
+	<h2 class="blogtitle">
+	<a href="http://www.xuebuyuan.com/" title="学步园">返回首页</a></h2>
+		<big class="lt"></big>
+	<big class="rt"></big>
+</div>
+<!-- 页脚 -->
+<div class="footer_bottom_a">
+	Copyright © 2013-2014 学步园&nbsp;&nbsp;保留所有权利.
+		<big class="lb"></big>
+	<big class="rb"></big>
+</div>
+<!-- 首页页脚 -->
+ <div class="clear"></div>
+</div>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc0f0742eeb83d6ab6614a81723b00197' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./ASN1编解码实现方法 _ 学步园_files/h.js.下载" type="text/javascript"></script><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=c0f0742eeb83d6ab6614a81723b00197" target="_blank"><img border="0" src="./ASN1编解码实现方法 _ 学步园_files/21.gif" width="20" height="20"></a>
+<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./ASN1编解码实现方法 _ 学步园_files/saved_resource.html"></iframe></div></body></html>
