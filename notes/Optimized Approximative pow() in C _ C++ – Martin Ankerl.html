@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/ -->
+<html lang="en-US" class="js no-svg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+
+<!--Plugin Global Hide Admin Tool Bar Active-->
+
+<!-- This website is patched against a big problem not solved from WordPress 3.3+ to date -->
+
+<script async="" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/analytics.js.下载"></script><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Optimized Approximative pow() in C / C++ – Martin Ankerl</title>
+	<script>function theChampLoadEvent(e){var t=window.onload;if(typeof window.onload!="function"){window.onload=e}else{window.onload=function(){t();e()}}}</script>
+		<script type="text/javascript">var heateorSsSDKBlockedMsg = 'Your browser is blocking some features of this website. Please follow the instructions at <a href=\'http://support.heateor.com/browser-blocking-social-features/\' target=\'_blank\' style=\'color:#33a9d8\'>http://support.heateor.com/browser-blocking-social-features/</a> to unblock these.', theChampCloseIconPath = 'http://martin.ankerl.com/wp-content/plugins/super-socializer/images/close.png';</script>
+		<script> var theChampSiteUrl = 'http://martin.ankerl.com', theChampVerified = 0, theChampEmailPopup = 0; </script>
+			<script> var theChampLoadingImgPath = 'http://martin.ankerl.com/wp-content/plugins/super-socializer/images/ajax_loader.gif'; var theChampAjaxUrl = 'http://martin.ankerl.com/wp-admin/admin-ajax.php'; var theChampRedirectionUrl = 'http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/'; var theChampRegRedirectionUrl = 'http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/'; </script>
+				<script> var theChampFacebookScope = 'public_profile,email', theChampFBKey = '1667230586870467', theChampVerified = 0; var theChampAjaxUrl = 'http://martin.ankerl.com/wp-admin/admin-ajax.php'; var theChampPopupTitle = ''; var theChampEmailPopup = 0; var theChampEmailAjaxUrl = 'http://martin.ankerl.com/wp-admin/admin-ajax.php'; var theChampEmailPopupTitle = ''; var theChampEmailPopupErrorMsg = ''; var theChampEmailPopupUniqueId = ''; var theChampEmailPopupVerifyMessage = ''; var theChampSteamAuthUrl = ""; var theChampTwitterRedirect = 'http%3A%2F%2Fmartin.ankerl.com%2F2012%2F01%2F25%2Foptimized-approximative-pow-in-c-and-cpp%2F';  </script>
+				<script>var theChampGoogleKey = '944865400326-pira9fgusjonfu5bevm8k7afkuer0n7o.apps.googleusercontent.com'; var theChampGoogleErrorMessage = 'Follow steps 11 and 12 at GooglePlus app configuration page, about to open' </script>
+				<script> var theChampFBKey = '1667230586870467', theChampFBLang = 'en_US', theChampFbLikeMycred = 0, theChampSsga = 0, theChampCommentNotification = 0, theChampFbIosLogin = 0; </script>
+						<script>var theChampFBCommentUrl = 'http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/'; var theChampFBCommentColor = 'light'; var theChampFBCommentNumPosts = ''; var theChampFBCommentWidth = '100%'; var theChampFBCommentOrderby = 'social'; var theChampCommentingTabs = "wordpress,facebook,googleplus,disqus", theChampGpCommentsUrl = 'http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/', theChampDisqusShortname = '', theChampScEnabledTabs = 'wordpress', theChampScLabel = 'Leave a reply', theChampScTabLabels = {"wordpress":"Default Comments (10)","fb":"Facebook Comments (<fb:comments-count href=http:\/\/martin.ankerl.com\/2012\/01\/25\/optimized-approximative-pow-in-c-and-cpp\/><\/fb:comments-count>)","googleplus":"G+ Comments","disqus":"Disqus Comments"}, theChampGpCommentsWidth = 0, theChampCommentingId = 'respond'</script>
+						<script> var theChampSharingAjaxUrl = 'http://martin.ankerl.com/wp-admin/admin-ajax.php', heateorSsUrlCountFetched = [], heateorSsSharesText = 'Shares', heateorSsShareText = 'Share', theChampPluginIconPath = 'http://martin.ankerl.com/wp-content/plugins/super-socializer/images/logo.png', theChampHorizontalSharingCountEnable = 0, theChampVerticalSharingCountEnable = 0, theChampSharingOffset = -10, theChampCounterOffset = -10;
+				</script>
+			<style type="text/css">
+	.the_champ_horizontal_sharing .theChampSharing{
+					color: #fff;
+				border-width: 0px;
+		border-style: solid;
+		border-color: transparent;
+	}
+		.the_champ_horizontal_sharing .theChampTCBackground{
+		color:#666;
+	}
+		.the_champ_horizontal_sharing .theChampSharing:hover{
+					background-color: #000000;
+				border-color: transparent;
+	}
+	.the_champ_vertical_sharing .theChampSharing{
+					color: #fff;
+				border-width: 0px;
+		border-style: solid;
+		border-color: transparent;
+	}
+		.the_champ_vertical_sharing .theChampTCBackground{
+		color:#666;
+	}
+		.the_champ_vertical_sharing .theChampSharing:hover{
+				border-color: transparent;
+	}
+	@media screen and (max-width:783px){.the_champ_vertical_sharing{display:none!important}}@media screen and (max-width:783px){.the_champ_bottom_sharing{left:0px!important;right:auto!important;display:block!important;width: auto!important;bottom: -10px!important;top: auto!important;}.the_champ_bottom_sharing .the_champ_square_count{line-height: inherit;}.the_champ_bottom_sharing .theChampSharingArrow{display:none;}.the_champ_bottom_sharing .theChampTCBackground{margin-right: 1.1em !important}}	</style>
+	<link rel="dns-prefetch" href="http://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link href="https://fonts.gstatic.com/" crossorigin="" rel="preconnect">
+<link rel="alternate" type="application/rss+xml" title="Martin Ankerl » Feed" href="http://martin.ankerl.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Martin Ankerl » Comments Feed" href="http://martin.ankerl.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Martin Ankerl » Optimized Approximative pow() in C / C++ Comments Feed" href="http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/martin.ankerl.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.2"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/wp-emoji-release.min.js.下载" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="crayon-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/crayon.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-theme-github-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/github.css" type="text/css" media="all">
+<link rel="stylesheet" id="crayon-font-droid-sans-mono-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/droid-sans-mono.css" type="text/css" media="all">
+<link rel="stylesheet" id="toc-screen-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/screen.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="wpdiscuz-font-awesome-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/font-awesome.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="wpdiscuz-frontend-css-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/wpdiscuz.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyseventeen-fonts-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyseventeen-style-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/style.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentyseventeen-ie8-css'  href='http://martin.ankerl.com/wp-content/themes/twentyseventeen/assets/css/ie8.css?ver=1.0' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="dashicons-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/dashicons.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="thickbox-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/thickbox.css" type="text/css" media="all">
+<link rel="stylesheet" id="the_champ_frontend_css-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/front.css" type="text/css" media="all">
+<link rel="stylesheet" id="the_champ_sharing_default_svg-css" href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/share-svg.css" type="text/css" media="all">
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/jquery.js.下载"></script>
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/jquery-migrate.min.js.下载"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"http:\/\/martin.ankerl.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/crayon.min.js.下载"></script>
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/jquery.cookie.min.js.下载"></script>
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/jquery.autogrowtextarea.min.js.下载"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var wpdiscuzAjaxObj = {"url":"http:\/\/martin.ankerl.com\/wp-admin\/admin-ajax.php","wpdiscuz_options":{"wc_hide_replies_text":"Hide Replies","wc_show_replies_text":"Show Replies","wc_msg_required_fields":"Please fill out required fields","wc_invalid_field":"Some of field value is invalid","wc_error_empty_text":"please fill out this field to comment","wc_error_url_text":"url is invalid","wc_error_email_text":"email address is invalid","wc_invalid_captcha":"Invalid Captcha Code","wc_login_to_vote":"You Must Be Logged In To Vote","wc_deny_voting_from_same_ip":"You are not allowed to vote for this comment","wc_self_vote":"You cannot vote for your comment","wc_vote_only_one_time":"You've already voted for this comment","wc_voting_error":"Voting Error","wc_held_for_moderate":"Comment awaiting moderation","wc_comment_edit_not_possible":"Sorry, this comment no longer possible to edit","wc_comment_not_updated":"Sorry, the comment was not updated","wc_comment_not_edited":"You've not made any changes","wc_new_comment_button_text":"new comment","wc_new_comments_button_text":"new comments","wc_new_reply_button_text":"new reply on your comment","wc_new_replies_button_text":"new replies on your comments","wc_msg_input_min_length":"Input is too short","wc_msg_input_max_length":"Input is too long","is_user_logged_in":false,"commentListLoadType":"0","commentListUpdateType":"0","commentListUpdateTimer":"30","liveUpdateGuests":"1","wc_comment_bg_color":"#FFFFFF","wc_reply_bg_color":"#F8F8F8","wordpress_comment_order":"asc","commentsVoteOrder":false,"wordpressThreadCommentsDepth":"5","wordpressIsPaginate":"1","commentTextMaxLength":null,"storeCommenterData":100000,"isCaptchaInSession":true,"isGoodbyeCaptchaActive":false,"facebookAppID":"","version":"4.0.4","wc_post_id":894,"loadLastCommentId":"259118","wc_captcha_show_for_guest":"1","wc_captcha_show_for_members":"0","is_email_field_required":"1"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/wpdiscuz.js.下载"></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='http://martin.ankerl.com/wp-content/themes/twentyseventeen/assets/js/html5.js?ver=3.7.3'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="http://martin.ankerl.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://martin.ankerl.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://martin.ankerl.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Chunky bacon" href="http://martin.ankerl.com/2012/01/15/chunky-bacon/">
+<link rel="next" title="Everything here under Creative Commons" href="http://martin.ankerl.com/2012/02/05/everything-here-under-creative-commons/">
+<meta name="generator" content="WordPress 4.7.2">
+<link rel="canonical" href="http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/">
+<link rel="shortlink" href="http://martin.ankerl.com/?p=894">
+<link rel="alternate" type="application/json+oembed" href="http://martin.ankerl.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fmartin.ankerl.com%2F2012%2F01%2F25%2Foptimized-approximative-pow-in-c-and-cpp%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://martin.ankerl.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fmartin.ankerl.com%2F2012%2F01%2F25%2Foptimized-approximative-pow-in-c-and-cpp%2F&amp;format=xml">
+<style type="text/css">div#toc_container {width: 100%;}</style><style type="text/css">#wpcomm .wc_new_comment{background:#007ACC;}#wpcomm .wc_new_reply{background:#007ACC;}#wpcomm .wc-form-wrapper{background:#FFFFFF;}#wpcomm select,#wpcomm input[type="text"],#wpcomm input[type="email"],#wpcomm input[type="url"],#wpcomm input[type="date"],#wpcomm input[type="color"]{border:#D9D9D9 1px solid;}#wpcomm .wc-comment .wc-comment-right{background:#FFFFFF;}#wpcomm .wc-reply .wc-comment-right{background:#F8F8F8;}#wpcomm .wc-comment-text{font-size:14px;color:#000000;}#wpcomm .wc-blog-administrator > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-administrator > .wc-comment-right .wc-comment-author a{color:#CC7A00;}#wpcomm .wc-blog-administrator > .wc-comment-left .wc-comment-label{background:#CC7A00;}#wpcomm .wc-blog-editor > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-editor > .wc-comment-right .wc-comment-author a{color:#007ACC;}#wpcomm .wc-blog-editor > .wc-comment-left .wc-comment-label{background:#007ACC;}#wpcomm .wc-blog-author > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-author > .wc-comment-right .wc-comment-author a{color:#CC7A00;}#wpcomm .wc-blog-author > .wc-comment-left .wc-comment-label{background:#CC7A00;}#wpcomm .wc-blog-contributor > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-contributor > .wc-comment-right .wc-comment-author a{color:#007ACC;}#wpcomm .wc-blog-contributor > .wc-comment-left .wc-comment-label{background:#007ACC;}#wpcomm .wc-blog-subscriber > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-subscriber > .wc-comment-right .wc-comment-author a{color:#007ACC;}#wpcomm .wc-blog-subscriber > .wc-comment-left .wc-comment-label{background:#007ACC;}#wpcomm .wc-blog-post_author > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-post_author > .wc-comment-right .wc-comment-author a{color:#007ACC;}#wpcomm .wc-blog-post_author > .wc-comment-left .wc-comment-label{background:#007ACC;}#wpcomm .wc-blog-guest > .wc-comment-right .wc-comment-author,#wpcomm .wc-blog-guest > .wc-comment-right .wc-comment-author a{color:#007ACC;}#wpcomm .wc-blog-guest > .wc-comment-left .wc-comment-label{background:#007ACC;}.wc-load-more-submit{border:1px solid #D9D9D9;}#wpcomm .wc-new-loaded-comment > .wc-comment-right{background:#FFFAD6;}.comments-area{width:auto;}.wpdiscuz-front-actions{background:#FFFFFF;}.wpdiscuz-subscribe-bar{background:#FFFFFF;}.wpdiscuz-sort-buttons{color:#bbbbbb;}.wpdiscuz-sort-button{color:#bbbbbb; cursor:pointer;}.wpdiscuz-sort-button:hover{color:#007ACC;cursor:pointer;}.wpdiscuz-sort-button-active{color:#007ACC!important;cursor:default!important;}#wpcomm .page-numbers{color:#000000;border:#000000 1px solid;}#wpcomm span.current{background:#000000;}#wpcomm .wpdiscuz-readmore{cursor:pointer;color:#007ACC;} #wpcomm .wpdiscuz-textarea-wrap{border:#D9D9D9 1px solid;} .wpd-custom-field .wcf-pasiv-star, #wpcomm .wpdiscuz-item .wpdiscuz-rating > label {color: #DDDDDD;}#wpcomm .wpdiscuz-item .wpdiscuz-rating:not(:checked) > label:hover,.wpdiscuz-rating:not(:checked) > label:hover ~ label {   }#wpcomm .wpdiscuz-item .wpdiscuz-rating > input ~ label:hover, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label{color: #FFED85;} #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover, #wpcomm .wpdiscuz-item .wpdiscuz-rating > label:hover ~ input:checked ~ label, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:checked + label:hover ~ label, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover ~ label, .wpd-custom-field .wcf-activ-star, #wpcomm .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label{ color:#FFD700;} #wpcomm .wc-cta-button:hover{border: 1px solid #007ACC!important; background:#007ACC!important; color:#fff!important;} #wpcomm .wc-cta-active{border: 1px solid #007ACC!important; background:#007ACC!important; color:#fff!important;}#wpcomm .wpf-cta:hover{color:#fff!important; background:#007ACC!important; border:1px solid #007ACC!important;}
+        
+#wpcomm .wpf-cta{ border: 1px solid #cccccc; color:#bbbbbb; }
+#wpcomm .wc-cta-button{ background:#888888; border:1px solid #888888; color:#ffffff;}
+#wpcomm .wc-cta-button-x{ background:#888888; border:1px solid #888888; color:#ffffff;}
+#wpcomm .wc-vote-link{border:1px solid #bbbbbb; color:#aaaaaa;}
+#wpcomm .wc-vote-result{border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; color:#aaaaaa;}
+#wpcomm .wc-vote-result.wc-vote-result-like{border:1px solid #bbbbbb;}
+#wpcomm .wc-vote-result.wc-vote-result-dislike{border:1px solid #bbbbbb;}
+</style>
+			<link rel="pingback" href="http://martin.ankerl.com/xmlrpc.php">
+<link rel="icon" href="http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-P1070610-1-32x32.jpg" sizes="32x32">
+<link rel="icon" href="http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-P1070610-1-192x192.jpg" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-P1070610-1-180x180.jpg">
+<meta name="msapplication-TileImage" content="http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-P1070610-1-270x270.jpg">
+
+<!-- BEGIN GADWP v4.9.6 Universal Tracking - https://deconf.com/google-analytics-dashboard-wordpress/ -->
+<script type="text/javascript">
+(function($){
+    $(window).load(function() {
+        
+            //Track Downloads
+            $('a').filter(function() {
+                return this.href.match(/.*\.(zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|rar*)(\?.*)?$/);
+            }).click(function(e) {
+                ga('send','event', 'download', 'click', this.href);
+            });
+
+            //Track Mailto
+            $('a[href^="mailto"]').click(function(e) {
+                ga('send','event', 'email', 'send', this.href);
+             });
+            
+            //Track Outbound Links
+            $('a[href^="http"]').filter(function() {
+                if (!this.href.match(/.*\.(zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|rar*)(\?.*)?$/)){
+                    if (this.href.indexOf('ankerl.com') == -1) return this.href;
+                }
+            }).click(function(e) {
+                ga('send','event', 'outbound', 'click', this.href);
+            });
+		    		                });
+})(jQuery);
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-1083863-1', 'auto', {'allowLinker' : true});
+  ga('require', 'linker');
+  ga('linker:autoLink', ['keto-calculator.ankerl.com'] );
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+  window.google_analytics_uacct = "UA-1083863-1";
+</script>
+
+<!-- END GADWP Universal Tracking -->
+
+</head>
+
+<body class="post-template-default single single-post postid-894 single-format-standard has-header-image has-sidebar colors-light wpdiscuz_4.0.4">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/#content">Skip to content</a>
+
+	<header id="masthead" class="site-header" role="banner">
+
+		<div class="custom-header">
+
+	<div class="custom-header-media">
+		<div id="wp-custom-header" class="wp-custom-header"><img src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/cropped-GOPR0846-1.jpg" width="2000" height="1201" alt="Martin Ankerl" srcset="http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-GOPR0846-1.jpg 2000w, http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-GOPR0846-1-300x180.jpg 300w, http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-GOPR0846-1-768x461.jpg 768w, http://martin.ankerl.com/wp-content/uploads/2014/06/cropped-GOPR0846-1-1024x615.jpg 1024w" sizes="100vw"></div>	</div>
+
+	<div class="site-branding">
+	<div class="wrap">
+
+		
+		<div class="site-branding-text">
+							<p class="site-title"><a href="http://martin.ankerl.com/" rel="home">Martin Ankerl</a></p>
+			
+								<p class="site-description">Chunky bacon!!</p>
+						</div><!-- .site-branding-text -->
+
+		
+	</div><!-- .wrap -->
+</div><!-- .site-branding -->
+
+</div><!-- .custom-header -->
+
+		
+	</header><!-- #masthead -->
+
+	
+	<div class="site-content-contain">
+		<div id="content" class="site-content">
+
+<div class="wrap">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+<article id="post-894" class="post-894 post type-post status-publish format-standard hentry category-programming">
+		<header class="entry-header">
+		<div class="entry-meta"><span class="posted-on"><span class="screen-reader-text">Posted on</span> <a href="http://martin.ankerl.com/2012/01/25/optimized-approximative-pow-in-c-and-cpp/" rel="bookmark"><time class="entry-date published" datetime="2012-01-25T20:48:39+01:00">January 25, 2012</time><time class="updated" datetime="2015-12-23T11:32:23+01:00">December 23, 2015</time></a></span><span class="byline"> by <span class="author vcard"><a class="url fn n" href="http://martin.ankerl.com/author/martinus/">martinus</a></span></span></div><!-- .entry-meta --><h1 class="entry-title">Optimized Approximative pow() in C / C++</h1>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		<p>Mostly thanks to <a href="http://www.reddit.com/r/gamedev/comments/n7na0/fast_approximation_to_mathpow/">this reddit discussion</a>, I have updated my <a href="http://martin.ankerl.com/2007/10/04/optimized-pow-approximation-for-java-and-c-c/">pow() approximation</a> for C / C++. I have now two different versions:</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5893fd1b48e60092443982" class="crayon-syntax crayon-theme-github crayon-font-droid-sans-mono crayon-os-pc print-yes notranslate crayon-wrapped" data-settings=" minimize scroll-mouseover wrap" style="margin-top: 12px; margin-bottom: 12px; font-size: 13px !important; line-height: 18px !important; height: auto;">
+		
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 13px !important; line-height: 18px !important; z-index: 0; opacity: 0; overflow: hidden;">inline double fastPow(double a, double b) {
+  union {
+    double d;
+    int x[2];
+  } u = { a };
+  u.x[1] = (int)(b * (u.x[1] - 1072632447) + 1072632447);
+  u.x[0] = 0;
+  return u.d;
+}</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				<table class="crayon-table">
+					<tbody><tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 13px !important; line-height: 18px !important;"><div class="crayon-num" data-line="crayon-5893fd1b48e60092443982-1" style="height: 18px;">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5893fd1b48e60092443982-2" style="height: 18px;">2</div><div class="crayon-num" data-line="crayon-5893fd1b48e60092443982-3" style="height: 18px;">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5893fd1b48e60092443982-4" style="height: 18px;">4</div><div class="crayon-num" data-line="crayon-5893fd1b48e60092443982-5" style="height: 18px;">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5893fd1b48e60092443982-6" style="height: 18px;">6</div><div class="crayon-num" data-line="crayon-5893fd1b48e60092443982-7" style="height: 18px;">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5893fd1b48e60092443982-8" style="height: 18px;">8</div><div class="crayon-num" data-line="crayon-5893fd1b48e60092443982-9" style="height: 18px;">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 13px !important; line-height: 18px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5893fd1b48e60092443982-1"><span class="crayon-e">inline </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-e">fastPow</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">a</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">b</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5893fd1b48e60092443982-2"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">union</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5893fd1b48e60092443982-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">d</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5893fd1b48e60092443982-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-sy">[</span><span class="crayon-cn">2</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5893fd1b48e60092443982-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-v">u</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-i">a</span><span class="crayon-h"> </span><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5893fd1b48e60092443982-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">u</span><span class="crayon-sy">.</span><span class="crayon-v">x</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-sy">)</span><span class="crayon-sy">(</span><span class="crayon-e ">b *</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">u</span><span class="crayon-sy">.</span><span class="crayon-v">x</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-cn">1072632447</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">1072632447</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5893fd1b48e60092443982-7"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">u</span><span class="crayon-sy">.</span><span class="crayon-v">x</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5893fd1b48e60092443982-8"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">u</span><span class="crayon-sy">.</span><span class="crayon-v">d</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5893fd1b48e60092443982-9"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0173 seconds] -->
+<p><span id="more-894"></span><br>
+<a href="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/pow.png"><img src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/pow.png" alt="" title="This is how a^b looks like, in case you were wondering..." width="240" height="202" class="alignright size-full wp-image-906"></a>This new code uses the union trick, instead of the weird casting trick I’ve used before. This means that <tt>-fno-strict-aliasing</tt> is no more  required any more when compiling, and it is also a bit faster because one less temporary variables is needed. When you have a little endian machine, you have to exchange u.x[0] and u.x[1]. On my PC, this version is 4.2 times faster than the much more precise pow().</p>
+<p>Besides that, I also have now a slower approximation that has much less error when the exponent is larger than 1. It makes use <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Exponentiation_by_squaring">exponentiation by squaring</a>, which is exact for the integer part of the exponent, and uses only the exponent’s fraction for the approximation:</p>
+<p></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5893fd1b48e70172673578" class="crayon-syntax crayon-theme-github crayon-font-droid-sans-mono crayon-os-pc print-yes notranslate crayon-wrapped" data-settings=" minimize scroll-mouseover wrap" style="margin-top: 12px; margin-bottom: 12px; font-size: 13px !important; line-height: 18px !important; height: auto;">
+		
+			<div class="crayon-plain-wrap"><textarea class="crayon-plain print-no" data-settings="dblclick" readonly="" style="tab-size: 4; font-size: 13px !important; line-height: 18px !important; z-index: 0; opacity: 0; overflow: hidden;">// should be much more precise with large b
+inline double fastPrecisePow(double a, double b) {
+  // calculate approximation with fraction of the exponent
+  int e = (int) b;
+  union {
+    double d;
+    int x[2];
+  } u = { a };
+  u.x[1] = (int)((b - e) * (u.x[1] - 1072632447) + 1072632447);
+  u.x[0] = 0;
+
+  // exponentiation by squaring with the exponent's integer part
+  // double r = u.d makes everything much slower, not sure why
+  double r = 1.0;
+  while (e) {
+    if (e &amp; 1) {
+      r *= a;
+    }
+    a *= a;
+    e &gt;&gt;= 1;
+  }
+
+  return r * u.d;
+}</textarea></div>
+			<div class="crayon-main" style="position: relative; z-index: 1; overflow: hidden;">
+				</div></div></div></article></main></div></div></div></div></div><div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./Optimized Approximative pow() in C _ C++ – Martin Ankerl_files/saved_resource.html"></iframe></div></body></html>
