@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)http://www.cnblogs.com/createyuan/p/4341349.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>linux概念之/dev/shm - 阳光-源泉 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/bundle-AnotherEon001.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/bundle-AnotherEon001-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/createyuan/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/createyuan/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/createyuan/wlwmanifest.xml">
+<script src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'createyuan', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<a href="https://github.com/createyuan"><img style="position: absolute; top: 0; right: 0; border: 0;" src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+<!--PageBeginHtml Block End-->
+
+<div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/createyuan/">阳光-源泉</a></h1>
+<div id="subtitle"></div>
+</div>
+<div id="sub"><div id="blog_stats">
+<div class="BlogStats">随笔 - 375, 文章 - 0, 评论 - 0, 引用 - 0</div>
+</div></div>
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/createyuan/p/4341349.html">linux概念之/dev/shm</a>
+		</h2>
+		<div class="postbody">
+		<div id="cnblogs_post_body"><p>Linux默认(CentOS)/dev/shm分区的大小是系统物理内存的50%, 虽说使用/dev/shm对文件操作的效率会高很多,<br>但是目前各发行软件中却很少有使用它的(除了前面提到的Oracle), 可以通过ls /dev/shm查看下面是否有文件, 如果没有就说明当前系统并没有使用该设备.<br><br>默认的Linux发行版中的内核配置都会开启tmpfs，映射到了/dev/下的shm目录。可以通过df 命令查看结果.<br>/dev/shm/是linux下一个非常有用的目录，因为这个目录不在硬盘上，而是在内存里。因此在linux下，就不需要大费周折去建ramdisk，直接使用/dev/shm/就可达到很好的优化效果。默认系统就会加载/dev/shm ，它就是所谓的tmpfs，有人说跟ramdisk（虚拟磁盘），但不一样。象虚拟磁盘一样，tmpfs 可以使用您的 RAM，但它也可以使用您的交换分区来存储。而且传统的虚拟磁盘是个块设备，并需要一个 mkfs 之类的命令才能真正地使用它，tmpfs 是一个文件系统，而不是块设备；您只是安装它，它就可以使用了。 <br>tmpfs有以下优势： <br>1。动态文件系统的大小，/dev/shm/需要注意的一个是容量问题，在linux下，它默认最大为内存的一半大小，使用df -h命令可以看到。但它并不会真正的占用这块内存，如果/dev/shm/下没有任何文件，它占用的内存实际上就是0字节；如果它最大为1G，里头放有 100M文件，那剩余的900M仍然可为其它应用程序所使用，但它所占用的100M内存，是绝不会被系统回收重新划分的 <br>2。tmpfs 的另一个主要的好处是它闪电般的速度。因为典型的 tmpfs 文件系统会完全驻留在 RAM 中，读写几乎可以是瞬间的。 <br>3。tmpfs 数据在重新启动之后不会保留，因为虚拟内存本质上就是易失的。所以有必要做一些脚本做诸如加载，绑定的操作。<br><br>[root@oracle5A ~]# df -h<br>Filesystem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Size&nbsp; Used Avail Use% Mounted on<br>/dev/mapper/VolGroup-lv_root&nbsp;&nbsp; 27G&nbsp; 5.3G&nbsp;&nbsp; 20G&nbsp; 22% /<br>tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.9G&nbsp; 650M&nbsp; 1.3G&nbsp; 34% /dev/shm<br><br>默认的最大一半内存大小在某些场合可能不够用，并且默认的inode数量很低一般都要调高些，这时可以用mount命令来管理它。<br>#mount -o size=1500M -o nr_inodes=1000000 -o noatime,nodiratime -o remount /dev/shm<br>在2G的机器上，将最大容量调到1.5G，并且inode数量调到1000000，这意味着大致可存入最多一百万个小文件。<br>如果需要永久修改/dev/shm的值，需要修改/etc/fstab<br>tmpfs /dev/shm tmpfs defaults,size=1.5G 0 0<br>mount -o remount /dev/shm</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>http://www.cnblogs.com/pied/archive/2013/01/29/2880718.html</p>
+<p>http://www.landley.net/writing/</p>
+<p><span style="font-size: 15px;"><strong>怎样使用initramfs</strong></span></p>
+<p><strong>工作过程简述</strong></p>
+<p>在2.6kernel启动时，它把rootfs作为它的第一个文件系统挂载（注意：这里的rootfs是真名！！！不是root filesystem的缩写）。rootfs是一个特殊的tmpfs，这个不能被删除或者是unmounted。很多使用2.6内核的系统通常都是挂载 rootfs后什么都不做，然后启动另一个文件系统作为root filesystem。但是，这个不能掩盖rootfs存在的事实，你可以“cat /proc/mounts” 来查看，第一个挂载的肯定是rootfs。</p>
+<p>[root@210-lvs grub]# cat /proc/mounts<br>rootfs / rootfs rw 0 0<br>proc /proc proc rw,relatime 0 0<br>sysfs /sys sysfs rw,seclabel,relatime 0 0<br>devtmpfs /dev devtmpfs rw,seclabel,relatime,size=241800k,nr_inodes=60450,mode=755 0 0<br>devpts /dev/pts devpts rw,seclabel,relatime,gid=5,mode=620,ptmxmode=000 0 0<br>tmpfs /dev/shm tmpfs rw,seclabel,relatime 0 0<br>/dev/mapper/VolGroup-lv_root / ext4 rw,seclabel,relatime,barrier=1,data=ordered 0 0<br>none /selinux selinuxfs rw,relatime 0 0<br>devtmpfs /dev devtmpfs rw,seclabel,relatime,size=241800k,nr_inodes=60450,mode=755 0 0<br>/proc/bus/usb /proc/bus/usb usbfs rw,relatime 0 0<br>/dev/sda1 /boot ext4 rw,seclabel,relatime,barrier=1,data=ordered 0 0<br>none /proc/sys/fs/binfmt_misc binfmt_misc rw,relatime 0 0<br><br></p>
+<p>rootfs被挂载后，kernel立马就解压了那个用gzip压缩的CPIO归档文件到rootfs。每个2.6的内核都会执行这一步，但是默认 那个压缩档是空的，所以也就没有往rootfs内添加任何东西。接着kernel会尝试在rootfs去找寻/init，一旦找到init并执 行，kernel也就完成了启动工作，然后便是刚刚执行的init程序接管了接下来的工作。如果kernel没法调用"/init"程序，可能就会回过头 去，按照便准的做法去解析参数“root=”，试图找到另一个filesystem然后挂载它。</p>
+<p>这里的使用initramfs是指，提供一个/init程序给rootfs使用，我们可以通过两种途径实现：使用编译进内核的cpio.gz档案， 或者是一个独立的cpio.gz档案。以前的initrd就是编译一个独立的档案，很多使用initramfs的方式也是给它提供一个独立的档案。</p>
+<p>&nbsp;</p>
+<p><strong>总结一下</strong></p>
+<p>这四种给rootfs提供内容的方式都有一个共同点：在kernel启动时，一系列的文件被解压到rootfs，如果kernel能在其中找到可执行的文件“/init”，kernel就会运行它；这意味着，kernel不会再去理会“root=”是指向哪里的。</p>
+<p>此外，一旦initramfs里面的init 进程运行起来，kernel就会认为启动已经完成。接下来，init将掌控整个宇宙！它拥有霹雳无敌的专门为它预留的Process ID #1，整个系统接下来的所有都将由它来创造！还有，它的地位将是不可剥夺的，嗯哼，PID 1 退出的话，系统会panic的。</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/createyuan/category/571962.html" target="_blank">linux概念</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4341349,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;dcbf7ff8-3c96-e311-8d02-90b11c0b17d6&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/createyuan/" target="_blank"><img src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/20150908105258.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/createyuan/">阳光-源泉</a><br>
+            <a href="http://home.cnblogs.com/u/createyuan/followees">关注 - 3</a><br>
+            <a href="http://home.cnblogs.com/u/createyuan/followers">粉丝 - 3</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;dcbf7ff8-3c96-e311-8d02-90b11c0b17d6&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4341349,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(4341349,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/createyuan/p/4341937.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/createyuan/p/4341937.html" title="发布于2015-03-17 14:32">linux概念之cpu分析</a><br><a href="http://www.cnblogs.com/createyuan/p/4346606.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/createyuan/p/4346606.html" title="发布于2015-03-18 11:03">系统过程分析</a><br></div>
+</div>
+
+
+		</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2015-03-17 14:34</span> <a href="http://www.cnblogs.com/createyuan/">阳光-源泉</a> 阅读(<span id="post_view_count">299</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4341349" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/createyuan/p/4341349.html#" onclick="AddToWz(4341349);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=176052,cb_entryId=4341349,cb_blogApp=currentBlogApp,cb_blogUserGuid='dcbf7ff8-3c96-e311-8d02-90b11c0b17d6',cb_entryCreatedDate='2015/3/17 14:34:00';loadViewCount(cb_entryId);</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/createyuan/p/4341349.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/createyuan/p/4341349.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://rongcloud.cn/reports/journal2" target="_blank">【推荐】融云发布 App 社交化白皮书 IM 提升活跃超 8 倍</a><br><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank">【推荐】自开发 零实施的BPM</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block"><a href="https://cn.udacity.com/course/deep-learning-nanodegree-foundation--nd101/?utm_source=cnblogB3&amp;utm_medium=referral&amp;utm_campaign=nd101launch" target="_blank"><img width="300" height="250" src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/24442-20170120162217812-818299692.jpg" alt=""></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562091/" target="_blank">汽车这一年，无人车不再遥不可及，新造车运动砸下千亿真金白银</a><br> ·  <a href="http://news.cnblogs.com/n/562090/" target="_blank">SpaceX完成了回收火箭的静态点火测试</a><br> ·  <a href="http://news.cnblogs.com/n/562089/" target="_blank">Windows 10 Cloud可能是微软应对Chrome OS的新招</a><br> ·  <a href="http://news.cnblogs.com/n/562088/" target="_blank">GoPro无人机Karma召回后再次开卖 恐已难与大疆匹敌</a><br> ·  <a href="http://news.cnblogs.com/n/562087/" target="_blank">保持开源项目健康运行并减少压力的10件事</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+<li>
+<a id="blog_nav_sitehome" href="http://www.cnblogs.com/">博客园</a></li>
+<li>
+<a id="blog_nav_myhome" class="two_words" href="http://www.cnblogs.com/createyuan/">首页</a></li>
+<li>
+<a id="blog_nav_newpost" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li>
+<a id="blog_nav_contact" accesskey="9" class="two_words" rel="nofollow" href="https://msg.cnblogs.com/send/%E9%98%B3%E5%85%89-%E6%BA%90%E6%B3%89">联系</a></li>
+<li>
+<a id="blog_nav_rss" class="two_words" href="http://www.cnblogs.com/createyuan/rss">订阅</a>
+<a id="blog_nav_rss_image" href="http://www.cnblogs.com/createyuan/rss"><img src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/xml.gif" alt="订阅"></a>
+</li>
+<li>
+<a id="blog_nav_admin" class="two_words" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/01/01&#39;);return false;">&lt;</a></td><td align="center">2017年2月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/03/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td class="CalTodayDay" align="center">3</td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td class="CalWeekendDay" align="center">25</td></tr><tr><td class="CalWeekendDay" align="center">26</td><td align="center">27</td><td align="center">28</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr><tr><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td><td class="CalOtherMonthDay" align="center">11</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+<meta name="vs_showGrid" content="False">
+
+<h3>公告</h3>
+<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/createyuan/">阳光-源泉</a><br>园龄：<a href="http://home.cnblogs.com/u/createyuan/" title="入园时间：2014-02-15">2年11个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/createyuan/followers/">3</a><br>关注：<a href="http://home.cnblogs.com/u/createyuan/followees/">3</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;dcbf7ff8-3c96-e311-8d02-90b11c0b17d6&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+
+<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_toptags" class="sidebar-block">
+<h3 class="catListTitle">我的标签</h3>
+<div id="MyTag">
+<ul>
+<li><a href="http://www.cnblogs.com/createyuan/tag/python/">python</a>(6)</li><li><a href="http://www.cnblogs.com/createyuan/tag/mysql/">mysql</a>(4)</li><li><a href="http://www.cnblogs.com/createyuan/tag/c/">c</a>(4)</li><li><a href="http://www.cnblogs.com/createyuan/tag/java/">java</a>(4)</li><li><a href="http://www.cnblogs.com/createyuan/tag/%E7%9B%91%E6%8E%A7%E6%8A%A5%E8%AD%A6/">监控报警</a>(4)</li><li><a href="http://www.cnblogs.com/createyuan/tag/%E7%9B%AE%E5%BD%95%E5%88%97%E8%A1%A8/">目录列表</a>(4)</li><li><a href="http://www.cnblogs.com/createyuan/tag/%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">性能调优</a>(3)</li><li><a href="http://www.cnblogs.com/createyuan/tag/kvm/">kvm</a>(3)</li><li><a href="http://www.cnblogs.com/createyuan/tag/docker/">docker</a>(3)</li><li><a href="http://www.cnblogs.com/createyuan/tag/oracle/">oracle</a>(2)</li><li><a href="http://www.cnblogs.com/createyuan/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+		<h3>随笔分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/createyuan/category/929149.html">gui-soft(6)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/createyuan/category/578332.html">linux服务(33)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/createyuan/category/571962.html">linux概念(32)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/createyuan/category/833884.html">linux工具(8)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/createyuan/category/650918.html">linux脚本实例(9)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/createyuan/category/578357.html">linux命令汇总(17)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/createyuan/category/578331.html">linux命令详解(23)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/createyuan/category/571961.html">管理-DB(40)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/createyuan/category/698376.html">管理-OS(9)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/createyuan/category/581509.html">管理-VM(30)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/createyuan/category/729965.html">管理-安全(6)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/createyuan/category/578336.html">管理-硬件(9)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/createyuan/category/586488.html">开发(12)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/createyuan/category/579269.html">开发-bash(19)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/createyuan/category/865071.html">开发-c(4)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/createyuan/category/865070.html">开发-java(4)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/createyuan/category/863312.html">开发-python(11)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/createyuan/category/660180.html">开源项目集成(15)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/createyuan/category/732314.html">目录(3)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/createyuan/category/583669.html">社会各界-各行各业-市场化(25)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/createyuan/category/890400.html">视频笔记</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_21" href="http://www.cnblogs.com/createyuan/category/898776.html">视频培训(5)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_22" href="http://www.cnblogs.com/createyuan/category/656313.html">英语-翻译(30)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_23" href="http://www.cnblogs.com/createyuan/category/691365.html">英语-知识点(8)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_24" href="http://www.cnblogs.com/createyuan/category/588766.html">知识点(6)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_25" href="http://www.cnblogs.com/createyuan/category/650636.html">转载(11)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/createyuan/archive/2017/01.html">2017年1月 (4)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/createyuan/archive/2016/12.html">2016年12月 (6)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/createyuan/archive/2016/11.html">2016年11月 (3)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/createyuan/archive/2016/10.html">2016年10月 (6)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/createyuan/archive/2016/09.html">2016年9月 (8)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/createyuan/archive/2016/08.html">2016年8月 (12)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/createyuan/archive/2016/07.html">2016年7月 (20)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/createyuan/archive/2016/06.html">2016年6月 (7)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/createyuan/archive/2016/05.html">2016年5月 (7)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/createyuan/archive/2016/04.html">2016年4月 (10)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/createyuan/archive/2016/03.html">2016年3月 (10)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/createyuan/archive/2016/02.html">2016年2月 (5)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/createyuan/archive/2016/01.html">2016年1月 (1)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/createyuan/archive/2015/12.html">2015年12月 (2)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/createyuan/archive/2015/11.html">2015年11月 (7)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/createyuan/archive/2015/10.html">2015年10月 (2)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/createyuan/archive/2015/09.html">2015年9月 (10)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/createyuan/archive/2015/08.html">2015年8月 (9)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/createyuan/archive/2015/07.html">2015年7月 (15)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/createyuan/archive/2015/06.html">2015年6月 (8)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/createyuan/archive/2015/05.html">2015年5月 (14)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/createyuan/archive/2015/04.html">2015年4月 (30)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/createyuan/archive/2015/03.html">2015年3月 (15)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/createyuan/archive/2015/02.html">2015年2月 (16)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/createyuan/archive/2015/01.html">2015年1月 (15)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/createyuan/archive/2014/12.html">2014年12月 (9)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/createyuan/archive/2014/11.html">2014年11月 (6)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/createyuan/archive/2014/10.html">2014年10月 (15)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/createyuan/archive/2014/09.html">2014年9月 (17)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/createyuan/archive/2014/08.html">2014年8月 (6)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/createyuan/archive/2014/07.html">2014年7月 (11)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/createyuan/archive/2014/06.html">2014年6月 (28)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/createyuan/archive/2014/05.html">2014年5月 (28)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/createyuan/archive/2014/04.html">2014年4月 (9)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/createyuan/archive/2014/03.html">2014年3月 (4)</a></li>
+			
+				</ul>
+			
+	
+		<h3>相册</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/createyuan/gallery/569517.html" rel="nofollow">故障(3)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_1" href="http://www.cnblogs.com/createyuan/gallery/569522.html" rel="nofollow">知识图(4)</a></li>
+			
+				</ul>
+			
+	</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" style="display: none;">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"></div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © 阳光-源泉
+</p>
+</div>
+</div>
+
+
+
+<div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./linux概念之_dev_shm - 阳光-源泉 - 博客园_files/saved_resource.html"></iframe></div></body></html>
