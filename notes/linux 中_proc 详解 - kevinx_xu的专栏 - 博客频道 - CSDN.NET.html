@@ -1,0 +1,2463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0054)http://blog.csdn.net/kevinx_xu/article/details/8178746 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tcam"></script>  
+
+    <script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/hm.js.下载"></script><script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tracking.js.下载" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script><script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/repoAddr2.js.下载"></script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/kevinx_xu/article/details/8178746#">
+
+    <title>linux 中/proc 详解 - kevinx_xu的专栏
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="今天做web的时候，前台URL提交参数中有中文，一开始以为是后台转码问题用unicode(param,utf-8)试了一下不行，得到的还是乱码，问老王python大牛大牛告诉我用urllib.urldecode转码，试了一下还是不行，因为别的页面也有中文提交的情况，别的页面后台用unicode(param,utf-8)就搞定了，为什么这个不行呢，仔细一想这个提交是在JS中提">
+    <script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/jquery.js.下载" type="text/javascript"></script>
+      <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/jquery-version.js.下载"></script>
+    <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ad.js.下载"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/index.css">
+        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tracking.js(1).下载"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/kevinx_xu/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/share.js.下载"></script><link rel="stylesheet" type="text/css" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/job_reco.css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/wxLogin.js.下载"></script><link rel="stylesheet" type="text/css" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/style(1).css"><link type="text/css" rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/style(2).css"><script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/get_ads.php" type="text/javascript"></script><script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/logger.js.下载"></script><link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/share_style0_16.css"></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><div id="MathJax_Message" style="display: none;"></div><iframe frameborder="0" style="display: none;" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saved_resource.html"></iframe>
+
+
+    <!-- 广告位开始 -->
+        <ins data-revive-zoneid="149" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57" id="revive-0-0"></ins>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/html.js.下载" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saved_resource(1).html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/kevinx_xu">kevinx_xu的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/kevinx_xu?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/kevinx_xu?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/kevinx_xu/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "kevinx_xu";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/kevinx_xu";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+
+<a href="http://geek.csdn.net/news/detail/134790" target="_blank">
+<font color="blue">CSDN学院招募微信小程序讲师啦
+
+
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/274" target="_blank">
+<font color="red">程序员简历优化指南！ 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/PK.html" target="_blank">
+<font color="blue">【观点】移动原生App开发 PK HTML 5开发
+</font></a>
+
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://bss.csdn.net/m/product/aliyun_essay/index" target="_blank">
+<font color="red">云端应用征文大赛，秀绝招，赢无人机！
+</font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+<link href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/jquery.cookie.js.下载"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/main.js.下载"></script>
+<link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/markdown_views.css">
+<link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/category.css">
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/MathJax.js.下载"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/web-storage-cache.min.js.下载"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/replace.min.js.下载"></script>
+
+
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=linux+%e4%b8%ad%2fproc+%e8%af%a6%e8%a7%a3&u=http://blog.csdn.net/kevinx_xu/article/details/8178746"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/kevinx_xu/article/details/8178746">
+        linux 中/proc 详解            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_r">
+            <span class="link_postdate">2012-11-13 15:15</span>
+            <span class="link_view" title="阅读次数">37951人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;linux+%e4%b8%ad%2fproc+%e8%af%a6%e8%a7%a3&#39;,&#39;8178746&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#report" onclick="javascript:report(8178746,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody" style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+    <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/category.js.下载"></script>  
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<dl class="box_t" style="font-weight:bold"><dd><span style="font-size:18px">Linux-proc
+</span></dd></dl>
+<dl class="box_INFO" style="font-weight:bold"><dd class="frinfo line_blue"><span style="font-size:18px">&nbsp; &nbsp;&nbsp;
+</span></dd><dd class="frsize line_blue"><span style="font-size:18px"><span id="favorite"><a class="t6"></a></span></span><br>
+</dd></dl>
+<dl class="box_body" id="fontzoom" style="font-weight:bold"><dd id="Article"><span style="font-size:18px">proc 文件系统<br>
+&nbsp;<br>
+在Linux中有额外的机制可以为内核和内核模块将信息发送给进程-- /proc 文件系统。最初设计的目的是允许更方便的对进程信息进行访问（因此得名），现在它被每一个有有趣的东西报告的内核使用，例如/proc/modules 有模块的列表/proc/meminfo 有内存使用的统计表。<br>
+&nbsp;<br>
+　　使用proc 文件系统的方法和使用设备驱动程序非常相似--创建一个/proc 文件需要的所有信息的结构，包括任何处理函数的指针（在我们的例子中只有一个，当某人试图从/proc 文件读时调用的那一个）。然后，init_module 在内核中登记该结构而cleanup_module 注销它。<br>
+&nbsp;<br>
+　　我们使用proc_register_dynamic(这是在2.0 版中的情况，在2.2 版中如果我们将节点设置为0系统将自动为我们做到) 的原因是我们不想预先决定我们的文件的节点数字，而是为防止冲突而由内核决定它。通常的文件系统存在于磁盘上而不是内存中（/proc 在内存中），在这中情况下，节点数是是指向文件的索引节点所在的磁盘位置的指针。节点包含文件的信息（例如文件的存取权限）和指向磁盘位置或文件数据可以被找到的几个位置的指针。<br>
+&nbsp;<br>
+　　因为当文件被打开或关闭的时候不能得到调用，所以在这个模块中没有地方放置MOD_INC_USE_COUNT 和MOD_DEC_USE_COUNT，并且，如果文件被打开随后模块被移除，我们没有办法避免后果。在下一章我们会看到一个艰难的但更灵活的可以处理/proc文件的实现方式，它也可以让我们防止那个问题。<br>
+&nbsp;<br>
+http://www.2cto.com/os/201202/119552.html<br>
+&nbsp;<br>
+Linux 内核提供了一种通过/proc 文件系统，在运行时访问内核内部数据结构、改变内核设置的机制。尽管在各种硬件平台上的Linux 系统的/proc 文件系统的基本概念都是相同的，但本文只讨论基于intel x86 架构的Linux /proc 文件系统。<br>
+&nbsp;<br>
+_________________ _________________ _________________<br>
+&nbsp;<br>
+/proc --- 一个虚拟文件系统<br>
+&nbsp;<br>
+/proc 文件系统是一种内核和内核模块用来向进程(process) 发送信息的机制(所以叫做/proc)。这个伪文件系统让你可以和内核内部数据结构进行交互，获取 有关进程的有用信息，在运行中(on the fly) 改变设置(通过改变内核参数)。 与其他文件系统不同，/proc 存在于内存之中而不是硬盘上。如果你察看文件/proc/mounts (和mount 命令一样列出所有已经加载的文件系统)，你会看到其中 一行是这样的：<br>
+&nbsp;<br>
+grep proc /proc/mounts<br>
+/proc /proc proc rw 0 0<br>
+&nbsp;<br>
+/proc 由内核控制，没有承载/proc 的设备。因为/proc 主要存放由内核控制的状态信息，所以大部分这些信息的逻辑位置位于内核控制的内存。对/proc 进行一次'ls -l' 可以看到大部分文件都是0 字节大的；不过察看这些文件的时候，确实可以看到一些信息。这怎么可能？这是因为/proc 文件系统和其他常规的文件系统一样把自己注册到虚拟文件系统层(VFS) 了。然而，直到当VFS 调用它，请求文件、目录的i-node 的时候，/proc 文件系统才根据内核中的信息建立相应的文件和目录。<br>
+&nbsp;<br>
+加载proc 文件系统<br>
+&nbsp;<br>
+如果系统中还没有加载proc 文件系统，可以通过如下命令加载proc 文件系统：<br>
+&nbsp;<br>
+mount -t proc proc /proc<br>
+上述命令将成功加载你的proc 文件系统。更多细节请阅读mount 命令的man page。<br>
+&nbsp;<br>
+察看/proc 的文件<br>
+&nbsp;<br>
+/proc 的文件可以用于访问有关内核的状态、计算机的属性、正在运行的进程的状态等信息。大部分/proc 中的文件和目录提供系统物理环境最新的信息。尽管/proc 中的文件是虚拟的，但它们仍可以使用任何文件编辑器或像'more', 'less'或'cat'这样的程序来查看。当编辑程序试图打开一个虚拟文件时，这个文件就通过内核中的信息被凭空地(on the fly) 创建了。这是一些我从我的系统中得到的一些有趣结果：<br>
+&nbsp;<br>
+$ ls -l /proc/cpuinfo<br>
+-r--r--r-- 1 root root 0 Dec 25 11:01 /proc/cpuinfo<br>
+&nbsp;<br>
+$ file /proc/cpuinfo<br>
+/proc/cpuinfo: empty<br>
+&nbsp;<br>
+$ cat /proc/cpuinfo<br>
+&nbsp;<br>
+processor : 0<br>
+vendor_id : GenuineIntel<br>
+cpu family : 6<br>
+model : 8<br>
+model name : Pentium III (Coppermine)<br>
+stepping : 6<br>
+cpu MHz : 1000.119<br>
+cache size : 256 KB<br>
+fdiv_bug : no<br>
+hlt_bug : no<br>
+sep_bug : no<br>
+f00f_bug : no<br>
+coma_bug : no<br>
+fpu : yes<br>
+fpu_exception : yes<br>
+cpuid level : 2<br>
+wp : yes<br>
+flags : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca<br>
+cmov pat pse36 mmx fxsr xmm<br>
+bogomips : 1998.85<br>
+&nbsp;<br>
+processor : 3<br>
+vendor_id : GenuineIntel<br>
+cpu family : 6<br>
+model : 8<br>
+model name : Pentium III (Coppermine)<br>
+stepping : 6<br>
+cpu MHz : 1000.119<br>
+cache size : 256 KB<br>
+fdiv_bug : no<br>
+hlt_bug : no<br>
+sep_bug : no<br>
+f00f_bug : no<br>
+coma_bug : no<br>
+fpu : yes<br>
+fpu_exception : yes<br>
+cpuid level : 2<br>
+wp : yes<br>
+flags : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca<br>
+cmov pat pse36 mmx fxsr xmm<br>
+bogomips : 1992.29<br>
+&nbsp;<br>
+这是一个从双CPU 的系统中得到的结果，上述大部分的信息十分清楚地给出了这个系统的有用的硬件信息。有些/proc 的文件是经过编码的，不同的工具可以被用来解释这些编码过的信息并输出成可读的形式。这样的工具包括：'top', 'ps', 'apm' 等。<br>
+&nbsp;<br>
+得到有用的系统/内核信息<br>
+&nbsp;<br>
+proc 文件系统可以被用于收集有用的关于系统和运行中的内核的信息。下面是一些重要的文件：<br>
+&nbsp;<br>
+* /proc/cpuinfo - CPU 的信息(型号, 家族, 缓存大小等)<br>
+* /proc/meminfo - 物理内存、交换空间等的信息<br>
+* /proc/mounts - 已加载的文件系统的列表<br>
+* /proc/devices - 可用设备的列表<br>
+* /proc/filesystems - 被支持的文件系统<br>
+* /proc/modules - 已加载的模块<br>
+* /proc/version - 内核版本<br>
+* /proc/cmdline - 系统启动时输入的内核命令行参数<br>
+&nbsp;<br>
+proc 中的文件远不止上面列出的这么多。想要进一步了解的读者可以对/proc 的每一个文件都'more'一下或读参考文献[1]获取更多的有关/proc 目录中的文件的信息。我建议使用'more'而不是'cat'，除非你知道这个文件很小，因为有些文件(比如kcore) 可能会非常长。<br>
+&nbsp;<br>
+有关运行中的进程的信息<br>
+&nbsp;<br>
+/proc 文件系统可以用于获取运行中的进程的信息。在/proc 中有一些编号的子目录。每个编号的目录对应一个进程id (PID)。这样，每一个运行中的进程/proc 中都有一个用它的PID 命名的目录。这些子目录中包含可以提供有关进程的状态和环境的重要细节信息的文件。让我们试着查找一个运行中的进程。<br>
+&nbsp;<br>
+$ ps -aef | grep mozilla<br>
+root 32558 32425 8 22:53 pts/1 00:01:23 /usr/bin/mozilla<br>
+&nbsp;<br>
+上述命令显示有一个正在运行的mozilla 进程的PID 是32558。相对应的，/proc 中应该有一个名叫32558 的目录<br>
+&nbsp;<br>
+$ ls -l /proc/32558<br>
+total 0<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 cmdline<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 cpu<br>
+lrwxrwxrwx 1 root root 0 Dec 25 22:59 cwd -&gt; /proc/<br>
+-r-------- 1 root root 0 Dec 25 22:59 environ<br>
+lrwxrwxrwx 1 root root 0 Dec 25 22:59 exe -&gt; /usr/bin/mozilla*<br>
+dr-x------ 2 root root 0 Dec 25 22:59 fd/<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 maps<br>
+-rw------- 1 root root 0 Dec 25 22:59 mem<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 mounts<br>
+lrwxrwxrwx 1 root root 0 Dec 25 22:59 root -&gt; //<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 stat<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 statm<br>
+-r--r--r-- 1 root root 0 Dec 25 22:59 status<br>
+&nbsp;<br>
+文件"cmdline" 包含启动进程时调用的命令行。"envir" 进程的环境变两。"status" 是进程的状态信息，包括启动进程的用户的用户ID (UID) 和组ID(GID) ，父进程ID (PPID)，还有进程当前的状态，比如"Sleelping"和"Running"。每个进程的目录都有几个符号链接，"cwd"是指向进程当前工作目录的符号链接，"exe"指向运行的进程的可执行程序，"root"指向被这个进程看作是根目录的目录(通常是"/")。目录"fd"包含指向进程使用的文件描述符的链接。"cpu"仅在运行SMP
+ 内核时出现，里面是按CPU 划分的进程时间。<br>
+&nbsp;<br>
+/proc/self 是一个有趣的子目录，它使得程序可以方便地使用/proc 查找本进程地信息。/proc/self 是一个链接到/proc 中访问/proc 的进程所对应的PID 的目录的符号链接。<br>
+&nbsp;<br>
+通过/proc 与内核交互<br>
+&nbsp;<br>
+上面讨论的大部分/proc 的文件是只读的。而实际上/proc 文件系统通过/proc 中可读写的文件提供了对内核的交互机制。写这些文件可以改变内核的状态，因而要慎重改动这些文件。/proc/sys 目录存放所有可读写的文件的目录，可以被用于改变内核行为。<br>
+&nbsp;<br>
+/proc/sys/kernel - 这个目录包含反通用内核行为的信息。/proc/sys/kernel/{domainname, hostname} 存放着机器/网络的域名和主机名。这些文件可以用于修改这些名字。<br>
+&nbsp;<br>
+$ hostname<br>
+machinename.domainname.com<br>
+&nbsp;<br>
+$ cat /proc/sys/kernel/domainname<br>
+domainname.com<br>
+&nbsp;<br>
+$ cat /proc/sys/kernel/hostname<br>
+machinename<br>
+&nbsp;<br>
+$ echo "new-machinename" &gt; /proc/sys/kernel/hostname<br>
+&nbsp;<br>
+$ hostname<br>
+new-machinename.domainname.com<br>
+&nbsp;<br>
+这样，通过修改/proc 文件系统中的文件，我们可以修改主机名。很多其他可配置的文件存在于/proc/sys/kernel/。这里不可能列出所有这些文件，读者可以自己去这个目录查看以得到更多细节信息。<br>
+另一个可配置的目录是/proc/sys/net。这个目录中的文件可以用于修改机器/网络的网络属性。比如，简单修改一个文件，你可以在网络上瘾藏匿的计算机。<br>
+&nbsp;<br>
+$ echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all<br>
+&nbsp;<br>
+这将在网络上瘾藏你的机器，因为它不响应icmp_echo。主机将不会响应其他主机发出的ping 查询。<br>
+&nbsp;<br>
+$ ping machinename.domainname.com<br>
+no answer from machinename.domainname.com<br>
+&nbsp;<br>
+要改回缺省设置，只要<br>
+&nbsp;<br>
+$ echo 0 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all<br>
+&nbsp;<br>
+/proc/sys 下还有许多其它可以用于改变内核属性。读者可以通过参考文献[1], [2] 获取更多信息。<br>
+&nbsp;<br>
+结论<br>
+&nbsp;<br>
+/proc 文件系统提供了一个基于文件的Linux 内部接口。它可以用于确定系统的各种不同设备和进程的状态。对他们进行配置。因而，理解和应用有关这个文件系统的知识是理解你的Linux 系统的关键。<br>
+&nbsp;<br>
+原文：http://www.sudu.cn/info/html/edu/20070101/292381.html<br>
+&nbsp;<br>
+什么是proc文件系统<br>
+proc文件系统是一个伪文件系统，它只存在内存当中，而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。用户和应用程序可以通过proc得到系统的信息，并可以改变内核的某些参数。由于系统的信息，如进程，是动态改变的，所以用户或应用程序读取proc文件时，proc文件系统是动态从系统内核读出所需信息并提交的。它的目录结构如下：<br>
+目录名称 目录内容<br>
+apm 高级电源管理信息<br>
+cmdline 内核命令行<br>
+Cpuinfo 关于Cpu信息<br>
+Devices 可以用到的设备（块设备/字符设备）<br>
+Dma 使用的DMA通道<br>
+Filesystems 支持的文件系统<br>
+Interrupts 中断的使用<br>
+Ioports I/O端口的使用<br>
+Kcore 内核核心印象<br>
+Kmsg 内核消息<br>
+Ksyms 内核符号表<br>
+Loadavg 负载均衡<br>
+Locks 内核锁<br>
+Meminfo 内存信息<br>
+Misc 杂项<br>
+Modules 加载模块列表<br>
+Mounts 加载的文件系统<br>
+Partitions 系统识别的分区表<br>
+Rtc 实时时钟<br>
+Slabinfo Slab池信息<br>
+Stat 全面统计状态表<br>
+Swaps 对换空间的利用情况<br>
+Version 内核版本<br>
+Uptime 系统正常运行时间<br>
+并不是所有这些目录在你的系统中都有，这取决于你的内核配置和装载的模块。另外，在/proc下还有三个很重要的目录：net，scsi和sys。Sys目录是可写的，可以通过它来访问或修改内核的参数（见下一部分），而net和scsi则依赖于内核配置。例如，如果系统不支持scsi，则scsi 目录不存在。<br>
+除了以上介绍的这些，还有的是一些以数字命名的目录，它们是进程目录。系统中当前运行的每一个进程都有对应的一个目录在/proc下，以进程的PID号为目录名，它们是读取进程信息的接口。而self目录则是读取进程本身的信息接口，是一个link。Proc文件系统的名字就是由之而起。进程目录的结构如下：<br>
+目录名称 目录内容<br>
+Cmdline 命令行参数<br>
+Environ 环境变量值<br>
+Fd 一个包含所有文件描述符的目录<br>
+Mem 进程的内存被利用情况<br>
+Stat 进程状态<br>
+Status 进程当前状态，以可读的方式显示出来<br>
+Cwd 当前工作目录的链接<br>
+Exe 指向该进程的执行命令文件<br>
+Maps 内存映象<br>
+Statm 进程内存状态信息<br>
+Root 链接此进程的root目录<br>
+用户如果要查看系统信息，可以用cat命令。例如：<br>
+# cat /proc/interrupts<br>
+CPU0<br>
+0: 8728810 XT-PIC timer<br>
+1: 8Array5 XT-PIC keyboard<br>
+2: 0 XT-PIC cascade<br>
+3: 5316Array5 XT-PIC aha152x<br>
+4: 2014133 XT-PIC serial<br>
+5: 44401 XT-PIC pcnet_cs<br>
+8: 2 XT-PIC rtc<br>
+11: 8 XT-PIC i82365<br>
+12: 182Array18 XT-PIC Mouse<br>
+13: 1 XT-PIC fpu PS/2<br>
+14: 1232265 XT-PIC ide0<br>
+15: 7 XT-PIC ide1<br>
+NMI: 0<br>
+用户还可以实现修改内核参数。在/proc文件系统中有一个有趣的目录：/proc/sys。它不仅提供了内核信息，而且可以通过它修改内核参数，来优化你的系统。但是你必须很小心，因为可能会造成系统崩溃。最好是先找一台无关紧要的机子，调试成功后再应用到你的系统上。<br>
+要改变内核的参数，只要用vi编辑或echo参数重定向到文件中即可。下面有一个例子：<br>
+# cat /proc/sys/fs/file-max<br>
+40Array6<br>
+# echo 81Array2 &gt; /proc/sys/fs/file-max<br>
+# cat /proc/sys/fs/file-max<br>
+81Array2<br>
+如果你优化了参数，则可以把它们写成添加到文件rc.local中，使它在系统启动时自动完成修改。<br>
+/proc文件系统中网络参数<br>
+/proc/sys/kernel<br>
+内核共享内存限制,默认最小为4M.两个参数可以改成一样.加大.<br>
+/proc/sys/kernel/shmall 40Array6<br>
+/proc/sys/kernel/shmmax 33554432<br>
+&nbsp;<br>
+/proc/sys/net/ipv4/<br>
+该目录包含的是和tcp/ip协议相关的各种参数，下面我们就对这些网络参数加以详细的说明。<br>
+ip_forward 参数类型：BOOLEAN<br>
+0 - 关闭(默认值)<br>
+not 0 - 打开ip转发<br>
+在网络本地接口之间转发数据报。该参数非常特殊，对该参数的修改将导致其它所有相关配置参数恢复其默认值(对于主机参阅RFC1122，对于路由器参见RFC1812)<br>
+/proc/sys/net/ipv4/ip_conntrack_max 65440 (默认)<br>
+ip_default_ttl 参数类型：INTEGER<br>
+默认值为64 。表示IP数据报的Time To Live值。<br>
+ip_no_pmtu_disc 参数类型：BOOLEAN<br>
+关闭路径MTU探测，默认值为FALSE<br>
+ipfrag_high_thresh 参数类型：整型<br>
+用来组装分段的IP包的最大内存量。当ipfrag_high_thresh数量的内存被分配来用来组装IP包，则IP分片处理器将丢弃数据报直到ipfrag_low_thresh数量的内存被用来组装IP包。<br>
+ipfrag_low_thresh 参数类型：整型<br>
+参见ipfrag_high_thresh。<br>
+ipfrag_time 参数类型：整型<br>
+保存一个IP分片在内存中的时间。<br>
+inet_peer_threshold 参数类型：整型<br>
+INET对端存储器某个合适值，当超过该阀值条目将被丢弃。该阀值同样决定生存时间以及废物收集通过的时间间隔。条目越多?存活期越低?GC 间隔越短<br>
+inet_peer_minttl 参数类型：整型<br>
+条目的最低存活期。在重组端必须要有足够的碎片(fragment)存活期。这个最低存活期必须保证缓冲池容积是否少于inet_peer_threshold。该值以jiffies为单位测量。<br>
+inet_peer_maxttl 参数类型：整型<br>
+条目的最大存活期。在此期限到达之后?如果缓冲池没有耗尽压力的话(例如?缓冲池中的条目数目非常少)?不使用的条目将会超时。该值以jiffies为单位测量。<br>
+inet_peer_gc_mintime 参数类型：整型<br>
+废物收集(GC)通过的最短间隔。这个间隔会影响到缓冲池中内存的高压力。 该值以jiffies为单位测量。<br>
+inet_peer_gc_maxtime 参数类型：整型<br>
+废物收集(GC)通过的最大间隔，这个间隔会影响到缓冲池中内存的低压力。 该值以jiffies为单位测量。<br>
+tcp_syn_retries 参数类型：整型<br>
+对于一个新建连接，内核要发送多少个SYN 连接请求才决定放弃。不应该大于255，默认值是5，对应于180秒左右。<br>
+tcp_synack_retries 参数类型：整型<br>
+对于远端的连接请求SYN，内核会发送SYN ＋ACK数据报，以确认收到上一个SYN连接请求包。这是所谓的三次握手( threeway handshake)机制的第二个步骤。这里决定内核在放弃连接之前所送出的SYN+ACK 数目。<br>
+tcp_keepalive_time 参数类型：整型<br>
+当keepalive打开的情况下，TCP发送keepalive消息的频率，默认值是2个小时。<br>
+tcp_keepalive_probes 参数类型：整型<br>
+TCP发送keepalive探测以确定该连接已经断开的次数，默认值是Array。<br>
+tcp_keepalive_interval 参数类型：整型<br>
+探测消息发送的频率，乘以tcp_keepalive_probes就得到对于从开始探测以来没有响应的连接杀除的时间。默认值为75秒，也就是没有活动的连接将在大约11分钟以后将被丢弃。<br>
+tcp_retries1 参数类型：整型<br>
+当出现可疑情况而必须向网络层报告这个可疑状况之前?需要进行多少次重试。最低的RFC 数值是3 ?这也是默认值?根据RTO的值大约在3秒- 8分钟之间。<br>
+tcp_retries2 参数类型：整型<br>
+在丢弃激活的TCP连接之前?需要进行多少次重试。RFC1122规定，该值必须大于100秒。默认值为15，根据RTO的值来决定，相当于13-30分钟，<br>
+tcp_orphan_retries 参数类型：整型<br>
+在近端丢弃TCP连接之前?要进行多少次重试。默认值是7 个?相当于50秒- 16分钟?视RTO 而定。如果您的系统是负载很大的web服务器?那么也许需要降低该值?这类sockets 可能会耗费大量的资源。另外参的考tcp_max_orphans 。<br>
+tcp_fin_timeout 参数类型：整型<br>
+对于本端断开的socket连接，TCP保持在FIN-WAIT-2状态的时间。对方可能会断开连接或一直不结束连接或不可预料的进程死亡。默认值为60 秒。过去在2.2版本的内核中是180 秒。您可以设置该值?但需要注意?如果您的机器为负载很重的web服务器?您可能要冒内存被大量无效数据报填满的风险?FIN-WAIT-2 sockets 的危险性低于FIN-WAIT-1 ?因为它们最多只吃1.5K 的内存?但是它们存在时间更长。另外参考tcp_max_orphans。<br>
+tcp_max_tw_buckets 参数类型：整型<br>
+系统在同时所处理的最大timewait sockets 数目。如果超过此数的话?time-wait socket 会被立即砍除并且显示警告信息。之所以要设定这个限制?纯粹为了抵御那些简单的DoS 攻击?千万不要人为的降低这个限制?不过?如果网络条件需要比默认值更多?则可以提高它(或许还要增加内存)。<br>
+tcp_tw_recycle 参数类型：布尔<br>
+打开快速TIME-WAIT sockets 回收。默认值是1。除非得到技术专家的建议或要求?请不要随意修改这个值。<br>
+tcp_max_orphans 参数类型：整型<br>
+系统所能处理不属于任何进程的TCP sockets最大数量。假如超过这个数量?那么不属于任何进程的连接会被立即reset，并同时显示警告信息。之所以要设定这个限制?纯粹为了抵御那些简单的DoS 攻击?千万不要依赖这个或是人为的降低这个限制<br>
+tcp_abort_on_overflow 参数类型：布尔<br>
+当守护进程太忙而不能接受新的连接，就象对方发送reset消息，默认值是false。这意味着当溢出的原因是因为一个偶然的猝发，那么连接将恢复状态。只有在你确信守护进程真的不能完成连接请求时才打开该选项，该选项会影响客户的使用。<br>
+tcp_syncookies 参数类型：整型<br>
+只有在内核编译时选择了CONFIG_SYNCOOKIES时才会发生作用。当出现syn等候队列出现溢出时象对方发送syncookies。目的是为了防止syn flood攻击。默认值是false。<br>
+注意：该选项千万不能用于那些没有收到攻击的高负载服务器，如果在日志中出现synflood消息，但是调查发现没有收到synflood攻击，而是合法用户的连接负载过高的原因，你应该调整其它参数来提高服务器性能。参考: tcp_max_syn_backlog, tcp_synack_retries, tcp_abort_on_overflow.<br>
+syncookie严重的违背TCP协议，不允许使用TCP扩展，可能对某些服务导致严重的性能影响(如SMTP转发)。<br>
+tcp_stdurg 参数类型：整型<br>
+使用TCP urg pointer 字段中的主机请求解释功能。大部份的主机都使用老旧的BSD解释，因此如果您在Linux 打开它?或会导致不能和它们正确沟通。默认值为为?FALSE<br>
+tcp_max_syn_backlog 参数类型：整型<br>
+对于那些依然还未获得客户端确认的连接请求?需要保存在队列中最大数目。对于超过128Mb 内存的系统?默认值是1024 ?低于128Mb 的则为128。如果服务器经常出现过载?可以尝试增加这个数字。警告?假如您将此值设为大于1024?最好修改include/net/tcp.h 里面的TCP_SYNQ_HSIZE ?以保持TCP_SYNQ_HSIZE*16 0)或者bytes-bytes/2^(-tcp_adv_win_scale)(如果tcp_adv_win_scale&nbsp; 128Mb 32768-61000<br>
+0)则系统将忽略所有发送给自己的ICMP ECHO请求或那些广播地址的请求。<br>
+icmp_destunreach_rate - 整数<br>
+icmp_paramprob_rate - 整数<br>
+icmp_timeexceed_rate - 整数<br>
+icmp_echoreply_rate - 整数(not enabled per default)<br>
+限制发向特定目标的ICMP数据报的最大速率。0表示没有任何限制，否则表示jiffies数据单位中允许发送的个数。<br>
+icmp_ignore_bogus_error_responses - 布尔类型<br>
+某些路由器违背RFC1122标准，其对广播帧发送伪造的响应来应答。这种违背行为通常会被以告警的方式记录在系统日志中。如果该选项设置为True，内核不会记录这种警告信息。默认值为False。<br>
+(1) Jiffie: 内核使用的内部时间单位，在i386系统上大小为1/100s，在Alpha中为1/1024S。在/usr/include/asm/param.h中的HZ定义有特定系统的值。<br>
+conf/interface/*:<br>
+conf/all/*是特定的，用来修改所有接口的设置，is special and changes the settings for all interfaces.<br>
+Change special settings per interface.<br>
+log_martians - 布尔类型<br>
+记录带有不允许的地址的数据报到内核日志中。<br>
+accept_redirects - 布尔类型<br>
+收发接收ICMP重定向消息。对于主机来说默认为True，对于用作路由器时默认值为False。<br>
+forwarding - 布尔类型<br>
+在该接口打开转发功能<br>
+mc_forwarding - 布尔类型<br>
+是否进行多播路由。只有内核编译有CONFIG_MROUTE并且有路由服务程序在运行该参数才有效。<br>
+proxy_arp - 布尔类型<br>
+打开proxy arp功能。<br>
+shared_media - 布尔类型<br>
+发送(路由器)或接收(主机) RFC1620 共享媒体重定向。覆盖ip_secure_redirects的值。默认为True。<br>
+secure_redirects - 布尔类型<br>
+仅仅接收发给默认网关列表中网关的ICMP重定向消息，默认值是TRUE。<br>
+send_redirects - 布尔类型<br>
+如果是router，发送重定向消息，默认值是TRUE<br>
+bootp_relay - 布尔类型<br>
+接收源地址为0.b.c.d，目的地址不是本机的数据报。用来支持BOOTP转发服务进程，该进程将捕获并转发该包。默认为False，目前还没有实现。<br>
+accept_source_route - 布尔类型<br>
+接收带有SRR选项的数据报。对于主机来说默认为False，对于用作路由器时默认值为True。<br>
+rp_filter 参数类型<br>
+1 - 通过反向路径回溯进行源地址验证(在RFC1812中定义)。对于单穴主机和stub网络路由器推荐使用该选项。<br>
+0 - 不通过反向路径回溯进行源地址验证。<br>
+默认值为0。某些发布在启动时自动将其打开。<br>
+/proc/sys/net/ipv4/netfilter<br>
+ip_conntrack_buckets<br>
+ip_conntrack_count<br>
+ip_conntrack_generic_timeout<br>
+ip_conntrack_icmp_timeout<br>
+ip_conntrack_log_invalid<br>
+ip_conntrack_max 65536(默认)<br>
+ip_conntrack_tcp_be_liberal<br>
+ip_conntrack_tcp_loose<br>
+ip_conntrack_tcp_max_retrans<br>
+ip_conntrack_tcp_timeout_close<br>
+ip_conntrack_tcp_timeout_close_wait<br>
+ip_conntrack_tcp_timeout_established 432000(单位为秒,5天)<br>
+ip_conntrack_tcp_timeout_fin_wait<br>
+ip_conntrack_tcp_timeout_last_ack<br>
+ip_conntrack_tcp_timeout_max_retrans<br>
+ip_conntrack_tcp_timeout_syn_recv<br>
+ip_conntrack_tcp_timeout_syn_sent<br>
+ip_conntrack_tcp_timeout_time_wait<br>
+ip_conntrack_udp_timeout<br>
+ip_conntrack_udp_timeout_stream<br>
+&nbsp;<br>
+#<br>
+&nbsp;<br>
+#<br>
+#<br>
+&nbsp;<br>
+&nbsp;<br>
+Linux Linux Linux Linux 中/proc /proc /proc /proc 目录下文件详解<br>
+声明：可以自由转载本文, 但请务必保留本文的完整性。<br>
+作者：张子坚<br>
+email:zhangzijian@163.com<br>
+说明：本文所涉及示例均在fedora core3 下得到。<br>
+--------------------------------------------------------------------------------<br>
+/proc 文件系统下的多种文件提供的系统信息不是针对某个特定进程的, 而是能够在整个系统范围的上下文<br>
+中使用。可以使用的文件随系统配置的变化而变化。命令procinfo 能够显示基于其中某些文件的多种系统<br>
+信息。<br>
+以下详细描述/proc 下的文件:<br>
+--------------------------------------------------------------------------------<br>
+/proc/cmdline 文件<br>
+这个文件给出了内核启动的命令行。它和用于进程的cmdline 项非常相似。<br>
+示例：<br>
+[root@localhost proc]# cat cmdline<br>
+ro root=LABEL=/ rhgb quiet<br>
+--------------------------------------------------------------------------------<br>
+/proc/cpuinfo 文件<br>
+这个文件提供了有关系统CPU 的多种信息。这些信息是从内核里对CPU 的测试代码中得到的。文件列出<br>
+了CPU 的普通型号 （386,486,586,686 等 ）, 以及能得到的更多特定信息 （ 制造商, 型号和版本 ） 。 文件还包含<br>
+了以bogomips 表示的处理器速度, 而且如果检测到CPU 的多种特性或者bug, 文件还会包含相应的标志。这<br>
+个文件的格式为：文件由多行构成, 每行包括一个域名称, 一个冒号和一个值。<br>
+示例：<br>
+[root@localhost proc]# cat cpuinfo<br>
+processor : 0<br>
+vendor_id : AuthenticAMD<br>
+cpu family : 6<br>
+model : 8<br>
+model name : AMD Athlon(tm) XP 1800+<br>
+stepping : 1<br>
+cpu MHz : 1530.165<br>
+cache size : 256 KB<br>
+fdiv_bug : no<br>
+hlt_bug : no<br>
+f00f_bug : nocoma_bug : no<br>
+fpu : yes<br>
+fpu_exception : yes<br>
+cpuid level : 1<br>
+wp : yes<br>
+flags : fpu vme de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat pse36 mmx fxsr sse syscall mmxext<br>
+3dnowext 3dnow<br>
+bogomips : 2998.27<br>
+--------------------------------------------------------------------------------<br>
+/proc/devices 文件<br>
+这个文件列出字符和块设备的主设备号, 以及分配到这些设备号的设备名称。<br>
+示例：<br>
+[root@localhost /]# cat /proc/devices<br>
+Character devices:<br>
+1 mem<br>
+4 /dev/vc/0<br>
+4 tty<br>
+4 ttyS<br>
+5 /dev/tty<br>
+5 /dev/console<br>
+5 /dev/ptmx<br>
+6 lp<br>
+7 vcs<br>
+10 misc<br>
+13 input<br>
+14 sound<br>
+29 fb<br>
+36 netlink<br>
+116 alsa<br>
+128 ptm<br>
+136 pts<br>
+180 usb<br>
+Block devices:<br>
+1 ramdisk<br>
+2 fd<br>
+3 ide0<br>
+9 md<br>
+22 ide1<br>
+253 device-mapper<br>
+254 mdp<br>
+--------------------------------------------------------------------------------/proc/dma 文件<br>
+这个文件列出由驱动程序保留的DMA 通道和保留它们的驱动程序名称 。casade 项供用于把次DMA 控制器<br>
+从主控制器分出的DMA 行所使用; 这一行不能用于其它用途。<br>
+示例：<br>
+[root@localhost ~]# cat /proc/dma<br>
+4: cascade<br>
+--------------------------------------------------------------------------------<br>
+/proc/filesystems 文件<br>
+这个文件列出可供使用的文件系统类型, 一种类型一行 。 虽然它们通常是编入内核的文件系统类型, 但该文件<br>
+还可以包含可加载的内核模块加入的其它文件系统类型。<br>
+示例：<br>
+[root@localhost proc]# cat /proc/filesystems<br>
+nodev sysfs<br>
+nodev rootfs<br>
+nodev bdev<br>
+nodev proc<br>
+nodev sockfs<br>
+nodev binfmt_misc<br>
+nodev usbfs<br>
+nodev usbdevfs<br>
+nodev futexfs<br>
+nodev tmpfs<br>
+nodev pipefs<br>
+nodev eventpollfs<br>
+nodev devpts<br>
+ext2<br>
+nodev ramfs<br>
+nodev hugetlbfs<br>
+iso9660<br>
+nodev mqueue<br>
+nodev selinuxfs<br>
+ext3<br>
+nodev rpc_pipefs<br>
+nodev autofs<br>
+--------------------------------------------------------------------------------<br>
+/proc/interrupts 文件<br>
+这个文件的每一行都有一个保留的中断 。 每行中的域有 ： 中断号, 本行中断的发生次数, 可能带有一个加号的<br>
+域（SA_INTERRUPT 标志设置）, 以及登记这个中断的驱动程序的名字。可以在安装新硬件前, 像查看<br>
+/proc/dma 和/proc/ioports 一样用cat 命令手工查看手头的这个文件 。 这几个文件列出了当前投入使用的资源<br>
+（但是不包括那些没有加载驱动程序的硬件所使用的资源 ） 。<br>
+示例：<br>
+[root@localhost SPECS]# cat /proc/interruptsCPU0<br>
+0: 7039406 XT-PIC timer<br>
+1: 6533 XT-PIC i8042<br>
+2: 0 XT-PIC cascade<br>
+3: 0 XT-PIC uhci_hcd<br>
+5: 108 XT-PIC VIA8233, uhci_hcd<br>
+8: 1 XT-PIC rtc<br>
+9: 0 XT-PIC acpi<br>
+10: 0 XT-PIC ehci_hcd<br>
+11: 17412 XT-PIC uhci_hcd, eth0<br>
+12: 140314 XT-PIC i8042<br>
+14: 37897 XT-PIC ide0<br>
+15: 60813 XT-PIC ide1<br>
+NMI: 0<br>
+ERR: 1<br>
+--------------------------------------------------------------------------------<br>
+/proc/ioports 文件<br>
+这个文件列出了诸如磁盘驱动器, 以太网卡和声卡设备等多种设备驱动程序登记的许多I/O 端口范围。<br>
+示例：<br>
+[root@localhost SPECS]# cat /proc/ioports<br>
+0000-001f : dma1<br>
+0020-0021 : pic1<br>
+0040-0043 : timer0<br>
+0050-0053 : timer1<br>
+0060-006f : keyboard<br>
+0070-0077 : rtc<br>
+0080-008f : dma page reg<br>
+00a0-00a1 : pic2<br>
+00c0-00df : dma2<br>
+00f0-00ff : fpu<br>
+0170-0177 : ide1<br>
+01f0-01f7 : ide0<br>
+0376-0376 : ide1<br>
+0378-037a : parport0<br>
+037b-037f : parport0<br>
+03c0-03df : vga+<br>
+03f6-03f6 : ide0<br>
+03f8-03ff : serial<br>
+0800-0803 : PM1a_EVT_BLK<br>
+0804-0805 : PM1a_CNT_BLK<br>
+0808-080b : PM_TMR<br>
+0810-0815 : ACPI CPU throttle<br>
+0820-0823 : GPE0_BLK0cf8-0cff : PCI conf1<br>
+dc00-dcff : 0000:00:12.0<br>
+dc00-dcff : via-rhine<br>
+e000-e0ff : 0000:00:11.5<br>
+e000-e0ff : VIA8233<br>
+e400-e41f : 0000:00:10.0<br>
+e400-e41f : uhci_hcd<br>
+e800-e81f : 0000:00:10.1<br>
+e800-e81f : uhci_hcd<br>
+ec00-ec1f : 0000:00:10.2<br>
+ec00-ec1f : uhci_hcd<br>
+fc00-fc0f : 0000:00:11.1<br>
+fc00-fc07 : ide0<br>
+fc08-fc0f : ide1<br>
+--------------------------------------------------------------------------------<br>
+/proc/kcore 文件<br>
+这个文件是系统的物理内存以core 文件格式保存的文件。例如,GDB 能用它考察内核的数据结构。它不是<br>
+纯文本, 而是/proc 目录下为数不多的几个二进制格式的项之一。<br>
+示例：<br>
+暂无<br>
+--------------------------------------------------------------------------------<br>
+/proc/kmsg 文件<br>
+这个文件用于检索用printk 生成的内核消息。任何时刻只能有一个具有超级用户权限的进程可以读取这个<br>
+文件。也可以用系统调用syslog 检索这些消息。通常使用工具dmesg 或守护进程klogd 检索这些消息。<br>
+示例：<br>
+暂无<br>
+--------------------------------------------------------------------------------<br>
+/proc/ksyms 文件<br>
+这个文件列出了已经登记的内核符号; 这些符号给出了变量或函数的地址 。 每行给出一个符号的地址, 符号名<br>
+称以及登记这个符号的模块。程序ksyms,insmod 和kmod 使用这个文件。它还列出了正在运行的任务数,<br>
+总任务数和最后分配的PID 。<br>
+示例：<br>
+暂无<br>
+--------------------------------------------------------------------------------<br>
+/proc/loadavg 文件<br>
+这个文件给出以几个不同的时间间隔计算的系统平均负载, 这就如同uptime 命令显示的结果那样 。 前三个数<br>
+字是平均负载 。 这是通过计算过去1 分钟,5 分钟,15 分钟里运行队列中的平均任务数得到的 。 随后是正在运行<br>
+的任务数和总任务数。最后是上次使用的进程号。<br>
+示例：[root@localhost ~]# cat /proc/loadavg<br>
+0.11 0.16 0.14 3/126 3912<br>
+--------------------------------------------------------------------------------<br>
+/proc/locks 文件<br>
+这个文件包含在打开的文件上的加锁信息。文件中的每一行描述了特定文件和文档上的加锁信息以及对文<br>
+件施加的锁的类型。内核也可以需要时对文件施加强制性锁。<br>
+示例：<br>
+[root@localhost redhat]# cat /proc/locks<br>
+1: POSIX ADVISORY READ 3822 03:0a:1067117 0 EOF<br>
+2: POSIX ADVISORY READ 3822 03:0a:1067138 0 EOF<br>
+3: POSIX ADVISORY WRITE 3326 03:0a:2326540 0 EOF<br>
+4: POSIX ADVISORY WRITE 2639 03:0a:2966595 0 EOF<br>
+5: FLOCK ADVISORY WRITE 2591 03:0a:2966586 0 EOF<br>
+6: POSIX ADVISORY WRITE 2540 03:0a:2966578 0 EOF<br>
+7: POSIX ADVISORY WRITE 2530 03:0a:2966579 0 EOF<br>
+8: POSIX ADVISORY WRITE 2402 03:0a:2966563 0 EOF<br>
+9: POSIX ADVISORY WRITE 2371 03:0a:2966561 0 EOF<br>
+--------------------------------------------------------------------------------<br>
+/proc/mdstat 文件<br>
+这个文件包含了由md 设备驱动程序控制的RAID 设备信息。<br>
+示例：<br>
+[root@localhost ~]# cat /proc/mdstat<br>
+Personalities :<br>
+unused devices: &lt;none&gt;<br>
+--------------------------------------------------------------------------------<br>
+/proc/meminfo 文件<br>
+这个文件给出了内存状态的信息 。 它显示出系统中空闲内存, 已用物理内存和交换内存的总量 。 它还显示出<br>
+内核使用的共享内存和缓冲区总量。这些信息的格式和free 命令显示的结果类似。<br>
+示例：<br>
+[root@localhost ~]# cat /proc/meminfo<br>
+MemTotal: 223812 kB<br>
+MemFree: 3764 kB<br>
+Buffers: 9148 kB<br>
+Cached: 92112 kB<br>
+SwapCached: 364 kB<br>
+Active: 183640 kB<br>
+Inactive: 17196 kB<br>
+HighTotal: 0 kB<br>
+HighFree: 0 kB<br>
+LowTotal: 223812 kB<br>
+LowFree: 3764 kBSwapTotal: 626524 kB<br>
+SwapFree: 620328 kB<br>
+Dirty: 12 kB<br>
+Writeback: 0 kB<br>
+Mapped: 142880 kB<br>
+Slab: 12668 kB<br>
+Committed_AS: 376732 kB<br>
+PageTables: 2336 kB<br>
+VmallocTotal: 3907576 kB<br>
+VmallocUsed: 2968 kB<br>
+VmallocChunk: 3904224 kB<br>
+HugePages_Total: 0<br>
+HugePages_Free: 0<br>
+Hugepagesize: 4096 kB<br>
+--------------------------------------------------------------------------------<br>
+/proc/misc 文件<br>
+这个文件报告用内核函数misc_register 登记的设备驱动程序。<br>
+示例：<br>
+[root@localhost ~]# cat /proc/misc<br>
+63 device-mapper<br>
+175 agpgart<br>
+135 rtc<br>
+--------------------------------------------------------------------------------<br>
+/proc/modules 文件<br>
+这个文件给出可加载内核模块的信息 。lsmod 程序用这些信息显示有关模块的名称, 大小, 使用数目方面的信<br>
+息。<br>
+示例：<br>
+[root@localhost /]# cat /proc/modules<br>
+md5 4033 1 - Live 0x10a7f000<br>
+ipv6 232577 8 - Live 0x10b0c000<br>
+parport_pc 24705 1 - Live 0x10a8b000<br>
+lp 11565 0 - Live 0x10a7b000<br>
+parport 41737 2 parport_pc,lp, Live 0x10a55000<br>
+autofs4 24005 0 - Live 0x10a74000<br>
+i2c_dev 10433 0 - Live 0x109d2000<br>
+i2c_core 22081 1 i2c_dev, Live 0x10a6d000<br>
+sunrpc 160421 1 - Live 0x10a9d000<br>
+ipt_REJECT 6465 1 - Live 0x109da000<br>
+ipt_state 1857 5 - Live 0x109eb000<br>
+ip_conntrack 40693 1 ipt_state, Live 0x10a62000<br>
+iptable_filter 2753 1 - Live 0x10896000<br>
+ip_tables 16193 3 ipt_REJECT,ipt_state,iptable_filter, Live 0x109ed000dm_mod 54741 0 - Live 0x109f8000<br>
+button 6481 0 - Live 0x10905000<br>
+battery 8517 0 - Live 0x109d6000<br>
+ac 4805 0 - Live 0x10908000<br>
+uhci_hcd 31449 0 - Live 0x109dd000<br>
+ehci_hcd 31557 0 - Live 0x10949000<br>
+snd_via82xx 27237 2 - Live 0x10953000<br>
+snd_ac97_codec 64401 1 snd_via82xx, Live 0x10912000<br>
+snd_pcm_oss 47609 0 - Live 0x1093c000<br>
+snd_mixer_oss 17217 2 snd_pcm_oss, Live 0x1090c000<br>
+snd_pcm 97993 2 snd_via82xx,snd_pcm_oss, Live 0x10923000<br>
+snd_timer 29765 1 snd_pcm, Live 0x108ec000<br>
+snd_page_alloc 9673 2 snd_via82xx,snd_pcm, Live 0x108bd000<br>
+gameport 4801 1 snd_via82xx, Live 0x108a6000<br>
+snd_mpu401_uart 8769 1 snd_via82xx, Live 0x108b9000<br>
+snd_rawmidi 26725 1 snd_mpu401_uart, Live 0x108e4000<br>
+snd_seq_device 8137 1 snd_rawmidi, Live 0x1083b000<br>
+snd 54053 11<br>
+snd_via82xx,snd_ac97_codec,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_timer,snd_mpu401_uart,snd_rawmidi,sn<br>
+d_seq_device, Live 0x108f6000<br>
+soundcore 9889 2 snd, Live 0x1089b000<br>
+via_rhine 23497 0 - Live 0x1089f000<br>
+mii 4673 1 via_rhine, Live 0x10893000<br>
+floppy 58609 0 - Live 0x108a9000<br>
+ext3 116809 1 - Live 0x10875000<br>
+jbd 74969 1 ext3, Live 0x10861000<br>
+lsmod 命令显示结果如下：<br>
+[root@localhost /]# lsmod<br>
+Module Size Used by<br>
+md5 4033 1<br>
+ipv6 232577 8<br>
+parport_pc 24705 1<br>
+lp 11565 0<br>
+parport 41737 2 parport_pc,lp<br>
+autofs4 24005 0<br>
+i2c_dev 10433 0<br>
+i2c_core 22081 1 i2c_dev<br>
+sunrpc 160421 1<br>
+ipt_REJECT 6465 1<br>
+ipt_state 1857 5<br>
+ip_conntrack 40693 1 ipt_state<br>
+iptable_filter 2753 1ip_tables 16193 3 ipt_REJECT,ipt_state,iptable_filter<br>
+dm_mod 54741 0<br>
+button 6481 0<br>
+battery 8517 0<br>
+ac 4805 0<br>
+uhci_hcd 31449 0<br>
+ehci_hcd 31557 0<br>
+snd_via82xx 27237 2<br>
+snd_ac97_codec 64401 1 snd_via82xx<br>
+snd_pcm_oss 47609 0<br>
+snd_mixer_oss 17217 2 snd_pcm_oss<br>
+snd_pcm 97993 2 snd_via82xx,snd_pcm_oss<br>
+snd_timer 29765 1 snd_pcm<br>
+snd_page_alloc 9673 2 snd_via82xx,snd_pcm<br>
+gameport 4801 1 snd_via82xx<br>
+snd_mpu401_uart 8769 1 snd_via82xx<br>
+snd_rawmidi 26725 1 snd_mpu401_uart<br>
+snd_seq_device 8137 1 snd_rawmidi<br>
+snd 54053 11<br>
+snd_via82xx,snd_ac97_codec,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_timer,snd_mpu401_uart,snd_rawmidi,sn<br>
+d_seq_device<br>
+soundcore 9889 2 snd<br>
+via_rhine 23497 0<br>
+mii 4673 1 via_rhine<br>
+floppy 58609 0<br>
+ext3 116809 1<br>
+jbd 74969 1 ext3<br>
+--------------------------------------------------------------------------------<br>
+/proc/mounts 文件<br>
+这个文件以/etc/mtab 文件的格式给出当前系统所安装的文件系统信息。这个文件也能反映出任何手工安装<br>
+从而在/etc/mtab 文件中没有包含的文件系统。<br>
+示例：<br>
+[root@localhost /]# cat /proc/mounts<br>
+rootfs / rootfs rw 0 0<br>
+/proc /proc proc rw,nodiratime 0 0<br>
+none /dev tmpfs rw 0 0<br>
+/dev/root / ext3 rw 0 0<br>
+none /dev tmpfs rw 0 0<br>
+none /selinux selinuxfs rw 0 0<br>
+/proc /proc proc rw,nodiratime 0 0<br>
+/proc/bus/usb /proc/bus/usb usbfs rw 0 0<br>
+/sys /sys sysfs rw 0 0none /dev/pts devpts rw 0 0<br>
+none /dev/shm tmpfs rw 0 0<br>
+none /proc/sys/fs/binfmt_misc binfmt_misc rw 0 0<br>
+sunrpc /var/lib/nfs/rpc_pipefs rpc_pipefs rw 0 0<br>
+--------------------------------------------------------------------------------<br>
+/proc/pci 文件<br>
+这个文件给出PCI 设备的信息。用它可以方便地诊断PCI 问题。你可以从这个文件中检索到的信息包括诸<br>
+如IDE 接口或USB 控制器这样的设备, 总线, 设备和功能编号, 设备延迟以及IRQ 编号。<br>
+示例：<br>
+[root@localhost /]# cat /proc/pci<br>
+PCI devices found:<br>
+Bus 0, device 0, function 0:<br>
+Class 0600: PCI device 1106:3116 (rev 0).<br>
+Master Capable. Latency=8.<br>
+Prefetchable 32 bit memory at 0xe0000000 [0xe7ffffff].<br>
+Bus 0, device 1, function 0:<br>
+Class 0604: PCI device 1106:b091 (rev 0).<br>
+Master Capable. No bursts. Min Gnt=12.<br>
+Bus 0, device 16, function 2:<br>
+Class 0c03: PCI device 1106:3038 (rev 12.<br>
+IRQ 5.<br>
+Master Capable. Latency=32.<br>
+I/O at 0xec00 [0xec1f].<br>
+Bus 0, device 16, function 1:<br>
+Class 0c03: PCI device 1106:3038 (rev 12.<br>
+IRQ 3.<br>
+Master Capable. Latency=32.<br>
+I/O at 0xe800 [0xe81f].<br>
+Bus 0, device 16, function 0:<br>
+Class 0c03: PCI device 1106:3038 (rev 12.<br>
+IRQ 11.<br>
+Master Capable. Latency=32.<br>
+I/O at 0xe400 [0xe41f].<br>
+Bus 0, device 16, function 3:<br>
+Class 0c03: PCI device 1106:3104 (rev 130).<br>
+IRQ 10.<br>
+Master Capable. Latency=32.<br>
+Non-prefetchable 32 bit memory at 0xdfffff00 [0xdfffffff].<br>
+Bus 0, device 17, function 0:<br>
+Class 0601: PCI device 1106:3177 (rev 0).<br>
+Bus 0, device 17, function 1:Class 0101: PCI device 1106:0571 (rev 6).<br>
+IRQ 255.<br>
+Master Capable. Latency=32.<br>
+I/O at 0xfc00 [0xfc0f].<br>
+Bus 0, device 17, function 5:<br>
+Class 0401: PCI device 1106:3059 (rev 80).<br>
+IRQ 5.<br>
+I/O at 0xe000 [0xe0ff].<br>
+Bus 0, device 18, function 0:<br>
+Class 0200: PCI device 1106:3065 (rev 116).<br>
+IRQ 11.<br>
+Master Capable. Latency=32. Min Gnt=3.Max Lat=8.<br>
+I/O at 0xdc00 [0xdcff].<br>
+Non-prefetchable 32 bit memory at 0xdffffe00 [0xdffffeff].<br>
+Bus 1, device 0, function 0:<br>
+Class 0300: PCI device 5333:8d04 (rev 0).<br>
+IRQ 11.<br>
+Master Capable. Latency=32. Min Gnt=4.Max Lat=255.<br>
+Non-prefetchable 32 bit memory at 0xdfe80000 [0xdfefffff].<br>
+Prefetchable 32 bit memory at 0xd0000000 [0xd7ffffff].<br>
+--------------------------------------------------------------------------------<br>
+/proc/stat 文件<br>
+这个文件包含的信息有CPU 利用率, 磁盘, 内存页, 内存对换, 全部中断, 接触开关以及赏赐自举时间（自1970<br>
+年1 月1 日起的秒数 ） 。<br>
+示例：<br>
+[root@localhost /]# cat /proc/stat<br>
+cpu 31994 3898 7161 381600 15254 451 0<br>
+cpu0 31994 3898 7161 381600 15254 451 0<br>
+intr 4615930 4404290 3364 0 0 12 0 7 0 2 0 0 12618 112114 0 44142 39381<br>
+ctxt 1310498<br>
+btime 1148891913<br>
+processes 4249<br>
+procs_running 4<br>
+procs_blocked 0<br>
+--------------------------------------------------------------------------------<br>
+/proc/uptime 文件<br>
+这个文件给出自从上次系统自举以来的秒数, 以及其中有多少秒处于空闲 。 这主要供uptime 程序使用 。 比较<br>
+这两个数字能够告诉你长期来看CPU 周期浪费的比例。<br>
+示例：<br>
+[root@localhost /]# cat /proc/uptime<br>
+4477.04 4021.10--------------------------------------------------------------------------------<br>
+/proc/version 文件<br>
+这个文件只有一行内容, 说明正在运行的内核版本。可以用标准的<a href="http://www.2cto.com/kf" target="_blank" class="keylink">编程</a>方法进行分析获得所需的系统信息 。<br>
+示例：<br>
+[root@localhost /]# cat /proc/version<br>
+<a href="http://www.2cto.com/os/linux/" target="_blank" class="keylink">Linux</a> version 2.6.9-1.667 ( bhcompile@tweety.build.redhat.com ) (gcc version 3.4.2 20041017 (Red Hat<br>
+3.4.2-6.fc3)) #1 Tue Nov 2 14:41:25 EST 2004<br>
+--------------------------------------------------------------------------------<br>
+/proc/net 子目录<br>
+此目录下的文件描述或修改了联网代码的行为。可以通过使用 arp,netstat,route 和ipfwadm 命令设置或查询<br>
+这些特殊文件中的许多文件。<br>
+示例：<br>
+[root@localhost /]# ls /proc/net<br>
+anycast6 ip_conntrack mcfilter6 rt6_stats tcp<br>
+arp ip_conntrack_expect netlink rt_acct tcp6<br>
+dev ip_mr_cache netstat rt_cache udp<br>
+dev_mcast ip_mr_vif packet snmp udp6<br>
+dev_snmp6 ip_tables_matches psched snmp6 unix<br>
+if_inet6 ip_tables_names raw sockstat wireless<br>
+igmp ip_tables_targets raw6 sockstat6<br>
+igmp6 ipv6_route route softnet_stat<br>
+ip6_flowlabel mcfilter rpc stat<br>
+--------------------------------------------------------------------------------<br>
+以下摘要介绍此目录下文件的功能：<br>
+arp<br>
+转储每个网络接口的arp 表中dev 包的统计<br>
+dev<br>
+来自网络设备的统计<br>
+dev_mcast<br>
+列出二层（数据链路层）多播组<br>
+igmp<br>
+加入的IGMP 多播组<br>
+netlink<br>
+netlink 套接口的信息<br>
+netstat<br>
+网络流量的多种统计。第一行是信息头, 带有每个变量的名称。接下来的一行保存相应变量的值<br>
+raw<br>
+原始套接口的套接口表<br>
+route<br>
+静态路由表<br>
+rpc<br>
+包含RPC 信息的目录rt_cache<br>
+路由缓冲<br>
+snmp<br>
+snmp agent 的ip/icmp/tcp/udp 协议统计; 各行交替给出字段名和值<br>
+sockstat<br>
+列出使用的tcp/udp/raw/pac/syc_cookies 的数量<br>
+tcp<br>
+TCP 连接的套接口<br>
+udp<br>
+UDP 连接的套接口表<br>
+unix<br>
+UNIX 域套接口的套接口表<br>
+--------------------------------------------------------------------------------<br>
+示例：[root@localhost /]# cat /proc/net/route<br>
+Iface Destination Gateway Flags RefCnt Use Metric Mask MTU<br>
+Window IRTT<br>
+eth0 0035C2DA 00000000 0001 0 0 0 80FFFFF0<br>
+eth0 0000FEA9 00000000 0001 0 0 0 0000FFF0<br>
+eth0 00000000 0135C2DA 0003 0 0 0 00000000<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost /]# cat /proc/net/tcp<br>
+sl local_address rem_address st tx_queue rx_queue tr tm-&gt;when retrnsmt uid timeout inode<br>
+0: 00000000:8000 00000000:0000 0A 00000000:00000000 00:00000000 00000000 29 0 9525 1<br>
+0dde7500 3000 0 0 2 -1<br>
+1: 00000000:006F 00000000:0000 0A 00000000:00000000 00:00000000 00000000 0 0 9484 1<br>
+0dde79e0 3000 0 0 2 -1<br>
+2: 0100007F:0277 00000000:0000 0A 00000000:00000000 00:00000000 00000000 0 0 10049 1<br>
+0a8e3a00 3000 0 0 2 -1<br>
+3: 0100007F:14D7 00000000:0000 0A 00000000:00000000 00:00000000 00000000 99 0 9847 1<br>
+0dde7020 3000 0 0 2 -1<br>
+4: 0100007F:0019 00000000:0000 0A 00000000:00000000 00:00000000 00000000 0 0 10286 1<br>
+0a8e3520 3000 0 0 2 -1<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost /]# cat /proc/net/arp<br>
+IP address HW type Flags HW address Mask Device<br>
+218.194.53.1 0x1 0x2 00:0D:BC:78:07:3F * eth0<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost /]# cat /proc/net/udp<br>
+sl local_address rem_address st tx_queue rx_queue tr tm-&gt;when retrnsmt uid timeout inode<br>
+0: 00000000:8000 00000000:0000 07 00000000:00000000 00:00000000 00000000 29 0 9520 2<br>
+0b4ef7c0<br>
+105: 00000000:14E9 00000000:0000 07 00000000:00000000 00:00000000 00000000 99 0 10284 20b4ef040<br>
+111: 00000000:006F 00000000:0000 07 00000000:00000000 00:00000000 00000000 0 0 9483 2<br>
+0b4efcc0<br>
+116: 00000000:02F4 00000000:0000 07 00000000:00000000 00:00000000 00000000 0 0 9511 2<br>
+0b4efa40<br>
+119: 00000000:0277 00000000:0000 07 00000000:00000000 00:00000000 00000000 0 0 10050 2<br>
+0b4ef2c0<br>
+--------------------------------------------------------------------------------<br>
+/proc/scsi 子目录<br>
+此目录下包含一个列出了所有检测到的SCSI 设备的文件, 并且为每种控制器驱动程序提供一个目录, 在这个<br>
+目录下又为已安装的此种控制器的每个实例提供一个子目录。<br>
+示例：<br>
+由于本人的机器没有SCSI 设备, 顾暂时无法提供示例。<br>
+--------------------------------------------------------------------------------<br>
+/proc/sys 子目录<br>
+在此目录下有许多子目录 。 此目录中的许多项都可以用来调整系统的性能 。 这个目录包含信息太多, 无法介<br>
+绍全部。只在示例中展示目录下的一些文件。<br>
+示例：[root@localhost /]# ls /proc/sys<br>
+debug dev fs kernel net proc sunrpc vm<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost ~]# ls /proc/sys/fs<br>
+aio-max-nr dentry-state file-nr lease-break-time overflowgid<br>
+aio-nr dir-notify-enable inode-nr leases-enable overflowuid<br>
+binfmt_misc file-max inode-state mqueue quota<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost ~]# ls /proc/sys/kernel<br>
+acct hotplug panic sem<br>
+cad_pid modprobe panic_on_oops shmall<br>
+cap-bound msgmax pid_max shmmax<br>
+core_pattern msgmnb print-fatal-signals shmmni<br>
+core_uses_pid msgmni printk sysrq<br>
+ctrl-alt-del ngroups_max printk_ratelimit tainted<br>
+domainname osrelease printk_ratelimit_burst threads-max<br>
+exec-shield ostype pty vdso<br>
+exec-shield-randomize overflowgid random version<br>
+hostname overflowuid real-root-dev<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost ~]# ls /proc/sys/net<br>
+core ethernet ipv4 ipv6 unix<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost sys]# ls /proc/sys/vmblock_dump laptop_mode nr_pdflush_threads<br>
+dirty_background_ratio legacy_va_layout overcommit_memory<br>
+dirty_expire_centisecs lower_zone_protection overcommit_ratio<br>
+dirty_ratio max_map_count page-cluster<br>
+dirty_writeback_centisecs min_free_kbytes swappiness<br>
+hugetlb_shm_group nr_hugepages vfs_cache_pressure<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost sys]# ls /proc/sys/net/ipv4<br>
+conf tcp_fack<br>
+icmp_echo_ignore_all tcp_fin_timeout<br>
+icmp_echo_ignore_broadcasts tcp_frto<br>
+icmp_ignore_bogus_error_responses tcp_keepalive_intvl<br>
+icmp_ratelimit tcp_keepalive_probes<br>
+icmp_ratemask tcp_keepalive_time<br>
+igmp_max_memberships tcp_low_latency<br>
+igmp_max_msf tcp_max_orphans<br>
+inet_peer_gc_maxtime tcp_max_syn_backlog<br>
+inet_peer_gc_mintime tcp_max_tw_buckets<br>
+inet_peer_maxttl tcp_mem<br>
+inet_peer_minttl tcp_moderate_rcvbuf<br>
+inet_peer_threshold tcp_no_metrics_save<br>
+ip_autoconfig tcp_orphan_retries<br>
+ip_conntrack_max tcp_reordering<br>
+ip_default_ttl tcp_retrans_collapse<br>
+ip_dynaddr tcp_retries1<br>
+ip_forward tcp_retries2<br>
+ipfrag_high_thresh tcp_rfc1337<br>
+ipfrag_low_thresh tcp_rmem<br>
+ipfrag_secret_interval tcp_sack<br>
+ipfrag_time tcp_stdurg<br>
+ip_local_port_range tcp_synack_retries<br>
+ip_nonlocal_bind tcp_syncookies<br>
+ip_no_pmtu_disc tcp_syn_retries<br>
+neigh tcp_timestamps<br>
+netfilter tcp_tso_win_divisor<br>
+route tcp_tw_recycle<br>
+tcp_abort_on_overflow tcp_tw_reuse<br>
+tcp_adv_win_scale tcp_vegas_alpha<br>
+tcp_app_win tcp_vegas_beta<br>
+tcp_bic tcp_vegas_cong_avoid<br>
+tcp_bic_fast_convergence tcp_vegas_gamma<br>
+tcp_bic_low_window tcp_westwood<br>
+tcp_dsack tcp_window_scalingtcp_ecn tcp_wmem<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost sys]# cat /proc/sys/kernel/shmall<br>
+2097152<br>
+--------------------------------------------------------------------------------<br>
+[root@localhost sys]# cat /proc/sys/kernel/osrelease<br>
+2.6.9-1.667<br>
+--------------------------------------------------------------------------------<br>
+总结 ：/proc 文件系统包含了大量的有关当前系统状态的信息 。proc 的手册页中也有对这些文件的解释文档 。<br>
+把文件和分析这些文件的工具产生的输出进行比较能够更加清晰地了解这些文件 </span></dd></dl>
+<br>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1486081306594">
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/blog_detail.css">
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/bds_s_v2.js.下载"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+
+        <div id="digg" articleid="8178746">
+            <dl id="btnDigg" class="digg digg_disable" onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable" onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" target="_blank">&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" target="_blank">&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/kevinx_xu/article/details/8170384&#39;;">上一篇</span><a href="http://blog.csdn.net/kevinx_xu/article/details/8170384" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">android 系统的休眠与唤醒+linux 系统休眠</a></li>
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/kevinx_xu/article/details/8180427&#39;;">下一篇</span><a href="http://blog.csdn.net/kevinx_xu/article/details/8180427" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">linux 强大的strace</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+      
+</div>
+
+    <div>
+            <script type="text/javascript">
+                /*博客内容页下方Banner1-728*90，创建于2016-12-13*/
+                var cpro_id = "u2843949";
+            </script>
+            <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/c.js.下载"></script><div id="BAIDU_SSP__wrapper_u2843949_0"><iframe id="iframeu2843949_0" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tcam.html" width="728" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+     </div>
+
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/kevinx_xu/svc/GetSuggestContent/8178746",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/replace.css">
+
+<div id="relate" data-mod="popu_218" class="tracking-ad" style="display: block;">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c"><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/linux"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/1468390230134_134.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/linux">Linux知识库</a></h4><p><label><span>9342</span><em>关注</em><i>|</i><span>3511</span><em>收录</em></label></p></dd></dl><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/softwaretest"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/1467193268346_346.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/softwaretest">软件测试知识库</a></h4><p><label><span>3390</span><em>关注</em><i>|</i><span>310</span><em>收录</em></label></p></dd></dl><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/datastructure"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/1461035533512_512.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/datastructure">算法与数据结构知识库</a></h4><p><label><span>12719</span><em>关注</em><i>|</i><span>2320</span><em>收录</em></label></p></dd></dl><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/architecture"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/1458091865915_915.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/architecture">大型网站架构知识库</a></h4><p><label><span>7364</span><em>关注</em><i>|</i><span>708</span><em>收录</em></label></p></dd></dl></div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived"> 
+    <div class="embody embody_b" id="libkeyparent" style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/job_reco.js.下载" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "8178746",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    <div class="tracking-ad" data-mod="popu_84"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/2041" title="话说linux内核-uboot和系统移植第14部分" strategy="v4:content" target="_blank">话说linux内核-uboot和系统移植第14部分</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/2597" title="从零写Bootloader及移植uboot、linux内核、文件系统和驱动" strategy="v4:content" target="_blank">从零写Bootloader及移植uboot、linux内核、文件系统和驱动</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/3742" title="嵌入式Linux内核移植" strategy="v4:content" target="_blank">嵌入式Linux内核移植</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/610" title="Linux操作系统及常用命令实战和进阶" strategy="v4:content" target="_blank">Linux操作系统及常用命令实战和进阶</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/609" title="Linux操作系统及常用基础命令深入讲解" strategy="v4:content" target="_blank">Linux操作系统及常用基础命令深入讲解</a></dd></div></div>  
+
+    
+     <div id="res" data-mod="popu_36" class="tracking-ad" style="width: 42%; float: left; margin-right: 30px; display: block;"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/haiross/article/details/9699409" title="Linux中Proc命令详解" strategy="SearchAlgorithm" target="_blank">Linux中Proc命令详解</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/woxiaozhi/article/details/38259991" title="Linux procdstat文件详解" strategy="SearchAlgorithm" target="_blank">Linux procdstat文件详解</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/ctthunagchneg/article/details/18090701" title="Linux procpidtasktidstat文件详解" strategy="SearchAlgorithm" target="_blank">Linux procpidtasktidstat文件详解</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/diy534/article/details/6828303" title="Linux proc详解" strategy="SearchAlgorithm" target="_blank">Linux proc详解</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/beijingshi1/article/details/9119729" title="Linux中proc目录下文件详解" strategy="SearchAlgorithm" target="_blank">Linux中proc目录下文件详解</a></dd></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'linux 中/proc 详解' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+
+    <div id="ad_cen">        
+                    <script type="text/javascript">
+                        /*博客内容页下方Banner-728*90，创建于2014-7-3*/
+                        var cpro_id = "u1607657";
+                    </script>
+                    <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/c.js.下载"></script><div id="BAIDU_SSP__wrapper_u1607657_0"><iframe id="iframeu1607657_0" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tcam(1).html" width="728" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+    </div>  
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_5541643"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/wang1204539207" target="_blank">wang1204539207</a> <span class="ptime">2015-10-27 16:22发表</span>  <a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="5541643" username="wang1204539207"> <a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/wang1204539207" target="_blank"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/3_wang1204539207.jpg" width="40" height="40"></a></dd><dd class="comment_body">深受启发！感谢感谢！</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fkevinx_xu%2Farticle%2Fdetails%2F8178746">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8178746';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/comment.js.下载"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="">
+
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+
+</div>
+  <script language="javascript" type="text/javascript">     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/kevinx_xu/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/async_new.js.下载"></script>      
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/kevinx_xu" target="_blank">
+    <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/1_kevinx_xu.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/kevinx_xu" class="user_name" target="_blank">小K仔</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=kevinx_xu&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+                                            <a target="_blank">
+                                                    <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/chizhiyiheng.png" onmouseover="m_over_m(this,4)" onmouseout="m_out_m()" alt="1">
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>631040次</span></li>
+    <li>积分：<span>6637</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/blog6.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：6637 </div>
+        </span>  </li>
+    <li>排名：<span>第2785名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>56篇</span></li>
+    <li>转载：<span>312篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>54条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321915" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">电池</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321917" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">LCD</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321919" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android</a><span>(33)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321921" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">camera 驱动</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321922" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">c++</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321923" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">C</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321924" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">input</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321925" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">G—sensor</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321929" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux 环境编程</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321930" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux 内核</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321931" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">编译技巧</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1321934" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">VM</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1323982" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android 休眠与唤醒</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1326346" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">sound</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1326347" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">i2s</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1326439" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">shell</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1327251" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">ALSA_sound</a><span>(29)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1336536" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">device</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1346528" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android recovery 升级</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1347226" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android mtd-utils使用</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1360163" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">VFS 虚拟文件系统</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1365660" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">wifi</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1375127" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">ALSA_utils</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1376194" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">DAMP</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1376942" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">DAPM</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1378449" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">3G</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1381670" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">bluetooth</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1381706" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">GPS</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1398357" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">git</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1408921" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">python</a><span>(14)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1408954" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mantis</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1445731" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">nand flash</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1452897" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Qt学习</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1510693" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">TVBOx OTT 区别</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1561029" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android_java</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1566173" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">UART</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1639955" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">RIL（radio interface layer）</a><span>(16)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1677313" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">KVM</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1677315" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">bridge</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1700791" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android—apk</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1700883" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">tinymix</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1700905" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">audio</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1702081" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">APKDEC</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1704865" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">SDK 环境搭建</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1706283" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">vim 技巧</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1709905" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Eclipse</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1714231" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android input</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1716105" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android增加物理按键</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1716969" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android webkit</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1720395" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">NFC</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1720431" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">bootload</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1720433" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">bootloader__TAGLIST</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1720659" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android Input touch</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1721355" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">APK启动第三方APK</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1721413" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android prop</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1721625" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android Intent</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1733229" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android permission</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1736565" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">SQL</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1754895" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Java JNI</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1759619" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android 异步处理机制</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1759883" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1760003" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java int string char 转换</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1765423" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux gpio to i2c</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1768759" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux delay</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1790481" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">intent</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1800369" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android thread</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1833693" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">压缩</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1935483" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">binder</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1937349" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">kernel</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/1999963" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">intput</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2017629" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Event</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2017735" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android 图片缓存技术</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2017989" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">LINUX ACK-gerp</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2095691" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">makefile</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2119327" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">USB MTP</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2119331" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">ramdisk.img</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2120001" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mysql</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2120007" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">LruCache</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2130243" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">hdmi</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2130569" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android view</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2165739" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">接口介绍</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2179581" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">hardware</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2180119" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux 库函数使用</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2180635" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">USB touch screen</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2186647" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">USB</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2191661" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">USB HID</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2234883" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android Async</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2234885" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android AsyncTask</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2237219" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android pager</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2237859" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android surfaceview</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2240805" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">屏</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2270113" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android 编译过程</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2274929" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android dumpstate</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2274935" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android 常用命令</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2284193" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">source insight error</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2288747" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Linux串口上网的简单实现</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2288975" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">strace</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2309681" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android launcher</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2309699" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android  systemUI</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2345563" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux oops panic</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2345595" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux 串kh</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2345599" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux 串口编程</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2354127" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android listview adapter</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2359999" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">NFS + tftp</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2361571" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android nfs</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2364215" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android bu</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2364217" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android bundle</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2368941" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">gdb</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2368971" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux Debug</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2404619" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">sh</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2488443" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">adb</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2519759" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android json</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2520861" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java set</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2530287" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">android 关机</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2736851" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">加密</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/2919793" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">windows7</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5679349" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">虚拟SD卡</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5775357" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">CVBS</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5826019" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Mstar_MHL</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5826489" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Mstar_CEC</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5828357" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Android_定时开关机</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/5864585" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Mstar_DTV</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/6136749" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">beyong</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/kevinx_xu/article/category/6136750" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">beyond compare</a><span>(0)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2017/01">2017年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2016/12">2016年12月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2016/07">2016年07月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2016/02">2016年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/11">2015年11月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/10">2015年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/09">2015年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/08">2015年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/07">2015年07月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/05">2015年05月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/04">2015年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2015/03">2015年03月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/11">2014年11月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/10">2014年10月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/09">2014年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/08">2014年08月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/07">2014年07月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/06">2014年06月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/05">2014年05月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/04">2014年04月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/03">2014年03月</a><span>(34)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/02">2014年02月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2014/01">2014年01月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/12">2013年12月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/11">2013年11月</a><span>(23)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/10">2013年10月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/09">2013年09月</a><span>(27)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/08">2013年08月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/07">2013年07月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/06">2013年06月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/05">2013年05月</a><span>(18)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/04">2013年04月</a><span>(21)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/03">2013年03月</a><span>(17)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/02">2013年02月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2013/01">2013年01月</a><span>(38)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2012/12">2012年12月</a><span>(25)</span></li><li><a href="http://blog.csdn.net/kevinx_xu/article/month/2012/11">2012年11月</a><span>(24)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8178746" title="linux 中/proc 详解">linux 中/proc 详解</a><span>(37951)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11660915" title="git format-patch 使用方法">git format-patch 使用方法</a><span>(26161)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/44108021" title="windows7 内部版本7601 此windows副本不是正版 ---解决方案">windows7 内部版本7601 此windows副本不是正版 ---解决方案</a><span>(22582)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/9714875" title="shell脚本参数">shell脚本参数</a><span>(20805)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/20465561" title="Android瀑布流照片墙实现，体验不规则排列的美感">Android瀑布流照片墙实现，体验不规则排列的美感</a><span>(18584)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11845619" title="Android电话拨打流程源码分析">Android电话拨打流程源码分析</a><span>(16858)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11846137" title="Android电话来电流程源码分析">Android电话来电流程源码分析</a><span>(12505)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11846289" title="dumpsys工具使用">dumpsys工具使用</a><span>(10919)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11832097" title="Android Phone设计介绍">Android Phone设计介绍</a><span>(7749)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8674468" title="Android Wifi驱动--底层">Android Wifi驱动--底层</a><span>(7147)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/20465561" title="Android瀑布流照片墙实现，体验不规则排列的美感">Android瀑布流照片墙实现，体验不规则排列的美感</a><span>(9)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/21728375" title="Android高级图片滚动控件，编写3D版的图片轮播器">Android高级图片滚动控件，编写3D版的图片轮播器</a><span>(6)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11832913" title="Android4.1电话呼叫界面布局设计：">Android4.1电话呼叫界面布局设计：</a><span>(5)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/8254410" title="android Activity 的7个生命周期">android Activity 的7个生命周期</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11832097" title="Android Phone设计介绍">Android Phone设计介绍</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11846219" title="Android Phone   模块3">Android Phone   模块3</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11845619" title="Android电话拨打流程源码分析">Android电话拨打流程源码分析</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11846289" title="dumpsys工具使用">dumpsys工具使用</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/11832859" title="Android phone 拨号UI">Android phone 拨号UI</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/kevinx_xu/article/details/9330109" title="Recovery和Charger模式下屏幕旋转180度">Recovery和Charger模式下屏幕旋转180度</a><span>(2)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/laoyang360/article/details/53843771" target="_blank">* 而立之年——三线城市程序员的年终告白</a></li>
+<li><a href="http://blog.csdn.net/sdkfjksf/article/details/54380659" target="_blank">* Java集合框架中隐藏的设计套路</a></li>
+<li><a href="http://blog.csdn.net/jiangwei0910410003/article/details/54092364" target="_blank">* Python脚本下载今日头条视频(附加Android版本辅助下载器)</a></li>
+<li><a href="http://blog.csdn.net/caowenbin/article/details/54406716" target="_blank">* 人工智能的冷思考</a></li>
+<li><a href="http://blog.csdn.net/it_talk/article/details/54346566" target="_blank">* React Native 实战系列教程之热更新原理分析与实现</a></li>
+
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/21728375#comments">Android高级图片滚动控件，编写3D版的图片轮播器</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/coder_e" class="user_name">coder_e</a>:
+这个和pulltorefreshscrollview滑动冲突 没人发现吗?
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/11846289#comments">dumpsys工具使用</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/gqlovelj" class="user_name">甘巧</a>:
+@sssssssdsssd:adb shell dumpsys package 对应包名，能获取到应...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/11845619#comments">Android电话拨打流程源码分析</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wokao2013" class="user_name">wokao2013</a>:
+7.0上面好多类都不在了，求大神指教
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/11845619#comments">Android高级图片滚动控件，编写3D版的图片轮播器</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qq_17519815" class="user_name">qq_17519815</a>:
+怎么根据网络图片，动态加载Image3DView。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/9330109#comments">Recovery和Charger模式下屏幕旋转180度</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yinhaide" class="user_name">尹海德</a>:
+楼主大神你好~请问旋转90度怎么改呢？有时间麻烦回一下，在线等~~~三克油~
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/9330109#comments">dumpsys工具使用</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wdong_love_cl" class="user_name">warmor</a>:
+@sssssssdsssd:使用aapt dump badging *.apk，你会惊喜的
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/9330109#comments">Android电话拨打流程源码分析</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wangclhuangmt" class="user_name">wangclhuangmt</a>:
+太好了，我正在学习TELEPHONY的开发，正愁没法入手，这个文章完美解决了我的问题，非常感谢！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/26980425#comments">linux 串口驱动gps</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/happyjackqu" class="user_name">happyjackqu</a>:
+nice
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/20465561#comments">Android瀑布流照片墙实现，体验不规则排列的美感</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qq_25219401" class="user_name">qq_25219401</a>:
+一样的问题， 换了图片的地址就不行了，截取的路径有问题，但是不知道怎么改
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/kevinx_xu/article/details/11832859#comments">Android phone 拨号UI</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/m1044248152" class="user_name">m1044248152</a>:
+求源码！1044248152@qq.com
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 --> 
+                    <div class="J_adv" data-view="true" data-mod="ad_popu_190" data-mtp="37" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 200px;"><!-- 广告占位容器 --><div id="cpro_u2734128"><iframe id="iframeu2734128_0" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/tcam(2).html" width="200" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div><!-- 投放代码 --><script type="text/javascript">(window['cproStyleApi'] = window['cproStyleApi'] || {})['u2734128']={at:'3',rsi0:'200',rsi1:'200',pat:'17',tn:'baiduCustNativeAD',rss1:'#FFFFFF',conBW:'1',adp:'1',ptt:'0',titFF:'%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91',titFS:'',rss2:'#000000',titSU:'0'};/*服务器频道首页置顶Banner960*90，创建于2014-7-3*/(window.cproArray = window.cproArray || []).push({id:'u2734128'});  </script>  <script src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/c.js.下载" type="text/javascript"></script></div> 
+                    <!-- 广告位结束 -->
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/cnick.js.下载"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/newblog.min.js.下载"></script>
+
+
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/JavaScript1.js.下载"></script><link rel="stylesheet" type="text/css" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="javascript:void(0);" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-600-2320</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏知之为计算机有限公司</span><span class="interval">|</span><span>江苏乐知网络技术有限公司</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2016, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saved_resource(2).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/notify.js.下载"></script>
+
+    <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/login.js.下载"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/counter.js.下载"></script><script type="text/javascript" charset="UTF-8" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/msg.popup.js.下载"></script>
+<script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ad-blog.js.下载"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div><input type="hidden" id="aa_g_data_ids">
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/toolbar.js.下载"></script>
+     <!--new top-->
+   
+    <link href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ask_float_block.css" type="text/css" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/wmd.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/showdown.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/prettify.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ask_float_block.js.下载"></script>
+   
+
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/52b5334.js.下载"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    <link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/blog_code.css">
+    <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saveToCode.js.下载"></script>
+      <script type="text/javascript" src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/main.js(1).下载"></script>
+
+     <link rel="stylesheet" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/fa.css">
+
+    <div class="pop_CA_cover" style="display:none"></div>
+    <div class="pop pop_CA" style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon" id="fapancle" onclick="$(&#39;.pop_CA&#39;).hide();$(&#39;.pop_CA_cover&#39;).hide();"></span>
+          </div>
+          <iframe src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saved_resource(3).html" id="fa" frameborder="0" width="100%" height="360" scrolling="no">
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;   
+ </iframe></div><div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><link rel="stylesheet" type="text/css" media="screen" href="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="csdn-tracking-statistics" chg-blk="0"><a id="com-quick-reply" title="快速回复" style="top:278px"></a><a id="com-quick-collect" title="我要收藏" style="top:316px"></a><a id="com-d-top-a" style="top: 354px; display: none;" title="返回顶部" onclick=""></a> </div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/kevinx_xu/article/details/8178746#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/kevinx_xu/article/details/8178746#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"><iframe src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/upload.html"></iframe></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/kevinx_xu/article/details/8178746#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><div id="mask_code"></div><div class="gist_edit"><div class="save_snippets clearfix"><div class="tit"><h3>保存代码片</h3><span>整理和分享保存的代码片，请访问<a href="https://code.csdn.net/snippets_manage" target="_blank">代码笔记</a></span></div><div class="con_form"><ul class="gist_edit_list clearfix"><li><span class="red">*</span><span class="txt">标题</span><input id="form_title" class="form-input" placeholder="linux 中/proc 详解" type="text"></li><li><span class="red">*</span><span class="txt">描述</span><textarea id="form-textarea" class="form-textarea" placeholder="linux 中/proc 详解： http://blog.csdn.net/kevinx_xu/article/details/8178746"></textarea></li><li><span class="red">&nbsp;</span><span class="txt">标签</span><div id="divSearchTags"><input id="insertTag" class="insertTag" placeholder="请输入标签，按Enter生成(最多5项)" type="text" value="" name="insertTag" maxlength="21" style="color: rgb(51, 51, 51);"><input id="OrganTag" class="OrganTag" type="hidden" name="OrganTag" value=""><input id="OldOrganTag" class="OldOrganTag" type="hidden" name="OldOrganTag" value=""><input type="hidden" name="txtSearchTags"></div></li></ul></div><div class="bottom-bar"><a href="javascript:;" class="btn-submit btn-cancel">取消</a><span class="tracking-ad" data-mod="popu_250"><a class="btn-submit btn-confirm" href="javascript:;" target="_blank">确定</a></span></div></div></div><div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./linux 中_proc 详解 - kevinx_xu的专栏 - 博客频道 - CSDN.NET_files/saved_resource(4).html"></iframe></div></body></html>

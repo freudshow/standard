@@ -1,0 +1,1603 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0055)http://blog.csdn.net/zdwzzu2006/article/details/7747977 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/acum"></script>  
+
+    <script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/hm.js.下载"></script><script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/tracking.js.下载" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script><script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/repoAddr2.js.下载"></script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#">
+
+    <title>Linux下/proc目录简介 - Mr. David 专栏
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="今天做web的时候，前台URL提交参数中有中文，一开始以为是后台转码问题用unicode(param,utf-8)试了一下不行，得到的还是乱码，问老王python大牛大牛告诉我用urllib.urldecode转码，试了一下还是不行，因为别的页面也有中文提交的情况，别的页面后台用unicode(param,utf-8)就搞定了，为什么这个不行呢，仔细一想这个提交是在JS中提">
+    <script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/jquery.js.下载" type="text/javascript"></script>
+      <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/jquery-version.js.下载"></script>
+    <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ad.js.下载"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/index.css">
+        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/tracking.js(1).下载"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/zdwzzu2006/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/share.js.下载"></script><link rel="stylesheet" type="text/css" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/job_reco.css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/wxLogin.js.下载"></script><link rel="stylesheet" type="text/css" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/style(1).css"><link type="text/css" rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/style(2).css"><script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/get_ads.php" type="text/javascript"></script><script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/logger.js.下载"></script><link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/share_style0_16.css"></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><div id="MathJax_Message" style="display: none;"></div><iframe frameborder="0" style="display: none;" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saved_resource.html"></iframe>
+
+
+    <!-- 广告位开始 -->
+        <div class="J_adv" data-view="true" data-mod="ad_popu_149" data-mtp="30" data-order="395" data-con="ad_content_2021"><script id="popuLayer_js_q_a" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/popuLayer.js.下载" defer="" async="" type="text/javascript"></script><div id="fulln1pze" style="text-align: center; width: 1170px; overflow: hidden; margin: 0px auto; display: block; height: 0px;"><a href="http://edu.csdn.net/yearPromotion/detail/3" target="_blank"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/201701231537137091.jpg"></a></div><script>  document.getElementById('popuLayer_js_q_a').onload=function(){      window.CSDN.Layer.FullAdv('#fulln1pze',{storageName:'fulln1pze',total:-1});  }</script></div>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/html.js.下载" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saved_resource(1).html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/zdwzzu2006">Mr. David 专栏</a></h2>
+            <h3>整理工作、学习中遇到的问题！</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/zdwzzu2006?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/zdwzzu2006?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/zdwzzu2006/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "zdwzzu2006";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/zdwzzu2006";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+
+<a href="http://geek.csdn.net/news/detail/134790" target="_blank">
+<font color="blue">CSDN学院招募微信小程序讲师啦
+
+
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/274" target="_blank">
+<font color="red">程序员简历优化指南！ 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/PK.html" target="_blank">
+<font color="blue">【观点】移动原生App开发 PK HTML 5开发
+</font></a>
+
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://bss.csdn.net/m/product/aliyun_essay/index" target="_blank">
+<font color="red">云端应用征文大赛，秀绝招，赢无人机！
+</font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+<link href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/jquery.cookie.js.下载"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/main.js.下载"></script>
+<link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/markdown_views.css">
+<link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/category.css">
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/MathJax.js.下载"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/web-storage-cache.min.js.下载"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/replace.min.js.下载"></script>
+
+
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=Linux%e4%b8%8b%2fproc%e7%9b%ae%e5%bd%95%e7%ae%80%e4%bb%8b&u=http://blog.csdn.net/zdwzzu2006/article/details/7747977"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977">
+        Linux下/proc目录简介            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href="http://www.csdn.net/tag/linux" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">linux</a><a href="http://www.csdn.net/tag/linux%e5%86%85%e6%a0%b8" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">linux内核</a><a href="http://www.csdn.net/tag/filesystems" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">filesystems</a><a href="http://www.csdn.net/tag/protocols" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">protocols</a><a href="http://www.csdn.net/tag/cache" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">cache</a><a href="http://www.csdn.net/tag/timer" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">timer</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2012-07-15 02:22</span>
+            <span class="link_view" title="阅读次数">79893人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;Linux%e4%b8%8b%2fproc%e7%9b%ae%e5%bd%95%e7%ae%80%e4%bb%8b&#39;,&#39;7747977&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#report" onclick="javascript:report(7747977,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody" style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label onclick="GetCategoryArticles(&#39;457019&#39;,&#39;zdwzzu2006&#39;,&#39;top&#39;,&#39;7747977&#39;);">
+                        <span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">Java<em>（179）</em></span>
+                      <img class="arrow-down" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a href="http://blog.csdn.net/zdwzzu2006/article/category/457019" target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_457019">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/category.js.下载"></script>  
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">1. /proc目录<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+<a href="http://lib.csdn.net/base/linux" class="replace_word" title="Linux知识库" target="_blank" style="color:#df3434; font-weight:bold;">Linux</a> 内核提供了一种通过 /proc 文件系统，在运行时访问内核内部<a href="http://lib.csdn.net/base/datastructure" class="replace_word" title="算法与数据结构知识库" target="_blank" style="color:#df3434; font-weight:bold;">数据结构</a>、改变内核设置的机制。proc文件系统是一个伪文件系统，它只存在内存当中，而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">用户和应用程序可以通过proc得到系统的信息，并可以改变内核的某些参数。由于系统的信息，如进程，是动态改变的，所以用户或应用程序读取proc文件时，proc文件系统是动态从系统内核读出所需信息并提交的。下面列出的这些文件或子文件夹，并不是都是在你的系统中存在，这取决于你的内核配置和装载的模块。另外，在/proc下还有三个很重要的目录：net，scsi和sys。 Sys目录是可写的，可以通过它来访问或修改内核的参数，而net和scsi则依赖于内核配置。例如，如果系统不支持scsi，则scsi
+ 目录不存在。</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">除了以上介绍的这些，还有的是一些以数字命名的目录，它们是进程目录。系统中当前运行的每一个进程都有对应的一个目录在/proc下，以进程的 PID号为目录名，它们是读取进程信息的接口。而self目录则是读取进程本身的信息接口，是一个link。</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">2. 子文件或子文件夹<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+/proc/buddyinfo 每个内存区中的每个order有多少块可用，和内存碎片问题有关</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/cmdline 启动时传递给kernel的参数信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/cpuinfo cpu的信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/crypto 内核使用的所有已安装的加密密码及细节</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/devices 已经加载的设备并分类</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+/proc/dma 已注册使用的ISA DMA频道列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/execdomains Linux内核当前支持的execution domains</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/fb 帧缓冲设备列表，包括数量和控制它的驱动</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/filesystems 内核当前支持的文件系统类型</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/interrupts x86<a href="http://lib.csdn.net/base/architecture" class="replace_word" title="大型网站架构知识库" target="_blank" style="color:#df3434; font-weight:bold;">架构</a>中的每个IRQ中断数</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/iomem 每个物理设备当前在系统内存中的映射</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/ioports 一个设备的输入输出所使用的注册端口范围</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/kcore 代表系统的物理内存，存储为核心文件格式，里边显示的是字节数，等于RAM大小加上4kb</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/kmsg 记录内核生成的信息，可以通过/sbin/klogd或/bin/dmesg来处理</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/loadavg 根据过去一段时间内CPU和IO的状态得出的负载状态，与uptime命令有关</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/locks 内核锁住的文件列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/mdstat 多硬盘，RAID配置信息(md=multiple disks)</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/meminfo RAM使用的相关信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/misc 其他的主要设备(设备号为10)上注册的驱动</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/modules 所有加载到内核的模块列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/mounts 系统中使用的所有挂载</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/mtrr 系统使用的Memory Type Range Registers (MTRRs)</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/partitions 分区中的块分配信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/pci 系统中的PCI设备列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/slabinfo 系统中所有活动的 slab 缓存信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/stat 所有的CPU活动信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/sysrq-trigger 使用echo命令来写这个文件的时候，远程root用户可以执行大多数的系统请求关键命令，就好像在本地终端执行一样。要写入这个文件，需要把/proc/sys/kernel/sysrq不能设置为0。这个文件对root也是不可读的</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/uptime 系统已经运行了多久</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/swaps 交换空间的使用情况</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/version Linux内核版本和gcc版本</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/bus 系统总线(Bus)信息，例如pci/usb等</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/driver 驱动信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/fs 文件系统信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/ide ide设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/irq 中断请求设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/net 网卡设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/scsi scsi设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/tty tty设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/net/dev 显示网络适配器及统计信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/vmstat 虚拟内存统计信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/vmcore 内核panic时的内存映像</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/diskstats 取得磁盘信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/schedstat kernel调度器的统计信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/zoneinfo 显示内存空间的统计信息，对分析虚拟内存行为很有用</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">以下是/proc目录中进程N的信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N pid为N的进程信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/cmdline 进程启动命令</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/cwd 链接到进程当前工作目录</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/environ 进程环境变量列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/exe 链接到进程的执行命令文件</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/fd 包含进程相关的所有的文件描述符</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/maps 与进程相关的内存映射信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/mem 指代进程持有的内存，不可读</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/root 链接到进程的根目录</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/stat 进程的状态</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/statm 进程使用的内存的状态</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/N/status 进程状态信息，比stat/statm更具可读性</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">/proc/self 链接到当前正在运行的进程</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3. 例子<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+3.1 /proc/<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+<a href="mailto:yafang@QA:~$" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">yafang@QA:~$</a>&nbsp;ls /proc/</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16819&nbsp; 21242&nbsp; 2180&nbsp;&nbsp; 2494&nbsp; 8768&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interrupts&nbsp;&nbsp;&nbsp; partitions</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">116&nbsp;&nbsp;&nbsp; 16820&nbsp; 21244&nbsp; 2181&nbsp;&nbsp; 2524&nbsp; 885&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iomem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sched_debug</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">11740&nbsp; 17901&nbsp; 21245&nbsp; 21810&nbsp; 2525&nbsp; acpi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ioports&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scsi</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">11742&nbsp; 17903&nbsp; 21247&nbsp; 21812&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp; asound&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; irq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">11743&nbsp; 17904&nbsp; 2131&nbsp;&nbsp; 21813&nbsp; 39&nbsp;&nbsp;&nbsp; buddyinfo&nbsp;&nbsp;&nbsp; kallsyms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; slabinfo</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">13452&nbsp; 18362&nbsp; 21319&nbsp; 21923&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp; bus&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kcore&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stat</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">13454&nbsp; 18364&nbsp; 2132&nbsp;&nbsp; 2193&nbsp;&nbsp; 41&nbsp;&nbsp;&nbsp; cgroups&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; key-users&nbsp;&nbsp;&nbsp;&nbsp; swaps</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">13455&nbsp; 18365&nbsp; 2139&nbsp;&nbsp; 21933&nbsp; 42&nbsp;&nbsp;&nbsp; cmdline&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kmsg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sys</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">149&nbsp;&nbsp;&nbsp; 19451&nbsp; 2142&nbsp;&nbsp; 2209&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp; cpuinfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kpagecount&nbsp;&nbsp;&nbsp; sysrq-trigger</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">150&nbsp;&nbsp;&nbsp; 19453&nbsp; 21572&nbsp; 2212&nbsp;&nbsp; 5330&nbsp; crypto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kpageflags&nbsp;&nbsp;&nbsp; sysvipc</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">151&nbsp;&nbsp;&nbsp; 19454&nbsp; 21574&nbsp; 2219&nbsp;&nbsp; 596&nbsp;&nbsp; devices&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; loadavg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; timer_list</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">152&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 21575&nbsp; 2243&nbsp;&nbsp; 597&nbsp;&nbsp; diskstats&nbsp;&nbsp;&nbsp; locks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; timer_stats</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">15771&nbsp; 2083&nbsp;&nbsp; 2158&nbsp;&nbsp; 2260&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp; dma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; meminfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tty</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">15773&nbsp; 2092&nbsp;&nbsp; 21625&nbsp; 2261&nbsp;&nbsp; 617&nbsp;&nbsp; driver&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; misc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uptime</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">15774&nbsp; 2101&nbsp;&nbsp; 21627&nbsp; 2262&nbsp;&nbsp; 619&nbsp;&nbsp; execdomains&nbsp; modules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; version</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">16232&nbsp; 21112&nbsp; 21628&nbsp; 2263&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp; fb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mounts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vmallocinfo</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">16234&nbsp; 21115&nbsp; 2165&nbsp;&nbsp; 2264&nbsp;&nbsp; 804&nbsp;&nbsp; filesystems&nbsp; mtrr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vmstat</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">16235&nbsp; 21116&nbsp; 2167&nbsp;&nbsp; 2265&nbsp;&nbsp; 8765&nbsp; fs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; net&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; zoneinfo</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">16811&nbsp; 2112&nbsp;&nbsp; 2177&nbsp;&nbsp; 2338&nbsp;&nbsp; 8767&nbsp; ide&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pagetypeinfo</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.2 /proc/sys<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+系统信息和内核参数</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:yafang@QA:~$" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">yafang@QA:~$</a>&nbsp;ls
+ /proc/sys</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">debug&nbsp; dev&nbsp; fs&nbsp; kernel&nbsp; net&nbsp; vm</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.3 /proc/net<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+网卡设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:yafang@QA:~$" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">yafang@QA:~$</a>&nbsp;ls
+ /proc/net</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">anycast6&nbsp;&nbsp; ip6_flowlabel&nbsp; netfilter&nbsp; raw6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sockstat6&nbsp;&nbsp;&nbsp;&nbsp; udplite</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">arp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ip6_mr_cache&nbsp;&nbsp; netlink&nbsp;&nbsp;&nbsp; route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; softnet_stat&nbsp; udplite6</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">dev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ip6_mr_vif&nbsp;&nbsp;&nbsp;&nbsp; netstat&nbsp;&nbsp;&nbsp; rt6_stats&nbsp; stat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unix</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">dev_mcast&nbsp; ip_mr_cache&nbsp;&nbsp;&nbsp; packet&nbsp;&nbsp;&nbsp;&nbsp; rt_acct&nbsp;&nbsp;&nbsp; tcp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vlan</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">dev_snmp6&nbsp; ip_mr_vif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; protocols&nbsp; rt_cache&nbsp;&nbsp; tcp6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wireless</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">if_inet6&nbsp;&nbsp; ipv6_route&nbsp;&nbsp;&nbsp;&nbsp; psched&nbsp;&nbsp;&nbsp;&nbsp; snmp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tr_rif</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">igmp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mcfilter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ptype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; snmp6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; udp</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">igmp6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mcfilter6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sockstat&nbsp;&nbsp; udp6</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.4 /proc/scsi<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+SCSI设备信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:yafang@QA:~$" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">yafang@QA:~$</a>&nbsp;ls
+ /proc/scsi</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">device_info&nbsp; scsi</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.5 /proc/modules&nbsp;<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+所有加载到内核的模块列表</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#
+ cat /proc/modules</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">bdspboard 8486 2 dspcontrol, Live 0xe134c000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">dspcontrol 9575 1 clkmon, Live 0xe135b000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">clkmon 6765 1 - Live 0xe136c000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">diagint 6635 1 - Live 0xe1379000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">bdsprio 10775 2 srioif,tsi577, Live 0xe9389000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">tsi577 17998 1 srioif, Live 0xe939e000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">srioif 7329 0 - Live 0xe93b2000</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">linux_kernel_bde 54666 1 linux_user_bde, Live 0xf1417000 (P)</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">linux_user_bde 17849 0 - Live 0xf1427000 (P)</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.6 /proc/devices&nbsp;<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+已经加载的设备并分类</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BCNMB-A" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BCNMB-A</a>:~#
+ cat /proc/devices</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+Character devices:</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 1 mem</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 2 pty</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 3 ttyp</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 4 /dev/vc/0</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 4 tty</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 4 ttyS</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 5 /dev/tty</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 5 /dev/console</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 5 /dev/ptmx</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 7 vcs</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;10 misc</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;13 input</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;89 i2c</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;90 mtd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">116 linux-user-bde2</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">117 linux-kernel-bde2</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">126 linux-user-bde</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">127 linux-kernel-bde</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">128 ptm</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">136 pts</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">180 usb</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">189 usb_device</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">245 ext_alarm</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">251 ipmidev</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">252 usb_endpoint</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">253 usbmon</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">254 rtc</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">Block devices:</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 1 ramdisk</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 8 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;31 mtdblock</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;65 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;66 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;67 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;68 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;69 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;70 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;71 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">128 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">129 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">130 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">131 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">132 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">133 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">134 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">135 sd</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp;</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+<a href="mailto:root@BCNMB-A" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BCNMB-A</a>:~#</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.7 /proc/partitions&nbsp;<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+分区中的块分配信息</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#
+ cat /proc/partitions</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">major minor&nbsp; #blocks&nbsp; name</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512 mtdblock0</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512 mtdblock1</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp; 123904 mtdblock2</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 mtdblock3</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1024 mtdblock4</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1024 mtdblock5</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512 mtdblock6</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512 mtdblock7</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8&nbsp;&nbsp;&nbsp;&nbsp; 123904 mtdblock8</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 mtdblock9</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1024 mtdblock10</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1024 mtdblock11</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">&nbsp; 31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12&nbsp;&nbsp;&nbsp; 1048576 mtdblock12</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.8 /proc/version<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+Linux内核版本和gcc版本</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#
+ cat /proc/version</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">Linux version 2.6.34.6-WR4.0.0.0_standard (<a href="mailto:satomi@CharlieBrown" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">satomi@CharlieBrown</a>)
+ (gcc version 4.4.1 (Wind River Linux Sourcery G++ 4.4-291) ) #1 SMP PREEMPT Fri Nov 26 16:07:47 CST 2010</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"><a href="mailto:root@BDSP-A-2-1-2" style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; color:rgb(1,95,145); text-decoration:none">root@BDSP-A-2-1-2</a>:~#</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">3.9 /proc/sys/fs/file-max<br style="padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px">
+该文件指定了可以分配的文件句柄的最大数目。如果用户得到的错误消息声明由于打开文件数已经达到了最大值，从而他们不能打开更多文件，则可能需要增加该值。可将这个值设置成有任意多个文件，并且能通过将一个新数字值写入该文件来更改该值。默认设置时4096。</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">改变内核的参数，用vi编辑或echo参数重定向到文件中。</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"># cat /proc/sys/fs/file-max</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">4096</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"># echo 8192 &gt; /proc/sys/fs/file-max</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px"># cat /proc/sys/fs/file-max</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">8192&nbsp;&nbsp;</span></p>
+<p style="padding-top:0px; padding-bottom:15px; margin-top:0px; margin-bottom:0px; color:rgb(85,85,85); line-height:28px">
+<span style="font-family:&#39;Comic Sans MS&#39;; font-size:16px">如果优化了参数，则可以把它们写成添加到文件rc.local中，使它在系统启动时自动完成修改。</span></p>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1486081248662">
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/blog_detail.css">
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/bds_s_v2.js.下载"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+
+        <div id="digg" articleid="7747977">
+            <dl id="btnDigg" class="digg digg_disable" onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>5</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable" onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" target="_blank">&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" target="_blank">&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/zdwzzu2006/article/details/7747948&#39;;">上一篇</span><a href="http://blog.csdn.net/zdwzzu2006/article/details/7747948" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">ThreadPoolExecutor使用介绍</a></li>
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/zdwzzu2006/article/details/7748006&#39;;">下一篇</span><a href="http://blog.csdn.net/zdwzzu2006/article/details/7748006" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">JAVA Socket超时浅析</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article" style="">
+                <h4>我的同类文章</h4>
+                <div class="similar_c" style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span style="cursor:pointer" onclick="GetCategoryArticles(&#39;457019&#39;,&#39;zdwzzu2006&#39;,&#39;foot&#39;,&#39;7747977&#39;);">Java<em>（179）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141" style="max-height:195px;">
+                        <a href="http://blog.csdn.net/" style="display:none" target="_blank">http://blog.csdn.net</a>
+                        <ul class="similar_list fl"><li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/50464781" id="foot_aritcle_50464781undefined6856117678833775" target="_blank" title="Java ResultSet 对Oracle Clob（大字符串）格式的操作 增改查">Java ResultSet 对Oracle Clob（大字符串）格式的操作 增改查</a><span>2016-01-05</span><label><i>阅读</i><b>907</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/17534537" id="foot_aritcle_17534537undefined42710614671764624" target="_blank" title="Hibernate分页查询">Hibernate分页查询</a><span>2013-12-24</span><label><i>阅读</i><b>2093</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/8232039" id="foot_aritcle_8232039undefined44191703536845095" target="_blank" title="ERROR: JDWP Unable to get JNI 1.2 environment">ERROR: JDWP Unable to get JNI 1.2 environment</a><span>2012-11-27</span><label><i>阅读</i><b>1559</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/8064960" id="foot_aritcle_8064960undefined05158685998499446" target="_blank" title="获取大文件MD5值（JAVA）">获取大文件MD5值（JAVA）</a><span>2012-10-12</span><label><i>阅读</i><b>12161</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/7953156" id="foot_aritcle_7953156undefined5318643230562299" target="_blank" title="用FlashFXP上传文件到SSH服务器，附FlashFXP显示中文乱码的解决方法">用FlashFXP上传文件到SSH服务器，附FlashFXP显示中文乱码的解决方法</a><span>2012-09-06</span><label><i>阅读</i><b>10959</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/7748006" id="foot_aritcle_7748006undefined9348538505788453" target="_blank" title="JAVA Socket超时浅析">JAVA Socket超时浅析</a><span>2012-07-15</span><label><i>阅读</i><b>1258</b></label></li> </ul>
+
+                        <ul class="similar_list fr"><li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/17534811" id="foot_aritcle_17534811undefined38631598067977" target="_blank" title="如何使用Criteria 实现两表的左外连接，返回根对象">如何使用Criteria 实现两表的左外连接，返回根对象</a><span>2013-12-24</span><label><i>阅读</i><b>5283</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/9301077" id="foot_aritcle_9301077undefined11572594537585079" target="_blank" title="oracle时间大小比较　格式">oracle时间大小比较　格式</a><span>2013-07-11</span><label><i>阅读</i><b>3257</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/8076790" id="foot_aritcle_8076790undefined5829713045870117" target="_blank" title="解压zip压缩包(JAVA)">解压zip压缩包(JAVA)</a><span>2012-10-16</span><label><i>阅读</i><b>810</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/8064947" id="foot_aritcle_8064947undefined3965272170132459" target="_blank" title="获取文件MD5值(JAVA代码)">获取文件MD5值(JAVA代码)</a><span>2012-10-12</span><label><i>阅读</i><b>4052</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/zdwzzu2006/article/details/7953001" id="foot_aritcle_7953001undefined9668627017633518" target="_blank" title="Xmanager Failed to get the installation date from the system registry">Xmanager Failed to get the installation date from the system registry</a><span>2012-09-06</span><label><i>阅读</i><b>3255</b></label></li> </ul>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457019" class="MoreArticle">更多文章</a></div>
+                </div>
+            </div>    
+    <script type="text/javascript">
+        $(function () {
+            GetCategoryArticles('457019', 'zdwzzu2006','foot','7747977');
+        });
+    </script>
+      
+</div>
+
+    <div>
+            <script type="text/javascript">
+                /*博客内容页下方Banner1-728*90，创建于2016-12-13*/
+                var cpro_id = "u2843949";
+            </script>
+            <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/c.js.下载"></script><div id="BAIDU_SSP__wrapper_u2843949_0"><iframe id="iframeu2843949_0" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/acum.html" width="728" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+     </div>
+
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/zdwzzu2006/svc/GetSuggestContent/7747977",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/replace.css">
+
+<div id="relate" data-mod="popu_218" class="tracking-ad" style="display: block;">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c"><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/linux"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/1468390230134_134.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/linux">Linux知识库</a></h4><p><label><span>9342</span><em>关注</em><i>|</i><span>3511</span><em>收录</em></label></p></dd></dl><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/datastructure"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/1461035533512_512.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/datastructure">算法与数据结构知识库</a></h4><p><label><span>12719</span><em>关注</em><i>|</i><span>2320</span><em>收录</em></label></p></dd></dl><dl class="relate_list"><dt><a target="_blank" href="http://lib.csdn.net/base/architecture"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/1458091865915_915.jpg" alt="img"></a></dt><dd><h4><a target="_blank" href="http://lib.csdn.net/base/architecture">大型网站架构知识库</a></h4><p><label><span>7364</span><em>关注</em><i>|</i><span>708</span><em>收录</em></label></p></dd></dl></div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived"> 
+    <div class="embody embody_b" id="libkeyparent" style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/job_reco.js.下载" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "7747977",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    <div class="tracking-ad" data-mod="popu_84"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/2041" title="话说linux内核-uboot和系统移植第14部分" strategy="v4:content" target="_blank">话说linux内核-uboot和系统移植第14部分</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/3742" title="嵌入式Linux内核移植" strategy="v4:content" target="_blank">嵌入式Linux内核移植</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/2597" title="从零写Bootloader及移植uboot、linux内核、文件系统和驱动" strategy="v4:content" target="_blank">从零写Bootloader及移植uboot、linux内核、文件系统和驱动</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/1952" title="嵌入式Linux系统移植入门" strategy="v4:content" target="_blank">嵌入式Linux系统移植入门</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/609" title="Linux操作系统及常用基础命令深入讲解" strategy="v4:content" target="_blank">Linux操作系统及常用基础命令深入讲解</a></dd></div></div>  
+
+    
+     <div id="res" data-mod="popu_36" class="tracking-ad" style="width: 42%; float: left; margin-right: 30px; display: block;"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/tangdichao/article/details/49686427" title="Linux下proc目录简介" strategy="SearchAlgorithm" target="_blank">Linux下proc目录简介</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/hxchuan000/article/details/46560733" title="Linux下proc目录简介" strategy="SearchAlgorithm" target="_blank">Linux下proc目录简介</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/ancient_wind/article/details/7935185" title="Linux下proc目录简介" strategy="SearchAlgorithm" target="_blank">Linux下proc目录简介</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/luckpiky/article/details/27378487" title="Linux下proc目录简介" strategy="SearchAlgorithm" target="_blank">Linux下proc目录简介</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wwwxxdddx/article/details/50504216" title="Linux下proc目录简介" strategy="SearchAlgorithm" target="_blank">Linux下proc目录简介</a></dd></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Linux下/proc目录简介' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+
+    <div id="ad_cen">        
+                    <script type="text/javascript">
+                        /*博客内容页下方Banner-728*90，创建于2014-7-3*/
+                        var cpro_id = "u1607657";
+                    </script>
+                    <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/c.js.下载"></script><div id="BAIDU_SSP__wrapper_u1607657_0"><iframe id="iframeu1607657_0" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/acum(1).html" width="728" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+    </div>  
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_6090185"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/u013243986" target="_blank">林先生您好</a> <span class="ptime">2016-06-21 14:51发表</span>  <a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6090185" username="u013243986"> <a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/u013243986" target="_blank"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/3_u013243986.jpg" width="40" height="40"></a></dd><dd class="comment_body">/proc/N/limits  没说</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fzdwzzu2006%2Farticle%2Fdetails%2F7747977">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '7747977';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/comment.js.下载"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="">
+
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+
+</div>
+  <script language="javascript" type="text/javascript">     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/zdwzzu2006/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/async_new.js.下载"></script>      
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/zdwzzu2006" target="_blank">
+    <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/1_zdwzzu2006.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/zdwzzu2006" class="user_name" target="_blank">zdwzzu2006</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=zdwzzu2006&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>2606928次</span></li>
+    <li>积分：<span>28334</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/blog7.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：28334 </div>
+        </span>  </li>
+    <li>排名：<span>第151名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>622篇</span></li>
+    <li>转载：<span>219篇</span></li>
+    <li>译文：<span>50篇</span></li>
+    <li>评论：<span>396条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457001" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">ACM</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457019" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Java</a><span>(180)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/734874" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">JavaScript</a><span>(23)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/639596" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java开源项目</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/566260" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux&amp;amp;unix程序开发基础教程 ---读书笔记</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457107" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux内核编程</a><span>(87)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/722440" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">MVC 模式</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/610551" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">struts+spring+hibernate</a><span>(96)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/482605" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">XML &amp;amp; UML</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/594868" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">安博JavaEE实习</a><span>(33)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457022" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">oracle/mysql/sybase</a><span>(96)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/771008" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">weblogic/tomcat</a><span>(17)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457016" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">程序人生</a><span>(31)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/457000" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">算法&amp;amp;&amp;amp;我的程序</a><span>(20)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/1119446" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">PowerDesigner</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/1145484" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">fileNet内容管理</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/1226758" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">设计模式</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/zdwzzu2006/article/category/1226853" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">项目管理</a><span>(3)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2016/06">2016年06月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2016/01">2016年01月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2015/09">2015年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2015/07">2015年07月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/12">2013年12月</a><span>(4)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/11">2013年11月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/10">2013年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/07">2013年07月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/05">2013年05月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/04">2013年04月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/03">2013年03月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/02">2013年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2013/01">2013年01月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/11">2012年11月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/10">2012年10月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/09">2012年09月</a><span>(24)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/08">2012年08月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/07">2012年07月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/06">2012年06月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/05">2012年05月</a><span>(9)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/04">2012年04月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/03">2012年03月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2012/02">2012年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/12">2011年12月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/11">2011年11月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/10">2011年10月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/09">2011年09月</a><span>(17)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/08">2011年08月</a><span>(17)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/07">2011年07月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/06">2011年06月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/05">2011年05月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/03">2011年03月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/02">2011年02月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2011/01">2011年01月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/12">2010年12月</a><span>(66)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/11">2010年11月</a><span>(70)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/10">2010年10月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/09">2010年09月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/08">2010年08月</a><span>(49)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/04">2010年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/02">2010年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2010/01">2010年01月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/12">2009年12月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/11">2009年11月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/10">2009年10月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/09">2009年09月</a><span>(34)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/08">2009年08月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/07">2009年07月</a><span>(25)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/06">2009年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/05">2009年05月</a><span>(45)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/04">2009年04月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/03">2009年03月</a><span>(52)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/02">2009年02月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2009/01">2009年01月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/12">2008年12月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/11">2008年11月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/10">2008年10月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/09">2008年09月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/08">2008年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/07">2008年07月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/06">2008年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/05">2008年05月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/04">2008年04月</a><span>(30)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/03">2008年03月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/02">2008年02月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2008/01">2008年01月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2007/12">2007年12月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2007/11">2007年11月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/zdwzzu2006/article/month/2007/10">2007年10月</a><span>(13)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4106420" title="JDK1.5官方下载_JDK5官方下载_JDK1.5API(chm)下载_JDK5APICHM中文参考下载_JDK1.5下载_JDK5下载">JDK1.5官方下载_JDK5官方下载_JDK1.5API(chm)下载_JDK5APICHM中文参考下载_JDK1.5下载_JDK5下载</a><span>(108749)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977" title="Linux下/proc目录简介">Linux下/proc目录简介</a><span>(79893)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/6928803" title="linux查看本机IP、gateway、dns">linux查看本机IP、gateway、dns</a><span>(68377)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/5151788" title="javabean总结">javabean总结</a><span>(65762)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7723738" title="Socket 长连接与短连接，心跳">Socket 长连接与短连接，心跳</a><span>(57988)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7552234" title="object references an unsaved transient instance - save the transient instance before flushing">object references an unsaved transient instance - save the transient instance before flushing</a><span>(56988)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/5947062" title="数据库事务">数据库事务</a><span>(48619)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/6047632" title="Js中的window.parent ,window.top,window.self 详解">Js中的window.parent ,window.top,window.self 详解</a><span>(45330)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4672383" title="JSP中的EL表达式详细介绍">JSP中的EL表达式详细介绍</a><span>(43821)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/6053006" title="DAO层，Service层，Controller层、View层">DAO层，Service层，Controller层、View层</a><span>(40145)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4106420" title="JDK1.5官方下载_JDK5官方下载_JDK1.5API(chm)下载_JDK5APICHM中文参考下载_JDK1.5下载_JDK5下载">JDK1.5官方下载_JDK5官方下载_JDK1.5API(chm)下载_JDK5APICHM中文参考下载_JDK1.5下载_JDK5下载</a><span>(26)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/5151788" title="javabean总结">javabean总结</a><span>(17)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4030882" title="GDT详解">GDT详解</a><span>(17)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4756675" title="jar文件运行时：Failed to load Main-Class manifest attribute from ......">jar文件运行时：Failed to load Main-Class manifest attribute from ......</a><span>(17)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4334791" title="Linux技术进阶示意图">Linux技术进阶示意图</a><span>(13)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/1932110" title="折半查找程序">折半查找程序</a><span>(10)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/6010354" title="关于MyEclipse8.5 错误 background indexer crash recovery java.lang.stackoverflowerror">关于MyEclipse8.5 错误 background indexer crash recovery java.lang.stackoverflowerror</a><span>(9)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/6034051" title="java.io.FileNotFoundException: class path resource [beans.xml] cannot be opened because it does not exist 解决方法">java.io.FileNotFoundException: class path resource [beans.xml] cannot be opened because it does not exist 解决方法</a><span>(8)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/7723738" title="Socket 长连接与短连接，心跳">Socket 长连接与短连接，心跳</a><span>(8)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/zdwzzu2006/article/details/4585739" title="Hibernate3的配置参数汇总">Hibernate3的配置参数汇总</a><span>(7)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/laoyang360/article/details/53843771" target="_blank">* 而立之年——三线城市程序员的年终告白</a></li>
+<li><a href="http://blog.csdn.net/sdkfjksf/article/details/54380659" target="_blank">* Java集合框架中隐藏的设计套路</a></li>
+<li><a href="http://blog.csdn.net/jiangwei0910410003/article/details/54092364" target="_blank">* Python脚本下载今日头条视频(附加Android版本辅助下载器)</a></li>
+<li><a href="http://blog.csdn.net/caowenbin/article/details/54406716" target="_blank">* 人工智能的冷思考</a></li>
+<li><a href="http://blog.csdn.net/it_talk/article/details/54346566" target="_blank">* React Native 实战系列教程之热更新原理分析与实现</a></li>
+
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/4567957#comments">Java接口详解</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/cidwzhu414" class="user_name">丁十一</a>:
+受益匪浅 谢谢啦
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/5151788#comments">javabean总结</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/Lvren_Andy" class="user_name">赶路的旅人</a>:
+啊，10年的，不知道现在有没有变化。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/5151788#comments">javabean总结</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/caopuwisdom" class="user_name">boywisdom</a>:
+深深的膜拜下，通俗易懂
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/6102826#comments">Unable to locate tools.jar. Expected to find it in C:/Program Files/Java/jre</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/bobai2009" class="user_name">柏白</a>:
+CLASSPATH 配置了为jdk/lib 啦
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/5947062#comments">数据库事务</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/soyuone" class="user_name">AnfieldKopite</a>:
+总结的很不错
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/7748006#comments">JAVA Socket超时浅析</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/sinat_33994921" class="user_name">sinat_33994921</a>:
+好文章
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/2298777#comments"> SQL数据库基本操作语句     </a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wenlongfengyun" class="user_name">wenlongfengyun</a>:
+修改应该是alter（更改，改变），而不是alert（警觉的，警惕的）。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/6053006#comments">DAO层，Service层，Controller层、View层</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/zhang5476499" class="user_name">少年张翠山</a>:
+讲的不错，看懂了。不过还是有困惑的地方，博主可不可以继续讲解一下：你提到的每一层与java 三层架构...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/51620668#comments">Microsoft Office 2016 简体中文 Vol 版镜像下载</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wangbaoning" class="user_name">宝宁</a>:
+感谢分享！！！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/zdwzzu2006/article/details/51620668#comments">数据库事务</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/heisedeyueguang" class="user_name">黑色的月光</a>:
+感谢博主的分享，帮了大忙
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 --> 
+                    <div class="J_adv" data-view="true" data-mod="ad_popu_190" data-mtp="37" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 200px;"><!-- 广告占位容器 --><div id="cpro_u2734128"><iframe id="iframeu2734128_0" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/acum(2).html" width="200" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div><!-- 投放代码 --><script type="text/javascript">(window['cproStyleApi'] = window['cproStyleApi'] || {})['u2734128']={at:'3',rsi0:'200',rsi1:'200',pat:'17',tn:'baiduCustNativeAD',rss1:'#FFFFFF',conBW:'1',adp:'1',ptt:'0',titFF:'%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91',titFS:'',rss2:'#000000',titSU:'0'};/*服务器频道首页置顶Banner960*90，创建于2014-7-3*/(window.cproArray = window.cproArray || []).push({id:'u2734128'});  </script>  <script src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/c.js.下载" type="text/javascript"></script></div> 
+                    <!-- 广告位结束 -->
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/cnick.js.下载"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/newblog.min.js.下载"></script>
+
+
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/JavaScript1.js.下载"></script><link rel="stylesheet" type="text/css" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="javascript:void(0);" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-600-2320</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏知之为计算机有限公司</span><span class="interval">|</span><span>江苏乐知网络技术有限公司</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2016, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saved_resource(2).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/notify.js.下载"></script>
+
+    <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/login.js.下载"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/counter.js.下载"></script><script type="text/javascript" charset="UTF-8" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/msg.popup.js.下载"></script>
+<script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ad-blog.js.下载"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div><input type="hidden" id="aa_g_data_ids">
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/toolbar.js.下载"></script>
+     <!--new top-->
+   
+    <link href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ask_float_block.css" type="text/css" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/wmd.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/showdown.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/prettify.js.下载"></script>
+    <script language="JavaScript" type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ask_float_block.js.下载"></script>
+   
+
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/52b5334.js.下载"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    <link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/blog_code.css">
+    <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saveToCode.js.下载"></script>
+      <script type="text/javascript" src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/main.js(1).下载"></script>
+
+     <link rel="stylesheet" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/fa.css">
+
+    <div class="pop_CA_cover" style="display:none"></div>
+    <div class="pop pop_CA" style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon" id="fapancle" onclick="$(&#39;.pop_CA&#39;).hide();$(&#39;.pop_CA_cover&#39;).hide();"></span>
+          </div>
+          <iframe src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saved_resource(3).html" id="fa" frameborder="0" width="100%" height="360" scrolling="no">
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;   
+ </iframe></div><div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><link rel="stylesheet" type="text/css" media="screen" href="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="csdn-tracking-statistics" chg-blk="0"><a id="com-quick-reply" title="快速回复" style="top:278px"></a><a id="com-quick-collect" title="我要收藏" style="top:316px"></a><a id="com-d-top-a" style="top: 354px; display: none;" title="返回顶部" onclick=""></a> </div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"><iframe src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/upload.html"></iframe></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor" style="visibility: hidden;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="visibility: hidden;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/zdwzzu2006/article/details/7747977#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><div id="mask_code"></div><div class="gist_edit"><div class="save_snippets clearfix"><div class="tit"><h3>保存代码片</h3><span>整理和分享保存的代码片，请访问<a href="https://code.csdn.net/snippets_manage" target="_blank">代码笔记</a></span></div><div class="con_form"><ul class="gist_edit_list clearfix"><li><span class="red">*</span><span class="txt">标题</span><input id="form_title" class="form-input" placeholder="Linux下/proc目录简介" type="text"></li><li><span class="red">*</span><span class="txt">描述</span><textarea id="form-textarea" class="form-textarea" placeholder="Linux下/proc目录简介： http://blog.csdn.net/zdwzzu2006/article/details/7747977"></textarea></li><li><span class="red">&nbsp;</span><span class="txt">标签</span><div id="divSearchTags"><span class="label blog_tag"><span>linux</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>linux内核</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>filesystems</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>protocols</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>cache</span><a title="Removing tag" href="javascript:;">x</a></span><span class="label blog_tag"><span>timer</span><a title="Removing tag" href="javascript:;">x</a></span><input id="insertTag" class="insertTag" placeholder="请输入标签，按Enter生成(最多5项)" type="text" value="" name="insertTag" maxlength="21" style="color: rgb(51, 51, 51);"><input id="OrganTag" class="OrganTag" type="hidden" name="OrganTag" value="linux,linux内核,filesystems,protocols,cache,timer,"><input id="OldOrganTag" class="OldOrganTag" type="hidden" name="OldOrganTag" value=""><input type="hidden" name="txtSearchTags"></div></li></ul></div><div class="bottom-bar"><a href="javascript:;" class="btn-submit btn-cancel">取消</a><span class="tracking-ad" data-mod="popu_250"><a class="btn-submit btn-confirm" href="javascript:;" target="_blank">确定</a></span></div></div></div><div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src="./Linux下_proc目录简介 - Mr. David 专栏 - 博客频道 - CSDN.NET_files/saved_resource(4).html"></iframe></div></body></html>
