@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc -->
+<html itemscope="" itemtype="http://schema.org/QAPage"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>apt - I am not able to compile a simple program using gcc - Ask Ubuntu</title>
+    <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/askubuntu/img/favicon.ico?v=eff8fd315b9e">
+    <link rel="apple-touch-icon image_src" href="https://cdn.sstatic.net/Sites/askubuntu/img/apple-touch-icon.png?v=e16e1315edd6">
+    <link rel="search" type="application/opensearchdescription+xml" title="Ask Ubuntu" href="http://askubuntu.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@AskUbuntu">
+    <meta name="twitter:domain" content="askubuntu.com">
+    <meta property="og:type" content="website">
+
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://cdn.sstatic.net/Sites/askubuntu/img/apple-touch-icon@2.png?v=c492c9229955">
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="I am not able to compile a simple program using gcc">
+    <meta name="twitter:description" property="og:description" itemprop="description" content="Wrongly I have install ia32-libs but my host system is 64 bit.
+Now whenever i try to compile c file i get a message  
+
+as: unrecognized option &#39;--64&#39;
+I have uninstall th ia32-libs but I am getting...">
+    <meta property="og:url" content="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc">
+    <link rel="canonical" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc">
+
+    
+    
+    <script type="text/javascript" async="" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/ados"></script><script async="" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/quant.js"></script><script async="" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/beacon.js"></script><script async="" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/analytics.js"></script><script type="text/javascript" async="" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/ados.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/stub.en.js"></script>
+    <link rel="stylesheet" type="text/css" href="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/all.css">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;I am not able to compile a simple program using gcc&#39;" href="http://askubuntu.com/feeds/question/502524">
+            <meta name="twitter:app:country" content="US">
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:iphone" content="871299723">
+            <meta name="twitter:app:url:iphone" content="se-zaphod://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc">
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:ipad" content="871299723">
+            <meta name="twitter:app:url:ipad" content="se-zaphod://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc">
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:5,shownCommentCount:5,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:502524});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('89', '502524');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text', false); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.ready(function () {
+                        StackExchange.realtime.init('wss://qa.sockets.stackexchange.com,ws://qa.sockets.stackexchange.com');
+            StackExchange.realtime.subscribeToReputationNotifications('89');
+                StackExchange.realtime.subscribeToTopBarNotifications('89');
+        });
+    </script>
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1486431642,"routeName":"Questions/Show","site":{"name":"Ask Ubuntu","description":"Q&A for Ubuntu users and developers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdsB7sSAAAAAAzjgEF_Hd8vXv-C42sa_KyofaGR","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":89,"enableInsertDocLinkDialog":false,"enableSocialMediaInSharePopup":true},"user":{"fkey":"2ae197f1bf86893780de85b2f68daba3","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true,"ab":{"question_show_tweaks":{"v":"altern_unansw_cta","g":1}}},"realtime":{"newest":true,"active":true,"tagged":true,"staleDisconnectIntervalInHours":0,"workerIframeDomain":"https://cdn.sstatic.net"},"events":{"postType":{"question":1},"postEditionSection":{"title":1,"body":2,"tags":3}},"story":{"minCompleteBodyLength":75}}, {"site":{"allowImageUploads":true,"enableUserHovercards":true,"styleCode":true,"enableImgurHttps":true},"comments":{},"userProfile":{},"tags":{},"accounts":{"currentPasswordRequiredForChangingStackIdPassword":true},"flags":{"allowRetractingFlags":true},"analytics":{"clientTimingsAbsoluteTimeout":30000,"clientTimingsDebounceTimeout":1000},"snippets":{"renderDomain":"stacksnippets.net"},"markdown":{"asteriskIntraWordEmphasis":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"154f2ddfcc9a","js/moderator.en.js":"cbd9a328c047","js/full-anon.en.js":"3e63e0737192","js/full.en.js":"1adbe3caeb48","js/wmd.en.js":"74f577776cba","js/third-party/jquery.autocomplete.min.js":"d3b8fa7fdf74","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"c37948fe0a99","js/help.en.js":"118cb359bcc6","js/tageditor.en.js":"9c6df10dabc4","js/tageditornew.en.js":"42b0bd10effe","js/inline-tag-editing.en.js":"2ddfa79492e7","js/revisions.en.js":"2faaeaae2529","js/review.en.js":"755ea56df389","js/tagsuggestions.en.js":"7dfec0d2a2d7","js/post-validation.en.js":"df9c64db5b70","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"f23d86c118ea","js/keyboard-shortcuts.en.js":"5bc8e8c8f2ee","js/external-editor.en.js":"497a1b77a112","js/adops.en.js":"9a6a7812a212"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+<script type="text/javascript" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/adFeedback.js"></script><link rel="stylesheet" href="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/adFeedback.css"></head>
+<body class="question-page new-topbar">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+            <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        <iframe id="adzerk-user-match" width="0" height="0" frameborder="0" scrolling="no" onload="window.AUMIframeDone=true" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/usermatch.html" style="display: none;" marginheight="0" marginwidth="0"></iframe>
+
+    <div id="notify-container"></div>
+    <div id="custom-header"><div class="nav-global"><div class="nav-global-wrapper"><ul><li><a href="http://www.ubuntu.com/">Ubuntu</a></li><li><a href="http://community.ubuntu.com/">Community</a></li><li><a href="http://askubuntu.com/" class="active">Ask!</a></li><li><a href="http://developer.ubuntu.com/">Developer</a></li><li><a href="http://design.ubuntu.com/">Design</a></li><li><a href="http://www.ubuntu.com/certification">Hardware</a></li><li><a href="http://insights.ubuntu.com/">Insights</a></li><li><a href="https://jujucharms.com/">Juju</a></li><li><a href="http://shop.ubuntu.com/">Shop</a></li><li class="more"><a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#">More <span>›</span></a><ul><li><a href="http://apps.ubuntu.com/">Apps</a></li><li><a href="https://help.ubuntu.com/">Help</a></li><li><a href="http://ubuntuforums.org/">Forum</a></li><li><a href="http://www.launchpad.net/">Launchpad</a></li><li><a href="http://maas.ubuntu.com/">MAAS</a></li><li><a href="http://www.canonical.com/">Canonical</a></li></ul></li></ul></div></div> <script> $(function() { $(".nav-global .more > a").click(function(e){ $(this).closest(".more").toggleClass("open"); return false; }); $(document).click(function(){ $(".nav-global .more.open").removeClass("open"); }); }); </script></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+    <div class="topbar-dialog siteSwitcher-dialog dno">
+        <div class="header">
+            <h3><a href="http://askubuntu.com/">current community</a>
+            </h3>
+        </div>
+        <div class="modal-content current-site-container">
+            <ul class="current-site">
+                    <li>
+                            <div class="related-links">
+                    <a href="http://chat.stackexchange.com/?tab=site&amp;host=askubuntu.com" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+            </div>
+
+
+
+
+    <a href="http://askubuntu.com/" class="current-site-link site-link js-gps-track" data-id="89" data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-askubuntu" title="Ask Ubuntu"></div>
+        Ask Ubuntu
+    </a>
+
+                    </li>
+                    <li class="related-site">
+                            <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                        
+
+
+
+    <a href="http://meta.askubuntu.com/" class="site-link js-gps-track" data-id="91" data-gps-track="
+            site.switch({ target_site:91, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-askubuntumeta" title="Ask Ubuntu Meta"></div>
+        Ask Ubuntu Meta
+    </a>
+
+                    </li>
+            </ul>
+        </div>
+
+        <div class="header" id="your-communities-header">
+            <h3>
+your communities            </h3>
+
+        </div>
+        <div class="modal-content" id="your-communities-section">
+
+                <div class="call-to-login">
+<a href="https://askubuntu.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a> or <a href="https://askubuntu.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:11 })">log in</a> to customize your list.
+                </div>
+        </div>
+
+        <div class="header">
+            <h3><a href="http://stackexchange.com/sites">more stack exchange communities</a>
+            </h3>
+            <a href="http://stackoverflow.blog/" class="fr">company blog</a>
+        </div>
+        <div class="modal-content">
+                <div class="child-content"></div>
+        </div>        
+    </div>
+        </div>
+
+        <div class="network-items">
+                <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 164 Stack Exchange sites">
+                    <span class="hidden-text">Stack Exchange</span>
+                </a>
+
+    <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" class="topbar-icon icon-inbox yes-hover js-inbox-button" title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" class="topbar-icon icon-achievements yes-hover js-achievements-button " data-unread-class="" title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://askubuntu.com/users/signup?ssrc=head&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc" class="login-link" rel="nofollow">sign up</a>
+                                <a href="https://askubuntu.com/users/login?ssrc=head&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc" class="login-link" rel="nofollow">log in</a>
+
+                            <a href="http://askubuntu.com/tour">tour</a>
+        <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" class="icon-help js-help-button" title="Help Center and other resources">
+            help
+            <span class="triangle"></span>
+        </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="http://askubuntu.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://askubuntu.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                        <li>
+                            <a href="http://meta.askubuntu.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                                Meta
+                                <span class="item-summary">
+                                    Discuss the workings and policies of this site
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                                About Us
+                                <span class="item-summary">
+                                    Learn more about Stack Overflow the company
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.stackoverflowbusiness.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                                Business
+                                <span class="item-summary">
+                                    Learn more about hiring developers or posting ads with us
+                                </span>
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+                                            </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="http://askubuntu.com/search" method="get" autocomplete="off">
+                        <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+            <div id="header">
+                <br class="cbt">
+                <div id="hlogo">
+                    <a href="http://askubuntu.com/">
+                        Ask Ubuntu
+                    </a>
+                </div>
+                <div id="hmenus">
+                        <div class="nav mainnavs">
+                            <ul>
+                                    <li class="youarehere">
+        <a id="nav-questions" href="http://askubuntu.com/questions" class="js-gps-track" data-gps-track="top_nav.click({is_current:true, location:2, destination:1})">
+        Questions
+        </a>
+    </li>
+
+                                                                    <li>
+        <a id="nav-tags" href="http://askubuntu.com/tags" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:2})">
+        Tags
+        </a>
+    </li>
+
+                                    <li>
+        <a id="nav-users" href="http://askubuntu.com/users" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:3})">
+        Users
+        </a>
+    </li>
+
+                                    <li>
+        <a id="nav-badges" href="http://askubuntu.com/help/badges" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:4})">
+        Badges
+        </a>
+    </li>
+
+    <li>
+        <a id="nav-unanswered" href="http://askubuntu.com/unanswered" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:5})">
+        Unanswered
+        </a>
+    </li>
+                            </ul>
+                        </div>
+                    <div class="nav askquestion">
+                        <ul>
+                            <li>
+                                <a id="nav-askquestion" href="http://askubuntu.com/questions/ask">Ask Question</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+
+
+        <div id="content">
+
+
+
+            
+
+<div itemscope="" itemtype="http://schema.org/Question">
+    <link itemprop="image" href="https://cdn.sstatic.net/Sites/askubuntu/img/apple-touch-icon.png?v=e16e1315edd6">
+
+
+    <div id="herobox">
+        <div id="hero-content">
+                <div id="close"><a title="click to minimize">_</a></div>
+            <div id="blurb">
+                Ask Ubuntu is a question and answer site for Ubuntu users and developers. Join them; it only takes a minute:
+                <br>
+                <br>
+                <a href="http://askubuntu.com/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc" id="tell-me-more" class="button">Sign up</a>
+            </div>
+            <div id="desc">
+                <b>Here's how it works:</b>
+                <ol id="hiw">
+                    <li id="q">Anybody can ask a question
+                    </li>
+                    <li id="an">Anybody can answer
+                    </li>
+                    <li id="b">The best answers are voted up and rise to the top
+                    </li>
+                </ol>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+<script>
+    StackExchange.ready(function () {
+
+        var location = 0;
+        if ($("body").hasClass("questions-page")) {
+            location = 1;;
+        } else if ($("body").hasClass("question-page")) {
+            location = 1;;
+        } else if ($("body").hasClass("faq-page")) {
+            location = 5;;
+        } else if ($("body").hasClass("home-page")) {
+            location = 3;;
+        }
+
+        $('#tell-me-more').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+            });
+        });
+        $('#herobox #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+            });
+            $.cookie("hero", "mini", { path: "/", expires: 365 });
+            $.ajax({
+                url: "/hero-mini",
+                success: function (data) {
+                    $("#herobox").fadeOut("fast", function () {
+                        $("#herobox").replaceWith(data);
+                        $("#herobox-mini").fadeIn("fast");
+                    });
+                }
+            });
+            return false;
+        });
+    });
+
+</script>			<div id="question-header">
+                <h1 itemprop="name"><a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc" class="question-hyperlink">I am not able to compile a simple program using gcc</a></h1>
+
+            
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="502524" id="question">
+
+    <script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,0,"adzerk202079285",4).enableDynamicSiteSelection().setZone(29); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk202079285"><a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6NCwiYnQiOjAsImNtIjo1MDk5OTYsImNoIjoxNjUzMSwiY2siOnt9LCJjciI6MTc5ODc5NiwiZGkiOiIxODAzMzA0MTBmNTg0NzdmYjdlODQxZTVhNmVmNDg1MiIsImRtIjoxLCJmYyI6MjEzODkwNCwiZmwiOjI2MDkxNTcsImlwIjoiMTE5LjE4MC4yNC4xNTYiLCJrdyI6ImFwdCw2NC1iaXQsY29tcGlsaW5nLGdjYyxnKysseC1jb21tdW5pdHkseC1ob3N0LWFza3VidW50dS5jb20iLCJudyI6MjIsInBjIjowLCJlYyI6MCwicHIiOjU3MjIyLCJydCI6MSwicmYiOiJodHRwOi8vb3ZlcnNlYXMuc29nb3UuY29tL2VuZ2xpc2g_cXVlcnk9YXMrdW5yZWNvZ25pemVkKytvcHRpb25zKy0tNjQmaWU9dXRmOCZfYXN0PTE0ODY0MzEyMzImX2FzZj1udWxsJnc9MDEwMjk5MDEmY2lkPSZjaWQ9JnN1dD0xNDgzJnNzdDA9MTQ4NjQzMTIzNTA2MiZsa3Q9MSwxNDg2NDMxMjM0MTY2LDE0ODY0MzEyMzQxNjYiLCJzdCI6NTY3NDksInVrIjoidWUxLTU3NTkyOGU3NzQ3NjRiMzU4MGUyY2E2NjAyZWI2ZWQ3Iiwiem4iOjI5LCJ0cyI6MTQ4NjQzMTc3NjE2MCwiYmYiOnRydWUsInBuIjoiYWR6ZXJrMjAyMDc5Mjg1IiwidXIiOiJodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vam9icz91dG1fc291cmNlPXdlYnNpdGUmdXRtX21lZGl1bT1iYW5uZXImdXRtX2NvbnRlbnQ9bGVhZGVyYm9hcmRfNyZ1dG1fY2FtcGFpZ249aG91c2VfYWRzX2hvdXNlX2Fkc19ST1NfU1UifQ&amp;s=l2DUHSD1kKHs3mEQsxVWZGzuldk" rel="nofollow" target="_blank" title=""><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/25c63890b1de4c969be7d4090ece7ca6.png" title="" alt="" border="0" width="728" height="90"></a><img height="0px" width="0px" border="0" style="position:absolute;" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/i.gif"></div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="502524">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#">favorite</a>
+        <div class="favoritecount"><b></b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>Wrongly I have install ia32-libs but my host system is 64 bit.
+Now whenever i try to compile c file i get a message  </p>
+
+<pre><code>as: unrecognized option '--64'
+</code></pre>
+
+<p>I have uninstall th ia32-libs but I am getting same error.
+then I have uninstall the  gcc,g++,multilib and build-essenstial  using purge command.
+again install these packages using apt-get command but again same error. When i run "which gcc" command on terminal i get "/usr/bin/gcc " and "which ld" output is "/usr/bin/ld".
+I guess both outputs are correct.</p>
+
+<p>When i run this command </p>
+
+<pre><code>g++ -v hello hello.c
+</code></pre>
+
+<p>then output is</p>
+
+<pre><code>Using built-in specs.
+COLLECT_GCC=g++
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6/lto-wrapper
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/cc1plus -quiet -v -imultilib . -imultiarch x86_64-linux-gnu -D_GNU_SOURCE he.c -quiet -dumpbase he.c -mtune=generic -march=x86-64 -auxbase he -version -fstack-protector -o /tmp/ccIQSmoy.s
+GNU C++ (Ubuntu/Linaro 4.6.3-1ubuntu5) version 4.6.3 (x86_64-linux-gnu)
+    compiled by GNU C version 4.6.3, GMP version 5.0.2, MPFR version 3.1.0-p3, MPC version 0.9
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../x86_64-linux-gnu/include"
+include "..." search starts here:
+include &lt;...&gt; search starts here:
+ /usr/include/c++/4.6
+ /usr/include/c++/4.6/x86_64-linux-gnu/.
+ /usr/include/c++/4.6/backward
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include
+ /usr/local/include
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed
+ /usr/include/x86_64-linux-gnu
+ /usr/include
+End of search list.
+GNU C++ (Ubuntu/Linaro 4.6.3-1ubuntu5) version 4.6.3 (x86_64-linux-gnu)
+    compiled by GNU C version 4.6.3, GMP version 5.0.2, MPFR version 3.1.0-p3, MPC version 0.9
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 65b5171ac1bd7b3f07dbea6bdb24be3d
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as --64 -o /tmp/ccXDnoi3.o /tmp/ccIQSmoy.s
+**as: unrecognized option '--64'**
+</code></pre>
+
+<p>Can you tell me how to solve this problem??</p>
+    </div>
+    <div class="post-taglist">
+        <a href="http://askubuntu.com/questions/tagged/apt" class="post-tag" title="show questions tagged &#39;apt&#39;" rel="tag">apt</a> <a href="http://askubuntu.com/questions/tagged/64-bit" class="post-tag" title="show questions tagged &#39;64-bit&#39;" rel="tag">64-bit</a> <a href="http://askubuntu.com/questions/tagged/compiling" class="post-tag" title="show questions tagged &#39;compiling&#39;" rel="tag">compiling</a> <a href="http://askubuntu.com/questions/tagged/gcc" class="post-tag" title="show questions tagged &#39;gcc&#39;" rel="tag">gcc</a> <a href="http://askubuntu.com/questions/tagged/g%2b%2b" class="post-tag" title="show questions tagged &#39;g++&#39;" rel="tag">g++</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://askubuntu.com/q/502524" title="short permalink to this question" class="short-link" id="link-post-502524">share</a><span class="lsep">|</span><a href="http://askubuntu.com/posts/502524/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="http://askubuntu.com/posts/502524/revisions" title="show all edits to this post">edited <span title="2014-08-04 14:00:13Z" class="relativetime">Aug 4 '14 at 14:00</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/10698/alvar"><div class="gravatar-wrapper-32"><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/f01cf0cc14447f738b549ab015b0e559" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/10698/alvar">Alvar</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">9,877</span><span title="22 gold badges"><span class="badge1"></span><span class="badgecount">22</span></span><span title="73 silver badges"><span class="badge2"></span><span class="badgecount">73</span></span><span title="111 bronze badges"><span class="badge3"></span><span class="badgecount">111</span></span>
+        </div>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2014-07-25 13:01:43Z" class="relativetime">Jul 25 '14 at 13:01</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/309060/aqib-butt"><div class="gravatar-wrapper-32"><img src="https://graph.facebook.com/100000518374309/picture?type=large" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/309060/aqib-butt">Aqib Butt</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">11</span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+                    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-502524" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-675059" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Can you add the outputs of <code>which as</code> and <code>as --version</code> as well please. Also your OS version (I'm guessing 12.04 based on the gcc version?)</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/178692/steeldriver" title="36,645 reputation" class="comment-user">steeldriver</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:17:25Z" class="relativetime-clean">Jul 25 '14 at 13:17</span></span>
+                        <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675070" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">which as output: "/usr/bin/as"       as --version output:                                GNU assembler (GNU Binutils for Ubuntu) 2.22 Copyright 2011 Free Software Foundation, Inc. This program is free software; you may redistribute it under the terms of the GNU General Public License version 3 or later. This program has absolutely no warranty. This assembler was configured for a target of `arm-linux-gnueabi'.  why target is pointing towards my cross compiler??  if this is a error how to correct it?? and, yes, OS is 12.04.</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:24:59Z" class="relativetime-clean">Jul 25 '14 at 13:24</span></span>
+                        <span class="edited-yes" title="this comment was edited 2 times"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675078" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">You could try to re install 'as' on your system with 'sudo apt-get install --reinstall binutils'</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/175978/jhilmer" title="1,067 reputation" class="comment-user">jhilmer</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:32:22Z" class="relativetime-clean">Jul 25 '14 at 13:32</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675080" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy"><b>Please edit your question to add the new information</b>. Yes somehow the arm-linux-gnueabi version of <code>as</code> has got installed as the default <code>/usr/bin/as</code>. How to fix it will depend why that occurred - if you don't actually use/need the ARM toolchain you could simply re-install the <code>binutils</code> package, which <i>should</i> overwrite it with the regular version. Otherwise you will need to do some more investigating - starting with whether <code>/usr/bin/as</code> is a simple file or a symbolic link.</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/178692/steeldriver" title="36,645 reputation" class="comment-user">steeldriver</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:32:59Z" class="relativetime-clean">Jul 25 '14 at 13:32</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675083" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thnx..... By reinstalling binutils my problem is solved.</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:36:39Z" class="relativetime-clean">Jul 25 '14 at 13:36</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-502524" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" onclick=""></a>
+        </div>         
+    </td>
+</tr>        </tbody></table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								3 Answers
+                                <span style="display:none;" itemprop="answerCount">3</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active" data-shortcut="A">
+            active</a>
+        <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest" data-shortcut="O">
+            oldest</a>
+        <a class="youarehere" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes" data-shortcut="V">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="502525"></a>
+<div id="answer-502525" class="answer" data-answerid="502525" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="502525">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>The options for gcc is '-m32' or '-m64' to generate code for a 32-bit or 64-bit environment. Not '--64'</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://askubuntu.com/a/502525" title="short permalink to this answer" class="short-link" id="link-post-502525">share</a><span class="lsep">|</span><a href="http://askubuntu.com/posts/502525/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2014-07-25 13:06:32Z" class="relativetime">Jul 25 '14 at 13:06</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/175978/jhilmer"><div class="gravatar-wrapper-32"><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/iHlWw.jpg" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/175978/jhilmer">jhilmer</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1,067</span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="9 bronze badges"><span class="badge3"></span><span class="badgecount">9</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-502525" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-675053" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">How can i solve my problem?</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:09:48Z" class="relativetime-clean">Jul 25 '14 at 13:09</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675061" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">i am not running --64 or -m64 as an option.</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:20:04Z" class="relativetime-clean">Jul 25 '14 at 13:20</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675066" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">You probably have set it somewhere in your environmet. Check that with <code>printenv | grep "\-\-64"</code></span>
+                    –&nbsp;<a href="http://askubuntu.com/users/15635/imbaer" title="1,982 reputation" class="comment-user">imbaer</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:22:46Z" class="relativetime-clean">Jul 25 '14 at 13:22</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675079" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">i got nothing on terminal when i run your command. I run printenv command and check all environments. --64 is not written anywhere.</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:32:37Z" class="relativetime-clean">Jul 25 '14 at 13:32</span></span>
+                        <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-675084" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">There is a problem with my assembler. By re-installing binutils my problem is SOlved</span>
+                    –&nbsp;<a href="http://askubuntu.com/users/309060/aqib-butt" title="11 reputation" class="comment-user owner">Aqib Butt</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-25 13:39:04Z" class="relativetime-clean">Jul 25 '14 at 13:39</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-502525" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,0,"adzerk732007353",4).enableDynamicSiteSelection().setZone(30); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk732007353"><a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6NCwiYnQiOjAsImNtIjo1MjcxODEsImNoIjoxNjUzMSwiY2siOnt9LCJjciI6MTg3NzA0NywiZGkiOiJiZjY1ZjVhOTkzNGY0NDA1Yjg0MjEwMzM1MTkyYzcxNSIsImRtIjoxLCJmYyI6MjI1NzM3MSwiZmwiOjI2ODA2MzQsImlwIjoiMTE5LjE4MC4yNC4xNTYiLCJrdyI6ImFwdCw2NC1iaXQsY29tcGlsaW5nLGdjYyxnKysseC1jb21tdW5pdHkseC1ob3N0LWFza3VidW50dS5jb20iLCJudyI6MjIsInBjIjowLCJlYyI6MCwicHIiOjU1Njk1LCJydCI6MiwicmYiOiJodHRwOi8vb3ZlcnNlYXMuc29nb3UuY29tL2VuZ2xpc2g_cXVlcnk9YXMrdW5yZWNvZ25pemVkKytvcHRpb25zKy0tNjQmaWU9dXRmOCZfYXN0PTE0ODY0MzEyMzImX2FzZj1udWxsJnc9MDEwMjk5MDEmY2lkPSZjaWQ9JnN1dD0xNDgzJnNzdDA9MTQ4NjQzMTIzNTA2MiZsa3Q9MSwxNDg2NDMxMjM0MTY2LDE0ODY0MzEyMzQxNjYiLCJzdCI6NTY3NDksInVrIjoidWUxLTU3NTkyOGU3NzQ3NjRiMzU4MGUyY2E2NjAyZWI2ZWQ3Iiwiem4iOjMwLCJ0cyI6MTQ4NjQzMTc3NjE2MiwiYmYiOnRydWUsInBuIjoiYWR6ZXJrNzMyMDA3MzUzIiwidXIiOiJodHRwczovL3d3dy5zdXJ2ZXltb25rZXkuY28udWsvci9WQ1RRTU1WIn0&amp;s=haRV7ntGrxHbKv45nWPKp-wP8VE" rel="nofollow" target="_blank" title=""><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/fb4ef84b4c0e4fe4903ec00d2bf2b10f.png" title="" alt="" border="0" width="728" height="90"></a><img height="0px" width="0px" border="0" style="position:absolute;" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/i(1).gif"></div>
+  
+<a name="506740"></a>
+<div id="answer-506740" class="answer" data-answerid="506740" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="506740">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>There was a problem with my assembler.</p>
+
+<p>When I run <code>as --version</code> </p>
+
+<pre><code>GNU assembler (GNU Binutils for Ubuntu) 2.22 Copyright 2011 Free Software Foundation, Inc. 
+This program is free software; you may redistribute it under the terms of the GNU General Public License version 3 or later. 
+This program has absolutely no warranty. This assembler was configured for a target of `arm-linux-gnueabi'.
+</code></pre>
+
+<p>My assembler target is mistakenly pointing towards the <code>arm-linux-gnueabi</code> (which was a cross compiler in my case). So, by re-installing <code>binutils</code> my problem was solved.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://askubuntu.com/a/506740" title="short permalink to this answer" class="short-link" id="link-post-506740">share</a><span class="lsep">|</span><a href="http://askubuntu.com/posts/506740/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="http://askubuntu.com/posts/506740/revisions" title="show all edits to this post">edited <span title="2014-08-04 13:59:33Z" class="relativetime">Aug 4 '14 at 13:59</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/10698/alvar"><div class="gravatar-wrapper-32"><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/f01cf0cc14447f738b549ab015b0e559" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/10698/alvar">Alvar</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">9,877</span><span title="22 gold badges"><span class="badge1"></span><span class="badgecount">22</span></span><span title="73 silver badges"><span class="badge2"></span><span class="badgecount">73</span></span><span title="111 bronze badges"><span class="badge3"></span><span class="badgecount">111</span></span>
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature owner">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2014-08-04 13:50:28Z" class="relativetime">Aug 4 '14 at 13:50</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/309060/aqib-butt"><div class="gravatar-wrapper-32"><img src="https://graph.facebook.com/100000518374309/picture?type=large" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/309060/aqib-butt">Aqib Butt</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">11</span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-506740" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-506740" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="570804"></a>
+<div id="answer-570804" class="answer" data-answerid="570804" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="570804">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>A similar phenomenon had occurred and was solved.</p>
+
+<ol>
+<li>Built and installed gcc-4.9.2 </li>
+<li>Built another software. No problem.</li>
+<li>Built and installed binutils-2.25</li>
+<li>gcc failed with ..../bin/as: unrecognized option: `-xarch=generic'</li>
+<li>Renamed /usr/local/i386-pc-solaris2.11/ with different name, which was installed by binutils including bin/as</li>
+<li>gcc succeeded</li>
+</ol>
+
+<p>This is my guess. Historically, gcc used an external assembler, as, which was 
+included in binutils. Several years ago, gcc changed its implementation to have  functionality of 'as' in gcc itself. The time past. Even so, if gcc finds 'as' 
+in the certain directories, gcc will use it, in place of internal 'as' functionality.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://askubuntu.com/a/570804" title="short permalink to this answer" class="short-link" id="link-post-570804">share</a><span class="lsep">|</span><a href="http://askubuntu.com/posts/570804/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2015-01-07 06:14:25Z" class="relativetime">Jan 7 '15 at 6:14</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://askubuntu.com/users/366360/tora"><div class="gravatar-wrapper-32"><img src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/e921e3ccc703a96b1159dd850d3ef210" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://askubuntu.com/users/366360/tora">Tora</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1</span><span title="1 bronze badge"><span class="badge3"></span><span class="badgecount">1</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-570804" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-570804" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+									<a name="new-answer"></a>
+						<form id="post-form" action="http://askubuntu.com/questions/502524/answer/submit" method="post" class="post-form">
+						    <input type="hidden" id="post-id" value="502524">
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false">
+                            <input type="hidden" name="referrer" value="http://overseas.sogou.com/english?query=as+unrecognized++options+--64&amp;ie=utf8&amp;_ast=1486431232&amp;_asf=null&amp;w=01029901&amp;cid=&amp;cid=&amp;sut=1483&amp;sst0=1486431235062&amp;lkt=1%2C1486431234166%2C1486431234166">
+							<h2 class="space">Your Answer</h2>
+
+
+        
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.settings.snippets.snippetsEnabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="2ae197f1bf86893780de85b2f68daba3">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="http://askubuntu.com/users/login?ssrc=question_page&amp;returnurl=http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid">
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false">
+                    <input type="hidden" name="use-google" class="use-google" value="false">
+                    <input type="button" class="submit-openid" value="Submit" style="display:none">
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown">
+                </div>
+            </td>
+        </tr>
+        </tbody></table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2faskubuntu.com%2fquestions%2f502524%2fi-am-not-able-to-compile-a-simple-program-using-gcc%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        &lt;h3&gt;Post as a guest&lt;/h3&gt;
+    &lt;div class="form-item"&gt;
+        &lt;table&gt;
+        &lt;tr&gt;
+                    &lt;td class="vm"&gt;
+                &lt;div&gt;
+                    &lt;label for="display-name"&gt;Name&lt;/label&gt;
+                    &lt;input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105"&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;label for="m-address"&gt;Email&lt;/label&gt;
+                    &lt;input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" /&gt;
+                &lt;/div&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" name="privacy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" name="tos" target="_blank">terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1">								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://askubuntu.com/questions/tagged/apt" class="post-tag" title="show questions tagged &#39;apt&#39;" rel="tag">apt</a> <a href="http://askubuntu.com/questions/tagged/64-bit" class="post-tag" title="show questions tagged &#39;64-bit&#39;" rel="tag">64-bit</a> <a href="http://askubuntu.com/questions/tagged/compiling" class="post-tag" title="show questions tagged &#39;compiling&#39;" rel="tag">compiling</a> <a href="http://askubuntu.com/questions/tagged/gcc" class="post-tag" title="show questions tagged &#39;gcc&#39;" rel="tag">gcc</a> <a href="http://askubuntu.com/questions/tagged/g%2b%2b" class="post-tag" title="show questions tagged &#39;g++&#39;" rel="tag">g++</a>  or <a href="http://askubuntu.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tbody><tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2014-07-25 13:01:43Z"><b>2 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>2064 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc?lastactivity" class="lastactivity-link" title="2015-07-19 08:37:38Z">1 year ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </tbody></table>
+			    </div>
+						
+			<script>
+                var ados = ados || {}; ados.run = ados.run || [];
+                ados.run.push(function () { ados_add_placement(22,0,"adzerk161646724",[5,17]).enableDynamicSiteSelection().setZone(56016); });
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk161646724"><div id="SE20-ad-container" style="height: 250px; width: 220px;"></div><script type="text/javascript">window._launchedAdUrl= "http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6NSwiYnQiOjAsImNtIjozNzM4NjIsImNoIjoxNjUzMSwiY2siOnt9LCJjciI6MTM2OTk0OSwiZGkiOiJhODI1ZWEwMDAxMGQ0OWNjODc4YzZlYTM4MGE3ZmExYiIsImRtIjoxLCJmYyI6MTUyOTk3NiwiZmwiOjExNDYxOTMsImlwIjoiMTE5LjE4MC4yNC4xNTYiLCJrdyI6ImFwdCw2NC1iaXQsY29tcGlsaW5nLGdjYyxnKysseC1jb21tdW5pdHkseC1ob3N0LWFza3VidW50dS5jb20iLCJudyI6MjIsInBjIjowLCJlYyI6MCwicHIiOjU1Njk1LCJydCI6MSwicmYiOiJodHRwOi8vb3ZlcnNlYXMuc29nb3UuY29tL2VuZ2xpc2g_cXVlcnk9YXMrdW5yZWNvZ25pemVkKytvcHRpb25zKy0tNjQmaWU9dXRmOCZfYXN0PTE0ODY0MzEyMzImX2FzZj1udWxsJnc9MDEwMjk5MDEmY2lkPSZjaWQ9JnN1dD0xNDgzJnNzdDA9MTQ4NjQzMTIzNTA2MiZsa3Q9MSwxNDg2NDMxMjM0MTY2LDE0ODY0MzEyMzQxNjYiLCJzdCI6NTY3NDksInVrIjoidWUxLTU3NTkyOGU3NzQ3NjRiMzU4MGUyY2E2NjAyZWI2ZWQ3Iiwiem4iOjU2MDE2LCJ0cyI6MTQ4NjQzMTc3NjE2NSwiYmYiOnRydWUsInBuIjoiYWR6ZXJrMTYxNjQ2NzI0IiwidXIiOm51bGx9&s=IqqXGyEVYX_VVCFyKoHJ6Ydktv8";</script><script type="text/javascript" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/js"></script><img height="0px" width="0px" border="0" style="position:absolute;" src="./apt - I am not able to compile a simple program using gcc - Ask Ubuntu_files/i(2).gif"></div>
+			
+
+            
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer"><a href="http://askubuntu.com/q/230983" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://askubuntu.com/questions/230983/error-while-compiling-c-program-using-gcc-filename-c-thru-the-cli" class="question-hyperlink">Error while compiling c program using gcc &lt;filename.c&gt; thru the CLI</a></div><div class="spacer"><a href="http://askubuntu.com/q/303771" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="http://askubuntu.com/questions/303771/diff-between-x86-64-linux-gnu-gcc-and-plain-old-gcc" class="question-hyperlink">diff between x86_64-linux-gnu-gcc and plain old gcc?</a></div><div class="spacer"><a href="http://askubuntu.com/q/312835" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">2</div></a><a href="http://askubuntu.com/questions/312835/gcc-segmentation-fault-on-ubuntu-12-04" class="question-hyperlink">gcc segmentation fault on Ubuntu 12.04</a></div><div class="spacer"><a href="http://askubuntu.com/q/401673" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="http://askubuntu.com/questions/401673/c-compiler-cannot-create-excecutables" class="question-hyperlink">C compiler cannot create excecutables</a></div><div class="spacer"><a href="http://askubuntu.com/q/497306" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">2</div></a><a href="http://askubuntu.com/questions/497306/cannot-compile-gcc-or-g-libc-nonshared-a-not-recognized" class="question-hyperlink">cannot compile gcc or g++ libc_nonshared.a not recognized</a></div><div class="spacer"><a href="http://askubuntu.com/q/564361" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">2</div></a><a href="http://askubuntu.com/questions/564361/compiling-g-programs" class="question-hyperlink">compiling g++ programs</a></div><div class="spacer"><a href="http://askubuntu.com/q/637014" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://askubuntu.com/questions/637014/gcc-fails-to-compile" class="question-hyperlink">gcc fails to compile</a></div><div class="spacer"><a href="http://askubuntu.com/q/759961" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://askubuntu.com/questions/759961/compiling-gcc-g-4-6-0-alongside-gcc-5-2-1-on-ubuntu-15-10-amd64" class="question-hyperlink">compiling gcc-g++ 4.6.0 alongside gcc 5.2.1 on ubuntu 15.10 amd64</a></div><div class="spacer"><a href="http://askubuntu.com/q/791731" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="http://askubuntu.com/questions/791731/where-to-find-core-dumps-from-gcc-and-g-compiled-code" class="question-hyperlink">Where to find core dumps from gcc and g++ compiled code?</a></div><div class="spacer"><a href="http://askubuntu.com/q/855945" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="http://askubuntu.com/questions/855945/what-exactly-does-gcc-multilib-mean-on-ubuntu" class="question-hyperlink">What exactly does gcc-multilib mean on Ubuntu?</a></div>
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="http://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/2132471/can-someone-confirm-my-method-and-answer-for-this-trig-problem" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can someone confirm my method and answer for this trig problem?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-vi" title="Vi and Vim Stack Exchange"></div><a href="http://vi.stackexchange.com/questions/11284/how-can-i-quote-text-in-a-search-regex" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:599 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I quote text in a search regex?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/152035/what-form-would-a-boggart-take-for-snape" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What form would a boggart take for Snape?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/84532/how-do-i-know-im-not-secretly-messing-it-all-up" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I know I'm not secretly messing it all up
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/84576/lecturer-in-a-course-im-taing-refuses-to-give-feedback-on-student-assignment" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Lecturer in a course I'm TA'ing refuses to give feedback on student assignment
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-anime" title="Anime &amp; Manga Stack Exchange"></div><a href="http://anime.stackexchange.com/questions/38832/where-did-ashs-haunter-go" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:477 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Where did Ash's Haunter go?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/84547/what-are-the-ethical-considerations-when-publishing-a-cheating-technique" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What are the ethical considerations when publishing a cheating technique?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/152055/when-did-batman-s-leather-thong-get-teeth-marks-in-it" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    When did Batman’s leather thong get teeth marks in it?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/152007/if-you-burn-a-zombie-youll-only-get-a-flaming-zombie-chasing-you" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    "If you burn a zombie, you'll only get a flaming zombie chasing you"?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/109155/create-a-checkbox" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Create a Checkbox
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/352449/how-to-respond-to-conflicting-environment-names-in-published-packages-which-i-in" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to respond to conflicting environment names in published packages which I inadvertently inflicted on an unsuspecting public?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/109275/find-the-submatrix-with-the-smallest-mean-2-0" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Find the submatrix with the smallest mean, 2.0
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-writers" title="Writers Stack Exchange"></div><a href="http://writers.stackexchange.com/questions/26550/is-it-bad-not-to-explain-things" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:166 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it bad not to explain things?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-iot" title="Internet of Things Stack Exchange"></div><a href="http://iot.stackexchange.com/questions/966/should-i-use-special-characters-in-mqtt-topics" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:666 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Should I use special characters in MQTT topics?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/42078597/why-is-case-statement-allowed-inside-block-for-another-case" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is case statement allowed inside block for another case?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/310104/why-does-a-thing-not-do-any-work-if-its-perpendicular-to-the-motion" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why does a thing not do any work if its perpendicular to the motion?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-christianity" title="Christianity Stack Exchange"></div><a href="http://christianity.stackexchange.com/questions/55081/what-type-of-church-or-christian-would-a-rob-bell-follower-be-or-attend" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:304 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What type of church or Christian would a Rob Bell follower be or attend?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/48818/insecurity-to-the-party" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Insecurity to the Party
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/70348/why-do-aliens-have-higher-tech-than-us" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why do aliens have higher tech than us?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-unix" title="Unix &amp; Linux Stack Exchange"></div><a href="http://unix.stackexchange.com/questions/342819/execute-as-test-rather-than-test" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:106 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Execute as .test rather than ./test
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="http://aviation.stackexchange.com/questions/35294/when-is-the-descent-clearance-requested-from-atc" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    When is the descent clearance requested from ATC?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cs" title="Computer Science Stack Exchange"></div><a href="http://cs.stackexchange.com/questions/69931/why-is-computation-of-this-function-numerically-unstable" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:419 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is computation of this function numerically unstable?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="http://cooking.stackexchange.com/questions/78169/how-do-i-wash-the-pokey-side-of-a-box-grater" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I wash the "pokey" side of a box grater?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/84571/none-of-25-students-at-question-session-before-exam-has-a-question-what-should" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    None of 25 students at question session before exam has a question. What should lecturer do?
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="http://askubuntu.com/questions/502524/i-am-not-able-to-compile-a-simple-program-using-gcc#" class="show-more js-show-more js-gps-track" data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="http://askubuntu.com/feeds/question/502524" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/502524/ivc/63ef');});
+</script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/502524/ivc/63ef" class="dno" alt="" width="0" height="0"&gt;&lt;/div&gt;
+</noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">            
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="http://askubuntu.com/tour">tour</a>
+                    <a href="http://askubuntu.com/help">help</a>
+                    <a href="http://stackoverflow.blog/?blb=1">blog</a>
+                        <a href="http://chat.stackexchange.com/?tab=site&amp;host=askubuntu.com">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick="StackExchange.switchMobile(&quot;on&quot;)">mobile</a>
+                    <b><a href="http://askubuntu.com/contact">contact us</a></b>
+                        <b><a href="http://meta.askubuntu.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                        <li><a href="http://softwareengineering.stackexchange.com/" title="professionals, academics, and students working within the systems development life cycle who care about creating, delivering, and maintaining software responsibly">Software Engineering</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Development</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="information security professionals">Information Security</a></li>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Wolfram Mathematica">Mathematica</a></li>
+                        <li><a href="http://salesforce.stackexchange.com/" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="http://expressionengine.stackexchange.com/" title="administrators, end users, developers and designers for ExpressionEngine® CMS">ExpressionEngine® Answers</a></li>
+                        <li><a href="http://crypto.stackexchange.com/" title="software developers, mathematicians and others interested in cryptography">Cryptography</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://codereview.stackexchange.com/" title="peer programmer code reviews">Code Review</a></li>
+                        <li><a href="http://magento.stackexchange.com/" title="users of the Magento e-Commerce platform">Magento</a></li>
+                        <li><a href="http://dsp.stackexchange.com/" title="practitioners of the art and science of signal, image and video processing">Signal Processing</a></li>
+                        <li><a href="http://raspberrypi.stackexchange.com/" title="users and developers of hardware and software for Raspberry Pi">Raspberry Pi</a></li>
+                        <li><a href="http://codegolf.stackexchange.com/" title="programming puzzle enthusiasts and code golfers">Programming Puzzles &amp; Code Golf</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://graphicdesign.stackexchange.com/" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="http://movies.stackexchange.com/" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="http://music.stackexchange.com/" title="musicians, students, and enthusiasts">Music: Practice &amp; Theory</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="http://money.stackexchange.com/" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="http://academia.stackexchange.com/" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (8)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://ell.stackexchange.com/" title="speakers of other languages learning English">English Language Learners</a></li>
+                        <li><a href="http://japanese.stackexchange.com/" title="students, teachers, and linguists wanting to discuss the finer points of the Japanese language">Japanese Language</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                        <li><a href="http://anime.stackexchange.com/" title="anime and manga fans">Anime &amp; Manga</a></li>
+                        <li><a href="http://mechanics.stackexchange.com/" title="mechanics and DIY enthusiast owners of cars, trucks, and motorcycles">Motor Vehicle Maintenance &amp; Repair</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (17)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://chemistry.stackexchange.com/" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="http://biology.stackexchange.com/" title="biology researchers, academics, and students">Biology</a></li>
+                        <li><a href="http://cs.stackexchange.com/" title="students, researchers and practitioners of computer science">Computer Science</a></li>
+                        <li><a href="http://philosophy.stackexchange.com/" title="those interested in the study of the fundamental nature of knowledge, reality, and existence">Philosophy</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (3)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://meta.stackexchange.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="https://www.stackoverflowbusiness.com/talent">Stack Overflow Talent</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo © 2017 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2017.2.6.24976
+            </div>
+                <div id="additional-notices">
+                    Ubuntu and Canonical are registered trademarks of Canonical Ltd.
+                </div>
+                </div>
+    </div>
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Ask Ubuntu works best with JavaScript enabled&lt;img src="https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    
+    
+        
+        ados.run.push(function () {
+                setTimeout(function () { $("#adzerk-user-match").remove(); }, window.AUMIframeDone ? 0 : 2000);
+                ados_setKeywords('apt,64-bit,compiling,gcc,g%2b%2b,x-community,x-host-askubuntu.com');; ados_load();
+        });   
+        
+</script>
+
+    <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                ga('create', 'UA-5620270-29');
+                ga('set', 'dimension2', '|apt|64-bit|compiling|gcc|g++|');
+                ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+                qc.async = true;
+                qc.src = (ssl ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+                s.parentNode.insertBefore(qc, s);
+                _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+                            var sc=document.createElement('script');
+                sc.async=true;
+                sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+                s.parentNode.insertBefore(sc, s);
+                _comscore.push({ c1: "2", c2: "17440561" });
+        })();
+
+    </script>
+        
+    
+            <script type="text/javascript">
+                
+                (function(appendChild) {
+                    Node.prototype.appendChild = function() {
+                        var parent = this;
+                        var newNode = arguments[0];
+                        if (parent.nodeName === 'HEAD'
+                            && newNode
+                            && newNode.nodeName === 'SCRIPT'
+                            && newNode.src) {
+                            
+                            window.setTimeout(function() {
+                                var result = newNode.src.match(/^https:\/\/maps\.googleapis\.com\/maps\/api\/place\/js\/(\w+)Service\./i) || [];
+                                var service = result[1];
+                                if (service) {
+                                    if (service === 'Autocompletion') service =  2;
+                                    else if (service === 'Place') service = 1;
+                                    else service = 0;
+                                    StackExchange.using('gps', function() {
+                                        StackExchange.gps.track('google_maps_places_api.call', { service: service });
+                                    });
+                                }
+                            }, 0);
+                        }
+                        return appendChild.apply(this, arguments);
+                    };
+                })(Node.prototype.appendChild);
+            </script>
+    
+</body></html>
