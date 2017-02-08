@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./Linux find 用法示例 - wanqi - 博客园_files/ca-pub-4210569241504288.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux  find 用法示例 - wanqi - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Linux find 用法示例 - wanqi - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Linux find 用法示例 - wanqi - 博客园_files/bundle-En_summerGarden.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./Linux find 用法示例 - wanqi - 博客园_files/bundle-En_summerGarden-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/wanqieddy/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/wanqieddy/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/wanqieddy/wlwmanifest.xml">
+<script src="./Linux find 用法示例 - wanqi - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'wanqieddy', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Linux find 用法示例 - wanqi - 博客园_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/wanqieddy/"><img id="blogLogo" src="./Linux find 用法示例 - wanqi - 博客园_files/logo.gif" alt="Return Home"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/wanqieddy/">wanqi</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<!--done-->
+			<ul id="navList">
+				<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">CnBlogs</a></li>
+				<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/wanqieddy/">Home</a></li>
+				<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">New Post</a></li>
+				<li><a id="blog_nav_contact" accesskey="9" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/wanqi">Contact</a></li>
+				<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">Admin</a></li>
+				<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/wanqieddy/rss">Rss</a>
+				<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/wanqieddy/rss"><img src="./Linux find 用法示例 - wanqi - 博客园_files/xml.gif" alt="Rss"></a></li>
+			</ul>
+
+
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<!--done-->
+Posts - 487&nbsp;
+Articles - 10&nbsp;
+Comments - 96&nbsp;
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html">Linux  find 用法示例</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body">
+<h2>Linux中find常见用法示例</h2>
+<h2>·find&nbsp;&nbsp; path&nbsp;&nbsp; -option&nbsp;&nbsp; [&nbsp;&nbsp; -print ]&nbsp;&nbsp; [ -exec&nbsp;&nbsp; -ok&nbsp;&nbsp; command ]&nbsp;&nbsp; {} \;</h2>
+<div>
+<div>
+<div>
+
+<p>find命令的参数；</p>
+<p><span style="color: #0000ff;">pathname: find命令所查找的目录路径。例如用.来表示当前目录，用/来表示系统根目录。</span><br>-print： find命令将匹配的文件输出到标准输出。<br>-exec： find命令对匹配的文件执行该参数所给出的shell命令。相应命令的形式为'command' { } \;，注意{ }和\；之间的空格。<br>-ok： 和-exec的作用相同，只不过以一种更为安全的模式来执行该参数所给出的shell命令，在执行每一个命令之前，都会给出提示，让用户来确定是否执行。</p>
+</div>
+<div>#-print 将查找到的文件输出到标准输出<br>#-exec&nbsp;&nbsp; command&nbsp;&nbsp; {} \;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —–将查到的文件执行command操作,{} 和 \;之间有空格<br>#-ok 和-exec相同，只不过在操作前要询用户</div>
+<div></div>
+<div>例：find . -name .svn | xargs rm -rf</div>
+<div>
+<p>====================================================</p>
+<p>-name&nbsp;&nbsp; filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找名为filename的文件<br>-perm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按执行权限来查找<br>-user&nbsp;&nbsp;&nbsp; username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件属主来查找<br>-group groupname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按组来查找<br>-mtime&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件更改时间来查找文件，-n指n天以内，+n指n天以前<br>-atime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件访问时间来查GIN: 0px"&gt;</p>
+<p>-ctime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前</p>
+</div>
+<div>-nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在<br>-nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存<br>-newer&nbsp;&nbsp; f1 !f2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 找文件，-n指n天以内，+n指n天以前&nbsp;<br>-ctime&nbsp;&nbsp;&nbsp; -n +n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #按文件创建时间来查找文件，-n指n天以内，+n指n天以前&nbsp;<br>-nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属组的文件，即文件的属组在/etc/groups中不存在<br>-nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查无有效属主的文件，即文件的属主在/etc/passwd中不存<br>-newer&nbsp;&nbsp; f1 !f2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查更改时间比f1新但比f2旧的文件<br>-type&nbsp;&nbsp;&nbsp; b/d/c/p/l/f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件<br>-size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n[c]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度为n块[或n字节]的文件<br>-depth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #使查找在进入子目录前先行查找完本目录<br>-fstype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查更改时间比f1新但比f2旧的文件<br>-type&nbsp;&nbsp;&nbsp; b/d/c/p/l/f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查是块设备、目录、字符设备、管道、符号链接、普通文件<br>-size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n[c]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度为n块[或n字节]的文件<br>-depth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #使查找在进入子目录前先行查找完本目录<br>-fstype&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到<br>-mount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查文件时不跨越文件系统mount点<br>-follow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件<br>-cpio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查位于某一类型文件系统中的文件，这些文件系统类型通常可 在/etc/fstab中找到<br>-mount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查文件时不跨越文件系统mount点<br>-follow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #如果遇到符号链接文件，就跟踪链接所指的文件<br>-cpio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #对匹配的文件使用cpio命令，将他们备份到磁带设备中<br>-prune&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #忽略某个目录<br>
+<p>=====================================================<br>$find&nbsp;&nbsp; ~&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp; #在$HOME中查.txt文件并显示<br>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "*.txt"&nbsp;&nbsp; -print<br>$find&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp; -name&nbsp;&nbsp; "[A-Z]*"&nbsp;&nbsp; -print&nbsp;&nbsp; #查以大写字母开头的文件<br>$find&nbsp;&nbsp; /etc&nbsp;&nbsp; -name&nbsp;&nbsp; "host*"&nbsp;&nbsp; -print #查以host开头的文件<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; -name&nbsp;&nbsp; "[a-z][a-z][0–9][0–9].txt"&nbsp;&nbsp;&nbsp; -print&nbsp;&nbsp; #查以两个小写字母和两个数字开头的txt文件<br>$find .&nbsp;&nbsp; -perm&nbsp;&nbsp; 755&nbsp;&nbsp; -print<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; -perm -007&nbsp;&nbsp; -exec ls -l {} \;&nbsp;&nbsp; #查所有用户都可读写执行的文件同-perm 777<br>$find&nbsp;&nbsp; . -type d&nbsp;&nbsp; -print<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; !&nbsp;&nbsp; -type&nbsp;&nbsp; d&nbsp;&nbsp; -print&nbsp;<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; -type l&nbsp;&nbsp; -print</p>
+<p>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; +1000000c&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度大于1Mb的文件<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; 100c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查长度为100c的文件<br>$find&nbsp;&nbsp; .&nbsp;&nbsp; -size&nbsp;&nbsp; +10&nbsp;&nbsp; -print&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查长度超过期作废10块的文件（1块=512字节）</p>
+<p>$cd /<br>$find&nbsp;&nbsp; etc&nbsp;&nbsp; home&nbsp;&nbsp; apps&nbsp;&nbsp;&nbsp; -depth&nbsp;&nbsp; -print&nbsp;&nbsp; | cpio&nbsp;&nbsp; -ivcdC65536&nbsp;&nbsp; -o&nbsp;&nbsp; /dev/rmt0<br>$find&nbsp;&nbsp; /etc -name "passwd*"&nbsp;&nbsp; -exec grep&nbsp;&nbsp; "cnscn"&nbsp;&nbsp; {}&nbsp;&nbsp; \;&nbsp;&nbsp; #看是否存在cnscn用户<br>$find . -name "yao*"&nbsp;&nbsp; | xargs file<br>$find&nbsp;&nbsp; . -name "yao*"&nbsp;&nbsp; |&nbsp;&nbsp; xargs&nbsp;&nbsp; echo&nbsp;&nbsp;&nbsp; "" &gt; /tmp/core.log<br>$find&nbsp;&nbsp; . -name "yao*"&nbsp;&nbsp; | xargs&nbsp;&nbsp; chmod&nbsp;&nbsp; o-w</p>
+<p>======================================================</p>
+<p><strong>find&nbsp;&nbsp; -name april*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在当前目录下查找以april开始的文件</strong><br><strong>find&nbsp;&nbsp; -name&nbsp;&nbsp; april*&nbsp;&nbsp; fprint file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在当前目录下查找以april开始的文件，并把结果输出到file中</strong><br><strong>find&nbsp;&nbsp; -name ap* -o -name may*&nbsp;&nbsp; 查找以ap或may开头的文件</strong><br><strong>find&nbsp;&nbsp; /mnt&nbsp;&nbsp; -name tom.txt&nbsp;&nbsp; -ftype vfat&nbsp;&nbsp; 在/mnt下查找名称为tom.txt且文件系统类型<span color="#ff0000" style="color: #ff0000;">为</span>vfat的文件</strong><br><strong>find&nbsp;&nbsp; /mnt&nbsp;&nbsp; -name t.txt ! -ftype vfat&nbsp;&nbsp; 在/mnt下查找名称为tom.txt且文件系统类型<span color="#ff0000" style="color: #ff0000;">不为</span>vfat的文件</strong><br><strong>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name wa* -type l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/tmp下查找名为wa开头且类型为符号链接的文件</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -mtime&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查最近两天内改动过的文件</strong><br><strong>find /home&nbsp;&nbsp;&nbsp; -atime -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查1天之内被存取过的文件</strong><br><strong>find /home -mmin&nbsp;&nbsp;&nbsp; +60&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查60分钟前改动过的文件</strong><br><strong>find /home&nbsp;&nbsp; -amin&nbsp;&nbsp; +30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查最近30分钟前被存取过的文件</strong><br><strong>find /home&nbsp;&nbsp; -newer&nbsp;&nbsp; tmp.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查更新时间比tmp.txt近的文件或目录</strong><br><strong>find /home&nbsp;&nbsp; -anewer&nbsp;&nbsp; tmp.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在/home下查存取时间比tmp.txt近的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -used&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出文件或目录被改动过之后，在2日内被存取过的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -user cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home目录内属于用户cnscn的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -uid&nbsp;&nbsp; +501&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home目录内用户的识别码大于501的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -group&nbsp;&nbsp; cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内组为cnscn的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -gid 501&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内组id为501的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内不属于本地用户的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -nogroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 列出/home内不属于本地组的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp;&nbsp; -maxdepth&nbsp;&nbsp; 4&nbsp;&nbsp; 列出/home内的tmp.txt 查时深度最多为3层</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp; -mindepth&nbsp;&nbsp; 3&nbsp;&nbsp; 从第2层开始查</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -empty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查找大小为0的文件或空目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -size&nbsp;&nbsp; +512k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 查大于512k的文件</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -size&nbsp;&nbsp; -512k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查小于512k的文件</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -links&nbsp;&nbsp; +2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查硬连接数大于2的文件或目录</strong><br><strong>find&nbsp;&nbsp; /home&nbsp;&nbsp; -perm&nbsp;&nbsp; 0700&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查权限为700的文件或目录</strong><br><strong>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name tmp.txt&nbsp;&nbsp; -exec cat {} \;</strong><br><strong>find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name&nbsp;&nbsp; tmp.txt&nbsp;&nbsp; -ok&nbsp;&nbsp; rm {} \;</strong></p>
+<p><strong><span size="+0">find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -amin&nbsp;&nbsp;&nbsp; -10&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后10分钟访问的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -atime&nbsp;&nbsp; -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后48小时访问的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -empty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中为空的文件或者文件夹<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -group&nbsp;&nbsp; cat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中属于 groupcat的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -mmin&nbsp;&nbsp; -5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 查找在系统中最后5分钟里修改过的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中最后24小时里修改过的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -nouser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中属于作废用户的文件<br>find&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp; -user&nbsp;&nbsp;&nbsp; fred&nbsp;&nbsp;&nbsp;&nbsp; #查找在系统中属于FRED这个用户的文件</span></strong></p>
+</div>
+<div></div>
+<div><strong><span size="+0"><strong>查当前目录下的所有普通文件</strong></span></strong>
+<hr size="1">
+<div><strong><span size="+0"><strong># find . -type f -exec ls -l {} \;&nbsp;<br>-rw-r–r–&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 34928 2003-02-25&nbsp;&nbsp; ./conf/httpd.conf&nbsp;<br>-rw-r–r–&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12959 2003-02-25&nbsp;&nbsp; ./conf/magic&nbsp;<br>-rw-r–r–&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 180 2003-02-25&nbsp;&nbsp; ./conf.d/README&nbsp;<br>查当前目录下的所有普通文件，并在- e x e c选项中使用ls -l命令将它们列出
+<p>=================================================<br>在/ l o g s目录中查找更改时间在5日以前的文件并删除它们：<br>$ find logs -type f -mtime +5 -exec&nbsp;&nbsp; -ok&nbsp;&nbsp; rm {} \;</p>
+<p>=================================================<br>查询当天修改过的文件<br>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -exec&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;</p>
+<p>=================================================<br>查询文件并询问是否要显示<br>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -ok&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;&nbsp;&nbsp;<br>&lt; ls … ./classDB.inc.php &gt; ? y<br>-rw-r–r–&nbsp;&nbsp;&nbsp; 1 cnscn&nbsp;&nbsp;&nbsp; cnscn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13709&nbsp;&nbsp; 1月 12 12:22 ./classDB.inc.php<br>[root@book class]# find&nbsp;&nbsp; ./&nbsp;&nbsp; -mtime&nbsp;&nbsp; -1&nbsp;&nbsp; -type f&nbsp;&nbsp; -ok&nbsp;&nbsp; ls -l&nbsp;&nbsp; {} \;&nbsp;&nbsp;<br>&lt; ls … ./classDB.inc.php &gt; ? n<br>[root@book class]#</p>
+<p>=================================================<br>查询并交给awk去处理<br>[root@book class]# who&nbsp;&nbsp; |&nbsp;&nbsp; awk&nbsp;&nbsp; ’{print $1"\t"$2}’<br>cnscn&nbsp;&nbsp;&nbsp; pts/0</p>
+<p>=================================================<br>awk—grep—sed</p>
+<p>[root@book class]# df&nbsp;&nbsp; -k |&nbsp;&nbsp; awk ‘{print $1}’ |&nbsp;&nbsp; grep&nbsp;&nbsp; -v&nbsp;&nbsp; ’none’ |&nbsp;&nbsp; sed&nbsp;&nbsp; s"/\/dev\///g"<br>文件系统<br>sda2<br>sda1<br>[root@book class]# df&nbsp;&nbsp; -k |&nbsp;&nbsp; awk ‘{print $1}’ |&nbsp;&nbsp; grep&nbsp;&nbsp; -v&nbsp;&nbsp; ’none’<br>文件系统<br>/dev/sda2<br>/dev/sda1</p>
+</strong></span></strong></div>
+<div></div>
+<div></div>
+<div>
+<div><strong><span size="+0"><strong>1)</strong>在/tmp中查找所有的*.h，并在这些文件中查找“SYSCALL_VECTOR"，最后打印出所有包含"SYSCALL_VECTOR"的文件名
+<p>A) find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name&nbsp;&nbsp; "*.h"&nbsp;&nbsp; | xargs&nbsp;&nbsp; -n50&nbsp;&nbsp; grep SYSCALL_VECTOR<br>B) grep&nbsp;&nbsp; SYSCALL_VECTOR&nbsp;&nbsp; /tmp/*.h | cut&nbsp;&nbsp;&nbsp; -d’:'&nbsp;&nbsp; -f1| uniq &gt; filename<br>C) find&nbsp;&nbsp; /tmp&nbsp;&nbsp; -name "*.h"&nbsp;&nbsp; -exec grep "SYSCALL_VECTOR"&nbsp;&nbsp; {}&nbsp;&nbsp; \; -print</p>
+<p>2)find / -name filename -exec rm -rf {} \;<br>&nbsp;&nbsp;&nbsp; find / -name filename -ok rm -rf {} \;</p>
+<p><strong>3)比如要查找磁盘中大于3M的文件：<br></strong>find . -size +3000k -exec ls -ld {} ;</p>
+<p>4)将find出来的东西拷到另一个地方<br>find *.c -exec cp ‘{}’ /tmp ‘;’</p>
+<p>如果有特殊文件，可以用cpio，也可以用这样的语法：<br>find dir -name filename -print | cpio -pdv newdir</p>
+<p>6)查找<strong>2004-11-30 16:36:37时更改过的文件</strong><br><strong># A=`find ./ -name "*php"` |&nbsp;&nbsp; ls -l –full-time $A 2&gt;/dev/null | grep "2004-11-30 16:36:37"</strong></p>
+</span></strong></div>
+</div>
+</div>
+</div>
+</div>
+<p title="查看所有Linux-all中的所有文章" rel="category tag" href="http://202.112.85.88/?cat=6"><a>Linux-all</a>,&nbsp;<a title="查看所有Linux中的所有文章" href="http://202.112.85.88/?cat=14" rel="category tag">Linux</a>&nbsp;<strong>|</strong>&nbsp;<a href="http://202.112.85.88/?p=168#comments">No Comments »</a></p>
+<h2>find 实例</h2>
+<small>四月 18th, 2006</small>
+<p><span size="3" style="font-size: small;">　　要在/usr/linux中查找所有的*.h，并在这些文件中查找“SYSCALL_VECTOR"，最后打印出所有包含"SYSCALL_VECTOR"的文件名，有以下几种方法实现<br>find /usr/linux -name "*.h" | xargs -n50 grep SYSCALL_VECTOR<br>grep SYSCALL_VECTOR /usr/linux/*.h | cut -d’:’ -f1 | uniq &gt; filename<br>find /usr/linux -name "*.h" -exec grep "SYSCALL_VECTOR" {} \; -print</span></p>
+<p><span size="3" style="font-size: small;">　　我用find / -name filename| rm -rf，不成功，请问为什么不成功？<br>find / -name filename -exec rm -rf {} \;<br>find . -name filename |rm -rf试一下{} 表示你找出来的结果。<br>\; 则相当于“宪法”，没什么说头，就是这么规定的，在 -exec 后面需要一个表示该命令终结的的符号。可以在 man find 中找到答案。<br>要让rm识别find的结果，如下：<br>find / -name filename |xargs rm -rf<br>之所以find . -name filename |rm -rf不通过，是因为rm命令不接受从标准输入传过来的指令<br>查找含特定字符串的文件<br>例如查找当前目录下含有"the string you want find…"字符串的文件：<br>$find . -type f -exec grep “the string you want find…” {} ; -print</span></p>
+<p><span size="3" style="font-size: small;">　　从根目录开始查tmpfile，一旦查到马上删除<br>find / -name "tmpfile" -exec rm {} \;</span></p>
+<p><span size="3" style="font-size: small;">　　find 的perm问题<br>请问一下以下命令什么意思？关键是那个数字前的-，其他都还知道<br>find -name ".*" -perm -007<br>我知道<br>find -name ".*" -perm 755<br>这个是用来查找权限位为755的隐藏文件<br>噢，对了还有，我上边的命令都省略了find的pathname参数 find默认是查找当前工作目录的吗？<br>如果我用 -ok 替代 -exec, 那么还需要加上 {} \; 吗？<br>这个已经清楚，仍然需要，因为 -ok 只是 -exec 的提示模式，它只是多了一个确认操作的步骤,刚才没有读懂那几句E文的意思 呵呵 不好意思<br>-007是指查找所有用户都可读、写、执行的文件，要小心呀~~~<br>解释解释？<br>find -name ".*" -perm -007 和 find -name ".*" -perm 777 有区别吗？<br>-007是怎么来得呢？<br>不过有一个问题<br>我用 find . -perm -100 会列出当前目录 . , 这是为什么呢？</span></p>
+<p><span size="3" style="font-size: small;">下面引用由explover在 2002/10/01 06:15am 发表的内容：<br>-007是指查找所有用户都可读、写、执行的文件，要小心呀~~~<br>-007是查找含其它用户(不同组,非属主)可读,写,执行的文件.并不一定要同组可读写,-是指最少权限为007.<br>下面引用由一颗小白菜在 2002/10/01 10:16am 发表的内容：<br>OK了， 呵呵<br>不过有一个问题<br>我用 find . -perm -100 会列出当前目录 . , 这是为什么呢？<br>这种方法不会准确的找出目录的. -100是指权限至少是属主可运行.<br>在unix系统下,你可以拥有对目录文件的执行权你才可以进入一个目录.这便是目录文件被列出的原因.<br>find . -perm -001 -print找到往往是目录文件.<br>我的意思当然不是使用这种方法来找目录，只不过不明白其中的 -100 意义了<br>那以此类推，是不是 -010是指权限至少是owner同组可执行的吗？也就是说其实这里的010和-是分开的，-表示一个至少的意思，而且010才是真正用来描述权限位的？<br>这样子就明白了 谢谢你噢</span></p>
+<p><span size="3" style="font-size: small;">　　将find出来的东西拷到另一个地方?<br>find *.c -exec cp ‘{}’ /tmp ‘;’<br>如果有特殊文件，可以用cpio，也可以用这样的语法：<br>find dir -name filename -print | cpio -pdv newdir</span></p>
+<p><span size="3" style="font-size: small;">　　找出磁盘中某个大小范围内的文件<br>比如要查找磁盘中大于3M的文件：<br>find . -size +3000k -exec ls -ld {} ;</span></p>
+<p><span size="3" style="font-size: small;">　　如何用find查找某一天更改的文件？<br>可以使用这一行命令来实现：<br>A=`find ~ -print` | ls -l –full-time $A 2&gt;/dev/null | grep "Jun 27" | grep 1998</span></p>
+<p><span size="3" style="font-size: small;">　　使用find 命令查找某个时间段的shell怎么写。比如11点到12点的。thanks<br>创建一个脚本judgetime，内容如下：<br>ls -l $*|awk ‘{split($8,hour,":");if((hour[1]&gt;23 || hour[1] &lt; 1)&amp;&amp;hour[1]&lt;24)print}’<br>到要查找的目录下，运行<br>find ./ -name "*" -exec judgetime {} \;<br>注意时间格式为２４小时制。<br>thank you ，如果我要精确到分钟呢<br>touch -t 04241112 starttemp #精确到12分钟<br>touch -t 04241220 endtemp #截止到12点20<br>find [dir] -newer starttemp -a ! -newer endtemp -exec ls -l {} \;<br>ｎｅｗｅｒ？<br>那昨天１２：１０文件如何呢？<br>每天执行的时候，用当天的日期和时间戳替换一下不就行了吗？<br>我不知道他是不是把所有的11：00~12：00的都找出来，是不是只执行一次还是每天都执行？<br>这种情况俺猜想是自己的东西放在哪忘了，只记得当时是深夜了。<br>有道理！<br>不愧是斑竹！<br>不光知道怎么解决问题，还知道在什么情况下出现这类问题，佩服佩服！<br>问题又出现了。创建这个文件的时候。本来应该是时间的一栏现在写上了2002，而不是12：00.<br>等到12：00过了吧！</span></p>
+<p><span size="3" style="font-size: small;">　　删除指定日期的文件<br>find ./ -name 文件名 -exec rm -f {} \;<br>例：删除当前30天内没用过的文件,用如下命令：<br>find / -atime +30 -exec rm -f {} \;<br>我自己试着写了一小段SHELL,也用ll ,grep, rm 几个命令，用起来还差强人意。<br>对过滤出来的文件名列表中用了一个FOR语句，再执行rm 。现在我想把这段SHELL 扩展一下让它每天定时运行将 n 天前的文件删掉，有没有人能给我一些提示，谢谢！<br>还有个问题，对于前面那位朋友提到的"find / -atime +30 -exec rm -f {} \;<br>"方法，我很早就试过几次，不过好像都不太对，参数 -atime n 是查找n天前被访问过的文件，我不明白的是这里的时间参照点是什么，以及这个n天是怎么计算的。<br>问 题二、对于"ll |cut -f 1" 这个命令我是不是用错了，我只想取出 ll 中列出的文件名，但用cut -f 命令做不到 ，我只好换用 ll |cut -c 59- 这种方式得到我要的文件名，but it’s a pool idear ！我也试过用awk ，好像也不对，看看大家可不可以给我一些小小的提醒，TKS SO MUCH<br>问题三、如何改变 I结点 的日期格式 我现在的系统显示的格式是：<br>-rw-r—– 1 msahz01 users 2253 2002年2月 2日 poheader.i<br>我想把这换成<br>-rw-rw-rw- 1 house users 2193 Apr 19 2001 hkdisp.p<br>如何才能做到这点？<br>awk 应该可以<br>ll | awk ‘{print $9}’<br>删除多少天之前的文件<br>find /yourpath -mtime +31 -exec rm {} \;<br>find /yourpath -mtime +366 -exec rm {} \;</span></p>
+<p><span size="3" style="font-size: small;">find中, -ctime, -mtime及其-atime有何区别</span></p>
+<p><span size="3" style="font-size: small;">请问 -ctime 和 -mtime 有什么关系 ?<br>如果父目录的 ctime 改变, 那它下面的文件的 ctime 就会自动都改了吗 ?<br>-ctime 和 -mtime ,-atime 这些信息是存在哪儿呢 ?</span></p>
+<p><span size="3" style="font-size: small;">我用 -mtime -1 找到了新建或改的文件.<br>但怎样才能找到一天内 mv 来的文件呢( 它们的时间是原有的时间,早于一天 ) ?</span></p>
+<p><span size="3" style="font-size: small;">用-newer选项啊。<br>你可以先touch一个你想要的时间的文件如下：<br>$ touch -t 08190800 test<br>$ ls -l test<br>-rw-r–r– 1 dba other 0 Aug 19 08:00 test<br>然后<br>$ find . -newer test -print<br>.<br>./.sh_history<br>$ ls -l .sh_history<br>-rw——- 1 dba other 154 Aug 20 17:39 .sh_history</span></p>
+<p><span size="3" style="font-size: small;">用touch可以写出你想要的任何时间的文件，然后用-newer ,! -newer选项即可成功。</span></p>
+<p><span size="3" style="font-size: small;">1.ctime含inode信息修改的时间.mtime只指文件内容建立或修改的时间.<br>2 不会.<br>3.这些信息应该是存在文件系统的超级块里.</span></p>
+<p><span size="3" style="font-size: small;">我查了书 -ctime 是指 inode 的改变(或称文件的状态改变).<br>请问 inode 存了哪些信息 ?<br>做了些小测试,-mtime 改, -ctime 一定也改.<br>改文件名, -ctime 也会改.<br>谁能回答 i-node 存了哪些东西 ?</span></p>
+<p><span size="3" style="font-size: small;">vi /usr/include/sys/inode.h</span></p>
+<p><span size="3" style="font-size: small;">班主,我不能 access /usr/include/sys/inode.h .<br>摘书如下:<br>Directories contain directory entries. Each entry contains a file or subdirectory name and an index node reference number (i-node number). To increase speed and enhance use of disk space, the data in a file is stored at various locations in the computer’s memory. The i-node contains the addresses used to locate all the scattered blocks of data associated with a file. The i-node also records other information about the file including time of modification and access, access modes, number of links, file owner, and file type.<br>可我发现 -atime 改了, -ctime 还没改. why ?<br>( 我先 cat 一个 ASCII 文件,再用 -atime -1 有它用 -ctime -1 居然没有它.)<br>着岂不跟 inode 信息改变, ctime 就改矛盾吗?</span></p>
+<p><span size="3" style="font-size: small;">我不同意你贴出来的那段文章,正如我提到的那样,atime,ctime,mtime是放到超级块里,在sco unix下是一种叫stat的结构.(stat_32),不同的系统文件系统可能不同.<br>sco 下inode的结构如下:</span></p>
+<p><span size="3" style="font-size: small;">typedef struct inode<br>{<br>struct inode *i_forw; /* inode hash chain */<br>struct inode *i_back; /* ‘’ */<br>struct inode *av_forw; /* freelist chain */<br>struct inode *av_back; /* ‘’ */<br>int *i_fsptr; /* "typeless" pointer to fs dependent */<br>ino32_t i_number; /* i number, 1-to-1 with dev address */<br>ushort i_ftype; /* file type = IFDIR, IFREG, etc. */<br>short i_fstyp; /* File system type */<br>off_t i_size; /* size of file */<br>ushort i_uid; /* owner */<br>ushort i_gid; /* group of owner */<br>ushort i_flag;<br>ushort i_want; /* i_flag extension to avoid MP races */<br>ushort i_count; /* reference count */<br>short i_nlink; /* directory entries */<br>dev_t i_rdev; /* Raw device number */<br>#define i_namtype i_rdev /* i_ftype==IFNAM subtype */<br>dev_t i_dev; /* device where inode resides */<br>struct mount *i_mton;/* ptr to mount table entry that */<br>/* this directory is mounted on */<br>struct region *i_rp; /* ptr to shared region if any */<br>struct stdata *i_sp; /* ptr to associated stream */<br>struct iisem *isem; /* ptr to XENIX semaphores */<br>struct iisd *isd; /* ptr to XENIX shared data */<br>} i_un;<br>#define i_mnton i_un.i_mton /* i_ftype==IFDIR IMOUNT */<br>#define i_rptr i_un.i_rp /* i_ftype==IFREG || i_ftype==IFBLK */<br>#define i_sptr i_un.i_sp /* i_ftype==IFCHR || i_ftype==IFIFO */<br>#define i_sem i_un.isem /* i_ftype==IFNAM &amp;&amp; i_namtype==IFSEM */<br>#define i_sd i_un.isd /* i_ftype==IFNAM &amp;&amp; i_namtype==IFSHD */</span></p>
+<p><span size="3" style="font-size: small;">struct fstypsw *i_fstypp; /* ptr to file system switch FSPTR */<br>long *i_filocks; /* pointer to filock (structure) list */<br>unsigned long i_mappages; /* number of pages currently cached */<br>unsigned long i_vcode; /* read-ahead block save (NFS) */<br>short i_wcnt; /* write open count or ITEXT count */<br>struct lockb i_cilock; /* tas to synchronize i_flag changes */<br>ushort i_rdlocks; /* count of non-exclusive lockers */<br>} inode_t;</span></p>
+<p><span size="3" style="font-size: small;">所以,访问一个文件不能改变inode信息.<br>使用chown, chgrp, chmod命令可以很好的比较mtime和ctime<br>chown改变一个文件的属主,用ctime可以找到,用mtime便找不到.<br>试试看.</span></p>
+<p><span size="3" style="font-size: small;">多谢斑竹! 我是在 Solaris 上面试的.我是对 -ctime 不明白.<br>试的结果如下:<br>修改文件,-mtime 改了, -ctime 也会改.<br>访问文件,-atime 改了, -ctime 没变.<br>chown, chgrp, chmod,mv, 都会使 -ctime 改变,但不影响 -atime 和 -mtime.<br>touch 可以改 -mtime and/or -atime,但 touch -a 只改访问时间时,-ctime也改了.<br>touch -m 改修改时间时,-ctime当然也改了.<br>好象还有别的很多东西可以令 -ctime 改变, 搞不清楚.<br>有什么方法可以显示 -mtime,atime,ctime 吗?<br>可以用 -ctime 来实现对目录的增量文件进行备份或 transfer 吗 ?<br>多谢!</span></p>
+<p><span size="3" style="font-size: small;">没有什么工具显示,(可能是俺不知道)<br>把下面程序里的st_mtime换成st_ctime,或st_atime便可以得到你要的了.<br>#include<br>int<br>main (int argc, char **argv)<br>{<br>struct stat buf;<br>char date[80];<br>char fname[80];<br>printf("Enter filename (with full path) to check mtime : ");<br>scanf("%s",fname);<br>stat(fname, &amp;buf);<br>printf ("mtime (in sec) of %s = %ld\n", fname, buf.st_mtime);<br>strcpy(date, ctime((time_t *)&amp;(buf.st_mtime)));<br>printf ("mtime (in date) of %s = %s\n", fname, date);<br>}</span></p>
+<p><span size="3" style="font-size: small;">至于文件备份,有什么不可以的么?</span></p>
+<p><span size="3" style="font-size: small;">mtime ls -l 最近修改文件内容的时间<br>atime ls -lu 最近访问文件的时间<br>ctime ls -li 最近文件有所改变的状态 ,如文件修改,属性\属主 改变 ,节点 ,链接变化等 ,应该是不拘泥只是时间前后的改变</span></p>
+<p><span size="3" style="font-size: small;">俺看了ls的帮助,以为只是按ctime或atime排序,显示的时间还是mtime.</span></p>
+<p><span size="3" style="font-size: small;">仔细比较了一下,ayhan说的是对的.谢谢ayhan.</span></p>
+<p><span size="3" style="font-size: small;">多谢 ahyan 提示 ! 我在 Solaris 上试过如下:<br>mtime 用 ls -l 看到<br>atime 用 ls -lu 看到<br>ctime 用 ls -lc 看到. (ls -li 只有 inode number)<br>摘书如下:<br>-c Uses time of last modification of the i-node (file<br>created, mode changed, and so forth) for sorting (-t)<br>or printing (-l or -n).<br>-u Uses time of last access instead of last modification<br>for sorting (with the -t option) or printing (with the<br>-l option).<br>-i For each file, prints the i-node number in the first<br>column of the report.</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/wanqieddy/category/299649.html" target="_blank">linux command </a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2076785,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;29f35c0e-29af-df11-8eb9-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Linux find 用法示例 - wanqi - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Linux find 用法示例 - wanqi - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/wanqieddy/" target="_blank"><img src="./Linux find 用法示例 - wanqi - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/wanqieddy/">wanqi</a><br>
+            <a href="http://home.cnblogs.com/u/wanqieddy/followees">关注 - 5</a><br>
+            <a href="http://home.cnblogs.com/u/wanqieddy/followers">粉丝 - 142</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;29f35c0e-29af-df11-8eb9-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(2076785,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">29</span>
+    </div>
+    <div class="buryit" onclick="votePost(2076785,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076783.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076783.html" title="发布于2011-06-09 19:56">linux svn 使用</a><br><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/17/2083636.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/17/2083636.html" title="发布于2011-06-17 14:58">彻底搞定C指针</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2011-06-09 20:00</span> <a href="http://www.cnblogs.com/wanqieddy/">wanqi</a> Views(<span id="post_view_count">658106</span>) Comments(<span id="post_comment_count">12</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=2076785" rel="nofollow">Edit</a> <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#" onclick="AddToWz(2076785);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=89138,cb_entryId=2076785,cb_blogApp=currentBlogApp,cb_blogUserGuid='29f35c0e-29af-df11-8eb9-001cf0cd104b',cb_entryCreatedDate='2011/6/9 20:00:00';loadViewCount(cb_entryId);</script>
+	
+</div>
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<br>
+<div class="feedback_area_title">
+    Post Comment</div>
+<div class="feedbackNoItems">
+    </div>
+
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2783958" class="layer">#1楼</a><a name="2783958" id="comment_anchor_2783958"></a> <span class="comment_date">2013-09-27 23:36</span>
+                |
+                <a id="a_comment_author_2783958" href="http://www.cnblogs.com/quartuslearning01/" target="_blank">Linuxv5</a> <a href="http://msg.cnblogs.com/send/Linuxv5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2783958" class="blog_comment_body">讲解的很详细，多谢！！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2783958,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2783958,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2783958_avatar" style="display:none;">http://pic.cnblogs.com/face/510877/20130903140214.png</span><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2817782" class="layer">#2楼</a><a name="2817782" id="comment_anchor_2817782"></a> <span class="comment_date">2013-11-16 14:15</span>
+                |
+                <a id="a_comment_author_2817782" href="http://home.cnblogs.com/u/290991/" target="_blank">gone_1</a> <a href="http://msg.cnblogs.com/send/gone_1" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2817782" class="blog_comment_body">楼主写的很好，但我有点不明白，想问个问题，我要把manifest.xml 里的 channelid 字段换成 3001 这个怎么写，</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2817782,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2817782,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2844027" class="layer">#3楼</a><a name="2844027" id="comment_anchor_2844027"></a> <span class="comment_date">2013-12-25 10:53</span>
+                |
+                <a id="a_comment_author_2844027" href="http://www.cnblogs.com/apiaoye/" target="_blank">啊飘曳</a> <a href="http://msg.cnblogs.com/send/%E5%95%8A%E9%A3%98%E6%9B%B3" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2844027" class="blog_comment_body">楼主写的很详细，值得好好学习。小生在此谢过楼主。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2844027,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2844027,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2880801" class="layer">#4楼</a><a name="2880801" id="comment_anchor_2880801"></a> <span class="comment_date">2014-02-22 23:47</span>
+                |
+                <a id="a_comment_author_2880801" href="http://www.cnblogs.com/Rainr/" target="_blank">rainrcn</a> <a href="http://msg.cnblogs.com/send/rainrcn" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2880801" class="blog_comment_body">想問個問題  。 我想用 find 找 "*.wmv"  然後  mv到別的地方 請問應該怎麽寫呢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2880801,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2880801,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2880801_avatar" style="display:none;">http://pic.cnblogs.com/face/86219/20130601204327.png</span><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2955945" class="layer">#5楼</a><a name="2955945" id="comment_anchor_2955945"></a> <span class="comment_date">2014-06-01 21:53</span>
+                |
+                <a id="a_comment_author_2955945" href="http://home.cnblogs.com/u/634491/" target="_blank">jzhx107</a> <a href="http://msg.cnblogs.com/send/jzhx107" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2955945" class="blog_comment_body">很详细，谢谢！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2955945,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2955945,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#2970975" class="layer">#6楼</a><a name="2970975" id="comment_anchor_2970975"></a> <span class="comment_date">2014-06-25 09:51</span>
+                |
+                <a id="a_comment_author_2970975" href="http://home.cnblogs.com/u/368347/" target="_blank">rzxtest</a> <a href="http://msg.cnblogs.com/send/rzxtest" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_2970975" class="blog_comment_body">上边讲没看懂，例子倒是看懂了，很详细</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2970975,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2970975,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3073488" class="layer">#7楼</a><a name="3073488" id="comment_anchor_3073488"></a> <span class="comment_date">2014-11-28 01:17</span>
+                |
+                <a id="a_comment_author_3073488" href="http://www.cnblogs.com/gaochundong/" target="_blank">匠心十年</a> <a href="http://msg.cnblogs.com/send/%E5%8C%A0%E5%BF%83%E5%8D%81%E5%B9%B4" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3073488" class="blog_comment_body">太帅了，收藏了。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3073488,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3073488,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3073488_avatar" style="display:none;">http://pic.cnblogs.com/face/175043/20151217111243.png</span><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3171351" class="layer">#8楼</a><a name="3171351" id="comment_anchor_3171351"></a> <span class="comment_date">2015-04-27 16:56</span>
+                |
+                <a id="a_comment_author_3171351" href="http://www.cnblogs.com/Mckk/" target="_blank">角角头小坏蛋</a> <a href="http://msg.cnblogs.com/send/%E8%A7%92%E8%A7%92%E5%A4%B4%E5%B0%8F%E5%9D%8F%E8%9B%8B" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3171351" class="blog_comment_body">给力呀...太帅了...</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3171351,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3171351,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3171351_avatar" style="display:none;">http://pic.cnblogs.com/face/633084/20140513172434.png</span><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3339229" class="layer">#9楼</a><a name="3339229" id="comment_anchor_3339229"></a> <span class="comment_date">2016-01-01 09:49</span>
+                |
+                <a id="a_comment_author_3339229" href="http://www.cnblogs.com/live365wang/" target="_blank">Pale Life</a> <a href="http://msg.cnblogs.com/send/Pale%20Life" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3339229" class="blog_comment_body">咱cnblogs的博主文章质量就是高</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3339229,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3339229,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3339229_avatar" style="display:none;">http://pic.cnblogs.com/face/u285507.jpg?id=09170213</span><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3405297" class="layer">#10楼</a><a name="3405297" id="comment_anchor_3405297"></a> <span class="comment_date">2016-04-11 18:13</span>
+                |
+                <a id="a_comment_author_3405297" href="http://home.cnblogs.com/u/681026/" target="_blank">少林功夫好</a> <a href="http://msg.cnblogs.com/send/%E5%B0%91%E6%9E%97%E5%8A%9F%E5%A4%AB%E5%A5%BD" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3405297" class="blog_comment_body">很乱啊。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3405297,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3405297,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3500387" class="layer">#11楼</a><a name="3500387" id="comment_anchor_3500387"></a> <span class="comment_date">2016-08-31 14:55</span>
+                |
+                <a id="a_comment_author_3500387" href="http://www.cnblogs.com/suiyuemanbu/" target="_blank">岁月漫步</a> <a href="http://msg.cnblogs.com/send/%E5%B2%81%E6%9C%88%E6%BC%AB%E6%AD%A5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3500387" class="blog_comment_body">这个帖子太牛逼了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3500387,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3500387,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    &nbsp;&nbsp;<span class="comment_actions"></span>
+                </div>
+                <a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3551905" class="layer">#12楼</a><a name="3551905" id="comment_anchor_3551905"></a><span id="comment-maxId" style="display:none;">3551905</span><span id="comment-maxDate" style="display:none;">2016/11/9 11:39:20</span> <span class="comment_date">2016-11-09 11:39</span>
+                |
+                <a id="a_comment_author_3551905" href="http://www.cnblogs.com/wanzaiqidao/" target="_blank">郝姬友</a> <a href="http://msg.cnblogs.com/send/%E9%83%9D%E5%A7%AC%E5%8F%8B" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+            </div>
+            <div class="feedbackCon">
+                <div id="comment_body_3551905" class="blog_comment_body">谢谢分享</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3551905,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3551905,&#39;Bury&#39;,this)">反对(0)</a></div><br>
+            </div>
+        </div>
+    
+<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" src="./Linux find 用法示例 - wanqi - 博客园_files/saved_resource.html"></iframe></ins></ins></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562453/" target="_blank">网络惊现国产阿法狗 谷歌或遭多国围棋AI围剿</a><br> ·  <a href="http://news.cnblogs.com/n/562452/" target="_blank">分析师向亚马逊支招：应该把梅西百货收购了</a><br> ·  <a href="http://news.cnblogs.com/n/562451/" target="_blank">Apple Pay在美超越PayPal 已成移动支付市场带头大哥</a><br> ·  <a href="http://news.cnblogs.com/n/562450/" target="_blank">印度下周三将发射一箭104星创纪录 88颗卫星来自同一公司</a><br> ·  <a href="http://news.cnblogs.com/n/562446/" target="_blank">为了乔布斯 苹果打造了一座完美的飞船总部</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./Linux find 用法示例 - wanqi - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/wanqieddy/">wanqi</a><br>园龄：<a href="http://home.cnblogs.com/u/wanqieddy/" title="入园时间：2010-08-24">6年5个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/wanqieddy/followers/">142</a><br>关注：<a href="http://home.cnblogs.com/u/wanqieddy/followees/">5</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;29f35c0e-29af-df11-8eb9-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div class="mySearch">
+<h3 class="catListTitle">Search</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="ZZK" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="Google" class="btn_my_zzk"></div>
+</div></div><div id="sidebar_shortcut" class="sidebar-block">
+<!--
+<div class="catListLink">
+<h3 class ="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/wanqieddy/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/wanqieddy/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/wanqieddy/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/wanqieddy/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/wanqieddy/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass('itemListLink', 'itemListLin_con');return false;" href="#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+--></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div class="catListPostCategory">
+<h3 class="catListTitle">Post Categories<span style="font-size:11px;font-weight:normal">(518)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/wanqieddy/category/303970.html">android solve (323)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/wanqieddy/category/382459.html">android telephony solve(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/wanqieddy/category/430384.html">android_google_apps(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/wanqieddy/category/439041.html">android_新技术_转载(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/wanqieddy/category/326697.html">arm solve(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/wanqieddy/category/378272.html">C++(27)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/wanqieddy/category/506524.html">cocos2d-x SS(18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/wanqieddy/category/431381.html">eclipse(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/wanqieddy/category/323193.html">electron 电子(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/wanqieddy/category/673317.html">h264(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/wanqieddy/category/305892.html">java lauguage(11)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/wanqieddy/category/519508.html">java 设计模式(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/wanqieddy/category/305618.html">linux C lauguage(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/wanqieddy/category/299649.html">linux command (31)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/wanqieddy/category/406859.html">linux git(12)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/wanqieddy/category/304963.html">linux tool(29)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/wanqieddy/category/673259.html">TRMP(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/wanqieddy/category/310080.html">ubuntu solve(28)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/wanqieddy/category/401062.html">windows(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/wanqieddy/category/548452.html">加密与解密(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/wanqieddy/category/310842.html">思考(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">Post Archives<span style="font-size:11px;font-weight:normal">(487)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/wanqieddy/archive/2016/03.html">2016/3 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/wanqieddy/archive/2016/01.html">2016/1 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/wanqieddy/archive/2015/11.html">2015/11 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/wanqieddy/archive/2015/10.html">2015/10 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/wanqieddy/archive/2015/09.html">2015/9 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/wanqieddy/archive/2015/08.html">2015/8 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/wanqieddy/archive/2015/07.html">2015/7 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/wanqieddy/archive/2015/06.html">2015/6 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/wanqieddy/archive/2015/05.html">2015/5 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/wanqieddy/archive/2015/04.html">2015/4 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/wanqieddy/archive/2015/03.html">2015/3 (27)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/wanqieddy/archive/2015/02.html">2015/2 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/wanqieddy/archive/2015/01.html">2015/1 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/wanqieddy/archive/2014/12.html">2014/12 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/wanqieddy/archive/2014/11.html">2014/11 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/wanqieddy/archive/2014/10.html">2014/10 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/wanqieddy/archive/2014/09.html">2014/9 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/wanqieddy/archive/2014/08.html">2014/8 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/wanqieddy/archive/2014/07.html">2014/7 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/wanqieddy/archive/2014/06.html">2014/6 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/wanqieddy/archive/2014/05.html">2014/5 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/wanqieddy/archive/2014/04.html">2014/4 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/wanqieddy/archive/2014/03.html">2014/3 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/wanqieddy/archive/2014/02.html">2014/2 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/wanqieddy/archive/2014/01.html">2014/1 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/wanqieddy/archive/2013/12.html">2013/12 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/wanqieddy/archive/2013/11.html">2013/11 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/wanqieddy/archive/2013/10.html">2013/10 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/wanqieddy/archive/2013/09.html">2013/9 (17)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/wanqieddy/archive/2013/08.html">2013/8 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/wanqieddy/archive/2013/07.html">2013/7 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/wanqieddy/archive/2013/06.html">2013/6 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/wanqieddy/archive/2013/05.html">2013/5 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/wanqieddy/archive/2013/03.html">2013/3 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/wanqieddy/archive/2013/01.html">2013/1 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_35" href="http://www.cnblogs.com/wanqieddy/archive/2012/12.html">2012/12 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_36" href="http://www.cnblogs.com/wanqieddy/archive/2012/11.html">2012/11 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_37" href="http://www.cnblogs.com/wanqieddy/archive/2012/10.html">2012/10 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_38" href="http://www.cnblogs.com/wanqieddy/archive/2012/09.html">2012/9 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_39" href="http://www.cnblogs.com/wanqieddy/archive/2012/08.html">2012/8 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_40" href="http://www.cnblogs.com/wanqieddy/archive/2012/07.html">2012/7 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_41" href="http://www.cnblogs.com/wanqieddy/archive/2012/06.html">2012/6 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_42" href="http://www.cnblogs.com/wanqieddy/archive/2012/05.html">2012/5 (45)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_43" href="http://www.cnblogs.com/wanqieddy/archive/2012/04.html">2012/4 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_44" href="http://www.cnblogs.com/wanqieddy/archive/2012/03.html">2012/3 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_45" href="http://www.cnblogs.com/wanqieddy/archive/2012/02.html">2012/2 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_46" href="http://www.cnblogs.com/wanqieddy/archive/2012/01.html">2012/1 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_47" href="http://www.cnblogs.com/wanqieddy/archive/2011/12.html">2011/12 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_48" href="http://www.cnblogs.com/wanqieddy/archive/2011/11.html">2011/11 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_49" href="http://www.cnblogs.com/wanqieddy/archive/2011/10.html">2011/10 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_50" href="http://www.cnblogs.com/wanqieddy/archive/2011/09.html">2011/9 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_51" href="http://www.cnblogs.com/wanqieddy/archive/2011/08.html">2011/8 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_52" href="http://www.cnblogs.com/wanqieddy/archive/2011/07.html">2011/7 (22)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_53" href="http://www.cnblogs.com/wanqieddy/archive/2011/06.html">2011/6 (19)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListArticleCategory">
+<h3 class="catListTitle">Article Categories</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/wanqieddy/category/352071.html">arm </a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="http://www.cnblogs.com/wanqieddy/category/527303.html">cocos2d-x</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListArticleArchive">
+<h3 class="catListTitle">Article Archives<span style="font-size:11px;font-weight:normal">(1)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="http://www.cnblogs.com/wanqieddy/archives/2013/10.html" rel="nofollow">2013年10月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">eoe</h3>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<!--
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	540500
+	<li class="liRank">
+		排名 -	184
+	</li>
+</ul>
+</div>
+-->
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">Recent Comments</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3558444">1. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">很清楚</li>
+        <li class="recent_comment_author">--南极兔子</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3553380">2. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">文章写的很不错</li>
+        <li class="recent_comment_author">--领编程之美</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3551905">3. Re:Linux  find 用法示例</a></li>
+        <li class="recent_comment_body">谢谢分享</li>
+        <li class="recent_comment_author">--郝姬友</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3556060.html#3537005">4. Re:Android签名总结</a></li>
+        <li class="recent_comment_body">good！</li>
+        <li class="recent_comment_author">--chahong</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3818718.html#3525005">5. Re:FragmentActivity和Activity的具体区别在哪里</a></li>
+        <li class="recent_comment_body">@公孙 轩辕我感觉言简意赅，哈哈！...</li>
+        <li class="recent_comment_author">--迷路的国王</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3818718.html#3514088">6. Re:FragmentActivity和Activity的具体区别在哪里</a></li>
+        <li class="recent_comment_body">写的太简短了吧</li>
+        <li class="recent_comment_author">--公孙 轩辕</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3500387">7. Re:Linux  find 用法示例</a></li>
+        <li class="recent_comment_body">这个帖子太牛逼了</li>
+        <li class="recent_comment_author">--岁月漫步</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3487949">8. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">强</li>
+        <li class="recent_comment_author">--climberDing</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3836480.html#3473116">9. Re:Android_深入解析AsyncTask</a></li>
+        <li class="recent_comment_body">可否贴出代码呢</li>
+        <li class="recent_comment_author">--栗子强</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2013/05/24/3096312.html#3448837">10. Re:如何调用Android隐藏API</a></li>
+        <li class="recent_comment_body">不错，推荐下工具</li>
+        <li class="recent_comment_author">--静以养身  俭以养德</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/02/2619928.html#3445898">11. Re:Linux下scp的用法</a></li>
+        <li class="recent_comment_body">不错！我在配置hadoop集群的时候，感觉这个命令十分有用！</li>
+        <li class="recent_comment_author">--klous</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4933606.html#3426388">12. Re:android网络框架Retrofit 同步异步</a></li>
+        <li class="recent_comment_body">30分钟上手最火android网络请求框架Retrofit<a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html" target="_blank"></a></li>
+        <li class="recent_comment_author">--哟西西</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3405297">13. Re:Linux  find 用法示例</a></li>
+        <li class="recent_comment_body">很乱啊。</li>
+        <li class="recent_comment_author">--少林功夫好</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/12/15/2288598.html#3400363">14. Re:adb shell top</a></li>
+        <li class="recent_comment_body">怎么分析日志啊</li>
+        <li class="recent_comment_author">--perfect_11a</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/5172120.html#3384598">15. Re:android:configChanges属性总结</a></li>
+        <li class="recent_comment_body">很喜欢看你的文章，希望神作继续</li>
+        <li class="recent_comment_author">--浅海千</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4350708.html#3380781">16. Re:Android Studio 出现 Gradle's dependency cache may be corrupt 错误分析</a></li>
+        <li class="recent_comment_body">md，我被你坑死了</li>
+        <li class="recent_comment_author">--为谁轻狂</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3354512">17. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">赞！写得很明白！</li>
+        <li class="recent_comment_author">--郝姬友</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3339229">18. Re:Linux  find 用法示例</a></li>
+        <li class="recent_comment_body">咱cnblogs的博主文章质量就是高</li>
+        <li class="recent_comment_author">--Pale Life</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2013/01/21/2869228.html#3335276">19. Re:android上传图片至服务器</a></li>
+        <li class="recent_comment_body">麻烦能发一份源码到我的qq邮箱吗？1372049490@qq.com,谢谢</li>
+        <li class="recent_comment_author">--ggsmt</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2013/01/21/2869228.html#3335153">20. Re:android上传图片至服务器</a></li>
+        <li class="recent_comment_body">吊</li>
+        <li class="recent_comment_author">--ggsmt</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/02/2619928.html#3328267">21. Re:Linux下scp的用法</a></li>
+        <li class="recent_comment_body">有用！</li>
+        <li class="recent_comment_author">--叫我序员好了</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3853863.html#3313673">22. Re:ExecutorService中submit和execute的区别</a></li>
+        <li class="recent_comment_body">感谢楼主，收藏了!</li>
+        <li class="recent_comment_author">--subFire</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4931106.html#3298709">23. Re:Android Studio使用小技巧：提取方法代码片段</a></li>
+        <li class="recent_comment_body">太简单了。你又在装逼了</li>
+        <li class="recent_comment_author">--lixiaodaoaaa</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2012/03/01/2375424.html#3277592">24. Re:android apk反编译和odex转dex</a></li>
+        <li class="recent_comment_body">@自由用户...</li>
+        <li class="recent_comment_author">--scoluo</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3836477.html#3270232">25. Re:fragment做成选项卡，tab效果。  fragment+RadioGroup</a></li>
+        <li class="recent_comment_body">如何在fragment里点击一个button, 设置另外一个radiobutton被选择（显示）呢，谢谢</li>
+        <li class="recent_comment_author">--张雨涛</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3555989.html#3261652">26. Re:android4.0 中关于内外置sd卡的获取及读写权限问题</a></li>
+        <li class="recent_comment_body">有没有方法打开 system/etc/的写权限啊，在代码中</li>
+        <li class="recent_comment_author">--Amazing_happens</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3853863.html#3251110">27. Re:ExecutorService中submit和execute的区别</a></li>
+        <li class="recent_comment_body">不错，介绍的很清楚。确实看中文API有些看不懂，不之所云的感觉<br>感谢博主</li>
+        <li class="recent_comment_author">--oh my lady gaga</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/12/28/2304906.html#3247916">28. Re:android下创建文件夹和修改其权限的方法</a></li>
+        <li class="recent_comment_body">这种方式是不是过期了</li>
+        <li class="recent_comment_author">--songalee</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3247511">29. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">明白了，多谢博主！！！</li>
+        <li class="recent_comment_author">--Eric_IT</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3545368.html#3245911">30. Re:Android SDK Download List</a></li>
+        <li class="recent_comment_body">东西很全</li>
+        <li class="recent_comment_author">--6572789</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4482738.html#3230639">31. Re:在Activity中使用Thread导致的内存泄漏</a></li>
+        <li class="recent_comment_body">厉害</li>
+        <li class="recent_comment_author">--一座城池2012</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3555989.html#3225687">32. Re:android4.0 中关于内外置sd卡的获取及读写权限问题</a></li>
+        <li class="recent_comment_body">这个只能系统app声明这个权限啊 0.0</li>
+        <li class="recent_comment_author">--xiayuanzhong</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html#3220194">33. Re:Makefile 中:= ?= += =的区别</a></li>
+        <li class="recent_comment_body">短小易懂！谢谢博主！</li>
+        <li class="recent_comment_author">--BillZhao@SZ</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4135239.html#3205586">34. Re:消除“Permission is only granted to system apps”错误</a></li>
+        <li class="recent_comment_body">找不到ProtectdedPermission怎么办</li>
+        <li class="recent_comment_author">--何必自作自受自己伤己</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3545368.html#3201018">35. Re:Android SDK Download List</a></li>
+        <li class="recent_comment_body">楼主好人~~</li>
+        <li class="recent_comment_author">--胖崔</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076783.html#3195152">36. Re:linux svn 使用</a></li>
+        <li class="recent_comment_body">写得很好，赞</li>
+        <li class="recent_comment_author">--江中炼</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/4478690.html#3178175">37. Re:MVP模式在Android开发中的应用</a></li>
+        <li class="recent_comment_body">程序不错哦</li>
+        <li class="recent_comment_author">--lixiaodaoaaa</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/p/3654501.html#3177553">38. Re:java中newInstance()和new()</a></li>
+        <li class="recent_comment_body">终于懂了，好感动</li>
+        <li class="recent_comment_author">--指下生虫</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html#3171351">39. Re:Linux  find 用法示例</a></li>
+        <li class="recent_comment_body">给力呀...太帅了...</li>
+        <li class="recent_comment_author">--逍遥坏蛋</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/wanqieddy/archive/2011/11/25/2263381.html#3162372">40. Re:Android有效解决加载大图片时内存溢出的问题</a></li>
+        <li class="recent_comment_body">这一快感觉挺深奥的，还得好好研究研究。谢谢博主的分享，写的还是挺详细的。</li>
+        <li class="recent_comment_author">--繁华未至</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">Top Posts</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html">1. Linux  find 用法示例(658104)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html">2. Makefile 中:= ?= += =的区别(60729)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/02/2619928.html">3. Linux下scp的用法(56942)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/03/2621027.html">4. git config配置文件(46072)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3556060.html">5. Android签名总结(42465)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3818718.html">6. FragmentActivity和Activity的具体区别在哪里(40690)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/05/2484534.html">7. Android中滑屏实现----手把手教你如何实现触摸滑屏以及Scroller类详解(40340)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/11/25/2263381.html">8. Android有效解决加载大图片时内存溢出的问题(39274)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3836485.html">9. Android_开源框架_AndroidUniversalImageLoader网络图片加载(38796)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3545368.html">10. Android SDK Download List(38537)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/04/07/2436299.html">11. Android中SharePreference的使用(33378)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3312288.html">12. android 常见分辨率（mdpi、hdpi 、xhdpi、xxhdpi ）及屏幕适配注意事项(30792)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3853863.html">13. ExecutorService中submit和execute的区别(26722)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/11/22/2782975.html">14. eclipse老是building workspace及自动更新问题,eclipse加速(26350)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3313920.html">15. C++笔记：头文件的作用和写法(25275)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/03/01/2375424.html">16. android apk反编译和odex转dex(22985)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2013/06/09/3128102.html">17. 给android添加系统属性：Settings.system和SystemProperties(22097)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3555989.html">18. android4.0 中关于内外置sd卡的获取及读写权限问题(21260)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/10/11/2719606.html">19. Android 查看内存使用情况(20872)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/07/2487761.html">20. Linux系统下用find命令查找最近修改过的文件(19037)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3967895.html">21. Android Butterknife框架(18947)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/07/2074113.html">22. linux下rm命令使用详解(18205)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076783.html">23. linux svn 使用(18187)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/09/17/2688366.html">24. android 开关机动画(17257)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4040601.html">25. java.lang.ClassCastException: android.widget.RelativeLayout$LayoutParams cannot be cast to android.widget.AbsListView$LayoutParams(17107)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/11/25/2263367.html">26. Android中/system/build.prop文件解读(16520)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/12/28/2304906.html">27. android下创建文件夹和修改其权限的方法(16314)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/04/2482661.html">28. Android ANR(14950)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/02/10/2344905.html">29. Ubuntu下Arm-Linux-GCC交叉编译环境的搭建(14833)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/07/26/2610048.html">30. 内存调试的东西D/dalvikvm( 809 ): GC_CONCURRENT freed(14370)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4153203.html">31. runOnUiThread更新主线程(14319)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3492373.html">32. 如何分析解决Android ANR(14071)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/07/15/2107375.html">33. Android SDK 源代码编译(13731)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4479868.html">34. Google推荐的图片加载库Glide介绍(13231)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3709466.html">35. 【Android】开源项目汇总-备用(12894)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3836477.html">36. fragment做成选项卡，tab效果。  fragment+RadioGroup(12582)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2013/01/21/2869228.html">37. android上传图片至服务器(12457)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/03/06/2382408.html">38. 在Ubuntu中VirtualBox下xp使用usb设备(11250)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/02/08/2342787.html">39. 嵌入式Linux学习笔记之GPIO接口(11149)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/07/14/2106652.html">40. 详细位置搜索ubuntu系统jdk安装的默认路径。(10791)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap" style="display: none;">
+<!--
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"></div>
+</div>
+-->
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076785.html">1. Linux  find 用法示例(29)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/09/21/2184257.html">2. Makefile 中:= ?= += =的区别(21)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/05/2484534.html">3. Android中滑屏实现----手把手教你如何实现触摸滑屏以及Scroller类详解(9)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3853863.html">4. ExecutorService中submit和execute的区别(5)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3836485.html">5. Android_开源框架_AndroidUniversalImageLoader网络图片加载(5)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3545368.html">6. Android SDK Download List(5)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/04/2482661.html">7. Android ANR(4)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/03/01/2375424.html">8. android apk反编译和odex转dex(4)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3818718.html">9. FragmentActivity和Activity的具体区别在哪里(3)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/5172120.html">10. android:configChanges属性总结(3)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/11/25/2263381.html">11. Android有效解决加载大图片时内存溢出的问题(3)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4372033.html">12. c++中new和delete的使用方法(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3313920.html">13. C++笔记：头文件的作用和写法(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/12/19/2824559.html">14. 二维码原理简介(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3709466.html">15. 【Android】开源项目汇总-备用(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3836477.html">16. fragment做成选项卡，tab效果。  fragment+RadioGroup(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/03/2621027.html">17. git config配置文件(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/07/12/2104077.html">18. Android 多媒体(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/12/22/2298208.html">19. android activity 生命周期(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/23/2088290.html">20. android CursorAdapter的监听事件(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/07/26/2610048.html">21. 内存调试的东西D/dalvikvm( 809 ): GC_CONCURRENT freed(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/08/2490402.html">22. Android智能指针sp wp详解(2)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/07/2486974.html">23. 堆和栈的区别 (转贴)(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/05/2484965.html">24. Thread.dumpStack()(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/05/2484536.html">25. Android中MediaButtonReceiver广播监听器的机制分析(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/07/18/2597471.html">26. Android Out Of Memory(OOM) 的详细研究(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/06/13/2547793.html">27. Android Handler详解(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/05/21/2512152.html">28. JAVA 中int类型转String类型的通常方法,有三种:(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/07/14/2106652.html">29. 详细位置搜索ubuntu系统jdk安装的默认路径。(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/07/14/2106648.html">30. 在Ubuntu 10.04上安装java 1.5 java 1.6(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2011/06/09/2076783.html">31. linux svn 使用(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/02/2619928.html">32. Linux下scp的用法(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3492373.html">33. 如何分析解决Android ANR(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3456890.html">34. adb install -r 中出现INSTALL_FAILED_UNKNOWN_SOURCES，怎样解决？(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3556060.html">35. Android签名总结(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/3548165.html">36. Android： INSTALL_FAILED_UPDATE_INCOMPATIBLE(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4350708.html">37. Android Studio 出现 Gradle's dependency cache may be corrupt 错误分析(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4329852.html">38. Android版本和API Level对应关系(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4312814.html">39. Android之Monkey全参数（包含隐藏参数）(1)</a></li><li><a href="http://www.cnblogs.com/wanqieddy/p/4040601.html">40. java.lang.ClassCastException: android.widget.RelativeLayout$LayoutParams cannot be cast to android.widget.AbsListView$LayoutParams(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2017 wanqi
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>
