@@ -1,5 +1,10 @@
 
-68 9D 00 43 05 08 00 00 00 00 00 10 8C 32 
+68 
+9D 00 
+43 
+05 08 00 00 00 00 00 
+10 
+8C 32 
 07 	Client-APDU∷=CHOICE:...	ACTION-Request         (APDU_TYPE)
 01 	ACTION-Request∷=CHOICE:... 	ActionRequest    (操作一个对象方法请求)   
 	
@@ -90,40 +95,6 @@
 				(4)	01 //array 
 					00 //array-num
 00 //clinet-apdu(no time )
-2C F8 16
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+2C F8 
+16
 

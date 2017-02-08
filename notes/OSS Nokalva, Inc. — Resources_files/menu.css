@@ -1,0 +1,173 @@
+
+/* general settings for the div with the menu ul*/
+.menu{
+	width:760px; /* for IE6, otherwise menu gets pushed down */
+	border:none;
+	margin:7px 0px 0px 0px;
+	padding:0px;
+	float: right;
+	display:block;
+    position:relative; 
+	z-index:200;
+}
+
+/* for IE6, which has a faulty box model */
+* html .menu { 
+	width:760px; 
+	w\idth:740px;
+}
+
+
+/* all unordered lists within the menu */
+.menu ul{
+	text-transform: uppercase; /* first-level menu text is uppercase */
+	text-align:center;
+	list-style-type: none;
+	display:block;
+	position:relative;
+	bottom: 0.7em; /* needed to ensure that the box around the whole first-level menu is displayed fully */
+	margin:0;
+	padding:0;	
+}
+
+/* all list items at all menu levels */
+.menu li {
+  float:right; /* push them as far right as possible, needed for the horizontal items in first-level menu */
+  padding:0px;
+  position:relative;
+  width:7em; /* fixed width otherwise different browsers render them differently */
+/*  height: 2.5em;*/
+}
+
+/* all links, visited or not, from all menu levels 
+ default colors are light text over dark background */
+.menu a, 
+.menu a:hover,
+.menu a:visited {
+  display:block;
+  text-decoration:none;
+  background-color:#383838; 
+  color: #d0d0d0;
+  padding: 0.5em 0.4em 0.3em 0.4em; /* make some room between links and list items*/
+  display:block;
+  margin: 0;  
+}
+ 
+/* for IE6, which has a faulty box model  */
+* html .menu a, 
+* html .menu a:visited {
+  width:7em; 
+  w\idth:6em;
+} 
+
+/* second-level ul */
+.menu ul ul {
+  visibility:hidden; /* by default, no need to display it */
+  position:absolute; /* needed to control the position of li children (in drop-down menu) */
+  height:0; /* make sure ul doesn't take any room */
+  top: 2.3em; 
+  left:0em; 
+}
+
+/* list items from the second-level menu (drop-down) */
+.menu ul li ul li {
+  height: 2.7em;
+  padding:0;	
+  width: 17em; /* force the width and height of the drop-down items to be large enough */
+  left: 0px;
+}
+
+/* for IE6, which has a faulty box model */
+* html .menu ul ul {
+  top:30px;
+  t\op:35px;
+}
+
+/* we use a table for menus for IE6 and lower */
+.menu table { 
+	position:absolute; 
+	top:-9px; /* lift it a bit to look ok in IE6*/
+	left:0; 
+	border-collapse:collapse; /* collapse the table row borders so only 1 is displayed */
+}
+
+/* hide decorations for all links within the table (IE6 again) */
+* html .menu ul a,
+* html .menu table a,
+* html .menu table a:hover,
+* html .menu table a:active { 
+  text-decoration:none;
+}
+
+/* all links, visited or not, within the second-level menu 
+ switch to dark text over light background */
+.menu ul ul a, 
+.menu ul ul a:visited {
+    height:2em;
+	width:17em;
+	text-transform:capitalize; /* second-level text is just capitalized, not uppercase */
+    text-align: left;	
+	margin:0px;
+	color: #383838;	 
+    /*background: #d0d0d0;*/
+    background: #dfdfdf;
+
+	 
+    /* CSS3 */
+    opacity:0.95;
+	/* IE */
+	filter:alpha(opacity=95);  
+	
+	/* TO DO TRANSPARENCY with RGBA
+	background-color:rgba(208,208,208,0.8); 
+	/* For IE 5.5 - 7 
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5000000, endColorstr=#E5000000);
+	/* For IE 8 
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5000000, endColorstr=#E5000000)";	*/	
+}
+
+/* for IE6, which has a faulty box model */
+* html .menu ul ul a, 
+* html .menu ul ul a:visited {
+	width:17em;
+	w\idth:16em;
+}
+
+/* hovering over links from the second-level menu (drop-down) 
+ light text over dark background, plus corner image in the background */
+.menu ul ul a:hover {
+  color: #d0d0d0;	  
+  background: #383838 url("../images/topleftgray.gif") top left no-repeat;
+}
+
+/* hovering over links from the first-level menu 
+ dark text over light background, no image */
+.menu ul a:hover {
+  color: #383838;	 
+  /*background: #d0d0d0;*/
+  background: #dfdfdf;
+}
+
+/* hovering over list items from all menu levels, change the link 
+ to dark text over light background, no image 
+ this is needed to preserve first-level menu selected (light)
+ when hovering over the drop-down items*/
+ .menu li:hover a { 
+  color: #383838;	   
+  /*background: #d0d0d0;*/
+  background: #dfdfdf;
+}
+
+/* 
+.menu ul ul :hover > a {
+  color: #d0d0d0;	  
+  background: #383838 url("../images/topleftgray.gif") top left no-repeat;
+}
+*/
+
+/* make the second-level menu visible when hovering over the first-level list item or over links in the first-level menu*/
+  .menu ul li:hover ul,
+  .menu ul a:hover ul{
+	visibility:visible;
+  }
+

@@ -1,7 +1,7 @@
 /*******************
-* ÎÄ¼þÃû: bitfield.h
-* ¹¦ÄÜ: ¶¨Òå³£ÓÃÊý¾Ý½á¹¹¼°ºê
-* ×÷Õß: ËÎ±¦ÉÆ
+* ï¿½Ä¼ï¿½ï¿½ï¿½: bitfield.h
+* ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½å³£ï¿½ï¿½ï¿½ï¿½ï¿½Ý½á¹¹ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½ï¿½: ï¿½Î±ï¿½ï¿½ï¿½
 ********************/
 
 #ifndef DLT_698_45_H
@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-#define LITTLE_ENDIAN//Ð¡¶Ë¸ñÊ½
+#define LITTLE_ENDIAN//Ð¡ï¿½Ë¸ï¿½Ê½
 
 typedef unsigned char	INT8U;
 typedef unsigned short	INT16U;
@@ -47,42 +47,42 @@ typedef union {
 	} lengthSTR;
 } lengthUN;
 
-typedef union {//¿ØÖÆÓò
+typedef union {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	INT8U u8b;
 	struct {
 #ifdef LITTLE_ENDIAN
-		INT8U func		: 3;//¹¦ÄÜÂë
-		INT8U rev		: 2;//±£Áô
-		INT8U divS		: 1;//·ÖÖ¡±êÖ¾Î»
-		INT8U prm		: 1;//Æô¶¯±êÖ¾Î»
-		INT8U dir		: 1;//´«Êä·½ÏòÎ»
+		INT8U func		: 3;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		INT8U rev		: 2;//ï¿½ï¿½ï¿½ï¿½
+		INT8U divS		: 1;//ï¿½ï¿½Ö¡ï¿½ï¿½Ö¾Î»
+		INT8U prm		: 1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+		INT8U dir		: 1;//ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Î»
 #else
-		INT8U dir		: 1;//´«Êä·½ÏòÎ»
-		INT8U prm		: 1;//Æô¶¯±êÖ¾Î»
-		INT8U divS		: 1;//·ÖÖ¡±êÖ¾Î»
-		INT8U rev		: 2;//±£Áô
-		INT8U func		: 3;//¹¦ÄÜÂë
+		INT8U dir		: 1;//ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Î»
+		INT8U prm		: 1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+		INT8U divS		: 1;//ï¿½ï¿½Ö¡ï¿½ï¿½Ö¾Î»
+		INT8U rev		: 2;//ï¿½ï¿½ï¿½ï¿½
+		INT8U func		: 3;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #endif
 	} ctlSTR;
 } ctlUN;
 
-typedef union {//·ÖÖ¡¸ñÊ½Óò
+typedef union {//ï¿½ï¿½Ö¡ï¿½ï¿½Ê½ï¿½ï¿½
 	INT16U u16b;
 	struct {
 #ifdef LITTLE_ENDIAN
-		INT16U length	: 12;//·ÖÖ¡´«Êä¹ý³ÌµÄÖ¡ÐòºÅ
-		INT16U rev		: 2;//±£Áô
-		INT16U pos		: 2;//bit14=0, bit15=0: ±íÊ¾·ÖÖ¡´«ÊäÊý¾ÝÆðÊ¼Ö¡;
-							//bit14=0, bit15=1: ±íÊ¾·ÖÖ¡´«ÊäÈ·ÈÏÖ¡(È·ÈÏÖ¡²»°üº¬APDUÆ¬¶ÎÓò);
-							//bit14=1, bit15=0: ±íÊ¾·ÖÖ¡´«Êä×îºóÖ¡;
-							//bit14=1, bit15=1: ±íÊ¾·ÖÖ¡´«ÊäÖÐ¼äÖ¡
+		INT16U length	: 12;//ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½Ö¡ï¿½ï¿½ï¿½
+		INT16U rev		: 2;//ï¿½ï¿½ï¿½ï¿½
+		INT16U pos		: 2;//bit14=0, bit15=0: ï¿½ï¿½Ê¾ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼Ö¡;
+							//bit14=0, bit15=1: ï¿½ï¿½Ê¾ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Ö¡(È·ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½APDUÆ¬ï¿½ï¿½ï¿½ï¿½);
+							//bit14=1, bit15=0: ï¿½ï¿½Ê¾ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡;
+							//bit14=1, bit15=1: ï¿½ï¿½Ê¾ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½Ö¡
 #else
 		INT16U pos		: 2;
 		INT16U rev		: 2;
 		INT16U length	: 12;
 #endif
 	} lengthSTR;
-} lengthUN;
+} length1UN;
 
 #pragma pack(pop)
 

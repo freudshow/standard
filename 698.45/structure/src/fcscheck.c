@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+typedef unsigned char  u8;
 typedef unsigned short u16;
 /*
 * FCS lookup table as calculated by the table generator.
@@ -56,6 +57,7 @@ u16 pppfcs16(register u16 fcs, register unsigned char *cp, register int len)
 	assert(((u16) -1) > 0);
 	while (len--)
 		fcs = (fcs >> 8) ^ fcstab[(fcs ^ *cp++) & 0xff];
+
 	return (fcs);
 }
 /*
@@ -66,11 +68,13 @@ void tryfcs16(register unsigned char *cp, register int len)
 	u16 trialfcs;
 	/* add on output */
 	trialfcs = pppfcs16( PPPINITFCS16, cp, len );
+	printf("%02X %02X\n", (unsigned char)trialfcs, (unsigned char)(trialfcs>>8));
 	trialfcs ^= 0xffff; /* complement */
 	cp[len] = (trialfcs & 0x00ff); /* least significant byte first */
 	cp[len+1] = ((trialfcs >> 8) & 0x00ff);
 	/* check on input */
 	trialfcs = pppfcs16( PPPINITFCS16, cp, len + 2 );
+	printf("%02X %02X\n", (u8)trialfcs, (u8)(trialfcs>>8));
 	if ( trialfcs == PPPGOODFCS16 )
 		printf("Good FCS\n");
 }
@@ -94,6 +98,8 @@ int main()
 {
 	register unsigned int b, v;
 	register int i;
+	char array[] = {0x9D, 0x00, 0x43, 0x05, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10};
+
 	printf("typedef unsigned short u16;\n");
 	printf("static u16 fcstab[256] = {");
 	for (b = 0; ; ) {
@@ -108,5 +114,7 @@ int main()
 		printf(",");
 	}
 	printf("\n};\n");
+
+	tryfcs16(array, sizeof(array));
 }
 

@@ -1,0 +1,77 @@
+/*
+
+Designed and Coded By: OSS Nokalva, Inc.
+Date: 02/01/2011
+
+*/
+
+
+/*********************************************************/
+/*              ASN.1 CODE STYLING                       */
+/*********************************************************/
+
+.asn1-code {
+  font-family:"Courier New", Courier, monospace;
+  font-size:120%;
+  color:#222;  
+}
+
+.code-border {
+  border:thin solid #CCC; 
+  margin-bottom:10px;
+}
+
+.code-border p{
+  padding-top:10px; /* push down text when using border */  
+}
+
+.binary-code {
+  background-color:#EEE;
+}
+
+.asn1-code{
+  margin-left:5px; /* adjust grid to take into account border */
+  margin-right:5px;
+}
+
+.asn1-code p {
+  margin-left:40px;
+}
+
+.asn1-key {
+  color:#039;
+}
+
+.asn1-number {
+  color:#600;
+}
+
+.ind_1 {
+  margin-left:15px;
+}
+
+.ind_2 {
+  margin-left:30px;
+}
+
+.ind_3 {
+  margin-left:60px;
+}
+
+
+pre.code {
+font-size: 13px;
+font-family: "Consolas", Courier New, arial;
+display: block;
+border: 1px solid #ccc;
+padding: 10px;
+margin-top: 8px;
+margin-bottom: 18px;
+background-color: #FAFAFA;
+}
+
+pre.content {
+font-size: 13px;
+font-family: "Consolas", Courier New, arial;
+display: block;
+}

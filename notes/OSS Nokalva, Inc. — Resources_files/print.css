@@ -1,0 +1,19 @@
+/* Remove elements that we don't want printed
+#header, #footer, #featured
+{
+display: none;
+}
+*/
+
+/* Change text colour to black (useful for light text on a dark background) */
+h1, h2, h3, h4, h5, h6 {
+  color:#000;
+}
+
+.callout {
+  color: #000;
+}
+
+#footer {
+  color: #000;
+}

@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://stackoverflow.com/questions/15078362/asn-1-compilers -->
+<html itemscope="" itemtype="http://schema.org/QAPage"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>c - ASN.1 compilers - Stack Overflow</title>
+    <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com">
+    <meta property="og:type" content="website">
+
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded">
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="ASN.1 compilers">
+    <meta name="twitter:description" property="og:description" itemprop="description" content="This is my first question so please bear with me, I&#39;m trying to find a good compiler to parse the following standard, I&#39;ve tried asn1c and I wasn&#39;t able compile it successfully, the problem is that I ">
+    <meta property="og:url" content="http://stackoverflow.com/questions/15078362/asn-1-compilers">
+    <link rel="canonical" href="http://stackoverflow.com/questions/15078362/asn-1-compilers">
+
+    
+    
+    <script type="text/javascript" async="" src="./c - ASN.1 compilers - Stack Overflow_files/ados"></script><script async="" src="./c - ASN.1 compilers - Stack Overflow_files/quant.js"></script><script async="" src="./c - ASN.1 compilers - Stack Overflow_files/beacon.js"></script><script async="" src="./c - ASN.1 compilers - Stack Overflow_files/analytics.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./c - ASN.1 compilers - Stack Overflow_files/stub.en.js"></script>
+    <link rel="stylesheet" type="text/css" href="./c - ASN.1 compilers - Stack Overflow_files/all.css">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;ASN.1 compilers&#39;" href="http://stackoverflow.com/feeds/question/15078362">
+            <meta name="twitter:app:country" content="US">
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:iphone" content="871299723">
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/15078362/asn-1-compilers">
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:ipad" content="871299723">
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/15078362/asn-1-compilers">
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/15078362/asn-1-compilers">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:3,shownCommentCount:3,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:15078362});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '15078362');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text', true); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1486532274,"routeName":"Questions/Show","site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"enableInsertDocLinkDialog":true,"enableSocialMediaInSharePopup":true},"user":{"fkey":"2ae197f1bf86893780de85b2f68daba3","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true,"ab":{"question_show_tweaks":{"v":"altern_unansw_cta","g":1}}},"events":{"postType":{"question":1},"postEditionSection":{"title":1,"body":2,"tags":3}},"story":{"minCompleteBodyLength":75}}, {"site":{"allowImageUploads":true,"enableUserHovercards":true,"styleCode":true,"enableNewLinkInsertDialog":true,"enableImgurHttps":true},"comments":{},"userProfile":{"openGraphAPIKey":"58740831ad23540e00c58987"},"tags":{},"accounts":{"currentPasswordRequiredForChangingStackIdPassword":true},"flags":{"allowRetractingFlags":true},"analytics":{"clientTimingsAbsoluteTimeout":30000,"clientTimingsDebounceTimeout":1000},"snippets":{"snippetsEnabled":true,"renderDomain":"stacksnippets.net"},"markdown":{"asteriskIntraWordEmphasis":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"760ee62a99c8","js/moderator.en.js":"13f5b993ec18","js/full-anon.en.js":"e2c4f9651ea8","js/full.en.js":"74db4a809089","js/wmd.en.js":"1b9b0b579e2f","js/third-party/jquery.autocomplete.min.js":"d3b8fa7fdf74","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"617589bf91c4","js/help.en.js":"54b998574be9","js/tageditor.en.js":"7968c1573954","js/tageditornew.en.js":"d473ed306e06","js/inline-tag-editing.en.js":"2ddfa79492e7","js/revisions.en.js":"8f22ba768cac","js/review.en.js":"eddd3973653f","js/tagsuggestions.en.js":"7dfec0d2a2d7","js/post-validation.en.js":"e9b6db6936c6","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"2bfa0848c9d7","js/keyboard-shortcuts.en.js":"922912adf078","js/external-editor.en.js":"e574ed908cf3","js/adops.en.js":"9a6a7812a212","js/external-editor.en.js":"e574ed908cf3","js/snippet-javascript.en.js":"63c6e84817f8","js/snippet-javascript-codemirror.en.js":"745831046a8e"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+<link rel="stylesheet" href="./c - ASN.1 compilers - Stack Overflow_files/jobs-multi.min.css" type="text/css"><script type="text/javascript" src="./c - ASN.1 compilers - Stack Overflow_files/adFeedback.js"></script><link rel="stylesheet" href="./c - ASN.1 compilers - Stack Overflow_files/adFeedback.css"></head>
+<body class="question-page new-topbar">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+            <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        <iframe id="adzerk-user-match" width="0" height="0" frameborder="0" scrolling="no" onload="window.AUMIframeDone=true" src="./c - ASN.1 compilers - Stack Overflow_files/usermatch.html" style="display: none;" marginheight="0" marginwidth="0"></iframe>
+
+    <div id="notify-container"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+    <div class="topbar-dialog siteSwitcher-dialog dno">
+        <div class="header">
+            <h3><a href="http://stackoverflow.com/">current community</a>
+            </h3>
+        </div>
+        <div class="modal-content current-site-container">
+            <ul class="current-site">
+                    <li>
+                            <div class="related-links">
+                    <a href="http://chat.stackoverflow.com/" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+            </div>
+
+
+
+
+    <a href="http://stackoverflow.com/" class="current-site-link site-link js-gps-track" data-id="1" data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                    </li>
+                    <li class="related-site">
+                            <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                        
+
+
+
+    <a href="http://meta.stackoverflow.com/" class="site-link js-gps-track" data-id="552" data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                    </li>
+            </ul>
+        </div>
+
+        <div class="header" id="your-communities-header">
+            <h3>
+your communities            </h3>
+
+        </div>
+        <div class="modal-content" id="your-communities-section">
+
+                <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=%2fusers%2fstory%2fcurrent&amp;amp;utm_source=stackoverflow.com&amp;amp;utm_medium=dev-story&amp;amp;utm_campaign=signup-redirect" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f15078362%2fasn-1-compilers" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:11 })">log in</a> to customize your list.
+                </div>
+        </div>
+
+        <div class="header">
+            <h3><a href="http://stackexchange.com/sites">more stack exchange communities</a>
+            </h3>
+            <a href="http://stackoverflow.blog/" class="fr">company blog</a>
+        </div>
+        <div class="modal-content">
+                <div class="child-content"></div>
+        </div>        
+    </div>
+        </div>
+
+        <div class="network-items">
+                <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 164 Stack Exchange sites">
+                    <span class="hidden-text">Stack Exchange</span>
+                </a>
+
+    <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" class="topbar-icon icon-inbox yes-hover js-inbox-button" title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" class="topbar-icon icon-achievements yes-hover js-achievements-button " data-unread-class="" title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&amp;returnurl=%2fusers%2fstory%2fcurrent&amp;utm_source=stackoverflow.com&amp;utm_medium=dev-story&amp;utm_campaign=signup-redirect" class="login-link" rel="nofollow">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f15078362%2fasn-1-compilers" class="login-link" rel="nofollow">log in</a>
+
+                            <a href="http://stackoverflow.com/tour">tour</a>
+        <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" class="icon-help js-help-button" title="Help Center and other resources">
+            help
+            <span class="triangle"></span>
+        </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="http://stackoverflow.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                        <li>
+                            <a href="http://meta.stackoverflow.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                                Meta
+                                <span class="item-summary">
+                                    Discuss the workings and policies of this site
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                                About Us
+                                <span class="item-summary">
+                                    Learn more about Stack Overflow the company
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.stackoverflowbusiness.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                                Business
+                                <span class="item-summary">
+                                    Learn more about hiring developers or posting ads with us
+                                </span>
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+                                            </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="http://stackoverflow.com/search" method="get" autocomplete="off">
+                        <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+            <div id="header">
+                <br class="cbt">
+                <div id="hlogo">
+                    <a href="http://stackoverflow.com/">
+                        Stack Overflow
+                    </a>
+                </div>
+                <div id="hmenus">
+                        <div class="nav mainnavs">
+                            <ul>
+                                    <li class="youarehere">
+        <a id="nav-questions" href="http://stackoverflow.com/questions" class="js-gps-track" data-gps-track="top_nav.click({is_current:true, location:2, destination:1})">
+        Questions
+        </a>
+    </li>
+
+    <li>
+        <a id="nav-jobs" href="http://stackoverflow.com/jobs?med=site-ui&amp;ref=jobs-tab" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:6})">
+        Jobs
+        </a>
+    </li>
+                                    <li>
+        <a id="nav-docs" href="http://stackoverflow.com/documentation" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:7})">
+        Documentation
+        </a>
+    </li>
+                                    <li>
+        <a id="nav-tags" href="http://stackoverflow.com/tags" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:2})">
+        Tags
+        </a>
+    </li>
+
+                                    <li>
+        <a id="nav-users" href="http://stackoverflow.com/users" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:3})">
+        Users
+        </a>
+    </li>
+
+                                    <li>
+        <a id="nav-badges" href="http://stackoverflow.com/help/badges" class="js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:4})">
+        Badges
+        </a>
+    </li>
+
+                            </ul>
+                        </div>
+                    <div class="nav askquestion">
+                        <ul>
+                            <li>
+                                <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+
+
+        <div id="content" class="snippet-hidden">
+
+
+
+            
+
+<div itemscope="" itemtype="http://schema.org/Question">
+    <link itemprop="image" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+
+    <div id="herobox" class="alternate">
+        <div class="test"></div>
+            <div id="close">
+                <a title="click to minimize"><span>x</span> Dismiss</a>
+            </div>
+        <div class="content">
+            <b>Join the Stack Overflow Community</b>
+            <div class="separator"></div>
+            <div class="blurb">
+                Stack Overflow is a community of 6.7 million programmers, just like you, helping each other.
+                    <br>
+Join them; it only takes a minute:                    <br>
+            </div>
+            <a href="http://stackoverflow.com/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f15078362%2fasn-1-compilers" id="tell-me-more" class="button">Sign up</a>
+        </div>
+    </div>
+<script>
+    StackExchange.ready(function () {
+
+        var location = 0;
+        if ($("body").hasClass("questions-page")) {
+            location = 1;;
+        } else if ($("body").hasClass("question-page")) {
+            location = 1;;
+        } else if ($("body").hasClass("faq-page")) {
+            location = 5;;
+        } else if ($("body").hasClass("home-page")) {
+            location = 3;;
+        }
+
+        $('#tell-me-more').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+            });
+        });
+        $('#herobox #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+            });
+            $.cookie("hero", "mini", { path: "/", expires: 365 });
+            $.ajax({
+                url: "/hero-mini",
+                success: function (data) {
+                    $("#herobox").fadeOut("fast", function () {
+                        $("#herobox").replaceWith(data);
+                        $("#herobox-mini").fadeIn("fast");
+                    });
+                }
+            });
+            return false;
+        });
+    });
+
+</script>			<div id="question-header">
+                <h1 itemprop="name"><a href="http://stackoverflow.com/questions/15078362/asn-1-compilers" class="question-hyperlink">ASN.1 compilers</a></h1>
+
+            
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="15078362" id="question">
+
+    <div class="everyonelovesstackoverflow" id="clc-tlb"><a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6NCwiYnQiOjAsImNtIjo0NzE0OTMsImNoIjoxMTc4LCJjayI6e30sImNyIjoxNjI3NzYzLCJkaSI6IjY0ZDNiYTE0YzMyMjQxYjFiNTZiMzFkMjMxZjFhYjEwIiwiZG0iOjEsImZjIjoxOTI0NDQyLCJmbCI6MjE0MjMxMiwiaXAiOiIxMTkuMTgwLjI0LjE1NiIsImt3IjoiYyxwcm90b2NvbHMsYXNuLjEiLCJudyI6MjIsInBjIjowLCJlYyI6MCwicHIiOjE2MDQsInJ0IjoxLCJyZiI6Imh0dHA6Ly9vdmVyc2Vhcy5zb2dvdS5jb20vZW5nbGlzaD9xdWVyeT0rQVNOLjErY29tcGlsZXIrJl9hc2Y9d3d3LnNvZ291LmNvbSZfYXN0PSZ3PTAxMDE5OTAwJnA9NDAwNDAxMDAmYl9vX2U9MSZpZT11dGY4JnN1dD04NjImc3N0MD0xNDg2NTMyMTMyMzExJmxrdD0wLDAsMCIsInN0Ijo4Mjc3LCJ1ayI6InVlMS01NzU5MjhlNzc0NzY0YjM1ODBlMmNhNjYwMmViNmVkNyIsInpuIjo0MywidHMiOjE0ODY1MzI0MjQwODAsImJmIjp0cnVlLCJwbiI6ImNsYy10bGIiLCJ1ciI6Imh0dHA6Ly9zdGFja292ZXJmbG93LmNvbS9qb2JzP3V0bV9zb3VyY2U9d2Vic2l0ZSZ1dG1fbWVkaXVtPWJhbm5lciZ1dG1fY29udGVudD1sZWFkZXJib2FyZF8yJnV0bV9jYW1wYWlnbj1ob3VzZV9hZHNfaG91c2VfYWRzX1JPU19TTyJ9&amp;s=h7amCI4A7U9dW6BY8-MWte5uLWc" rel="nofollow" target="_blank" title=""><img src="./c - ASN.1 compilers - Stack Overflow_files/6768ddb6a63e482c9c31155cdde7af9a.png" title="" alt="" border="0" width="728" height="90"></a><img height="0px" width="0px" border="0" style="position:absolute;" src="./c - ASN.1 compilers - Stack Overflow_files/i.gif"></div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="15078362">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="http://stackoverflow.com/questions/15078362/asn-1-compilers#">favorite</a>
+        <div class="favoritecount"><b>1</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>This is my first question so please bear with me, I'm trying to find a good compiler to parse the following <a href="http://www.3gpp.org/ftp/Specs/archive/29_series/29.002/ASN.1/" rel="nofollow">standard</a>, I've tried asn1c and I wasn't able compile it successfully, the problem is that I didn't get any error, I tried with "-P" and there was no output, this is what I did </p>
+
+<p>sn1c MAP-ShortMessageServiceOperations.EXP -P</p>
+
+<p>The files in the link have been generated by SIEMENS and for some reason they are not the standard ASN.1</p>
+
+<p>The question is how can I compile all these ASN files with asn1c or any other asn compiler? </p>
+
+<p>and also I've tried snacc and didn't get anything useful from it either.</p>
+
+<p>I'm trying to write a C application that will be running on Red-hat Linux</p>
+    </div>
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/c" class="post-tag" title="show questions tagged &#39;c&#39;" rel="tag">c</a> <a href="http://stackoverflow.com/questions/tagged/protocols" class="post-tag" title="show questions tagged &#39;protocols&#39;" rel="tag">protocols</a> <a href="http://stackoverflow.com/questions/tagged/asn.1" class="post-tag" title="show questions tagged &#39;asn.1&#39;" rel="tag">asn.1</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/q/15078362" title="short permalink to this question" class="short-link" id="link-post-15078362">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/15078362/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2013-02-25 23:13:58Z" class="relativetime">Feb 25 '13 at 23:13</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/2109149/user-iv"><div class="gravatar-wrapper-32"><img src="./c - ASN.1 compilers - Stack Overflow_files/e17e6acfbee63f8f47b164436e488993" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/2109149/user-iv">user_iv</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">58</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="8 bronze badges"><span class="badge3"></span><span class="badgecount">8</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+                    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-15078362" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-21206541" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">This is just a general direction but OpenSSL has an ASN.1 parser.  A quick google also finds asn1parse.  I'm not sure what you mean by "compilers".</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/441099/guy-sirton" title="6,331 reputation" class="comment-user">Guy Sirton</a>
+                <span class="comment-date" dir="ltr"><span title="2013-02-25 23:17:40Z" class="relativetime-clean">Feb 25 '13 at 23:17</span></span>
+                        <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-21206934" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">asn1c is a compiler that will generate a C files and then you can write your parser, as I mentioned asn1c is working but not with complicated structures or old ones</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2109149/user-iv" title="58 reputation" class="comment-user owner">user_iv</a>
+                <span class="comment-date" dir="ltr"><span title="2013-02-25 23:39:20Z" class="relativetime-clean">Feb 25 '13 at 23:39</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-21207014" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">As mentioned here <a href="http://stackoverflow.com/questions/14858838/what-does-it-mean-compile-asn-1" title="what does it mean compile asn 1">stackoverflow.com/questions/14858838/…</a></span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2109149/user-iv" title="58 reputation" class="comment-user owner">user_iv</a>
+                <span class="comment-date" dir="ltr"><span title="2013-02-25 23:44:04Z" class="relativetime-clean">Feb 25 '13 at 23:44</span></span>
+                        <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-15078362" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" onclick=""></a>
+        </div>         
+    </td>
+</tr>        </tbody></table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								3 Answers
+                                <span style="display:none;" itemprop="answerCount">3</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active" data-shortcut="A">
+            active</a>
+        <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest" data-shortcut="O">
+            oldest</a>
+        <a class="youarehere" href="http://stackoverflow.com/questions/15078362/asn-1-compilers?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes" data-shortcut="V">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="15094410"></a>
+<div id="answer-15094410" class="answer" data-answerid="15094410" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="15094410">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">3</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>A great place to start is <a href="http://www.itu.int/ITU-T/asn1/links/index.htm" rel="nofollow">http://www.itu.int/ITU-T/asn1/links/index.htm</a> which list several ASN.1 compilers (both free and commercial).</p>
+
+<p>You can also try your specification in the free online compiler and encoder/decoder at <a href="http://asn1-playground.oss.com/" rel="nofollow">http://asn1-playground.oss.com</a>.</p>
+
+<p>For 3gpp specifications, you are likely to be better off using a commercial tool rather than one of the free tools.  OSS Nokalva offers free trials of its ASN.1 Tools at <a href="http://www.oss.com/asn1/products/asn1-download.html" rel="nofollow">http://www.oss.com/asn1/products/asn1-download.html</a>.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/15094410" title="short permalink to this answer" class="short-link" id="link-post-15094410">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/15094410/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2013-02-26 16:35:39Z" class="relativetime">Feb 26 '13 at 16:35</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/1146672/paul-thorpe"><div class="gravatar-wrapper-32"><img src="./c - ASN.1 compilers - Stack Overflow_files/d3518c24282d7bd7eb83f7ec4e2e840d" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/1146672/paul-thorpe">Paul Thorpe</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1,029</span><span title="7 silver badges"><span class="badge2"></span><span class="badgecount">7</span></span><span title="14 bronze badges"><span class="badge3"></span><span class="badgecount">14</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-15094410" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-15094410" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+<div class="everyonelovesstackoverflow" id="clc-mlb"><a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6NCwiYnQiOjAsImNtIjo0NzE0OTMsImNoIjoxMTc4LCJjayI6e30sImNyIjoxNjI3NzY3LCJkaSI6IjlkYWM5OTA5M2IzNDRhMzU4YTIxZTZmZGRhZDJjOTMyIiwiZG0iOjEsImZjIjoxOTI0NDQ2LCJmbCI6MjE0MjMxMiwiaXAiOiIxMTkuMTgwLjI0LjE1NiIsImt3IjoiYyxwcm90b2NvbHMsYXNuLjEiLCJudyI6MjIsInBjIjowLCJlYyI6MCwicHIiOjE2MDQsInJ0IjoxLCJyZiI6Imh0dHA6Ly9vdmVyc2Vhcy5zb2dvdS5jb20vZW5nbGlzaD9xdWVyeT0rQVNOLjErY29tcGlsZXIrJl9hc2Y9d3d3LnNvZ291LmNvbSZfYXN0PSZ3PTAxMDE5OTAwJnA9NDAwNDAxMDAmYl9vX2U9MSZpZT11dGY4JnN1dD04NjImc3N0MD0xNDg2NTMyMTMyMzExJmxrdD0wLDAsMCIsInN0Ijo4Mjc3LCJ1ayI6InVlMS01NzU5MjhlNzc0NzY0YjM1ODBlMmNhNjYwMmViNmVkNyIsInpuIjo0NCwidHMiOjE0ODY1MzI0MjQwODEsImJmIjp0cnVlLCJwbiI6ImNsYy1tbGIiLCJ1ciI6Imh0dHA6Ly9zdGFja292ZXJmbG93LmNvbS9qb2JzL3JlbW90ZT91dG1fc291cmNlPXdlYnNpdGUmdXRtX21lZGl1bT1iYW5uZXImdXRtX2NvbnRlbnQ9bGVhZGVyYm9hcmRfMyZ1dG1fY2FtcGFpZ249aG91c2VfYWRzX1JPU19TTyJ9&amp;s=goPWqHk3RTP2fDzJWOEabw-Cf9E" rel="nofollow" target="_blank" title=""><img src="./c - ASN.1 compilers - Stack Overflow_files/d220101fccb24c5f805ac8f614335fc7.png" title="" alt="" border="0" width="728" height="90"></a><img height="0px" width="0px" border="0" style="position:absolute;" src="./c - ASN.1 compilers - Stack Overflow_files/i(1).gif"></div>
+  
+<a name="22393170"></a>
+<div id="answer-22393170" class="answer" data-answerid="22393170" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="22393170">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Another tool for 3GPP specifications is online encoder/decoder <a href="http://3gpp-message-analyser.com/" rel="nofollow">http://3gpp-message-analyser.com</a> It supports UTRAN RANAP SABP RNSAP NBAP PCAP RUA HNBAP, E-UTRAN S1AP X2AP M2AP M3AP</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/22393170" title="short permalink to this answer" class="short-link" id="link-post-22393170">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/22393170/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2014-03-13 23:28:26Z" class="relativetime">Mar 13 '14 at 23:28</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/3417826/konstantin"><div class="gravatar-wrapper-32"><img src="./c - ASN.1 compilers - Stack Overflow_files/efb3b5cf34f27fd0654f431ec11bd30c" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/3417826/konstantin">Konstantin</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">11</span><span title="1 bronze badge"><span class="badge3"></span><span class="badgecount">1</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-22393170" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-22393170" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="35155388"></a>
+<div id="answer-35155388" class="answer" data-answerid="35155388" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="35155388">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p><a href="http://www.itu.int/en/ITU-T/asn1/Pages/Tools.aspx" rel="nofollow">http://www.itu.int/en/ITU-T/asn1/Pages/Tools.aspx</a> mentions two free ASN.1 compilers, one of which is  </p>
+
+<ul>
+<li><a href="http://lionet.info/asn1c/compiler.html" rel="nofollow">http://lionet.info/asn1c/compiler.html</a>  which is FOSS and seems to be well received (<a href="http://lionet.info/asn1c/quotes.html" rel="nofollow">http://lionet.info/asn1c/quotes.html</a>)  </li>
+<li>The second “free” compiler listed seems to have gone commercial (<a href="http://www.oss.com/asn1/products/asn1-c/asn1-c.html" rel="nofollow">http://www.oss.com/asn1/products/asn1-c/asn1-c.html</a>), <em>BUT</em> the same company offer a free online encode/decode service at <a href="http://asn1-playground.oss.com/" rel="nofollow">http://asn1-playground.oss.com/</a>   </li>
+<li>I can’t figure out if this one is free or requires purchase - <a href="http://www.obj-sys.com/products/asn1c/index.php" rel="nofollow">http://www.obj-sys.com/products/asn1c/index.php</a> </li>
+<li>This one is FOSS and might be worth examining - <a href="https://github.com/ttsiodras/asn1scc" rel="nofollow">https://github.com/ttsiodras/asn1scc</a> </li>
+</ul>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/35155388" title="short permalink to this answer" class="short-link" id="link-post-35155388">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/35155388/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2016-02-02 13:55:09Z" class="relativetime">Feb 2 '16 at 13:55</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/192910/mawg"><div class="gravatar-wrapper-32"><img src="./c - ASN.1 compilers - Stack Overflow_files/de26f9c446ae47545220ff9eff3e3ef7" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/192910/mawg">Mawg</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 11,496" dir="ltr">11.5k</span><span title="60 gold badges"><span class="badge1"></span><span class="badgecount">60</span></span><span title="185 silver badges"><span class="badge2"></span><span class="badgecount">185</span></span><span title="360 bronze badges"><span class="badge3"></span><span class="badgecount">360</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-35155388" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-59842278" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I've used the one from Objective Systems. It's not free. I was happy with it and their level of support. I think I prefer OSS Nokalva's C++ model though, it's much friendlier to work with than Objective Systems'.</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2147218/bazza" title="2,970 reputation" class="comment-user">bazza</a>
+                <span class="comment-date" dir="ltr"><span title="2016-03-19 08:10:31Z" class="relativetime-clean">Mar 19 '16 at 8:10</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-35155388" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+									<a name="new-answer"></a>
+						<form id="post-form" action="http://stackoverflow.com/questions/15078362/answer/submit" method="post" class="post-form">
+						    <input type="hidden" id="post-id" value="15078362">
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false">
+                            <input type="hidden" name="referrer" value="http://overseas.sogou.com/english?query=+ASN.1+compiler+&amp;_asf=www.sogou.com&amp;_ast=&amp;w=01019900&amp;p=40040100&amp;b_o_e=1&amp;ie=utf8&amp;sut=862&amp;sst0=1486532132311&amp;lkt=0%2C0%2C0">
+							<h2 class="space">Your Answer</h2>
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.settings.snippets.snippetsEnabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="2ae197f1bf86893780de85b2f68daba3">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="http://stackoverflow.com/users/login?ssrc=question_page&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f15078362%2fasn-1-compilers%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid">
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false">
+                    <input type="hidden" name="use-google" class="use-google" value="false">
+                    <input type="button" class="submit-openid" value="Submit" style="display:none">
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown">
+                </div>
+            </td>
+        </tr>
+        </tbody></table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2fstackoverflow.com%2fquestions%2f15078362%2fasn-1-compilers%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        &lt;h3&gt;Post as a guest&lt;/h3&gt;
+    &lt;div class="form-item"&gt;
+        &lt;table&gt;
+        &lt;tr&gt;
+                    &lt;td class="vm"&gt;
+                &lt;div&gt;
+                    &lt;label for="display-name"&gt;Name&lt;/label&gt;
+                    &lt;input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105"&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;label for="m-address"&gt;Email&lt;/label&gt;
+                    &lt;input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" /&gt;
+                &lt;/div&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" name="privacy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" name="tos" target="_blank">terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1">								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/c" class="post-tag" title="show questions tagged &#39;c&#39;" rel="tag">c</a> <a href="http://stackoverflow.com/questions/tagged/protocols" class="post-tag" title="show questions tagged &#39;protocols&#39;" rel="tag">protocols</a> <a href="http://stackoverflow.com/questions/tagged/asn.1" class="post-tag" title="show questions tagged &#39;asn.1&#39;" rel="tag">asn.1</a>  or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tbody><tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2013-02-25 23:13:58Z"><b>3 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>5393 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="http://stackoverflow.com/questions/15078362/asn-1-compilers?lastactivity" class="lastactivity-link" title="2016-02-02 13:55:09Z">1 year ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </tbody></table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://stackoverflow.blog/2017/02/What-Programming-Languages-Weekends/" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://stackoverflow.blog/2017/02/What-Programming-Languages-Weekends/" class="question-hyperlink">What Programming Languages Are Used Most on Weekends?</a>
+                </div>
+                <br class="cbt">
+            </div>
+    </div>
+</div>			
+			<div class="clc-jobs-multi orange tagged" id="hireme"><a class="top " href="https://stackoverflow.com/jobs" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=10439&amp;ct=1&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs&amp;sig=vlzwkGL6kYOoAg"><span>Looking for a job?</span></a><div class="middle"><ul class="jobs"><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Lisp Software Architect - $60k at Crossover. Click to learn more." href="https://stackoverflow.com/jobs/103335/lisp-software-architect-60k-crossover" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=226259&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F103335%2Flisp-software-architect-60k-crossover&amp;sig=jHdYovYf5D8Wvw"><div class="title">Lisp Software Architect - $60k</div><div><span class="company">Crossover</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag">c</span><span class="post-tag">c++</span></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=226259&amp;ct=-1&amp;sig=EeOWVD8GzeWgIA" data-clc-meta-target="-1"><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Core Tech Programmer at Splash Damage. Click to learn more." href="https://stackoverflow.com/jobs/104947/core-tech-programmer-splash-damage" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=13156&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F104947%2Fcore-tech-programmer-splash-damage&amp;sig=PraSWLyJWleL-g"><div class="title">Core Tech Programmer</div><div><span class="company">Splash Damage</span><span class="location">Bromley, UK</span></div><div class="opts"><span class="opt relocate">Relocation</span><span class="opt visa">Visa Sponsorship</span></div><span class="post-tag">c++</span><span class="post-tag">xbox-one</span></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=13156&amp;ct=-1&amp;sig=P5SFK2kywx-m2Q" data-clc-meta-target="-1"><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="JavaEE Course Authoring Opportunity at Pluralsight (FREELANCE) at Pluralsight. Click to learn more." href="https://stackoverflow.com/jobs/130823/javaee-course-authoring-opportunity-at-pluralsight" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=227804&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F130823%2Fjavaee-course-authoring-opportunity-at-pluralsight&amp;sig=I1cb9yBiDGwM6A"><div class="title">JavaEE Course Authoring Opportunity at Pluralsight (FREELANCE)</div><div><span class="company">Pluralsight</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag">java-ee</span></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=227804&amp;ct=-1&amp;sig=z8HOF-AVgDiYsA" data-clc-meta-target="-1"><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Lisp Software Engineer - $30k at Crossover. Click to learn more." href="https://stackoverflow.com/jobs/104276/lisp-software-engineer-30k-crossover" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=232426&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F104276%2Flisp-software-engineer-30k-crossover&amp;sig=KleaSjPkqRD1IA"><div class="title">Lisp Software Engineer - $30k</div><div><span class="company">Crossover</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag">lisp</span><span class="post-tag">c++</span></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=4yxYeOzjE_8rHqwPiv2cmZgYGBhYGEDglvAzhuxoDQaG4xpgsZ4NIFFGRhBHWpqFieFyMTNIPOWAeuwUS4dbZ-2kjxoxMKQYg1XPmFOgMNOSgaHBnluTnYnhTiVUbd3dSEvpCAEmhlfdUJE1_3sso3k32zGwrbsUdPjxutoaEQA&amp;cr=232426&amp;ct=-1&amp;sig=-ovB5a1wCmh8gw" data-clc-meta-target="-1"><span class="clc-tooltip above-left">dismiss this job</span></a></li></ul></div><img src="./c - ASN.1 compilers - Stack Overflow_files/impression.gif" class="impression" style="display: none;"></div>
+        <script>
+window.clc_request = 'AjPmWKHkT9QIAAAAANoT5gACAAAAAgAAAAATAAAAfGN8cHJvdG9jb2xzfGFzbi4xfADPkk49saiAbm7D';
+;(function(n){var t,r,i;try{if(typeof[].indexOf!="function")return;if(window.attachEvent&&!window.addEventListener)return;if(n.allowed[0]!=="*"&&n.allowed.indexOf(location.hostname)===-1)return;t=window;t.clc=t.clc||{};r=t.clc_request||t.clcfl_request;r||console.warn("clc_request missing");t.clc.init=t.clc.init||[];t.clc.init.push(function(n){return n.load()});t.clc.options=n;i=document.createElement("script");i.async=!0;i.src=n.lib;document.body.appendChild(i)}catch(u){console.error("[clc] Error in loader:",u)}}).call(null, {"azw":true,"kt":2000,"tto":true,"autoload":true,"d":{"sb":["hireme","clc-sb"],"tlb":["careers1","clc-tlb"],"mlb":["careers3","clc-mlb"]},"allowed":["stackoverflow.com","serverfault.com","blog.codinghorror.com","talent.stackoverflow.com"],"h":"clc.stackoverflow.com","u":"https://clc.stackoverflow.com/markup.js","lib":"https://cdn.sstatic.net/clc/clc.min.js?v=348c8500e828"});        </script>
+			
+
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+
+<div class="spacer">
+	<a href="http://stackoverflow.com/q/14858838" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/14858838/what-does-it-mean-compile-asn-1?noredirect=1" class="question-hyperlink">what does it mean “compile asn.1”?</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer"><a href="http://stackoverflow.com/q/968236" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">6</div></a><a href="http://stackoverflow.com/questions/968236/java-asn-1-compiler" class="question-hyperlink">Java ASN.1 compiler</a></div><div class="spacer"><a href="http://stackoverflow.com/q/3417005" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="http://stackoverflow.com/questions/3417005/invalid-asn-1-file" class="question-hyperlink">Invalid ASN.1 file?</a></div><div class="spacer"><a href="http://stackoverflow.com/q/6110403" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="http://stackoverflow.com/questions/6110403/asn-1-compiler-with-support-for-extended-xer-rxer" class="question-hyperlink">ASN.1 compiler with support for Extended XER/RXER</a></div><div class="spacer"><a href="http://stackoverflow.com/q/9883839" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="http://stackoverflow.com/questions/9883839/asn-1-java-compiler" class="question-hyperlink">ASN.1 Java Compiler</a></div><div class="spacer"><a href="http://stackoverflow.com/q/12141250" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://stackoverflow.com/questions/12141250/decoding-asn-1-compiler-output-as-strings" class="question-hyperlink">decoding asn.1 compiler output as strings</a></div><div class="spacer"><a href="http://stackoverflow.com/q/24956489" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">2</div></a><a href="http://stackoverflow.com/questions/24956489/bacnet-encoding-decoding-asn-1-c-syntax" class="question-hyperlink">BACnet encoding/ decoding ASN.1/ C syntax</a></div><div class="spacer"><a href="http://stackoverflow.com/q/29840488" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://stackoverflow.com/questions/29840488/asn1c-compiler-not-compiling-the-asn-files" class="question-hyperlink">asn1c compiler not compiling the asn files</a></div><div class="spacer"><a href="http://stackoverflow.com/q/32025049" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="http://stackoverflow.com/questions/32025049/compiling-complex-with-many-references-asn-schema-certificate-request-format" class="question-hyperlink">Compiling complex (with many references) ASN schema - Certificate Request Format ( RFC4211)</a></div><div class="spacer"><a href="http://stackoverflow.com/q/35601262" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="http://stackoverflow.com/questions/35601262/asn-1-file-parser-compiler-using-java" class="question-hyperlink">ASN.1 file parser / Compiler using java</a></div><div class="spacer"><a href="http://stackoverflow.com/q/39742129" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="http://stackoverflow.com/questions/39742129/need-asn-1-files-for-sccp-ss7" class="question-hyperlink">Need ASN.1 files for SCCP (SS7)</a></div>
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="http://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/372230/whats-the-word-for-undoing-progress" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What's the word for undoing progress?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-askubuntu" title="Ask Ubuntu"></div><a href="http://askubuntu.com/questions/880858/what-is-the-difference-in-using-touch-file-and-file-in-creating-a-new-file" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:89 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the difference in using "touch file" and "&gt; file" in creating a new file?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/152124/do-the-enchanted-locations-in-the-harry-potter-books-occupy-another-dimension" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do the enchanted locations in the Harry Potter books occupy another dimension?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-politics" title="Politics Stack Exchange"></div><a href="http://politics.stackexchange.com/questions/15387/does-the-secretary-of-education-have-to-support-public-education" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:475 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does the Secretary of Education have to support public education?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-mechanics" title="Motor Vehicle Maintenance &amp; Repair Stack Exchange"></div><a href="http://mechanics.stackexchange.com/questions/41731/why-arent-electric-forms-of-heating-used-in-internal-combustion-engines" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:224 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why aren't electric forms of heating used in internal combustion engines
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-politics" title="Politics Stack Exchange"></div><a href="http://politics.stackexchange.com/questions/15305/can-a-us-president-declare-a-state-of-emergency" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:475 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can a US President declare a "State of Emergency"?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/118634/meaning-of-what-are-they-upto" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Meaning of 'What are they upto?'
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/70513/why-would-aliens-ally-with-humans-against-other-humans" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why would aliens ally with humans against other humans?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/48848/what-kind-of-people-can-answer-this-riddle" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What kind of people can answer this riddle?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-skeptics" title="Skeptics Stack Exchange"></div><a href="http://skeptics.stackexchange.com/questions/37119/did-noaa-publish-a-fake-map-with-temperature-data-it-doesnt-have" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:212 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Did NOAA publish a fake map with temperature data it doesn't have?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/2130264/sum-of-random-decreasing-numbers-between-0-and-1-does-it-converge" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Sum of random decreasing numbers between 0 and 1: does it converge??
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/70602/how-does-one-explain-transformation-magic" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How does one explain transformation magic?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-movies" title="Movies &amp; TV Stack Exchange"></div><a href="http://movies.stackexchange.com/questions/68213/what-is-the-meaning-behind-this-scene-in-american-sniper-where-the-nurses-ignore" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:367 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the meaning behind this scene in American Sniper where the nurses ignore Bradley Cooper and his crying baby?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/118511/how-common-is-the-use-of-the-word-tee-for-t-shirt-in-the-uk-or-the-us" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How common is the use of the word "tee" for T-shirt in the UK or the US?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="http://travel.stackexchange.com/questions/87650/do-americans-need-special-permits-to-rent-and-drive-a-car-in-france" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do Americans need special permits to rent and drive a car in France?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="http://cooking.stackexchange.com/questions/78197/do-tomato-based-sauces-change-enhance-flavour-when-left-in-the-fridge" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do tomato-based sauces change/enhance flavour when left in the fridge?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-writers" title="Writers Stack Exchange"></div><a href="http://writers.stackexchange.com/questions/26576/how-do-i-improve-beige-text" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:166 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I improve "beige" text?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/150540/is-it-completely-safe-to-publish-an-ssh-public-key" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it completely safe to publish an ssh public key?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-diy" title="Home Improvement Stack Exchange"></div><a href="http://diy.stackexchange.com/questions/108212/what-type-of-plywood-for-shower-bench" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:73 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What type of plywood for shower bench?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-bicycles" title="Bicycles Stack Exchange"></div><a href="http://bicycles.stackexchange.com/questions/45204/at-what-point-does-a-road-become-too-busy-fast-to-ride-on-safely" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:126 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    At what point does a road become too busy/fast to ride on safely?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/70560/kingdom-with-helpful-bands-of-mercenaries-avoiding-devolving-into-bandits" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Kingdom with helpful bands of mercenaries; avoiding devolving into bandits
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-retrocomputing" title="Retrocomputing Stack Exchange"></div><a href="http://retrocomputing.stackexchange.com/questions/2244/how-was-early-randomness-generated" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:648 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How was early randomness generated?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-cs" title="Computer Science Stack Exchange"></div><a href="http://cs.stackexchange.com/questions/69936/why-are-some-games-np-complete" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:419 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why are some games np-complete?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/84609/is-it-reasonable-for-my-project-manager-to-expect-no-bugs-in-production" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it reasonable for my project manager to expect no bugs in production?
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="http://stackoverflow.com/questions/15078362/asn-1-compilers#" class="show-more js-show-more js-gps-track" data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="http://stackoverflow.com/feeds/question/15078362" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/15078362/ivc/637f');});
+</script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/15078362/ivc/637f" class="dno" alt="" width="0" height="0"&gt;&lt;/div&gt;
+</noscript><div style="display:none" id="prettify-lang">lang-c</div></div>
+
+
+        </div>
+    </div><script async="" src="./c - ASN.1 compilers - Stack Overflow_files/clc.min.js"></script>
+    <div id="footer" class="categories">
+        <div class="footerwrap">            
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="http://stackoverflow.com/tour">tour</a>
+                    <a href="http://stackoverflow.com/help">help</a>
+                    <a href="http://stackoverflow.blog/?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com/">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="https://www.stackoverflowbusiness.com/advertise">advertising info</a>
+                        <a href="http://stackoverflow.com/jobs/directory/developer-jobs">developer jobs directory</a>
+
+                    <a onclick="StackExchange.switchMobile(&quot;on&quot;)">mobile</a>
+                    <b><a href="http://stackoverflow.com/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                        <li><a href="http://softwareengineering.stackexchange.com/" title="professionals, academics, and students working within the systems development life cycle who care about creating, delivering, and maintaining software responsibly">Software Engineering</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Development</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="information security professionals">Information Security</a></li>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Wolfram Mathematica">Mathematica</a></li>
+                        <li><a href="http://salesforce.stackexchange.com/" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="http://expressionengine.stackexchange.com/" title="administrators, end users, developers and designers for ExpressionEngine® CMS">ExpressionEngine® Answers</a></li>
+                        <li><a href="http://crypto.stackexchange.com/" title="software developers, mathematicians and others interested in cryptography">Cryptography</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://codereview.stackexchange.com/" title="peer programmer code reviews">Code Review</a></li>
+                        <li><a href="http://magento.stackexchange.com/" title="users of the Magento e-Commerce platform">Magento</a></li>
+                        <li><a href="http://dsp.stackexchange.com/" title="practitioners of the art and science of signal, image and video processing">Signal Processing</a></li>
+                        <li><a href="http://raspberrypi.stackexchange.com/" title="users and developers of hardware and software for Raspberry Pi">Raspberry Pi</a></li>
+                        <li><a href="http://codegolf.stackexchange.com/" title="programming puzzle enthusiasts and code golfers">Programming Puzzles &amp; Code Golf</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://graphicdesign.stackexchange.com/" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="http://movies.stackexchange.com/" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="http://music.stackexchange.com/" title="musicians, students, and enthusiasts">Music: Practice &amp; Theory</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="http://money.stackexchange.com/" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="http://academia.stackexchange.com/" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (8)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://ell.stackexchange.com/" title="speakers of other languages learning English">English Language Learners</a></li>
+                        <li><a href="http://japanese.stackexchange.com/" title="students, teachers, and linguists wanting to discuss the finer points of the Japanese language">Japanese Language</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                        <li><a href="http://anime.stackexchange.com/" title="anime and manga fans">Anime &amp; Manga</a></li>
+                        <li><a href="http://mechanics.stackexchange.com/" title="mechanics and DIY enthusiast owners of cars, trucks, and motorcycles">Motor Vehicle Maintenance &amp; Repair</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (17)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://chemistry.stackexchange.com/" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="http://biology.stackexchange.com/" title="biology researchers, academics, and students">Biology</a></li>
+                        <li><a href="http://cs.stackexchange.com/" title="students, researchers and practitioners of computer science">Computer Science</a></li>
+                        <li><a href="http://philosophy.stackexchange.com/" title="those interested in the study of the fundamental nature of knowledge, reality, and existence">Philosophy</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (3)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://meta.stackexchange.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="https://www.stackoverflowbusiness.com/talent">Stack Overflow Talent</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo © 2017 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2017.2.7.24999
+            </div>
+                </div>
+    </div>
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Stack Overflow works best with JavaScript enabled&lt;img src="https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+        <script> setTimeout(function() { $("#adzerk-user-match").remove(); }, 2000);</script>
+
+    <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                ga('create', 'UA-5620270-1');
+                ga('create', 'UA-5620270-59', {name: 'pageData', sampleRate: 5 });
+                ga('set', 'dimension2', '|c|protocols|asn.1|');
+                ga('pageData.set', 'dimension2', '|c|protocols|asn.1|');
+                ga('send', 'pageview');
+                ga('pageData.send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+                qc.async = true;
+                qc.src = (ssl ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+                s.parentNode.insertBefore(qc, s);
+                _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+                            var sc=document.createElement('script');
+                sc.async=true;
+                sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+                s.parentNode.insertBefore(sc, s);
+                _comscore.push({ c1: "2", c2: "17440561" });
+        })();
+
+    </script>
+        
+    
+            <script type="text/javascript">
+                
+                (function(appendChild) {
+                    Node.prototype.appendChild = function() {
+                        var parent = this;
+                        var newNode = arguments[0];
+                        if (parent.nodeName === 'HEAD'
+                            && newNode
+                            && newNode.nodeName === 'SCRIPT'
+                            && newNode.src) {
+                            
+                            window.setTimeout(function() {
+                                var result = newNode.src.match(/^https:\/\/maps\.googleapis\.com\/maps\/api\/place\/js\/(\w+)Service\./i) || [];
+                                var service = result[1];
+                                if (service) {
+                                    if (service === 'Autocompletion') service =  2;
+                                    else if (service === 'Place') service = 1;
+                                    else service = 0;
+                                    StackExchange.using('gps', function() {
+                                        StackExchange.gps.track('google_maps_places_api.call', { service: service });
+                                    });
+                                }
+                            }, 0);
+                        }
+                        return appendChild.apply(this, arguments);
+                    };
+                })(Node.prototype.appendChild);
+            </script>
+    
+</body></html>
