@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://www.veryarm.com/296.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM</title>
+<script>
+window._deel = {
+    name: 'VeryARM',
+    url: 'http://www.veryarm.com/wp-content/themes/D9',
+    rss: 'http://www.veryarm.com/feed',
+    ajaxpager: '',
+    maillist: '',
+    maillistCode: '',
+    commenton: 1,
+    roll: [1,99],
+    tougaoContentmin: 200,
+    tougaoContentmax: 5000,
+    appkey: {
+    	tqq: '801494063',
+    	tsina: '1106777879',
+    	t163: '',
+    	tsohu: ''
+    }
+}
+</script>
+
+<link rel="dns-prefetch" href="http://cdn.bootcss.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="stylesheet" id="highlight-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/github-gist.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="highlight-custom-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/github-gist.css" type="text/css" media="all">
+<link rel="stylesheet" id="style-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/dashicons.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="menu-icons-extra-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/extra.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="toc-screen-css" href="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/screen.min.css" type="text/css" media="all">
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/jquery.min.js"></script>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/highlight.min.js"></script>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/d8.js"></script>
+<link rel="https://api.w.org/" href="http://www.veryarm.com/wp-json/">
+<link rel="prev" title="ARM芯片服务器领域的低功耗优势正逐渐消失" href="http://www.veryarm.com/289.html">
+<link rel="next" title="工具链商CodeSourcery由明导国际(Mentor Graphics)收购" href="http://www.veryarm.com/306.html">
+<link rel="canonical" href="http://www.veryarm.com/296.html">
+<link rel="shortlink" href="http://www.veryarm.com/?p=296">
+<link rel="alternate" type="application/json+oembed" href="http://www.veryarm.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.veryarm.com%2F296.html">
+<link rel="alternate" type="text/xml+oembed" href="http://www.veryarm.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.veryarm.com%2F296.html&amp;format=xml">
+<meta name="keywords" content="Codesourcery, gcc, gnu, Linux, 交叉编译器, 知识经验">
+<meta name="description" content="命名规则 交叉编译工具链的命名规则为：arch [-vendor] [-os] [-(gnu)eabi]  	arch - 体系架构，如ARM，MIPS 	vendor - 工具链提供商 	os - 目标操作系统 	eabi - 嵌入式应用二进制接口（Embedded Application Binary Interface）  根据对操作系统的支持与否，ARM GCC可分为支持和不支持操作系统，如  	arm-none-eabi：这个">
+<style>.article-content{font-size: 14px;}@media (max-width:640px){.article-content{font-size:16px}}</style><!--[if lt IE 9]><script src="http://www.veryarm.com/wp-content/themes/D9/js/html5.js"></script><![endif]-->
+</head>
+<body class="post-template-default single single-post postid-296 single-format-standard">
+<div class="navbar-wrap">
+<div class="navbar">
+		<div class="logo"><a href="http://www.veryarm.com/" title="VeryARM">VeryARM</a></div>
+		<ul class="nav">
+			<li id="menu-item-390" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-390"><a href="http://www.veryarm.com/news"><i class="_mi _before dashicons dashicons-format-image" aria-hidden="true"></i><span>新闻</span></a></li>
+<li id="menu-item-351" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-351"><a href="http://www.veryarm.com/knowledge"><i class="_mi _before dashicons dashicons-book-alt" aria-hidden="true"></i><span>知识经验</span></a></li>
+<li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-365"><a href="http://www.veryarm.com/cross-tools"><i class="_mi _before dashicons dashicons-admin-tools" aria-hidden="true"></i><span>工具链</span></a>
+<ul class="sub-menu">
+	<li id="menu-item-367" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-367"><a title="Codesourcery ARM Linux交叉编译器" href="http://www.veryarm.com/arm-none-linux-gnueabi-gcc">arm-none-linux-gnueabi-gcc下载</a></li>
+	<li id="menu-item-366" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-366"><a title="Linaro ARM Linux交叉编译器" href="http://www.veryarm.com/arm-linux-gnueabihf-gcc">arm-linux-gnueabihf-gcc下载</a></li>
+	<li id="menu-item-708" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-708"><a title="Linaro ARMv8 64位编译器" href="http://www.veryarm.com/aarch64-linux-gnu-gcc">aarch64-linux-gnu-gcc下载</a></li>
+	<li id="menu-item-740" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-740"><a title="Codesourcery ARM EABI交叉编译器" href="http://www.veryarm.com/arm-none-elf-gcc">arm-none-elf-gcc下载</a></li>
+	<li id="menu-item-368" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368"><a title="GNU官方 ARM EABI交叉编译器" href="http://www.veryarm.com/arm-none-eabi-gcc">arm-none-eabi-gcc下载</a></li>
+</ul>
+</li>
+<li id="menu-item-439" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-439"><a href="http://www.veryarm.com/app"><i class="_mi _before dashicons dashicons-controls-repeat" aria-hidden="true"></i><span>应用移植</span></a></li>
+<li id="menu-item-1295" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1295"><a href="http://www.veryarm.com/study"><i class="_mi _before dashicons dashicons-welcome-view-site" aria-hidden="true"></i><span>入门教程</span></a>
+<ul class="sub-menu">
+	<li id="menu-item-1455" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1455"><a href="http://www.veryarm.com/videos">视频教程</a></li>
+</ul>
+</li>
+		</ul>
+		<div class="menu pull-right">
+			<form method="get" class="dropdown search-form" action="http://www.veryarm.com/">
+				<input class="search-input" name="s" type="text" placeholder="输入关键字搜索" x-webkit-speech=""><input class="btn btn-success search-submit" type="submit" value="搜索">
+				<ul class="dropdown-menu search-suggest"></ul>
+			</form><!--
+			<div class="btn-group pull-left">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#feed">订阅</button>
+							</div>-->
+		</div>
+</div>
+</div>
+
+<header class="header"><!--
+	<div class="speedbar">
+				<div class="toptip"><strong class="text-success">最新消息：</strong>站长QQ：<strong>2956311905</strong>，欢迎交流~</div>
+	</div>-->
+</header>
+<section class="container">
+	<div class="content-wrap">
+	<div class="content">
+		<div class="breadcrumbs">你的位置：<a href="http://www.veryarm.com/">VeryARM</a> <small>&gt;</small> <a href="http://www.veryarm.com/knowledge">知识经验</a> <small>&gt;</small> <span class="muted">arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别</span></div>
+				<header class="article-header">
+			<h1 class="article-title"><a href="http://www.veryarm.com/296.html">arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别</a></h1>
+			<div class="meta">
+				<span class="muted"><a href="http://www.veryarm.com/knowledge"><i class="icon-list-alt icon12"></i> 知识经验</a></span>								<time class="muted"><i class="ico icon-time icon12"></i> 3年前 (2014-08-09)</time>
+				<span class="muted"><i class="ico icon-eye-open icon12"></i> 43595浏览</span>
+				<span class="muted"><i class="icon-comment icon12"></i> <a href="http://www.veryarm.com/296.html#comments">5评论</a></span>							</div>
+		</header>
+
+				
+		<article class="article-content">
+			<div id="toc_container" class="no_bullets"><p class="toc_title">目录</p><ul class="toc_list"><li><a href="http://www.veryarm.com/296.html#i">命名规则</a></li><li><a href="http://www.veryarm.com/296.html#i-2">&nbsp;实例</a><ul><li><a href="http://www.veryarm.com/296.html#1arm-none-eabi-gcc">1、arm-none-eabi-gcc</a></li><li><a href="http://www.veryarm.com/296.html#2arm-none-linux-gnueabi-gcc">2、arm-none-linux-gnueabi-gcc</a></li><li><a href="http://www.veryarm.com/296.html#3arm-eabi-gcc">3、arm-eabi-gcc</a></li><li><a href="http://www.veryarm.com/296.html#4armcc">4、armcc</a></li><li><a href="http://www.veryarm.com/296.html#5arm-none-uclinuxeabi-gcc_arm-none-symbianelf-gcc">5、arm-none-uclinuxeabi-gcc 和&nbsp;arm-none-symbianelf-gcc</a></li></ul></li><li><a href="http://www.veryarm.com/296.html#Codesourcery">Codesourcery</a></li><li><a href="http://www.veryarm.com/296.html#ABI_EABI">ABI 和 EABI</a></li><li><a href="http://www.veryarm.com/296.html#arm-linux-gnueabi-gcc_arm-linux-gnueabihf-gcc">arm-linux-gnueabi-gcc 和 arm-linux-gnueabihf-gcc</a></li><li><a href="http://www.veryarm.com/296.html#i-3">参考资料</a></li></ul></div>
+<h2><span id="i">命名规则</span></h2>
+<p>交叉编译工具链的命名规则为：<strong>arch [-vendor] [-os] [-(gnu)eabi]</strong></p>
+<ul>
+<li><strong>arch</strong> - 体系架构，如ARM，MIPS</li>
+<li><strong>vendor</strong> - 工具链提供商</li>
+<li><strong>os</strong> - 目标操作系统</li>
+<li><strong>eabi</strong> - 嵌入式应用二进制接口（<span style="color: #3d3d3d;">Embedded Application Binary Interface</span>）</li>
+</ul>
+<p><span style="color: #454545;">根据对操作系统的支持与否，ARM GCC可分为支持和不支持操作系统，如</span></p>
+<ul>
+<li><strong>arm-none-eabi</strong>：这个是没有操作系统的，自然不可能支持那些跟操作系统关系密切的函数，比如fork(2)。他使用的是newlib这个专用于嵌入式系统的C库。</li>
+<li><strong>arm-none-<span style="color: rgb(0, 0, 255);">linux</span>-eabi</strong>：用于Linux的，使用Glibc</li>
+</ul>
+<p>&nbsp;</p>
+<h2><span id="i-2">&nbsp;实例</span></h2>
+<h3><span id="1arm-none-eabi-gcc"><strong>1、arm-none-eabi-gcc</strong></span></h3>
+<p>（<span style="text-decoration: underline;">ARM architecture</span>，<span style="text-decoration: underline;"><span style="color: rgb(255, 0, 0); text-decoration: underline;">no</span> vendor</span>，<span style="text-decoration: underline;"><span style="color: rgb(61, 61, 61); text-decoration: underline;"><span style="color: rgb(255, 0, 0); text-decoration: underline;">not</span> target an operating system</span></span>，<span style="text-decoration: underline;"><span style="color: rgb(61, 61, 61); text-decoration: underline;">complies with the ARM EABI</span></span>）<br>
+用于编译 ARM 架构的裸机系统（包括 ARM Linux 的 boot、kernel，<span style="color: #ff0000;">不适用编译 Linux 应用&nbsp;Application</span>），一般适合 ARM7、Cortex-M 和&nbsp;Cortex-R 内核的芯片使用，所以不支持那些跟操作系统关系密切的函数，比如fork(2)，他使用的是 newlib 这个专用于嵌入式系统的C库。</p>
+<h3><span id="2arm-none-linux-gnueabi-gcc"><strong>2、arm-none-linux-gnueabi-gcc</strong></span></h3>
+<p>(<span style="text-decoration: underline;">ARM architecture</span>, <span style="text-decoration: underline;"><span style="color: rgb(255, 0, 0); text-decoration: underline;">no</span> vendor</span>, <span style="color: #3d3d3d;"><span style="text-decoration: underline;">creates binaries that run on the <strong><span style="color: rgb(0, 128, 0); text-decoration: underline;">Linux</span></strong> operating system</span>, <span style="text-decoration: underline;">and uses the GNU EABI</span></span>)</p>
+<p>主要用于基于ARM架构的Linux系统，可用于编译 ARM 架构的 u-boot、Linux内核、linux应用等。arm-none-linux-gnueabi基于GCC，使用<span style="color: #454545;">Glibc库，</span>经过 Codesourcery 公司优化过推出的编译器。arm-none-linux-gnueabi-xxx&nbsp;交叉编译工具的浮点运算非常优秀。一般ARM9、ARM11、Cortex-A 内核，带有 Linux 操作系统的会用到。</p>
+<h3><span id="3arm-eabi-gcc"><strong>3、arm-eabi-gcc</strong></span></h3>
+<p>Android ARM 编译器。</p>
+<h3><span id="4armcc"><strong>4、armcc</strong></span></h3>
+<p>ARM 公司推出的编译工具，<span style="text-decoration: underline;">功能和 arm-none-eabi 类似</span>，可以编译裸机程序（u-boot、kernel），但是不能编译 Linux 应用程序。armcc一般和ARM开发工具一起，Keil MDK、ADS、RVDS和DS-5中的编译器都是armcc，所以 armcc 编译器都是收费的（爱国版除外，呵呵~~）。</p>
+<h3><span id="5arm-none-uclinuxeabi-gcc_arm-none-symbianelf-gcc"><strong>5、<span style="color: #454545;">arm-none-uclinuxeabi-gcc 和&nbsp;arm-none-symbianelf-gcc</span></strong></span></h3>
+<p><span style="color: #454545;">arm-none-uclinuxeabi 用于<strong><span style="text-decoration: underline;">uCLinux</span></strong>，使用Glibc。</span></p>
+<p><span style="color: #454545;">arm-none-symbianelf 用于<strong><span style="text-decoration: underline;">symbian</span></strong>，没用过，不知道C库是什么</span>&nbsp;。</p>
+<p>&nbsp;</p>
+<h2 style="color: #3d3d3d;"><span id="Codesourcery">Codesourcery</span></h2>
+<p><strong>Codesourcery</strong>推出的产品叫Sourcery G++ Lite Edition，其中基于command-line的编译器是免费的，在官网上可以下载，而其中包含的IDE和debug 工具是收费的，当然也有30天试用版本的。</p>
+<p>目前<span style="color: #000000;">CodeSourcery已经由</span><span style="color: #000000;">明导国际(Mentor Graphics)收购，所以原本的网站风格已经全部变为&nbsp;Mentor 样式，但是 Sourcery G++ Lite Edition 同样可以注册后免费下载。</span></p>
+<p>Codesourcery一直是在做ARM目标 GCC 的开发和优化，它的ARM GCC在目前在市场上非常优秀，很多 patch 可能还没被gcc接受，所以还是应该直接用它的（而且他提供Windows下[mingw交叉编译的]和Linux下的二进制版本，比较方便；如果不是很有时间和兴趣，不建议下载 src 源码包自己编译，很麻烦，Codesourcery给的shell脚本很多时候根本没办法直接用，得自行提取关键的部分手工执行，又费精力又费时间，如果想知道细节，其实不用自己编译一遍，看看他是用什么步骤构建的即可，如果你对交叉编译器感兴趣的话。</p>
+<h2><span id="ABI_EABI">ABI 和 EABI</span></h2>
+<p><strong>ABI</strong>：二进制应用程序接口(Application Binary Interface (ABI) for the ARM Architecture)。在计算机中，应用二进制接口描述了应用程序（或者其他类型）和操作系统之间或其他应用程序的低级接口。</p>
+<p><strong>EABI</strong>：嵌入式ABI。嵌入式应用二进制接口指定了文件格式、数据类型、寄存器使用、堆积组织优化和在一个嵌入式软件中的参数的标准约定。开发者使用自己的汇编语言也可以使用 EABI 作为与兼容的编译器生成的汇编语言的接口。</p>
+<p>两者主要区别是，ABI是计算机上的，EABI是嵌入式平台上（如ARM，MIPS等）。</p>
+<p>&nbsp;</p>
+<h2><span id="arm-linux-gnueabi-gcc_arm-linux-gnueabihf-gcc">arm-linux-gnueabi-gcc 和 arm-linux-gnueabihf-gcc</span></h2>
+<p>两个交叉编译器分别适用于 armel 和 armhf 两个不同的架构，armel 和 armhf 这两种架构在对待浮点运算采取了不同的策略（有 fpu 的 arm 才能支持这两种浮点运算策略）。</p>
+<p>其实这两个交叉编译器只不过是 gcc 的选项 <span style="text-decoration: underline;">-mfloat-abi</span> 的默认值不同。gcc 的选项 -mfloat-abi 有三种值<strong> soft、softfp、hard</strong>（其中后两者都要求 arm 里有 fpu 浮点运算单元，soft 与后两者是兼容的，但 softfp 和 hard 两种模式互不兼容）：<br>
+<strong>soft：</strong> 不用fpu进行浮点计算，即使有fpu浮点运算单元也不用，而是使用软件模式。<br>
+<strong>softfp：</strong> armel架构（对应的编译器为&nbsp;<span style="text-decoration: underline;">arm-linux-gnueabi-gcc&nbsp;</span>）采用的默认值，用fpu计算，但是传参数用普通寄存器传，这样中断的时候，只需要保存普通寄存器，中断负荷小，但是参数需要转换成浮点的再计算。<br>
+<strong>hard：</strong> armhf架构（对应的编译器&nbsp;<span style="text-decoration: underline;">arm-linux-gnueabi<span style="color: #0000ff; text-decoration: underline;">hf-gcc</span></span><span style="color: #0000ff;">&nbsp;</span>）采用的默认值，用fpu计算，传参数也用fpu中的浮点寄存器传，省去了转换，性能最好，但是中断负荷高。</p>
+<p>把以下测试使用的C文件内容保存成 mfloat.c：<br>
+#include &lt;stdio.h&gt;<br>
+int main(void)<br>
+{<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>double a,b,c;<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>a = 23.543;<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>b = 323.234;<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>c = b/a;<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>printf(“the 13/2 = %f\n”, c);<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>printf(“hello world !\n”);<br>
+<span style="color: #000000;">&nbsp; &nbsp;&nbsp;</span>return 0;<br>
+}</p>
+<p><strong>1、使用 arm-linux-gnueabihf-gcc 编译，使用“-v”选项以获取更详细的信息：</strong><br>
+<span style="color: #0000ff;"># arm-linux-gnueabihf-gcc -v mfloat.c</span><br>
+COLLECT_GCC_OPTIONS=’-v’ ‘-march=armv7-a’ ‘-mfloat-abi=hard’ ‘-mfpu=vfpv3-d16′ ‘-mthumb’<br>
+-mfloat-abi=<span style="color: #ff0000;">hard</span></p>
+<p>可看出使用hard硬件浮点模式。</p>
+<p><strong>2、使用 arm-linux-gnueabi-gcc 编译：</strong><br>
+<span style="color: #0000ff;"># arm-linux-gnueabi-gcc -v mfloat.c</span><br>
+COLLECT_GCC_OPTIONS=’-v’ ‘-march=armv7-a’ ‘-mfloat-abi=softfp’ ‘-mfpu=vfpv3-d16′ ‘-mthumb’<br>
+-mfloat-abi=<span style="color: #ff0000;">softfp</span></p>
+<p>可看出使用softfp模式。</p>
+<p>&nbsp;</p>
+<div style="width: 570px" class="wp-caption aligncenter"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/1461f9b2f976c97cbf509fac059688a1.png" alt="" width="560" height="238"><p class="wp-caption-text">交叉编译工具</p></div>
+<h2><span id="i-3">参考资料</span></h2>
+<ol>
+<li>交叉编译器 arm-linux-gnueabi 和 arm-linux-gnueabihf 的区别：<a href="http://www.cnblogs.com/xiaotlili/p/3306100.html" target="_blank">http://www.cnblogs.com/xiaotlili/p/3306100.html</a></li>
+<li>arm-none-linux-gnueabi，arm-none-eabi 与arm-eabi 区别：<a href="http://blog.csdn.net/mantis_1984/article/details/21049273" target="_blank">http://blog.csdn.net/mantis_1984/article/details/21049273</a></li>
+<li>What's the difference between arm-linux- / arm-none-linux-gnueabi- / arm-fsl-linux-gnueabi- in LTIB?<a href="https://community.freescale.com/thread/313490" target="_blank">https://community.freescale.com/thread/313490</a></li>
+</ol>
+		</article>
+
+		
+		<footer class="article-footer">
+			<div class="article-tags">继续浏览有关 <a href="http://www.veryarm.com/tag/codesourcery" rel="tag">Codesourcery</a><a href="http://www.veryarm.com/tag/gcc" rel="tag">gcc</a><a href="http://www.veryarm.com/tag/gnu" rel="tag">gnu</a><a href="http://www.veryarm.com/tag/linux" rel="tag">Linux</a><a href="http://www.veryarm.com/tag/%e4%ba%a4%e5%8f%89%e7%bc%96%e8%af%91%e5%99%a8" rel="tag">交叉编译器</a> 的文章</div>					</footer>
+
+		<nav class="article-nav">
+			<span class="article-nav-prev">上一篇 <a href="http://www.veryarm.com/289.html" rel="prev">ARM芯片服务器领域的低功耗优势正逐渐消失</a></span>
+			<span class="article-nav-next"><a href="http://www.veryarm.com/306.html" rel="next">工具链商CodeSourcery由明导国际(Mentor Graphics)收购</a> 下一篇</span>
+		</nav>
+
+		<div class="relates">
+			<h3>相关文章</h3>
+			<ul>
+<li><a href="http://www.veryarm.com/1640.html">11个无用而有趣的Linux终端彩蛋</a></li><li><a href="http://www.veryarm.com/1551.html">从航天应用看Linux、VxWorks和uC/OSII</a></li><li><a href="http://www.veryarm.com/1485.html">Linux、Ubuntu/RedHat、ARM Linux区别联系</a></li><li><a href="http://www.veryarm.com/1471.html">如何成为一名优秀的Linux运维人员？</a></li><li><a href="http://www.veryarm.com/1462.html">10年Windows与Linux程序员的区别</a></li><li><a href="http://www.veryarm.com/1397.html">Ubuntu Linux常用快捷键</a></li></ul>		</div>
+	
+
+		
+		<div id="respond" class="no_webshot">
+		<form action="http://www.veryarm.com/wp-comments-post.php" method="post" id="commentform">
+		
+		<div class="comt-title">
+			<div class="comt-avatar pull-left">
+				<img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s28.jpg" class="avatar avatar-28" width="28" height="28">			</div>
+			<div class="comt-author pull-left">
+			发表我的评论			</div>
+			<a id="cancel-comment-reply-link" class="pull-right" href="javascript:;">取消评论</a>
+		</div>
+		
+		<div class="comt">
+			<div class="comt-box">
+				<textarea placeholder="写点什么..." class="input-block-level comt-area" name="comment" id="comment" cols="100%" rows="3" tabindex="1" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(&#39;submit&#39;).click();return false};"></textarea>
+				<div class="comt-ctrl">
+					<button class="btn btn-primary pull-right" type="submit" name="submit" id="submit" tabindex="5"><i class="icon-ok-circle icon-white icon12"></i> 提交评论</button>
+					<div class="comt-tips pull-right"><input type="hidden" name="comment_post_ID" value="296" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="ed782c3d3b"></p><p style="display: none;"></p></div>
+					<span data-type="comment-insert-smilie" class="muted comt-smilie"><i class="icon-thumbs-up icon12"></i> 表情</span>
+					<span class="muted comt-mailme"><label for="comment_mail_notify" class="checkbox inline" style="padding-top:0"><input type="checkbox" name="comment_mail_notify" id="comment_mail_notify" value="comment_mail_notify" checked="checked">有人回复时邮件通知我</label></span>
+				</div>
+			</div>
+
+												<div class="comt-comterinfo" id="comment-author-info">
+						<h4>Hi，您需要填写昵称和邮箱！</h4>
+						<ul>
+							<li class="form-inline"><label class="hide" for="author">昵称</label><input class="ipt" type="text" name="author" id="author" value="" tabindex="2" placeholder="昵称"><span class="help-inline">昵称 (必填)</span></li>
+							<li class="form-inline"><label class="hide" for="email">邮箱</label><input class="ipt" type="text" name="email" id="email" value="" tabindex="3" placeholder="邮箱"><span class="help-inline">邮箱 (必填)</span></li>
+							<li class="form-inline"><label class="hide" for="url">网址</label><input class="ipt" type="text" name="url" id="url" value="" tabindex="4" placeholder="网址"><span class="help-inline">网址</span></li>
+						</ul>
+					</div>
+									</div>
+
+		
+	<input type="hidden" id="ak_js" name="ak_js" value="1486254307044"></form>
+	</div>
+<div id="postcomments">
+	<h3 id="comments">
+		网友最新评论<b> (5)</b>
+	</h3>
+	<ol class="commentlist">
+		    <li class="comment even thread-even depth-1" id="comment-33">
+        <div class="c-avatar"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36"></div>
+            <div class="c-main" id="div-comment-33">
+            很久没有看到这么好的资源了。
+            
+            <div class="c-meta">
+                <span class="c-author"><a href="http://www.hongnianwang.com/" rel="external nofollow" class="url">鸿念网</a></span>
+                3年前 (2014-08-17)
+                <a rel="nofollow" class="comment-reply-link" href="http://www.veryarm.com/296.html?replytocom=33#respond" onclick="return addComment.moveForm( &quot;div-comment-33&quot;, &quot;33&quot;, &quot;respond&quot;, &quot;296&quot; )" aria-label="回复给鸿念网">回复</a>
+                <a class="comment-edit-link" href="http://www.veryarm.com/296.html">编辑</a>
+            </div>
+        </div></li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="comment-697">
+        <div class="c-avatar"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36"></div>
+            <div class="c-main" id="div-comment-697">
+            灰常好
+            
+            <div class="c-meta">
+                <span class="c-author"><a href="http://weibo.com/toycc2h" rel="external nofollow" class="url">霍圆餠</a></span>
+                1年前 (2016-01-26)
+                <a rel="nofollow" class="comment-reply-link" href="http://www.veryarm.com/296.html?replytocom=697#respond" onclick="return addComment.moveForm( &quot;div-comment-697&quot;, &quot;697&quot;, &quot;respond&quot;, &quot;296&quot; )" aria-label="回复给霍圆餠">回复</a>
+                <a class="comment-edit-link" href="http://www.veryarm.com/296.html">编辑</a>
+            </div>
+        </div></li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="comment-730">
+        <div class="c-avatar"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36"></div>
+            <div class="c-main" id="div-comment-730">
+            相信博主的说，非常支持你
+            
+            <div class="c-meta">
+                <span class="c-author"><a href="http://www.douban.com/people/96206743/" rel="external nofollow" class="url">苏梦瑶</a></span>
+                11个月前 (03-07)
+                <a rel="nofollow" class="comment-reply-link" href="http://www.veryarm.com/296.html?replytocom=730#respond" onclick="return addComment.moveForm( &quot;div-comment-730&quot;, &quot;730&quot;, &quot;respond&quot;, &quot;296&quot; )" aria-label="回复给苏梦瑶">回复</a>
+                <a class="comment-edit-link" href="http://www.veryarm.com/296.html">编辑</a>
+            </div>
+        </div></li><!-- #comment-## -->
+	</ol>
+	<div class="pagenav">
+			</div>
+</div>
+
+		
+	</div>
+</div>
+<aside class="sidebar">	
+<div class="widget d_textbanner"><a class="style02" href="http://www.veryarm.com/study"><strong></strong><h2>新出炉，ARM Linux入门教程</h2><p>讴歌力作，全网只此一家，嵌入式快速入门必备！</p></a></div><div class="widget d_tag"><h3 class="widget_tit">标签云</h3><div class="d_tags"><a href="http://www.veryarm.com/tag/arm">ARM (43)</a><a href="http://www.veryarm.com/tag/linux">Linux (34)</a><a href="http://www.veryarm.com/tag/arm-linux">ARM Linux (11)</a><a href="http://www.veryarm.com/tag/%e7%89%a9%e8%81%94%e7%bd%91">物联网 (9)</a><a href="http://www.veryarm.com/tag/64%e4%bd%8d">64位 (8)</a><a href="http://www.veryarm.com/tag/armv8">ARMv8 (7)</a><a href="http://www.veryarm.com/tag/amd">AMD (6)</a><a href="http://www.veryarm.com/tag/%e6%9c%8d%e5%8a%a1%e5%99%a8">服务器 (6)</a><a href="http://www.veryarm.com/tag/mbed-os">mbed os (6)</a><a href="http://www.veryarm.com/tag/ubuntu">Ubuntu (6)</a><a href="http://www.veryarm.com/tag/%e9%ab%98%e9%80%9a">高通 (5)</a><a href="http://www.veryarm.com/tag/x86">X86 (5)</a><a href="http://www.veryarm.com/tag/%e7%a7%bb%e6%a4%8d">移植 (5)</a><a href="http://www.veryarm.com/tag/windows">Windows (5)</a><a href="http://www.veryarm.com/tag/%e8%8b%b1%e7%89%b9%e5%b0%94">英特尔 (4)</a><a href="http://www.veryarm.com/tag/%e5%b5%8c%e5%85%a5%e5%bc%8f">嵌入式 (4)</a><a href="http://www.veryarm.com/tag/arm%e6%9c%8d%e5%8a%a1%e5%99%a8">ARM服务器 (4)</a><a href="http://www.veryarm.com/tag/atmel">Atmel (4)</a><a href="http://www.veryarm.com/tag/%e4%b8%89%e6%98%9f">三星 (3)</a><a href="http://www.veryarm.com/tag/%e5%be%ae%e8%bd%af">微软 (3)</a><a href="http://www.veryarm.com/tag/ucos">uC/OS (3)</a><a href="http://www.veryarm.com/tag/vxworks">VxWorks (3)</a><a href="http://www.veryarm.com/tag/%e8%8b%b9%e6%9e%9c">苹果 (3)</a><a href="http://www.veryarm.com/tag/android">Android (3)</a><a href="http://www.veryarm.com/tag/mbed">mbed (3)</a><a href="http://www.veryarm.com/tag/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f">操作系统 (3)</a><a href="http://www.veryarm.com/tag/cortex-m7">Cortex-M7 (3)</a><a href="http://www.veryarm.com/tag/arm%e5%8f%91%e5%b1%95%e5%8f%b2">ARM发展史 (3)</a><a href="http://www.veryarm.com/tag/arm%e6%9e%b6%e6%9e%84">ARM架构 (2)</a><a href="http://www.veryarm.com/tag/cortex-a50">Cortex-A50 (2)</a></div></div><div class="widget d_postlist"><h3 class="widget_tit">可能喜欢</h3><ul><li><a href="http://www.veryarm.com/1471.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/c1c75e523db32c7072f539abd7661ac8-220x150.jpg" alt="如何成为一名优秀的Linux运维人员？"></span><span class="text">如何成为一名优秀的Linux运维人员？</span><span class="muted">2015-04-17</span><span class="muted">1评论</span></a></li>
+<li><a href="http://www.veryarm.com/1700.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/f5a75e22b2cffbdf2cf1734bc23af234-220x150.jpg" alt="一段关于Unix与 Linux的暗黑史"></span><span class="text">一段关于Unix与 Linux的暗黑史</span><span class="muted">2015-07-12</span><span class="muted">3评论</span></a></li>
+<li><a href="http://www.veryarm.com/1688.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/99e4a578e0c189d1df833bb33adec751-220x150.jpg" alt="红帽发力云分析，发布一系列新产品"></span><span class="text">红帽发力云分析，发布一系列新产品</span><span class="muted">2015-07-05</span><span class="muted">4评论</span></a></li>
+<li><a href="http://www.veryarm.com/1604.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/50194988c73d5693a904689012acff05-220x150.jpg" alt="Linux Shell脚本面试25问"></span><span class="text">Linux Shell脚本面试25问</span><span class="muted">2015-06-15</span><span class="muted">3评论</span></a></li>
+<li><a href="http://www.veryarm.com/595.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/74019988730daace084bb9e437587093-220x150.jpg" alt="如何系统学习Linux系统？"></span><span class="text">如何系统学习Linux系统？</span><span class="muted">2014-10-12</span><span class="muted">1评论</span></a></li>
+<li><a href="http://www.veryarm.com/1381.html"><span class="thumbnail"><img src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/f07689ede30f775a3de74ca9d284840f-220x150.jpg" alt="进程与线程简单图解"></span><span class="text">进程与线程简单图解</span><span class="muted">2015-01-15</span><span class="muted">19评论</span></a></li>
+</ul></div><div class="widget d_comment"><h3 class="widget_tit">最新评论</h3><ul><li><a href="http://www.veryarm.com/1765.html#comments" title="细数2016年ARM发布的CPU和GPU上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/dd22917432b136006b659a8e42833635-s36.jpg" class="avatar avatar-36" width="36" height="36">无聊赚 <span class="muted">2周前 (01-24)说：<br>绝对的核心啊</span></a></li><li><a href="http://www.veryarm.com/cross-tools#comments" title="ARM交叉编译工具链上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36">mastermouse <span class="muted">3周前 (01-13)说：<br>可以开设一个，推动ARM Linux同行的交流，行业发展</span></a></li><li><a href="http://www.veryarm.com/440.html#comments" title="SQLite3移植到ARM Linux教程上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36">mastermouse <span class="muted">3周前 (01-13)说：<br>感谢，已经解决</span></a></li><li><a href="http://www.veryarm.com/cross-tools#comments" title="ARM交叉编译工具链上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36">Gooder <span class="muted">3周前 (01-13)说：<br>暂时没有呢</span></a></li><li><a href="http://www.veryarm.com/1485.html#comments" title="Linux、Ubuntu/RedHat、ARM Linux区别联系上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36">Gooder <span class="muted">3周前 (01-13)说：<br>可以，不过工作量非常大。</span></a></li><li><a href="http://www.veryarm.com/440.html#comments" title="SQLite3移植到ARM Linux教程上的评论"><img alt="" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/default-s36.jpg" class="avatar avatar-36" width="36" height="36">Gooder <span class="muted">3周前 (01-13)说：<br>少了这一步：export PATH=$PATH:/usr/local/arm-2</span></a></li></ul></div></aside></section>
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="copyright pull-left">
+		© 2017<!--
+		<a href="http://www.veryarm.com">VeryARM</a>-->
+		<a href="http://www.veryarm.com/about">联系我</a>
+		
+        </div>
+        <div class="trackcode pull-right">
+            <a href="http://www.miitbeian.gov.cn/" rel="external nofollow" target="_blank"></a>
+            沪ICP备15003216号 &nbsp; <script src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/z_stat.php" language="JavaScript"></script><script src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=4789349" target="_blank" title="站长统计">站长统计</a>        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/form.js"></script>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/front.min.js"></script>
+<script type="text/javascript" src="./arm交叉编译器gnueabi、none-eabi、arm-eabi、gnueabihf、gnueabi区别 - VeryARM_files/wp-embed.min.js"></script>
+<script type="text/javascript">$(document).ready(function(){$('pre,code').each(function(i,block){hljs.highlightBlock(block);});});</script>
+
+</body></html>

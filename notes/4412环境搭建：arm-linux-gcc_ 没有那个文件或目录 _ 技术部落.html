@@ -169,7 +169,7 @@ jQuery.ajax({type:'GET',url:'http://www.techbulo.com/wp-admin/admin-ajax.php',da
 									<a href="http://www.techbulo.com/2020.html" rel="bookmark" title="zynq 纯逻辑开发(VIVADO)-不使用PS部分"><img class="home-thumb" src="./4412环境搭建：arm-linux-gcc_ 没有那个文件或目录 _ 技术部落_files/GCLK-300x169.png" width="236px" height="155px" alt="zynq 纯逻辑开发(VIVADO)-不使用PS部分"></a>
 										</div>
 			<div class="top_box"><a href="http://www.techbulo.com/2020.html" rel="bookmark" title="zynq 纯逻辑开发(VIVADO)-不使用PS部分">详细内容</a></div>
-			<div class="boxCaption" style="top: 160px;">
+			<div class="boxCaption">
 				<h2><a href="http://www.techbulo.com/2020.html" title="Permalink to zynq 纯逻辑开发(VIVADO)-不使用PS部分">zynq 纯逻辑开发(VIVADO)-</a></h2>
 			</div>
 		</div>
@@ -240,7 +240,7 @@ jQuery.ajax({type:'GET',url:'http://www.techbulo.com/wp-admin/admin-ajax.php',da
 		<!-- end: menu -->
 		<div class="entry_box_s">
 			<div class="context">
-				<div class="context_t" style="display: block;">
+				<div class="context_t" style="display: block; opacity: 0.99698;">
 					<span class="prev"><a href="http://www.techbulo.com/1231.html" rel="prev">上篇</a></span>
 					<span class="next"></span>
 				</div>
@@ -263,21 +263,21 @@ jQuery.ajax({type:'GET',url:'http://www.techbulo.com/wp-admin/admin-ajax.php',da
 				<div id="entry">
 																				<p class="mb-5">最近弄了个4412的板子（友善之臂的Tiny4412增强版），准备搞搞android，开发服务器用的是Ubuntu12.04-64bit版本（对于Android 2.3.X和更新的版本，需要64位的系统，之前的老版本2.2以下（包括2.2）可以 在32位版本上编译，另外不推荐虚拟机，因为官网上写的虚拟机配置过于变态，要16G的RAM/swap和30G以上的硬盘，速度上也不会很理想）</p>
 <p class="mb-5">用友善提供的arm-linux-gcc 4.5.1交叉工具链，安装配置好环境变量之后运行arm-linux-gcc -v出错</p>
-<div><div id="highlighter_125487" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#/opt/FriendlyARM/toolschain/4.5.1/bin/arm-linux-gcc -v</code></div><div class="line number2 index1 alt1"><code class="cpp plain">bash: /opt/FriendlyARM/toolschain/4.5.1/bin/arm-linux-gcc: 没有那个文件或目录</code></div></div></td></tr></tbody></table></div></div>
+<div><div id="highlighter_772721" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#/opt/FriendlyARM/toolschain/4.5.1/bin/arm-linux-gcc -v</code></div><div class="line number2 index1 alt1"><code class="cpp plain">bash: /opt/FriendlyARM/toolschain/4.5.1/bin/arm-linux-gcc: 没有那个文件或目录</code></div></div></td></tr></tbody></table></div></div>
 <p><a href="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-1.png" class="cboxElement" rel="example_group" 1236=""><img class="size-medium wp-image-1238 aligncenter" src="./4412环境搭建：arm-linux-gcc_ 没有那个文件或目录 _ 技术部落_files/arm-linux-gcc-1-300x51.png" alt="arm-linux-gcc-1" width="300" height="51" srcset="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-1-300x51.png 300w, http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-1.png 723w" sizes="(max-width: 300px) 100vw, 300px" original="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-1-300x51.png"></a></p>
 <p><a href="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-2.png" class="cboxElement" rel="example_group" 1236=""><img class="size-medium wp-image-1239 aligncenter" src="./4412环境搭建：arm-linux-gcc_ 没有那个文件或目录 _ 技术部落_files/arm-linux-gcc-2-300x192.png" alt="arm-linux-gcc-2" width="300" height="192" srcset="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-2-300x192.png 300w, http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-2.png 726w" sizes="(max-width: 300px) 100vw, 300px" original="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-2-300x192.png"></a></p>
 <p class="line mt-10 q-content">通过截图可以看到这个文件是存在的，环境变量设置的也是正确的，</p>
 <p><a href="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-3.png" class="cboxElement" rel="example_group" 1236=""><img class="size-medium wp-image-1240 aligncenter" alt="arm-linux-gcc-3" width="300" height="66" srcset="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-3-300x66.png 300w, http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-3.png 735w" sizes="(max-width: 300px) 100vw, 300px" original="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-3-300x66.png" src="./4412环境搭建：arm-linux-gcc_ 没有那个文件或目录 _ 技术部落_files/arm-linux-gcc-3-300x66.png" style="display: block;"></a></p>
 <p>直接在目录bin目录下执行也不行：</p>
-<div><div id="highlighter_344106" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">ld@Techbulo:/opt/FriendlyARM/toolschain/4.5.1/bin# ./arm-linux-gcc -v exec: 15:</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="cpp plain">/opt/FriendlyARM/toolschain/4.5.1/bin/.arm-none-linux-gnueabi-gcc: not found</code></div></div></td></tr></tbody></table></div></div>
+<div><div id="highlighter_368604" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">ld@Techbulo:/opt/FriendlyARM/toolschain/4.5.1/bin# ./arm-linux-gcc -v exec: 15:</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="cpp plain">/opt/FriendlyARM/toolschain/4.5.1/bin/.arm-none-linux-gnueabi-gcc: not found</code></div></div></td></tr></tbody></table></div></div>
 <p>直接执行传说中的 arm-none-linux-gnueadi-gcc仍然不行：</p>
-<div><div id="highlighter_619103" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">ld@Techbulo:/opt/FriendlyARM/toolschain/4.5.1/bin# ./arm-none-linux-gnueabi-gcc</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="cpp plain">-su: ./arm-none-linux-gnueabi-gcc: 没有那个文件或目录</code></div></div></td></tr></tbody></table></div></div>
+<div><div id="highlighter_429453" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">ld@Techbulo:/opt/FriendlyARM/toolschain/4.5.1/bin# ./arm-none-linux-gnueabi-gcc</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="cpp plain">-su: ./arm-none-linux-gnueabi-gcc: 没有那个文件或目录</code></div></div></td></tr></tbody></table></div></div>
 <p><span style="background-color: #ff00ff; font-size: 12pt;">&nbsp; &nbsp; &nbsp;google了一番，终于找到了答案，如下：</span></p>
 <p><span style="font-size: 14pt; background-color: #00ff00;">The problem has been solved, because I installed the amd64.iso linux system,<span style="background-color: #ffff00;">so first must excuse</span> <span style="background-color: #ff6600;">apt-get install lsb-core</span>,<span style="background-color: #ffff00;">then you can excuse arm-linux-gcc -v</span></span></p>
 <p>&nbsp;</p>
 <p><span style="font-size: 24pt;">解决方案：</span></p>
 <p>执行</p>
-<div><div id="highlighter_546976" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">sudo apt-get install lsb-core</code></div></div></td></tr></tbody></table></div></div>
+<div><div id="highlighter_831845" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">sudo apt-get install lsb-core</code></div></div></td></tr></tbody></table></div></div>
 <p><a href="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-4.png" class="cboxElement" rel="example_group" 1236=""><img class="size-medium wp-image-1241 aligncenter" alt="arm-linux-gcc-4" width="300" height="185" srcset="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-4-300x185.png 300w, http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-4.png 728w" sizes="(max-width: 300px) 100vw, 300px" original="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-4-300x185.png"></a></p>
 <p>安装完成之后，再执行arm-linux-gcc -v,输出正常</p>
 <p><a href="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-5.png" class="cboxElement" rel="example_group" 1236=""><img class="size-medium wp-image-1242 aligncenter" alt="arm-linux-gcc-5" width="300" height="181" srcset="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-5-300x181.png 300w, http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-5.png 724w" sizes="(max-width: 300px) 100vw, 300px" original="http://www.techbulo.com/wp-content/uploads/2014/10/arm-linux-gcc-5-300x181.png"></a></p>
@@ -682,7 +682,7 @@ jQuery.ajax({type:'GET',url:'http://www.techbulo.com/wp-admin/admin-ajax.php',da
       
 		<!--<p><small><strong>XHTML:</strong> You can use these tags: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>-->
       <div class="clear"></div>
-		<p><textarea name="comment" id="comment" tabindex="4"></textarea><div id="loading" style="display: none;"> 正在提交, 请稍候...</div><div id="error" style="display: none;">#</div></p>
+		<p><textarea name="comment" id="comment" tabindex="4" style="color: rgb(102, 102, 102);"></textarea><div id="loading" style="display: none;"> 正在提交, 请稍候...</div><div id="error" style="display: none;">#</div></p>
 		<p>
 			<script type="text/javascript">
 /* <![CDATA[ */
@@ -761,7 +761,7 @@ jQuery.ajax({type:'GET',url:'http://www.techbulo.com/wp-admin/admin-ajax.php',da
 			document.getElementById("submit").click();}
 			}
 			</script>
-		<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8684072e05"></p><input type="checkbox" name="comment_mail_notify" id="comment_mail_notify" value="comment_mail_notify" checked="checked" style="margin-left:0px;"><label for="comment_mail_notify">有人回复时邮件通知我</label><p style="display: none;"></p>    <input type="hidden" id="ak_js" name="ak_js" value="1486273674259"></form>
+		<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8684072e05"></p><input type="checkbox" name="comment_mail_notify" id="comment_mail_notify" value="comment_mail_notify" checked="checked" style="margin-left:0px;"><label for="comment_mail_notify">有人回复时邮件通知我</label><p style="display: none;"></p>    <input type="hidden" id="ak_js" name="ak_js" value="1486272791046"></form>
 
 	<div class="clear"></div>
       </div>
