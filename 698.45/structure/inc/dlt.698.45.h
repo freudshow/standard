@@ -21,6 +21,15 @@ typedef char	INT8S;
 typedef short	INT16S;
 typedef int		INT32S;
 
+#define CTL_LINKMAN	1		//LINK management(log in; heat beat; log out.)
+#define CTL_USERDATAMAN	3	//Application management and data exchange.
+
+#define	ADDR_TYPE_SGL	0	//Single address
+#define	ADDR_TYPE_WILD	1	//Wild address
+#define	ADDR_TYPE_GRP	2	//Group address
+#define	ADDR_TYPE_BRD	3	//Broadcast address
+
+#define	MAX_SGL_ADDR_LEN	16	//Max single address's bytes
 
 #pragma pack(push)
 #pragma pack(1)

@@ -1,0 +1,13 @@
+TestModule DEFINITIONS ::= BEGIN
+		Married ::= BOOLEAN
+		Age ::= INTEGER
+		Picture ::= BIT STRING
+		Form ::= SEQUENCE
+		{
+		    name    PrintableString,
+			age    Age,
+			married    Married,
+			marriage-certificate	Picture OPTIONAL
+		}
+END
+
