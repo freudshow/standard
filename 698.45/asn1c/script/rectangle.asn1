@@ -1,0 +1,10 @@
+RectangleTest DEFINITIONS ::= BEGIN
+Bool ::= BOOLEAN
+Octet-string ::= BIT STRING(SIZE(8))
+Float32 ::= Octet-string(SIZE(4))
+Rectangle ::= SEQUENCE {
+	height INTEGER(0..127),	-- Height of the rectangle
+	width INTEGER,	-- Width of the rectangle
+	area  Float32
+}
+END
