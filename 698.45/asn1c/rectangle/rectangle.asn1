@@ -1,7 +1,7 @@
 RectangleTest DEFINITIONS ::= BEGIN
 Bool ::= BOOLEAN
 Octet-string ::= BIT STRING(SIZE(8))
-Float32 ::= Octet-string(SIZE(4))
+Float32 ::= BIT STRING(SIZE(32))
 Rectangle ::= SEQUENCE {
 	height INTEGER(0..127),	-- Height of the rectangle
 	width INTEGER,	-- Width of the rectangle
