@@ -1,0 +1,105 @@
+body,ul,li,p,h1,h2,h3,form,dl,dt,dd{margin:0;padding:0;line-height:200%;}
+body{font-size:14px; font-family: microsoft yahei,Tahoma,Arial; line-height:200%;}
+.wrapper{width:940px;margin-left:auto;margin-right:auto;}
+a,a:visited{text-decoration:none;color:#336699;}
+a:hover{text-decoration:underline;color:red;}
+img{border:none;}
+h1,h2,h3{color:#d84600; font-weight:normal;}
+h1{font-size:26px;}
+h2,h3{font-size:14px;padding:2px 10px;}
+.mt10{margin-top:10px;}
+ul,li{list-style:none;}
+
+.noinfo{ text-align:center; padding:20px; color:#999;}
+
+#header{position:relative;padding:10px 0 0;}
+.logo{margin:0 10px;}
+.menu{height:30px;line-height:30px; padding:4px; margin-top:10px; background:#ff8800;}
+.menu a{margin:0 10px;color:#fff; font-size:16px;}
+.search{position:absolute;right:0;top:20px;}
+.search-keyword{padding:4px 5px 5px; width:200px;border:1px solid #e2e2e2;}
+.search-button{border:1px solid #fff;background:#ff8800;color:#fff;padding:5px;}
+
+.head-ad{margin:15px 0 0; border:1px solid #eee; padding:10px 9px;}
+
+.path{padding:5px 15px;color:#999;position: relative;}
+.path,.path a{color:#6c6c6c;}
+.path em{font-family: Simsun;margin:0 5px;font-style:normal;color:#999;}
+
+.ul_menu{overflow:hidden;zoom:1;background:#ff8800;}
+.ul_menu li{float:left; line-height:30px; height:30px; padding:0 10px;}
+.ul_menu li a{color:#ffffff;font-size:14px; font-weight:bold;}
+
+.red,.red a{ color:red; text-decoration:underline;}
+
+#content{overflow:hidden;zoom:1;margin-top:15px;}
+#main{float:left;width:620px;}
+#sidebar{float:right;width:300px;}
+#article,#related,#comment,div.smod,#footer,#link{border:1px solid #eee;}
+#related,#comment{margin-top:10px;}
+
+ul.related_ul{margin:0 20px;}
+ul.related_list li{padding:15px 0px;border-bottom:1px dotted #f1f1f1;}
+ul.newdigg{margin:0 20px;}
+ul.newdigg li{padding:15px 0; border-bottom:1px solid #eee; color:#444;}
+ul.newdigg li em{ color:#999; font-style:normal;}
+
+.docommend{ text-align:center; padding:20px;}
+.btncommend{padding:20px 20px 20px 30px; cursor: pointer;text-indent: 10px;
+background: url(http://bdimg.share.baidu.com/static/images/like.png) -262px -105px no-repeat #FFFBF8;
+border: 1px solid #FA9E8A; border-radius: 3px;}
+.btncommendhover {background-color: #FCF1E8;}
+
+.relateds h2{ background:#f5f5f5; border-bottom:1px solid #eee;}
+.relateds ul{margin:10px; overflow:hidden;zoom:1;}
+.relateds ul li{border-bottom:1px dotted #ddd;}
+.relateds ul li em{font-style:normal;}
+.relateds ul li h3 em{color:red;}
+.relateds ul li p{margin:0 10px;}
+
+div.title,div.info{text-align:center;}
+div.info a{color:#6c6c6c;}
+div.info{margin:0 20px; font-size:12px; color:#999;}
+div.info a{margin:0 5px;}
+div.content{margin:5px 20px;font-size:14px; overflow:hidden; zoom:1;}
+div.content p{text-indent: 2em;margin: 0 0 1em;}
+div.content p a{color:red; text-decoration:underline;}
+div.content p a:visited{color:red;}
+
+.results{margin:10px 15px;font-family: arial;}
+.results a {color: #0041D5;text-decoration: none;}
+.results .title a:visited {color: purple;}
+.results .record {line-height:115%;display: block; margin-bottom:5px; padding:5px 0 10px; position: relative; border-bottom:1px dashed #eee;}
+.results .title {font-size: 16px;font-weight: normal;line-height: 24px;white-space: nowrap;overflow: hidden;padding:0;}
+.results em {font-style: normal;color: #CC0900;}
+.results .title a {text-decoration: underline;}
+.results .title a em {text-decoration: underline;}
+.results .desc {text-align: justify;color: #232323;font-size: 12px;line-height: 18px;word-wrap: break-word;word-break: break-all;}
+.results .url {color: #098100;font-size: 12px;}
+.results .date, .results {font-size: 12px;color: #717171;}
+.results .date{margin-left:10px;}
+
+
+
+div.smod{margin-bottom:15px;}
+.smod h3{background:#f5f5f5; border-bottom:1px solid #eee;}
+.smod ul{padding:10px;}
+.smod ul li{ overflow:hidden; zoom:1;white-space:nowrap;text-overflow:ellipsis;}
+.smod ul li em{float:right; font-style:normal; color:#999;}
+
+.randKeywords{padding:10px;}
+.randKeywords a{margin-right:5px;display:inline-block;white-space:nowrap; }
+
+#link{margin-top:10px;padding:10px;}
+#link a{margin:0 5px;}
+#footer{margin-top:15px;padding:10px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#666;}
+
+b{color:red;font-weight:normal;}
+.search_list{margin:0 10px;}
+.search_list li{padding:10px 0;border-bottom:1px dashed #f1f1f1;}
+.search_list li a{font-size:14px;text-decoration:underline;}
+
+
+.specials{margin:15px 0;border:1px solid #eee;}
+.specials h2{ padding:0 5px; background:#eee;}
+.specials ul{margin:10px;}

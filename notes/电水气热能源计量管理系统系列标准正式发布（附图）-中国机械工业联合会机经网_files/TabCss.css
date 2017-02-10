@@ -1,0 +1,121 @@
+#menu{width:96%; overflow:hidden; margin:0 auto;}
+#menu #nav {display:block;width:100%;padding:0;margin:0;list-style:none;}
+#menu #nav li {float:left;width:120px;}
+#menu #nav li a {display:block;line-height:27px;text-decoration:none;padding:0 0 0 5px; text-align:center; color:#333;}
+#menu_con{
+	width:100%;
+	height:auto; 
+	max-height:300px;
+	border-top:none;
+}
+.key_word_tab{
+	background-image:url(h2_bg01.gif) !important;
+	background-repeat:repeat-x;
+	text-align:left;
+	border:1px solid #9dcded;
+	height:20px;
+	font-size:14px;
+	font-weight:bold;
+	line-height:20px;
+}
+.key_word_hover a{
+	float:left;
+	width:auto;
+	background:#fff;
+	height:20px;
+	text-decoration:none;
+	FONT: bold 12px/30px "Simsun", "Arial", "New York";
+	color:#c00 !important;
+	display:block; 
+	text-align:center; 
+}
+.key_word_tab ul li{
+	float:left;
+	clear:right;
+	width:95px;
+	height:20px;
+	display:block;
+	text-align:center;
+	line-height:20px;
+	
+	/* border-right:1px solid #dbdbdb;
+	border-left:1px solid #dbdbdb; */
+}
+.key_word_tab ul li a{
+	width:100%;
+	color:#333333;
+	text-decoration:none;
+	FONT: bold 12px/30px "Simsun", "Arial", "New York";
+	line-height:20px !important;
+}
+.tag{
+	float:left;
+	height:auto;
+	width:700px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	position:relative;
+	left:0;
+	top:0;
+	
+}
+.selected{background:#C5A069; color:#fff;}
+
+#incon7{
+	width:624px;
+	padding-top:10px;
+}
+.key_word_news{
+	display:inline-block;
+	width:300px;
+	height:20px;
+	margin-left:10px;
+	float:left;	
+	font-family:"Simsun", "Arial", "New York";
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+	padding-left:0;
+	text-align:left;
+	line-height:20px;
+}
+.tabMenu{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+}
+
+
+
+
+
+
+
+
+
+
+.zt_word_tab{}
+.zt_word_tab ul { background:url(a_30.jpg) repeat-x; height:30px; line-height:30px; margin-bottom:0px; padding-left:8px; }
+.zt_word_tab li { float:left; }
+.zt_word_tab li a { color:#333333;text-decoration:none;FONT: bold 12px/30px "Simsun", "Arial", "New York";width:200px; height:30px; display:block; text-align:center;}
+.zt_word_tab li a { color:#333333;text-decoration:none;FONT: bold 12px/30px "Simsun", "Arial", "New York";width:200px; height:30px; display:block; text-align:center;}
+.zt_word_tab li a:hover { FONT: bold 12px/30px "Simsun", "Arial", "New York"; color:#c00; text-decoration:none;width:200px; height:30px; display:block;}
+
+.zt_word_tab .cli2  { background:url(a_32.jpg) no-repeat; width:200px; height:30px;FONT: bold 12px/30px "Simsun", "Arial", "New York";color:#c00; display:block; text-align:center; }
+.zt_word_tab .cli2 a  { background:url(a_32.jpg) no-repeat; width:200px; height:30px;FONT: bold 12px/30px "Simsun", "Arial", "New York"; color:#c00; display:block; text-align:center; }
+
+#incon2 .hidden{ display:none;}
+#incon2 {text-align:center;	overflow: hidden;}
+#incon2 ul { padding-bottom:0px; }
+#incon2 li {margin:0px; float:left;}
+#incon2 ul li a{ FONT:12px/25px "Simsun", "Arial", "New York"; color:#333;}
+#incon2 ul li a:hover{ FONT:14px/px "Simsun", "Arial", "New York"; color:#c00;}
+#incon2 ul li img {margin: 0px; width:610px;height:72px;}
+
+
+.article_paging{ text-align:center; background-color:#ddd; padding:4px 0;}
+.paging_mark{ text-align:center; background-color:Green; color:#fff; display:none;}
+.paging_blk{ display:none;}        
+.hidden2{display:none;}
+#incon7 {height:120px;	text-align:center;	overflow: hidden;}
+
