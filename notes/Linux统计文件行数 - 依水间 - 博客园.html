@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./Linux统计文件行数 - 依水间 - 博客园_files/ca-pub-4210569241504288.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux统计文件行数 - 依水间 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Linux统计文件行数 - 依水间 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Linux统计文件行数 - 依水间 - 博客园_files/bundle-Minyx2_Lite.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./Linux统计文件行数 - 依水间 - 博客园_files/bundle-Minyx2_Lite-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/fullhouse/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/fullhouse/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/fullhouse/wlwmanifest.xml">
+<script src="./Linux统计文件行数 - 依水间 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'fullhouse', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Linux统计文件行数 - 依水间 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script src="./Linux统计文件行数 - 依水间 - 博客园_files/bundle-Minyx2_Lite.js" language="javascript" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+
+<div id="container">
+    <a class="minyx" href="http://www.cnblogs.com/">代码改变世界</a>
+    <ul id="topMnu">
+        <!-- 统计数据 -->
+        <li>
+            
+                <div id="blog_stats">
+Posts - 135, 
+Articles - 0, 
+Comments - 62
+<!----></div>
+            
+        </li>
+        <!-- 这边可以增加一些链接 -->
+        <!-- 博客园 -->
+        <li><a href="http://www.cnblogs.com/">Cnblogs</a></li>
+        <!-- 管理 -->
+        <li id="topMnu-dashboard">
+            <a id="lnkDashboard" href="http://www.cnblogs.com/fullhouse/admin/EditPosts.aspx">Dashboard</a></li>
+        <li>
+            <a id="lnkLogin" href="http://passport.cnblogs.com/login.aspx?ReturnUrl=http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html">Login</a></li>
+    </ul>
+
+    <script type="text/javascript">
+        var m = window.__blog.topMenuRendered;
+        if (m) { m(__$("topMnu")); }
+    </script>
+
+    <div id="header">
+        <ul id="menu">
+            <!-- 首页，当前section加上current类 -->
+            <li id="menu-home" class="current">
+                <a id="lnkHome" href="http://www.cnblogs.com/fullhouse/">Home</a></li>
+            <!-- 联系 -->
+            <li id="menu-contact">
+                <a id="lnkContact" href="http://space.cnblogs.com/msg/send/%e4%be%9d%e6%b0%b4%e9%97%b4">Contact</a></li>
+            <!-- 相册 -->
+            <li id="menu-gallary">
+                <a id="lnkGallery" href="http://www.cnblogs.com/fullhouse/gallery.html">Gallery</a></li>
+            <!-- Rss订阅 -->
+            <li id="rss">
+                <a id="lnkRss" href="http://www.cnblogs.com/fullhouse/rss">RSS</a></li>
+        </ul>
+        <div id="newmsg"></div>
+        <h1>
+            <!-- 主标题 -->
+            <a id="lnkBlogTitle" href="http://www.cnblogs.com/fullhouse/">依水间</a>
+            <!-- 子标题 -->
+            <small>
+                </small>
+        </h1>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.headerRendered;
+        if (m) { m(__$("header")); }
+    </script>
+
+    <div id="wrapper">
+        <div id="content">
+            <script type="text/javascript">
+                var m = window.__blog.preRenderPosts;
+                if (m) { m(); }
+            </script>
+            
+<div id="post_detail">
+<div class="post" id="post">
+    <a name="top"></a>
+    <h2><a id="cb_post_title_url" href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html">Linux统计文件行数</a></h2>
+    <small>2011-07-17 17:32 by 依水间, <span id="post_view_count">120906</span> 阅读, <span id="post_comment_count">3</span> 评论, <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#" onclick="AddToWz(2108786);return false;">收藏</a>,  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=2108786" rel="nofollow">编辑</a></small>
+    <div class="entry">
+        <div id="cnblogs_post_body"><p><span style="font-size: 13px;">语法：wc [选项] 文件…</span></p>
+<p><span style="font-size: 13px;">说明：该命令统计给定文件中的字节数、字数、行数。如果没有给出文件名，则从标准输入读取。wc同时也给出所有指定文件的总统计数。字是由空格字符区分开的最大字符串。</span></p>
+<p><span style="font-size: 13px;">该命令各选项含义如下：</span></p>
+<p><span style="font-size: 13px;">　　- c 统计字节数。</span></p>
+<p><span style="font-size: 13px;">　　- l 统计行数。</span></p>
+<p><span style="font-size: 13px;">　　- w 统计字数。</span></p>
+<p><span style="font-size: 13px;">这些选项可以组合使用。</span></p>
+<p><span style="font-size: 13px;">输出列的顺序和数目不受选项的顺序和数目的影响。</span></p>
+<p><span style="font-size: 13px;">总是按下述顺序显示并且每项最多一列。</span></p>
+<p><span style="font-size: 13px;">行数、字数、字节数、文件名</span></p>
+<p><span style="font-size: 13px;">如果命令行中没有文件名，则输出中不出现文件名。</span></p>
+<p><span style="font-size: 13px;">例如：</span></p>
+<p><span style="font-size: 13px;"><code>$ wc - lcw file1 file2<br>4 33 file1<br>7 52 file2<br>11 11 85 total</code></span></p>
+<p><span size="2" style="font-size: x-small; color: #993300;"><span class="Apple-style-span" style="line-height: 19px;">举例分析：</span></span></p>
+<p><span size="2" style="font-size: 13px;"><span class="Apple-style-span" style="line-height: 19px;">1.统计demo目录下，js文件数量：</span></span></p>
+<div class="code"><span style="font-size: 13px;">find demo/ -name "*.js" |wc -l</span></div>
+<p><span size="2" style="font-size: 13px;"><span class="Apple-style-span" style="line-height: 19px;">2.统计demo目录下所有js文件代码行数：</span></span></p>
+<div class="code"><span style="font-size: 13px;">find demo/ -name "*.js" |xargs cat|wc -l&nbsp;</span><span class="Apple-style-span" style="font-size: 13px; line-height: 19px;">或&nbsp;</span><span class="Apple-style-span" style="font-size: 13px; line-height: 19px;">wc -l `find ./ -name "*.js"`|tail -n1</span></div>
+<p><span size="2" style="font-size: 13px;"><span class="Apple-style-span" style="line-height: 19px;">3.统计demo目录下所有js文件代码行数，过滤了空行：</span></span></p>
+<div class="code"><span style="font-size: 13px;">find /demo -name "*.js" |xargs cat|grep -v ^$|wc -l</span></div>
+<p><span size="2" style="font-size: x-small;"><span class="Apple-style-span" style="line-height: 19px;"></span></span></p></div><div id="MySignature"></div>
+        <div class="clear"></div>
+        <div id="blog_post_info_block">
+        <div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2108786,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;7c38cde6-9c05-df11-ba8f-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Linux统计文件行数 - 依水间 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Linux统计文件行数 - 依水间 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/fullhouse/" target="_blank"><img src="./Linux统计文件行数 - 依水间 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/fullhouse/">依水间</a><br>
+            <a href="http://home.cnblogs.com/u/fullhouse/followees">关注 - 5</a><br>
+            <a href="http://home.cnblogs.com/u/fullhouse/followers">粉丝 - 176</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;7c38cde6-9c05-df11-ba8f-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(2108786,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">3</span>
+    </div>
+    <div class="buryit" onclick="votePost(2108786,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+        <div class="clear"></div>
+        <div id="post_next_prev"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108710.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108710.html" title="发布于2011-07-17 14:49">JavaScript中的arguments,callee,caller</a><br><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/18/2109936.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/fullhouse/archive/2011/07/18/2109936.html" title="发布于2011-07-18 20:25">SOCKET.IO</a><br></div>
+    </div>
+</div>
+    <ul class="postmetadata">
+        <li class="icon_cat" id="BlogPostCategory"></li>
+        <li class="icon_bullet" id="EntryTag">标签: <a href="http://www.cnblogs.com/fullhouse/tag/Linux/">Linux</a></li>
+    </ul>
+</div>
+<script type="text/javascript">var allowComments=true,cb_blogId=92729,cb_entryId=2108786,cb_blogApp=currentBlogApp,cb_blogUserGuid='7c38cde6-9c05-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2011/7/17 17:32:00';loadViewCount(cb_entryId);</script>
+<script type="text/javascript">
+    var m = window.__blog.postRendered;
+    if (m) { m(__$("post")); }
+</script>
+<script type="text/javascript">
+    var m = window.__blog.postRenderPosts;
+    if (m) { m(); }
+</script>
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<a class="addcomment" href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#comment_tip">Add your comment</a>
+<h3 id="comments"></h3>
+<div class="feedbackNoItems"></div>
+
+
+<ol class="commentlist" id="commentList">	
+
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#2877503" class="layer">#1楼</a><a name="2877503" id="comment_anchor_2877503"></a></cite> <a id="a_comment_author_2877503" href="http://www.cnblogs.com/codezyc/" target="_blank">codezyc</a> <a href="http://msg.cnblogs.com/send/codezyc" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2014-02-18 13:06</span></small>
+			</h5>
+			<div id="comment_body_2877503" class="blog_comment_body">谢谢楼主的分享，很实用。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2877503,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2877503,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#3136197" class="layer">#2楼</a><a name="3136197" id="comment_anchor_3136197"></a></cite> <a id="a_comment_author_3136197" href="http://www.cnblogs.com/web1992/" target="_blank">er_bao</a> <a href="http://msg.cnblogs.com/send/er_bao" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2015-03-06 09:55</span></small>
+			</h5>
+			<div id="comment_body_3136197" class="blog_comment_body">偷偷收藏</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3136197,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3136197,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3136197_avatar" style="display:none;">http://pic.cnblogs.com/face/532218/20150308181931.png</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#3311865" class="layer">#3楼</a><a name="3311865" id="comment_anchor_3311865"></a><span id="comment-maxId" style="display:none;">3311865</span><span id="comment-maxDate" style="display:none;">2015/11/23 9:48:36</span></cite> <a id="a_comment_author_3311865" href="http://www.cnblogs.com/daimakun/" target="_blank">Sam_Yang</a> <a href="http://msg.cnblogs.com/send/Sam_Yang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2015-11-23 09:48</span></small>
+			</h5>
+			<div id="comment_body_3311865" class="blog_comment_body">已收藏~</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3311865,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3311865,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3311865_avatar" style="display:none;">http://pic.cnblogs.com/face/788691/20160120172838.png</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+</ol>
+
+<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" src="./Linux统计文件行数 - 依水间 - 博客园_files/saved_resource.html"></iframe></ins></ins></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562633/" target="_blank">苹果海外召回存在电池问题设备 中国再被遗忘</a><br> ·  <a href="http://news.cnblogs.com/n/562609/" target="_blank">我在百度医疗事业部的209天</a><br> ·  <a href="http://news.cnblogs.com/n/562632/" target="_blank">董明珠又有大动作：格力将进军汽车空调制造领域</a><br> ·  <a href="http://news.cnblogs.com/n/562631/" target="_blank">美国国家工程院新选出106名院士：微软沈向洋等8位华人入选</a><br> ·  <a href="http://news.cnblogs.com/n/562630/" target="_blank">Snap修改招股书 未来五年为云服务支出30亿美元</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./Linux统计文件行数 - 依水间 - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.contentRendered;
+            if (m) { m(__$("content")); }
+        </script>
+
+        <div id="sidebar">
+            
+<div id="about">
+<div>
+<h2 id="about_title">About</h2>
+<div id="about_body">
+<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/fullhouse/">依水间</a><br>园龄：<a href="http://home.cnblogs.com/u/fullhouse/" title="入园时间：2010-01-20">7年</a><br>粉丝：<a href="http://home.cnblogs.com/u/fullhouse/followers/">176</a><br>关注：<a href="http://home.cnblogs.com/u/fullhouse/followees/">5</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;7c38cde6-9c05-df11-ba8f-001cf0cd104b&#39;)">+加关注</a></div></div></div>
+<script type="text/javascript">loadBlogNews();</script>
+</div>
+</div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.aboutRendered;
+                if (m) { m(__$("about")); }
+            </script>
+            
+<div id="mySearchWrapper">
+    <div id="mySearch">
+        <input type="image" src="./Linux统计文件行数 - 依水间 - 博客园_files/btnsearch.gif" id="btnZzk" class="submit" onclick="zzk_go();return false;">
+        <label class="lb_search"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="keyword"></label>
+    </div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.searchFormRendered;
+                if (m) { m(__$("searchform")); }
+            </script>
+            <div id="sideMain">
+            <div id="side-recent-comments">
+        <h2>最新评论</h2>
+        <ul class="voice">
+                <li>
+                    <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/18/2109953.html#3605922">Re:websocket与node.js完美结合</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/fullhouse/archive/2011/07/18/2109953.html#3605922">
+                        我觉得这种东西自己开发太麻烦了，就别自己捣鼓了，找个第三方，方便，GoEasy就挺不错的，我昨天试了一下，代码简洁易懂，几分钟我就洗了一个自己的实时推送功能；官网: 
+                        -- wahahagong
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3597621">Re:什么是CommonJS？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3597621">
+                        预约帝
+                        -- 野生小前端
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3594276">Re:什么是CommonJS？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3594276">
+                        牛逼！11年就预言到了
+                        -- 风随叶舞
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3571170">Re:什么是CommonJS？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3571170">
+                        搜嘎
+                        -- 路不该是疑问句
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3563018">Re:什么是CommonJS？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html#3563018">
+                        吃我一记洛阳铲
+                        -- 国民欧尼酱
+                    </a>
+                </li>
+        </ul>
+    </div></div>
+            <div id="sideRight">
+            <div id="side-archives">
+        <h2>随笔档案</h2>
+        <ul class="date">
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/10.html">2012年10月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/07.html">2012年7月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/06.html">2012年6月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/04.html">2012年4月(6)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/03.html">2012年3月(5)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/02.html">2012年2月(10)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01.html">2012年1月(21)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2011/12.html">2011年12月(28)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2011/10.html">2011年10月(5)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2011/09.html">2011年9月(29)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2011/08.html">2011年8月(9)</a></li>
+                <li><a href="http://www.cnblogs.com/fullhouse/archive/2011/07.html">2011年7月(16)</a></li>
+        </ul>
+    </div></div>
+            <div id="sideLeft">
+            <div id="side-calendar">
+        <h2>日历</h2>
+        <div id="blog-calendar"><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2011/06/01&#39;);return false;">&lt;</a></td><td align="center">2011年7月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2011/08/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td class="CalWeekendDay" align="center">9</td></tr><tr><td class="CalWeekendDay" align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15.html"><u>15</u></a></td><td class="CalWeekendDay" align="center">16</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17.html"><u>17</u></a></td><td align="center"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/18.html"><u>18</u></a></td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/23.html"><u>23</u></a></td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center"><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/25.html"><u>25</u></a></td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div>
+    </div><div id="side-categories">
+        <h2>随笔分类</h2>
+        <ul class="folder">
+        </ul>
+    </div><div id="side-top-posts-custom">
+    <h2>推荐排行榜</h2>
+    <div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html">1. 什么是CommonJS？(18)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/16/2324131.html">2. JS中关于clientWidth offsetWidth scrollWidth 等的含义(12)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/05/2312956.html">3. JS性能优化(8)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/03/07/2384016.html">4. jQuery ready函数实现原理(6)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/05/2313800.html">5. [JS]document.body.clientHeight的取值(6)</a></li></ul></div>
+</div><div id="side-top-posts">
+    <h2>阅读排行榜</h2>
+    <div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/17/2108786.html">1. Linux统计文件行数(120905)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/15/2107416.html">2. 什么是CommonJS？(61583)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2011/07/18/2109945.html">3. Jade模板引擎入门教程(44432)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/16/2324131.html">4. JS中关于clientWidth offsetWidth scrollWidth 等的含义(40420)</a></li><li><a href="http://www.cnblogs.com/fullhouse/archive/2012/10/10/2718193.html">5. CSS定义input disabled样式(29030)</a></li></ul></div>
+</div>    
+    
+    
+    
+
+
+</div>
+            
+                <div id="sideContainer"></div>
+                <script type="text/javascript">
+                    $.ajax({
+                        url: '/' + currentBlogApp + '/mvc/blog/Minyx2_Lite_SideColumn.aspx',
+                        data: '{}',
+                        type: 'post',
+                        dataType: 'text',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            if (data) {
+                                $("#sideContainer").html(data);
+                                loadBlogDefaultCalendar();
+                                loadBlogSideBlocks();
+                                var m = window.__blog.sideContainerRendered;
+                                if (m) { m(__$("sideContainer")); }
+                                window.__blog.sidebar.__layout();
+                            }
+                        }
+                    });
+
+                </script>
+            
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.sidebarRendered;
+            if (m) { m(__$("sidebar")); }
+        </script>
+
+        <div id="footer">
+            
+<p id="logoFoot">
+    <a href="http://www.spiga.com.mx/" title="Agencia Interactiva Spiga">www.spiga.com.mx</a>
+</p>
+<div class="footText">
+<p>
+Copyright ©2017 依水间
+</p>
+<p>
+<a href="http://www.cnblogs.com/">博客园</a>
+</p>
+</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.wrapperRendered;
+        if (m) { m(__$("wrapper")); }
+    </script>
+
+</div>
+<script type="text/javascript">
+    var m = window.__blog.containerRendered;
+    if (m) { m(__$("container")); }
+</script>
+
+
+</body></html>
