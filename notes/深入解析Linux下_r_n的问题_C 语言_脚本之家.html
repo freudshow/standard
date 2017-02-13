@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://www.jb51.net/article/37389.htm -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK"><script type="text/javascript" charset="utf-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/changyan.js"></script>
+
+<meta name="applicable-device" content="pc">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform">
+<title>深入解析Linux下\r\n的问题_C 语言_脚本之家</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<meta name="keywords" content="Linux,\r,\n">
+<meta name="description" content="本篇文章是对Linux下\r\n的问题进行了详细的分析介绍，需要的朋友参考下">
+<link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.jb51.net/article/37389.htm">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/37389.htm">
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/37389.htm">
+<script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/hm.js"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/ca-pub-6384567588307613.js"></script><script type="text/javascript" async="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/dynamicFloat.js"></script><script type="text/javascript" async="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/cm.js"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/push.js"></script><script type="text/javascript">
+var tougao="jingxian";var lmname="C 语言";var ourl="";
+(function(){var reWriteUrl=function(url){if(url){var Splits=url.split("/"),siteName=window.location.pathname;if(typeof siteName!=="undefined"){return "http://m.jb51.net"+siteName}}};if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){var url=window.location.href;var pathname=window.location.pathname;if(url.indexOf("?pc")<0){try{window.location.href=reWriteUrl(url)}catch(e){}}}})();
+</script>
+<link type="text/css" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/base.css" rel="stylesheet">
+<link type="text/css" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/common.css" rel="stylesheet">
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/jquery.min.js"></script>
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/base.js"></script>
+<script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/version-v3.js"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/cookie"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/adapter.min.js"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/cyrHH3dwi"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/version.js"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/cookie(1)"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/cyrHH3dwi(1)"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/event"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/sea.v2.2.0.js"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/app-build.js"></script><link rel="stylesheet" type="text/css" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/upload-img.css"><style id="changyanCss">#SOHUCS{clear:both;min-height:320;_height:320px;overflow:visible;}#SOHUCS iframe{width:100%;min-height:320px;_height:320px;}</style><link charset="utf-8" rel="stylesheet" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/changyan2.css"><link charset="utf-8" rel="stylesheet" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/default.css"><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/main.js"></script><script type="text/javascript" charset="UTF-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/render-pc.js"></script></head>
+<body style=""><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div>
+<!--head Star -->
+<div id="head">
+  <div class="toolBar">
+  <div class="main">
+    <!--topNav Star -->
+    <div class="topNav clearfix">
+      <ul class="navList fl">
+        <li>
+          <div class="one"><a href="http://www.jb51.net/" target="_blank">脚本之家</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/softs/" target="_blank">软件下载<i class="icon"></i></a></div>
+          <div class="two">
+<a href="http://www.jb51.net/softs/android.html" target="_blank">android软件</a> <a href="http://www.jb51.net/softs/mac.html" target="_blank">MAC软件</a> <a href="http://www.jb51.net/qudong/" target="_blank">驱动下载</a> <a href="http://www.jb51.net/fonts/" target="_blank">字体下载</a> <a href="http://www.jb51.net/dll/" target="_blank">DLL下载</a> </div>
+</li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/codes/" target="_blank">源码下载<i class="icon"></i></a></div>
+          <div class="two"> <a href="http://www.jb51.net/codes/asp.html" target="_blank">asp源码</a> <a href="http://www.jb51.net/codes/php.html" target="_blank">php源码</a> <a href="http://www.jb51.net/codes/aspnet.html" target="_blank">asp.net源码</a> <a href="http://www.jb51.net/codes/jsp.html" target="_blank">jsp源码</a> <a href="http://www.jb51.net/codes/editor.html" target="_blank">网页编辑器</a> <a href="http://www.jb51.net/codes/list123_1.html" target="_blank">数据库管理</a> <a href="http://www.jb51.net/codes/list124_1.html" target="_blank">常用组件</a> <a href="http://www.jb51.net/jiaoben/" target="_blank">脚本下载</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://tools.jb51.net/" target="_blank">在线工具<i class="icon"></i></a></div>
+          <div class="two"> <a href="http://www.jb51.net/shouce/" target="_blank">在线手册</a> <a href="http://www.jb51.net/tools/cssyasuo.shtml" target="_blank">CSS格式化</a> <a href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a> <a href="http://www.jb51.net/tools/html-js.htm" target="_blank">Html转化为Js</a> <a href="http://tools.jb51.net/regex/javascript" target="_blank">js正则表达式</a>
+</div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/w3school/" target="_blank">网页教程基础</a></div>
+        </li>
+			<li>
+          <div class="one"><a href="http://s.jb51.net/" target="_blank">服务器常用软件</a></div>
+        </li>
+		<li>
+          <div class="one"><a href="http://m.jb51.net/" target="_blank">手机版</a></div>
+          <div class="two"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/m.jb51.net.png" data-baiduimageplus-ignore=""></div>     
+        </li>
+        <li><div class="one"><a href="http://wxbj.jb51.net/" target="_blank">微信编辑器</a></div></li><li class="watch">
+          <div class="one"><a href="http://weibo.com/jb51net" target="_blank" rel="nofollow"><i class="icon"></i>关注微信</a></div>
+          <div class="two"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/weixin_200.gif" data-baiduimageplus-ignore=""></div>
+        </li>
+      </ul>
+      <div class="navUser mt5 fr" id="jb51_topbar"><div class="userbar"><a href="http://tougao.jb51.net/" target="_blank">投稿中心</a><img style="width:32px; height:22px" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/newn.gif" alt="hot"></div></div>
+    </div>
+    <!--topNav End -->
+  </div>
+</div>
+
+  <div class="main clearfix">
+    <div class="mtb10 clearfix">
+      <div class="logo"><a href="http://www.jb51.net/"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/logo.gif" title="脚本之家" alt="脚本之家"></a></div>
+      <div class="logom fl"><a href="http://vps.zzidc.com/tongji/jb51.html" target="_blank"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/zzidc370-1.gif" width="370" height="60"></a>
+</div>
+      <div class="logor fr"><a href="https://www.mysubmail.com/sms?s=jb51" target="_blank"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/submail_370.gif" width="370" height="60"></a>
+</div>
+    </div>
+<!-- 导航-->
+<div class="nav_top clearfix">
+<ul>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li><a href="http://www.jb51.net/hack/">网络安全</a></li>
+<li class="last"><a href="http://www.jb51.net/shouce/">在线手册</a></li>
+
+</ul>
+</div>
+
+<!--导航结束-->
+<div class="subnav clearfix">
+<ul><li><a href="http://www.jb51.net/list/list_85_1.htm" title="C#教程">C#教程</a></li>
+<li><a href="http://www.jb51.net/list/list_93_1.htm" title="vb">vb</a></li>
+<li><a href="http://www.jb51.net/list/list_205_1.htm" title="vb.net">vb.net</a></li>
+<li><a href="http://www.jb51.net/list/list_159_1.htm" title="C 语言">C 语言</a></li>
+<li><a href="http://www.jb51.net/list/list_134_1.htm" title="Java编程">Java编程</a></li>
+<li><a href="http://www.jb51.net/list/list_206_1.htm" title="Delphi">Delphi</a></li>
+<li><a href="http://www.jb51.net/list/list_207_1.htm" title="java">java</a></li>
+<li><a href="http://www.jb51.net/list/list_233_1.htm" title="Android">Android</a></li>
+<li><a href="http://www.jb51.net/list/list_238_1.htm" title="IOS">IOS</a></li>
+<li><a href="http://www.jb51.net/list/list_244_1.htm" title="Swift">Swift</a></li>
+<li><a href="http://www.jb51.net/list/list_250_1.htm" title="Scala">Scala</a></li>
+<li><a href="http://www.jb51.net/list/list_254_1.htm" title="易语言">易语言</a></li>
+<li><a href="http://www.jb51.net/list/list_188_1.htm" title="其它相关">其它相关</a></li>
+</ul>
+</div>
+<div class="NavBar clearfix ptb10">
+<div class="fl w690">
+<div class="box mb15 mt10"><i class="icon"></i>您的位置：<a href="http://www.jb51.net/">首页</a> → <a href="http://www.jb51.net/list/index_84.htm" title="软件编程">软件编程</a> → <a href="http://www.jb51.net/list/list_159_1.htm" title="C 语言">C 语言</a> → 正文内容 Linux \r \n</div>
+</div>
+<div class="fr w300"><div class="search">
+<form action="http://so.jb51.net/cse/search" target="_blank">
+    <input type="hidden" name="s" value="10520733385329581432">
+    <input type="hidden" name="ie" value="gbk">
+    <input type="text" name="q" class="key_input" placeholder="请输入关键词">
+    <input type="submit" value="搜索" class="c_btn">
+</form></div></div>
+  </div>
+</div>
+<!--head End -->
+<div class="main mb10 clearfix">
+<div class="clearfix"><div id="txtlink"><ul><li><a href="http://www.jsll.me/" target="_blank"><span style="color:red;">低价出售流量10000IP只需8元</span></a></li><li><a href="http://click.aliyun.com/m/8070/" target="_blank"><span style="color:red;">阿里云免费虚机＋木马查杀仅6元</span></a></li><li><a href="http://www.99-idc.com/" target="_blank"><span style="color:red;">16核16G独服百兆带宽899元/月|创梦网络</span></a></li><li><a href="http://www.zoneidc.com/chaozhi/" target="_blank"><span style="color:red;">美国云20元/香港云29元/韩国云55元</span></a></li><li><a href="http://js.50bang.org/?formType=7858" target="_blank"><span style="color:blue;">装软件赚钱，每台电脑秒赚6.3元</span></a></li><li><a href="http://www.155idc.cn/rent/index.html" target="_blank"><span style="color:blue;">《无视CC/DDOS 双线150G单机 899/月》</span></a></li><li><a href="http://www.vzidc.com/hzdl.asp/" target="_blank"><span style="color:blue;">微子网络 湛江双线高防 抗15G 700元起</span></a></li><li><a href="http://www.zitian.cn/Products/zhongyuan/overview.aspx" target="_blank"><span style="color:blue;">中原地区最大IDC数据中心，首月托管免费</span></a></li><li><a href="http://www.021.net/" target="_blank"><span style="color:red;">众生网络 基于云计算的互联网基础服务运营商</span></a></li><li><a href="http://www.tuidc.com/" target="_blank"><span style="color:red;">服务器租用/托管-域名空间/认准腾佑科技</span></a></li><li><a href="http://www.enkj.com/special/20160315/" target="_blank"><span style="color:red;">BGP四线 亿恩1U服务器托管3999元/年</span></a></li><li><a href="http://www.jjidc.com/" target="_blank"><span style="color:red;">九九数据 — 工信部认可正规资质IDC接入商</span></a></li><li><a href="http://www.33ip.com/" target="_blank"><span style="color:blue;">枫信科技-江苏双线10M保证-399/元</span></a></li><li><a href="http://www.gwidc.com/" target="_blank"><span style="color:blue;">港湾云主机，稳定、安全才是硬道理</span></a></li><li><a href="http://www.ssf.cc/" target="_blank"><span style="color:blue;">免备vps20/百独799/双线350/45互联</span></a></li><li><a href="http://www.xiaozhiyun.com/2016/" target="_blank"><span style="color:blue;">韩国香港美国站群服务器 巨牛网络</span></a></li><li><a href="http://www.139w.com/" target="_blank"><span style="color:red;">鼎点网络百兆独享服务器仅需999元</span></a></li><li><a href="http://www.360jq.com/hkshuang.htm" target="_blank"><span style="color:red;">[香港双高防]无视CC★DDOS/堪比广东！</span></a></li><li><a href="http://www.cyidc.cc/" target="_blank"><span style="color:red;">畅游网络 百独服务器 包跑满 998元</span></a></li><li><a href="http://www.wdw6.com/" target="_blank"><span style="color:red;">服务器租用  199元起</span></a></li><li><a href="https://www.wsisp.net/sale/20170110/?jb51wz" target="_blank"><span style="color:blue;">◆◆2M带宽虚拟主机 118/年◆◆</span></a></li><li><a href="http://www.qy.com.cn/" target="_blank"><span style="color:blue;">群英云服务器送10M带宽30G防御,49元起</span></a></li><li><a href="https://www.ku86.com/" target="_blank"><span style="color:blue;">百M服务器托管 租用</span></a></li><li><a href="http://www.yinliuliang.com/?jb51" target="_blank"><span style="color:blue;">【1000UV流量只要8毛】还有点击流量</span></a></li></ul><div class="clearfix"></div></div><div class="blank6"></div><div class="topimg"><ul><li><a href="http://www.west.cn/services/CloudHost/?ads=jb512014" target="_blank"><img alt="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/west263_237.gif" width="237" height="60"></a></li><li><a href="http://click.aliyun.com/m/7514/" target="_blank"><img alt="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/ali_237.jpg" width="237" height="60"></a></li><li><img alt="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/baiduyh_237.gif" width="237" height="60"></li><li><a href="http://www.7e.hk/product/list/12254.html" target="_blank"><img alt="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/7ehk.gif" width="237" height="60"></a></li></ul></div><div class="blank6"></div><div class="mainlr"><a href="http://click.aliyun.com/m/10001/" target="_blank"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/ali_1000_2.jpg" alt="cdnoss" width="1000" height="60"></a></div><div class="blank5"></div>
+</div>
+</div>
+
+<!--content Star -->
+<div id="contents">
+ <div class="main clearfix">
+      <div class="w690 fl">
+      <div class="article-content border">
+      <div class="title">
+            <h1 class="YaHei">深入解析Linux下\r\n的问题</h1>
+            <p>作者：  字体：[<a href="javascript:turnbig()">增加</a> <a href="javascript:turnsmall()">减小</a>] 类型：转载 时间：2013-05-27<a href="http://www.jb51.net/article/37389.htm#comments"> 我要评论</a></p>
+        </div>
+        <div class="art_desc mt10"><div id="art_demo">本篇文章是对Linux下\r\n的问题进行了详细的分析介绍，需要的朋友参考下</div></div>
+        <div class="lbd clearfix"><script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/gn3a1ecf96f1ccff30db1c7481b2b03ded00b3930a3ef6.js"></script><div id="_o3gcg1nnz9afck9cpez0n3ik9"><iframe id="iframeu2866688_0" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/mcam.html" width="680" height="100" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+</div>
+        <div id="content">
+常在Linux下操作，难免要遇到\r\n问题，特别在很多地方比如最近的邮件发送，怎么都\r\n了，以前只有\n的时代好像已经过去了，因为我是一个比较喜欢总结的人，一个喜欢理论先行的人，所以，认真的测试并且理解了一番，尽管我个人认为是比较可以了，但，如果哪位高手看出了不妥之处，不吝赐教！<br><strong>一、例子</strong><br><strong><font style="COLOR: #0000ff">源文件：main.c</font></strong><br>例一：<br>#include &lt;stdio.h&gt;<br>int main(void)<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd"); //6个d<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>}<br><strong><font style="COLOR: #ff0000">结果：空</font></strong><br><br>例二：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\r");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345 ");<br><strong><font style="COLOR: #ff0000">结果：空</font></strong><br><br>例三：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\n ");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345 ");<br><strong><font style="COLOR: #ff0000">结果：dddddd</font></strong><br><br>例四：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\r");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345\n");<br><strong><font style="COLOR: #ff0000">结果：12345d<br></font></strong>&nbsp;<br>例五：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\r\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345\n");<br><strong><font style="COLOR: #ff0000">结果：dddddd<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12345</font></strong><br><br>例六：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\n \r ");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345\n");<br><strong><font style="COLOR: #ff0000">结果：同五</font></strong><br><br>例七：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\n \r ");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345");<br><strong><font style="COLOR: #ff0000">结果：dddddd</font></strong><br><br>例八：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345\r ");<br><strong><font style="COLOR: #ff0000">结果：dddddd</font></strong><br><br>例九：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("dddddd\n");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("12345\n\r ");<br><strong><font style="COLOR: #ff0000">结果：同五<br></font></strong>&nbsp;<br><strong><font style="COLOR: #ff0000">二、总结：</font></strong><br>根据上面九个简单而清楚的例子，以及我个人的一些理解，我就做个总结吧：<br>1.回车换行符，是2个符。一个回车，一个换行。\r仅仅是回车，\n是换行。一个是控制屏幕或者从键盘的Enter键输入。另一个是控制“打印机”！<br><strong><font style="COLOR: #ff0000">2.回车 = 光标到达最左侧，换行 = 移到下一行。</font></strong>如果只回车，打印的东西会覆盖同行以前的内容，如果只换行，打印的东西会在下一行的先一个位置继续。<br>3.\r实际是回到行首。\n如果<strong><font style="COLOR: #0000ff">下一行已经有了一些内容的话</font></strong>它会在那些内容的后边.因为一般情况下下一行是没有数据的,很多时候\n也就成了\r\n作用一样。<br>
+
+</div><!--endmain-->
+<div class="art_xg">
+
+</div>
+<div class="lbd clearfix">
+<script type="text/javascript">var cpro_id="u776243";(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"650",rsi1:"250",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"1",ptbg:"90",piw:"0",pih:"0",ptp:"0"}</script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/c.js" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u776243_0"><iframe id="iframeu776243_0" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/mcam(1).html" width="650" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+</div>
+<div id="shoucang"></div>
+<div class="tags mt10">
+<strong>Tags：</strong><a href="http://img.jb51.net/tag/Linux/1.htm" target="_blank" title="搜索关于Linux的文章">Linux</a> <a href="http://img.jb51.net/tag/%5Cr/1.htm" target="_blank" title="搜索关于\r的文章">\r</a> <a href="http://img.jb51.net/tag/%5Cn/1.htm" target="_blank" title="搜索关于\n的文章">\n</a> 
+</div>
+<div class="relatedarticle clearfix mt5">
+<h2>相关文章</h2>
+<ul><li><span>2015-12-12</span><a href="http://www.jb51.net/article/75918.htm" title="C++中头文件的概念与基本编写方法" target="_blank">C++中头文件的概念与基本编写方法</a></li><li><span>2014-05-05</span><a href="http://www.jb51.net/article/49681.htm" title="使用UART与PC通信实现msp430g2553单片机超声波测距示例" target="_blank">使用UART与PC通信实现msp430g2553单片机超声波测距示例</a></li><li><span>2013-09-09</span><a href="http://www.jb51.net/article/41618.htm" title="浅析stl序列容器(map和set)的仿函数排序" target="_blank">浅析stl序列容器(map和set)的仿函数排序</a></li><li><span>2015-03-03</span><a href="http://www.jb51.net/article/62352.htm" title="C++ const修饰变量和修饰函数介绍" target="_blank">C++ const修饰变量和修饰函数介绍</a></li><li><span>2016-02-02</span><a href="http://www.jb51.net/article/79200.htm" title="C++实现查找二叉树中和为某一值的所有路径的示例" target="_blank">C++实现查找二叉树中和为某一值的所有路径的示例</a></li><li><span>2013-10-10</span><a href="http://www.jb51.net/article/42066.htm" title="C++基本算法思想之穷举法" target="_blank">C++基本算法思想之穷举法</a></li><li><span>2014-09-09</span><a href="http://www.jb51.net/article/55072.htm" title="Cocos2d-x保存用户游戏数据之XML文件是否存在问题判断方法" target="_blank">Cocos2d-x保存用户游戏数据之XML文件是否存在问题判断方法</a></li><li><span>2015-03-03</span><a href="http://www.jb51.net/article/63059.htm" title="C++实现的分布式游戏服务端引擎KBEngine详解" target="_blank">C++实现的分布式游戏服务端引擎KBEngine详解</a></li><li><span>2015-07-07</span><a href="http://www.jb51.net/article/70359.htm" title="C++如何实现DNS域名解析" target="_blank">C++如何实现DNS域名解析</a></li><li><span>2008-11-11</span><a href="http://www.jb51.net/article/16526.htm" title="VC WinExec打开指定程序或者文件的方法" target="_blank">VC WinExec打开指定程序或者文件的方法</a></li></ul>
+</div>
+<div class="lbd clearfix mt5">
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/tb3a1ecf96f1cdf739db1c7481b2b03ded00b3930a3ef6.js"></script><div id="_s73g5avisaraf853qfrpmn29"><iframe id="iframeu2866701_0" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/mcam(2).html" width="680" height="200" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+</div>
+<a href="http://www.jb51.net/article/37389.htm#comments"></a>
+<div id="comments">
+<h2>最新评论</h2>
+<div class="pd5"><div id="SOHUCS" sid="art_37389" style="width: 100%; height: auto;"><div id="SOHU_MAIN"><div id="SOHU-comment-main" class="sohu-comment-wrapper"><div id="article_info_sohu">        <div class="reset-g clear-g section-title-w  section-title-logoutStyle">
+            <div class="title-join-w">
+                <div class="join-wrap-w join-wrap-b"><strong class="wrap-name-w wrap-name-b">评论</strong><span class="wrap-join-w wrap-join-b">(<em class="join-strong-gw join-strong-bg">0</em><span node-type="involved">人参与</span><i class="gap-b">，</i><em class="join-strong-gw join-strong-bg">0</em><span node-type="comments">条评论</span>)</span></div>
+            </div>
+            <div class="title-user-w">
+                <div node-type="sohu-pact" class="title-link-w" style="display: none;"><a href="http://zt.pinglun.sohu.com/s2014/sljyhgy/index.shtml" target="_blank">搜狐“我来说两句”用户公约</a></div>
+            </div>
+        </div>
+        </div><div id="login_sohu"></div><div id="comment_sohu"><div node-type="cbox-wrapper" class="reset-g section-cbox-w"><div style="width:1px;height:1px;overflow:hidden;"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/vcode.jpg" style="visibility:hidden;width:1px;height:1px;"></div><div class="clear-g cbox-block-w">
+            <div class="block-head-w">
+                <div class="head-img-w">
+                                        <a node-type="user-avatar" href="javascript:void(0)" target="_self"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/pic42_null.gif" onerror="SOHUCS.isImgErr(this)" width="42" height="42" alt=""></a>
+                    </div>
+                <!--
+                -->
+            </div>
+        <div class="block-post-w block-post-default-e"><div class="post-wrap-w post-wrap-b"><div class="wrap-area-w"><div class="area-textarea-w" style="position:relative;zoom:1;z-index:9;"><textarea name="" class="textarea-fw textarea-bf">来说两句吧...</textarea></div></div><div class="clear-g wrap-action-w wrap-action-b"><div class="action-function-w action-function-b relative-z-w"><ul class="clear-g"><li class="function-face-w"><a href="javascript:void(0)" class="effect-w" title="表情"><i class="face-b"></i></a></li><li class="function-uploadimg-w"><a href="javascript:void(0)" class="effect-w" title="上传图片"><i class="uploadimg-b"></i></a><div class="uploadimg-file-w"><input class="file-fw" id="img_upload" name="file" type="file" accept="image/*"></div><div class="img-btn-cover" style="width:40px;height:40px;margin-top:-40px;z-index:-1;position: relative;"></div></li><!--<li class="function-at-w"><a href="javascript:void(0)" class="effect-w"><i class="at-b"></i></a></li>--></ul></div><div class="clear-g action-issue-w"><div class="issue-btn-w"><a href="javascript:void(0)"><button class="btn-fw btn-bf btn-fw-main">发布</button></a></div></div></div></div>
+                                    <div node-type="login-list" class="post-login-w">
+                <ul class="clear-g">
+                                                            <li style="display:block">
+                        <div class="login-wrap-w login-wrap-b">
+                            <a data-key="sina" target="_self" href="javascript:;" title="新浪微博" alt="新浪微博">
+                                <span class="wrap-icon-w icon30-sina-b"></span><span class="wrap-name-w wrap-name-b">微博登录</span>
+                            </a>
+                        </div>
+                    </li>
+                                        <li style="display:block">
+                        <div class="login-wrap-w login-wrap-b">
+                            <a data-key="qq" target="_self" href="javascript:;" title="QQ" alt="QQ">
+                                <span class="wrap-icon-w icon30-qq-b"></span><span class="wrap-name-w wrap-name-b">QQ登录</span>
+                            </a>
+                        </div>
+                    </li>
+                                        <li style="display:">
+                        <div class="login-wrap-w login-wrap-b">
+                            <a data-key="" target="_self" href="javascript:;" title="" alt="">
+                                <span class="wrap-icon-w icon30--b"></span><span class="wrap-name-w wrap-name-b"></span>
+                            </a>
+                        </div>
+                    </li>
+                                        <li>
+                        <div class="login-wrap-w login-wrap-b login-wrap-phone-b">
+                            <a data-key="phone" target="_self" href="javascript:void(0)">
+                                <span class="wrap-icon-w icon30-phone-b"></span><span class="wrap-name-w wrap-name-b">手机登录</span>
+                            </a>
+                        </div>
+                    </li>
+                    </ul>
+            </div>
+            </div></div><div node-type="prompt-no-privilege" class="cbox-prompt-w" style="display: none;">
+            <span class="prompt-empty-w prompt-empty-b">等级不够，发表评论升至指定级别才能获得该特权。详情请参见<a node-type="privilege-intro" href="javascript:;">等级说明</a>。</span>
+        </div></div></div><div id="list_sort_sohu"></div><div id="list_sohu" topicid="561255391">
+        <div class="reset-g section-list-w">
+            <div class="list-comment-empty-w">
+                <div class="empty-prompt-w"><span class="prompt-null-w prompt-null-b">还没有评论，快来抢沙发吧！</span></div>
+            </div>
+        </div></div><div id="list_hot"></div><div id="page_sohu"></div><div id="more_list_sohu"></div><div id="powerby_sohu">        <div class="reset-g section-service-w">
+            <div class="service-wrap-w service-wrap-b"><a node-type="powered-by" href="http://changyan.sohu.com/?from=changyan" target="_blank">Powered by 畅言</a></div>
+        </div></div></div></div></div></div>
+</div>
+      </div><!--endborder-->
+      </div><!--end fl-->
+      
+<div class="w300 fr">
+<div class="r300 clearfix"><script async="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/adsbygoogle.js"></script><ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-6384567588307613" data-ad-slot="2817964327" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/saved_resource.html"></iframe></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">大家感兴趣的内容</h4>
+<ul class="newsList newList-in">
+<li><em class="no1">1</em><a href="http://www.jb51.net/article/33654.htm" title="c语言10个经典小程序" target="_blank">c语言10个经典小程序</a></li><li><em class="no2">2</em><a href="http://www.jb51.net/article/37410.htm" title="C语言字符串操作总结大全(超详细)" target="_blank">C语言字符串操作总结大全(超详细</a></li><li><em class="no3">3</em><a href="http://www.jb51.net/article/38051.htm" title="C语言程序设计50例(经典收藏)" target="_blank">C语言程序设计50例(经典收藏)</a></li><li><em class="no4">4</em><a href="http://www.jb51.net/article/37688.htm" title="C语言文件操作函数大全(超详细)" target="_blank">C语言文件操作函数大全(超详细)</a></li><li><em class="no5">5</em><a href="http://www.jb51.net/article/37456.htm" title="c语言字符数组与字符串的使用详解" target="_blank">c语言字符数组与字符串的使用详解</a></li><li><em class="no6">6</em><a href="http://www.jb51.net/article/42065.htm" title="C语言/C++中如何产生随机数" target="_blank">C语言/C++中如何产生随机数</a></li><li><em class="no7">7</em><a href="http://www.jb51.net/article/37282.htm" title="C语言运算符优先级列表(超详细)" target="_blank">C语言运算符优先级列表(超详细)</a></li><li><em class="no8">8</em><a href="http://www.jb51.net/article/41725.htm" title="c++中的string常用函数用法总结" target="_blank">c++中的string常用函数用法总结</a></li><li><em class="no9">9</em><a href="http://www.jb51.net/article/55954.htm" title="C++常用字符串分割方法实例汇总" target="_blank">C++常用字符串分割方法实例汇总</a></li><li><em class="no10">10</em><a href="http://www.jb51.net/article/41045.htm" title="浅析C++中结构体的定义、初始化和引用" target="_blank">浅析C++中结构体的定义、初始化和</a></li>
+</ul>
+</div>
+</div>
+<div class="r300 clearfix mt10"><script async="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/adsbygoogle.js"></script><!--thea+300*250--><ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-6389290466807248" data-ad-slot="6788945816" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/saved_resource(1).html"></iframe></ins></ins></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script><div class="blank10"></div><a href="http://click.aliyun.com/m/9812/" target="_blank"><img alt="" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/ali_300_2.gif" width="300" height="100"></a>
+</div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">最近更新的内容</h4>
+<ul class="newsListA">
+<ul><li><a href="http://www.jb51.net/article/85769.htm" title="C语言中实现KMP算法的实例讲解" target="_blank">C语言中实现KMP算法的实例讲解</a></li><li><a href="http://www.jb51.net/article/37400.htm" title="C语言调试手段:锁定错误的实现方法" target="_blank">C语言调试手段:锁定错误的实现方法</a></li><li><a href="http://www.jb51.net/article/86515.htm" title="C语言实现字符转unix时间戳的简单实例" target="_blank">C语言实现字符转unix时间戳的简单实例</a></li><li><a href="http://www.jb51.net/article/71704.htm" title="使用C语言操作文件的基本函数整理" target="_blank">使用C语言操作文件的基本函数整理</a></li><li><a href="http://www.jb51.net/article/39930.htm" title="C语言运算符及其优先级汇总表口诀" target="_blank">C语言运算符及其优先级汇总表口诀</a></li><li><a href="http://www.jb51.net/article/69434.htm" title="C++中关于委派（Delegates）的实现示例" target="_blank">C++中关于委派（Delegates）的实现示例</a></li><li><a href="http://www.jb51.net/article/41779.htm" title="二叉树遍历 非递归 C++实现代码" target="_blank">二叉树遍历 非递归 C++实现代码</a></li><li><a href="http://www.jb51.net/article/47258.htm" title="C++ Primer 第一部分基本语言" target="_blank">C++ Primer 第一部分基本语言</a></li><li><a href="http://www.jb51.net/article/70535.htm" title="C++实现简单的职工信息管理系统" target="_blank">C++实现简单的职工信息管理系统</a></li><li><a href="http://www.jb51.net/article/72525.htm" title="详解C++编程中多级派生时的构造函数和访问属性" target="_blank">详解C++编程中多级派生时的构造函数和访问</a></li></ul>
+</ul>
+</div>
+</div>   
+<div class="r300 clearfix mt10"><div class="idc3"><a href="http://www.021.net/" target="_blank"><h1>众生网络</h1><span>品牌服务器租用</span> </a><a href="http://www.geisnic.com/" target="_blank"><h1>集思网络</h1><span>VPS主机</span> </a><a href="http://www.33ip.com/" target="_blank"><h1>枫信科技</h1><span>IDC服务商</span> </a></div>
+</div>
+<div class="tabTitleBar mt10 bgf borderTblue">
+<div class="borderTnone pb10 YaHei">
+<h4 class="blue">常用在线小工具</h4>
+<ul class="newsListA"><li><a href="http://tools.jb51.net/code/unixtime" target="_blank"><font color="red">Unix时间戳(timestamp)转换工具</font></a></li><li><a href="http://www.jb51.net/tools/js_Debug.htm" target="_blank"><font color="red">在线JS脚本校验器错误</font></a></li><li><a href="http://tools.jb51.net/code/xmlformat" target="_blank">在线XML格式化/压缩工具</a></li><li><a href="http://tools.jb51.net/color/jPicker" target="_blank"><font color="red">RGB颜色查询对照表_配色工具</font></a></li><li><a href="http://tools.jb51.net/bianmin/xiehouyu" target="_blank">歇后语在线查询</a></li><li><a href="http://tools.jb51.net/code/json" target="_blank">JSON代码工具</a></li><li><a href="http://tools.jb51.net/transcoding/jb51qrcode" target="_blank">在线生成二维码工具(加强版)</a></li><li><a href="http://tools.jb51.net/code/json" target="_blank">在线JSON代码检验/检验/美化/格式化</a></li><li><a href="http://tools.jb51.net/code/sqlcodeformat" target="_blank">sql代码在线格式化美化工具</a></li><li><a href="http://tools.jb51.net/code/phpformat" target="_blank">php代码在线格式化美化工具</a></li>
+</ul>
+</div>
+</div>
+<div class="r300 clearfix mt10" id="idctu2"><a href="http://tuidc.com/" target="_blank"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/tengyou300.gif" width="300" height="100"></a><div class="blank10"></div><a href="http://www.enkj.com/encloud/" target="_blank"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/enkj_300.gif" alt="云服务器" width="300" height="100"></a>
+</div>
+<div class="mt10 rFixedBox" style="position: static; top: 0px;">
+<script type="text/javascript">var cpro_id="u1397867";(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"380",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}</script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/c.js" type="text/javascript"></script><div id="BAIDU_SSP__wrapper_u1397867_0" style="width: 300px; height: 380px; display: inline-block;"><iframe id="iframeu1397867_0" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/mcam(3).html" width="300" height="380" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div>
+
+</div>
+      
+      
+      </div><!--end fr-->
+      </div>
+</div><!--end content-->
+<div id="footer">
+<div class="main clearfix">
+<p>
+<a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - 
+<a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - 
+<a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  
+<a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  
+<a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - 
+<a href="tencent://message/?uin=461478385&amp;Site=http://www.jb51.net" target="_blank">投诉建议</a> - 
+<a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+</p>
+<p>&#169;CopyRight 2006-2016 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+</div>
+   <div class="gotop" id="gotop" style="left: auto; display: block;">   <a href="javascript:;" class="jb51-weixin"></a>  <div class="jb51-weixin-con hide">     <h2 class="jb51-weixin-title">微信扫一扫</h2>    <div class="jb51-weixin-pic"> <img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/weixin_jb51.gif" alt="脚本之家微信账号" width="100" height="100"> </div>  </div>  <a href="http://shequ.jb51.net/" target="_blank" class="question"><img src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/hot.gif" alt="hot"></a>  <a href="javascript:;" class="go"></a>  </div></div><!--end footer-->
+<link type="text/css" rel="stylesheet" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/shThemeDefault.css">
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/shCore.js"></script>
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/shAutoloader.js"></script>
+<script type="text/javascript">
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+if (top.location != self.location)top.location=self.location;
+$(function(){
+	$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+            img.style.width = "650px";
+            img.style.height = "auto";
+            //$(img).removeAttr('height');
+            var aTag = document.createElement('a');
+            aTag.href = img.src;
+			aTag.target="_blank";
+            $(aTag).addClass('bPic')
+            .insertAfter(img).append(img)
+          }
+    });
+	$(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = $(window).height();
+        var top = $(window).scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+344)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			if(parseInt(top) + 340 < h1){
+				$('.rFixedBox').css({'position':'fixed','top': 0});
+			}else{
+				$('.rFixedBox').css({'position':'absolute','top': h1-510});
+			}
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+    });
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+});
+</script>
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/jbLoader.js"></script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<script>jbLoader();</script>
+<div id="tongji">
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/tongji.js"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/i.js" type="text/javascript"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/stat.php" language="JavaScript"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=1585378" target="_blank" title="站长统计">站长统计</a><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/stat(1).php" language="JavaScript"></script><script src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/core(1).php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=5488916" target="_blank" title="站长统计">站长统计</a>
+<script>
+(function(){
+var appid = 'cyrHH3dwi',
+conf = 'prod_1dc5dc80970106099d43fe242b7465fc';
+var doc = document,
+s = doc.createElement('script'),
+h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+s.type = 'text/javascript';
+s.charset = 'utf-8';
+s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+h.insertBefore(s,h.firstChild);
+window.SCS_NO_IFRAME = true;
+})();
+</script>
+</div>
+<script type="text/javascript" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/pl.asp"></script>
+<script type="text/javascript" charset="utf-8" src="./深入解析Linux下_r_n的问题_C 语言_脚本之家_files/saved_resource"></script>
+
+
+<!-- published at 2016-11-23 23:31:32By dxycms qq:461478385  -->
+</div></body></html>
