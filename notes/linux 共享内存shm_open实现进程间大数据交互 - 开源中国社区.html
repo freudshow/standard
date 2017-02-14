@@ -1,0 +1,769 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0048)https://www.oschina.net/code/snippet_237505_8645 -->
+<html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/adsbygoogle.js"></script>
+    
+
+	<!-- 此meta用于腾讯验证我们网址的有效性 -->
+    <meta property="qc:admins" content="2554550177673301616654">
+	<!-- 此meta用于百度站长工具 -->
+    <meta name="baidu-site-verification" content="kerGDpToCx">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.oschina.net/img/favicon.ico?t=1451961935000">
+  <title>linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区</title>
+				<meta itemprop="name" content="linux 共享内存shm_open实现进程间大数据交互- 开源中国社区">
+<meta itemprop="image" content="https://www.oschina.net/img/logo_s2.png">
+
+	<meta name="Keywords" content="">	  		  <meta name="Description" itemprop="description" content="&lt;p&gt;/*&lt;br /&gt; int shm_open(const char *name, int oflag, mode_t mode);&lt;br /&gt; //创建或打开一个共享内存,成功返回一个整数的文件描述符，错误返回-1。&lt;br /&gt; 1.name:共享内存区的名字；&lt;br /&gt; 2.标志位；open的标志一样&lt;br /&gt; 3.权限位&lt;br /&gt; int shm_unlink(const char *name);&lt;/p&gt; 
+&lt;p&gt;编译时要加库文件-lrt&lt;br /&gt; */&lt;/p&gt;">
+	  
+  <link rel="stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/style2013.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/channel.css" type="text/css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/jquery.fancybox-1.3.4.css" media="screen">
+  <link rel="alternate" type="application/rss+xml" title="最新开源项目" href="https://www.oschina.net/project/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新开源资讯" href="https://www.oschina.net/news/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新问题列表" href="https://www.oschina.net/question/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新翻译列表" href="https://www.oschina.net/translate/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新博客列表" href="https://www.oschina.net/blog/rss">
+  <link rel="alternate" type="application/rss+xml" title="推荐博客列表" href="https://www.oschina.net/blog/rss?show=more">
+  <link rel="alternate" type="application/rss+xml" title="推荐软件列表" href="https://www.oschina.net/project/rss?show=recomms">
+  <link rel="alternate" type="application/rss+xml" title="最新代码分享列表" href="https://www.oschina.net/code/rss">
+  <link rel="alternate" type="application/rss+xml" title="开源中国 - 源码列表" href="https://www.oschina.net/code/source_rss">
+    <!--添加emoji支持-->
+    <link rel="stylesheet" type="text/css" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/emoji.min.css">
+
+  <script src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/hm.js"></script><script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/jquery.form.js"></script>
+  <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/jquery.fancybox-fixed.js"></script>
+    <link rel="stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/tip-yellowsimple.css" type="text/css">
+  <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/jquery.poshytip.min.js"></script>
+    <!-- 此script用于百度统计工具-->
+	<script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?a411c4d1664dd70048ee98afe7b28f0b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+	<script type="text/javascript">
+  	g_user = {
+	id:0,
+	name:'',
+	login:false};  </script>
+    <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/oschina.js"></script>
+  <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/utils.js"></script>
+  <script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/channel.js"></script>
+    <style type="text/css">
+  
+  </style>
+<script src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/share.js"></script><link href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/default.css" rel="stylesheet"><link href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/oschina.css" rel="stylesheet"><link rel="stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/share_style1_16.css"></head>
+<body>
+<div id="OSC_NavTop">
+	<div class="wp998">
+        <div id="OSC_Channels">
+        	<ul>
+        	<li class="item"><a href="https://www.oschina.net/" class="home">首页</a></li>        	<li class="item control_select"><a href="https://www.oschina.net/project" class="project">开源项目</a>
+				<ul class="cs_content">
+					<li><a href="https://www.oschina.net/project/zh">国产开源项目</a></li>
+					<li><a href="https://www.oschina.net/project/tags">项目分类</a></li>
+					<li><a href="https://www.oschina.net/project/list?sort=time">最新收录项目</a></li>
+					<li class="split"></li>
+                	                	<li><a href="https://www.oschina.net/project/lang/19/java">Java 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/194/csharp">C# 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/22/php">PHP 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/21/c">C/C++ 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/26/ruby">Ruby 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/25/python">Python 开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/358/go">Go开源软件</a></li>
+                	<li><a href="https://www.oschina.net/project/lang/28/javascript">JS开源软件</a></li>
+				</ul>
+			</li>
+        	<li class="item control_select">
+				<a href="https://www.oschina.net/question" class="question">问答</a>
+				<ul class="cs_content">
+                	<li><a href="https://www.oschina.net/question?catalog=1"> 技术问答 » </a></li>
+                	<li><a href="https://www.oschina.net/question?catalog=2"> 技术分享 » </a></li>
+                	<li><a href="https://www.oschina.net/question?catalog=3"> IT大杂烩 » </a></li>
+                	<li><a href="https://www.oschina.net/question?catalog=100"> 职业生涯 » </a></li>
+                	<li><a href="https://www.oschina.net/question?catalog=4"> 站务/建议 » </a></li>
+                	<li><a href="https://www.oschina.net/alipay"> 支付宝专区 » </a></li>
+                	<li><a href="https://www.oschina.net/mopaas"> MoPaaS专区 » </a></li>
+                	<li><a href="https://www.oschina.net/hardware"> 开源硬件专区 » </a></li>
+				</ul>
+			</li>
+        	<li class="item"><a href="https://www.oschina.net/tweets" class="tweets">动弹</a></li>
+        	        	<li class="item"><a href="https://www.oschina.net/blog" class="blog">博客</a></li>
+        	<li class="item"><a href="https://www.oschina.net/translate" class="tran">翻译</a></li>
+            <li class="item"><a href="https://www.oschina.net/news" class="news">资讯</a></li>
+        	<li class="item control_select">
+				<a href="https://www.oschina.net/android" class="mobile">专题</a>
+				<ul class="cs_content cs_mobile">
+        			<li><a href="https://www.oschina.net/event/ych" style="color:#c00">源创会</a> <a href="https://www.oschina.net/video">视频</a></li>
+        			<li><a href="http://www.oschina.net/question/tag/%E9%AB%98%E6%89%8B%E9%97%AE%E7%AD%94">高手问答</a> <a href="http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88">访谈</a></li>
+        			<li><a href="http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E5%91%A8%E5%88%8A">周刊</a> <a href="http://my.oschina.net/xxiaobian/blog?catalog=547834">乱弹</a></li>
+            		<li><a href="https://www.oschina.net/company">公司开源导航页</a></li>
+					<li class="split"></li>
+                	<li class="android_"><a href="https://www.oschina.net/android">Android开发专区</a></li>
+                	<li class="ios_"><a href="https://www.oschina.net/ios/home">iOS开发专区</a></li>
+                	<li class="ios_"><a href="https://www.oschina.net/ios/codingList">iOS代码库</a></li>
+                	<li class="wp7_"><a href="https://www.oschina.net/wp">Windows Phone</a></li>
+					
+				</ul>
+			</li>
+        <li class="item"><a href="https://www.oschina.net/event" class="event">活动</a></li>
+        	        				        	</ul>
+        </div>
+		<div id="OSC_Userbar">
+                		    		当前访客身份：游客 [ <a href="https://www.oschina.net/home/login?goto_page=https%3A%2F%2Fwww.oschina.net%2Fcode%2Fsnippet_237505_8645">登录</a> | <a href="https://www.oschina.net/home/reg">加入开源中国</a> ]
+    				</div>
+		<div class="clear"></div>
+	</div>
+
+</div>
+<div id="OSC_Banner"><div class="wp998"><a href="https://www.oschina.net/" class="Logo" title="OSChina 开源中国">开源中国</a>
+<h1><a href="https://www.oschina.net/code/list">代码分享</a></h1>
+<dl>
+	<dt>当前位置：</dt>
+	<dd>
+		<a href="https://www.oschina.net/code/list">代码分享</a>&nbsp;»&nbsp;<a href="https://www.oschina.net/code/list/?lang=cpp">C/C++</a> &nbsp;»&nbsp;<a href="https://www.oschina.net/code/list/?catalog=linux-programming">Linux编程</a>  
+	</dd>
+</dl>
+<form action="https://www.oschina.net/search" class="search">
+	<input type="hidden" name="scope" value="code">
+	<input id="channel_q" type="text" name="q" value="" placeholder="资讯、软件、分享、代码、博客" class="TXT">
+    <button type="submit" class="BTN">搜 索</button>
+</form>
+<div class="clear"></div></div></div>
+<div id="OSC_Screen">
+	<div id="OSC_Content" class="CenterDiv">
+<script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+  	scrolltotop.offset(100,120);
+  	scrolltotop.init();
+</script>
+
+<div class="Question Code">
+	<div class="Body">
+    	<div class="Title">
+    		<div class="Asker"><a href="https://my.oschina.net/lihanwei" class="ShowUserOutline" target="_blank"><img src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/237505_50.jpg" align="absmiddle" alt="howaylee" title="howaylee" class="SmallPortrait" user="237505" data-bd-imgshare-binded="1"></a></div>
+    		<div class="QTitle">
+    			<h1><a href="https://www.oschina.net/code/snippet_237505_8645">linux 共享内存shm_open实现进程间大数据交互</a></h1>
+            	<div class="stat">
+            		<a href="https://my.oschina.net/lihanwei">howaylee</a> 发布于 2012年02月12日 20时,
+            		<a href="https://www.oschina.net/code/snippet_237505_8645#comments">3评/11379阅</a>
+    				            		            	</div>
+            </div>
+    		<div class="clear"></div>
+    	</div>
+		<style type="text/css">
+#TagsSwitcher{color:#A00;}
+#RecTags,#MyTags{margin:5px 0;}
+#RecTags a.tag{line-height:24px;}
+#favor_form{width:200px;}
+#favor_form p:first-child{margin:5px 0;}
+#favor_form p {color:#666;}
+#favor_form form{min-height:85px;width:200px;}
+#favor_form form ._favor_input{display:block;margin:2px 0;width:199px;}
+#favor_form form ._favor_button{float:left;padding:2px 5px;}
+.favor_ok {text-align:center;font-size:10.5pt;width:199px;height:60px;margin-top:10px;}
+#TagsSwitcher{cursor:pointer;float:right;margin-top:10px;}
+#MyTags{display:none;width:199px;}
+#MyTags a.tag {float:left; background-color: #E0EAF1;border-bottom: 1px solid #3E6D8E;border-right: 1px solid #7F9FB6;color: #3E6D8E;font-size: 8pt;line-height: 16px;margin: 2px 2px 2px 0;padding: 2px 4px;text-decoration: none;white-space: nowrap;}
+#MyTags a.tag:hover{background-color: #3E6D8E;color: #FFF;}
+#toolbar_wrapper{padding:10px 0 5px 0;}
+.toolbar{height:33px;margin:0;padding:0;vertical-align: middle;border:1px solid #CCC;-moz-box-shadow: 0 1px 3px rgba(198,198,198,0.5);-webkit-box-shadow: 0 1px 3px rgba(198,198,198,0.5);box-shadow: 0 1px 3px rgba(198,198,198,0.5);}
+.toolbar a{text-decoration:none;color:black;}
+.share{float:left;margin:0;padding:3px 0 0 0;line-height:25px;width:280px;}
+.share_sina{float:left;background:url(/img/toolbar.gif) -1px -278px no-repeat;padding-left:25px;padding-right:5px;margin-left:3px;}
+.share_qq{float:left;background:url(/img/toolbar.gif) -1px -316px no-repeat;padding-left:25px;padding-right:5px;}
+#share_weixin {float:left;background:url('/img/weixin.gif') 5px 4px no-repeat;padding-left:25px; cursor:pointer;}
+.options{float:right;margin:3px 5px 0 5px;padding:0;height:30px;line-height:25px;}
+.tool_title {float:left;text-align:center;vertical-align:middle;margin:0 0 0 5px;line-height:33px;}
+.options .tool_title{line-height:30px;}
+.favorite{float:left;}
+.soft_collect{background: url(/img/toolbar.gif) 0 -1px no-repeat; cursor: pointer;padding-left:20px;}
+.soft_collected{background: url(/img/toolbar.gif) 1px -28px no-repeat;}
+.soft_collect_count{font-size:12pt;font-family: Arial;color:#8B0000;margin:0 10px 0 10px;}
+.soft_collect_count:hover {color:red;}
+.soft_used{float:right;margin:0 0 0 20px;padding:0;position: relative;}
+.soft_used_button{z-index: 1; position: relative; cursor: pointer;margin-left:10px;}
+.arrow_holder{background: url(/img/toolbar.gif) -1px -350px no-repeat;}
+a.soft_used_button_n{}
+a.soft_used_button_y{color:#40AA53;font-weight:bold;}
+.soft_used_level{ z-index: 99; position: absolute; top: 28px;left: 0; width: 80px; background-color: #f9f9f9; border: 1px solid #ccc;}
+.soft_used_level li{ line-height: 34px; padding-left: 30px;background: url(/img/toolbar.gif) 3px -390px no-repeat; cursor: pointer;}
+.soft_used_level li.choice{ background-color: #e9e9e9; background-position: 3px -418px}
+.soft_used_level li.level{ background-position: 3px -418px}
+.options .report{float:left;background: url(/img/toolbar.gif) 0 -113px no-repeat;padding:0 10px 0 15px;border-top:1px solid #CCC;border-bottom:1px solid #CCC;border-right:1px solid #CCC;}
+.options .vote{float:right;width:120px;margin:0 0 0 20px;padding:0 5px;border:1px solid #CCC;text-align:center;vertical-align:middle;}
+.options .vote-up-on{float:left;background: url(/img/toolbar.gif) 0 -160px no-repeat;padding-left:15px;}
+.options .vote-up-off{float:left;background: url(/img/toolbar.gif) 0 -137px no-repeat;padding-left:15px;}
+.options .vote-down-on{float:right;background: url(/img/toolbar.gif) 0 -209px no-repeat;padding-left:15px;}
+.options .vote-down-off{float:right;background: url(/img/toolbar.gif) 0 -184px no-repeat;padding-left:15px;}
+.options .vote-count-post{font-size:12pt;font-family: Arial;color: #8B0000;text-align: center;vertical-align:middle;margin:0 5px;}
+.options .news_deliver{float:left;background: url(/img/toolbar.gif) 3px -243px no-repeat;padding:0 10px 0 24px;border-top:1px solid #CCC;border-bottom:1px solid #CCC;border-right:1px solid #CCC;}
+#p_used_count{cursor:pointer;}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$.ajax({
+		url:"/action/favorite/attentionUsersCount",
+		type:"get",
+		data:"id="+8645+"&type="+5,
+		success:function(msg){
+			$("#p_favor_count").html("+"+msg);
+		}
+	});
+	
+	$('#favor_trigger').click(function(){
+			add_to_favor(8645,5);
+		});
+});
+
+var favor_ok = "<p class='favor_ok'>已成功添加到收藏夹<br/><br/> <a href='null/favorites?type=5'>我的收藏夹</a> | <a href='javascript:close_favor()'>关闭</a></p>";
+function delete_favor(obi_id, obj_type){
+	if(!confirm('确定取消收藏？')) return;
+	$.post("/action/favorite/cancel?type="+obj_type+"&id="+obi_id+"&user=${g_user.id}",function(html){
+    	$('#favor_trigger').removeClass('soft_collected');
+		$('#favor_trigger').attr('title','添加到收藏');
+    	$('#p_favor_count').html('+'+html);
+		$('#favor_trigger').unbind('click');
+		$('#favor_trigger').click(function(){add_to_favor(8645,5);});
+	});
+}
+function add_to_favor(obj_id, obj_type){
+	if(confirm('必须登录后才能收藏，是否现在登录？')){
+		location.href="https://www.oschina.net/home/login?goto_page="+encodeURIComponent(location.href);
+	}
+}
+function close_favor(elem_id){
+    $('#favor_trigger').poshytip('destroy');
+}
+function setTag(tv){
+	var t = $("._favor_input");
+	var value = t.val();
+	var tags = value.replace(/，/ig,',').split(',');
+	var exist = false;
+	value = $.map(tags,function(v,i){
+		if($.trim(tv) == $.trim(v)){
+			exist = true;
+			return undefined;
+		}
+		return v;
+	}).join(',');
+	if(exist){
+		t.val(value);
+		return;
+	}
+	if(value!="")
+		t.val(value+","+tv);
+	else
+		t.val(tv)
+}
+</script>
+<div id="toolbar_wrapper">
+	<div class="toolbar">
+	<div class="tool_title"><b>分享到：&nbsp;</b></div>
+	<div class="share">
+		<div class="bdsharebuttonbox bdshare-button-style1-16" data-bd-bind="1487061628072"><a href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_more" data-cmd="more"></a><a title="分享到新浪微博" href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到QQ空间" href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到微信" href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_weixin" data-cmd="weixin"></a><a title="分享到QQ好友" href="https://www.oschina.net/code/snippet_237505_8645#" class="bds_sqq" data-cmd="sqq"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","tqq","qzone","weixin","sqq"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/bdshare_api/share.js?t=1466497475000'];</script>
+
+	</div>
+	<div class="options">
+				<div class="favorite">
+		<a title="收藏此代码" id="favor_trigger" class="soft_collect " href="javascript:;">收藏</a>		<span class="soft_collect_count" id="p_favor_count">+11</span>
+		</div>
+						<div class="vote" id="Vote">
+									<a id="vote_down" class="vote-down-off" href="javascript:;" title="踩：这代码不知道在说什么，或者没什么用">踩</a>
+							<a id="vote_up" class="vote-up-off" href="javascript:;" title="顶：这代码很有用或者很清晰明了">顶</a>
+					<span class="vote-count-post">1</span>
+		</div>
+			</div>
+	</div>
+</div>		
+		<div class="Content">
+			<div class="detail">
+								<p>/*<br> int shm_open(const char *name, int oflag, mode_t mode);<br> //创建或打开一个共享内存,成功返回一个整数的文件描述符，错误返回-1。<br> 1.name:共享内存区的名字；<br> 2.标志位；open的标志一样<br> 3.权限位<br> int shm_unlink(const char *name);</p> 
+<p>编译时要加库文件-lrt<br> */</p><div class="clear"></div></div>
+    		<div class="Tags">
+    			<strong>标签：</strong>
+    											&lt;无&gt;
+								    		</div>
+    				</div>
+    	<div class="clear"></div>
+		<style>
+			.CodeEntity .code_pieces ul.piece_anchor{width:25px;position:absolute;top:25px;left:-30px;z-index:1000;}
+			.CodeEntity .code_pieces ul.piece_anchor li{width:25px;background: #efe;margin-bottom:2px;}
+			.CodeEntity .code_pieces ul.piece_anchor li{border-left:3px #40AA63 solid;border-right:3px #efe solid;}
+						.CodeEntity .code_pieces ul.piece_anchor li:hover{border-right:3px #40AA63 solid;border-left:3px #efe solid;}
+			.CodeEntity .code_pieces ul.piece_anchor li a{color: #333;padding: 3px 10px;}
+			.CodeEntity .code_pieces .jump_to_code{visibility:hidden;position:relative;}
+			.CodeEntity .code_pieces .code_piece:hover .jump_to_code{visibility:visible;}
+			.CodeEntity .code_pieces .code_piece:hover .jump_to_code a{text-decoration:none;}
+			.CodeEntity .code_pieces h2 i{float:right;font-style:normal;font-weight:normal;}
+			.CodeEntity .code_pieces h2 i a{font-size:9pt;background: #FFFFFF;color:#00A;padding: 2px 5px;text-decoration:none;}
+		</style>
+        <div class="CodeEntity">
+        	<div class="code_pieces code_module">
+				<!--<ul class="piece_anchor">-->
+									<!--<li><a href="#${cp.id}" style="text-decoration:none;">$velocityCount</a></li>-->
+								<!--</ul>-->
+        		<h2>
+					<a>代码片段<em>(2)</em></a>
+					<i><a href="https://www.oschina.net/code/piece_full?code=8645" target="_blank">[全屏查看所有代码]</a></i>
+				</h2>
+            	            	<div class="code_piece">
+            	    				                	<h3><i>1.&nbsp;</i><i>[文件]</i>
+    					read.c&nbsp;~&nbsp;1KB&nbsp;&nbsp;&nbsp;&nbsp;
+    					<a href="https://www.oschina.net/action/code/download?code=8645&amp;id=13751">下载</a><span style="font-weight:normal;font-size:8pt;">(133)</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    					<i class="jump_to_code">
+    						    							<span>
+        							<a>跳至</a>
+        							    									    										    											<a href="https://www.oschina.net/code/snippet_237505_8645#13751">[1]</a>
+    										    									        							    									    										    											<a href="https://www.oschina.net/code/snippet_237505_8645#13752">[2]</a>
+    										    									        							    							</span>
+    						    							<a href="https://www.oschina.net/code/piece_full?code=8645&amp;piece=13751#13751" name="13751" target="_blank">[全屏预览]</a>
+    					</i>
+    				</h3>
+            		                	<div><div id="highlighter_758232" class="syntaxhighlighter  cpp"><div class="toolbar"><span><a href="https://www.oschina.net/code/snippet_237505_8645#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div><div class="line number62 index61 alt1">62</div><div class="line number63 index62 alt2">63</div><div class="line number64 index63 alt1">64</div><div class="line number65 index64 alt2">65</div><div class="line number66 index65 alt1">66</div><div class="line number67 index66 alt2">67</div><div class="line number68 index67 alt1">68</div><div class="line number69 index68 alt2">69</div><div class="line number70 index69 alt1">70</div><div class="line number71 index70 alt2">71</div><div class="line number72 index71 alt1">72</div><div class="line number73 index72 alt2">73</div><div class="line number74 index73 alt1">74</div><div class="line number75 index74 alt2">75</div><div class="line number76 index75 alt1">76</div><div class="line number77 index76 alt2">77</div><div class="line number78 index77 alt1">78</div><div class="line number79 index78 alt2">79</div><div class="line number80 index79 alt1">80</div><div class="line number81 index80 alt2">81</div><div class="line number82 index81 alt1">82</div><div class="line number83 index82 alt2">83</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include &lt;sys/types.h&gt;</code></div><div class="line number2 index1 alt1"><code class="cpp preprocessor">#include &lt;sys/stat.h&gt;</code></div><div class="line number3 index2 alt2"><code class="cpp preprocessor">#include &lt;fcntl.h&gt;</code></div><div class="line number4 index3 alt1"><code class="cpp preprocessor">#include &lt;stdio.h&gt;</code></div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#include &lt;sys/mman.h&gt;</code></div><div class="line number6 index5 alt1"><code class="cpp preprocessor">#include &lt;string.h&gt;</code></div><div class="line number7 index6 alt2"><code class="cpp preprocessor">#include &lt;errno.h&gt;</code></div><div class="line number8 index7 alt1"><code class="cpp preprocessor">#include &lt;unistd.h&gt;</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="cpp comments">/*</code></div><div class="line number11 index10 alt2"><code class="cpp comments">int shm_open(const char *name, int oflag, mode_t mode);</code></div><div class="line number12 index11 alt1"><code class="cpp comments">//创建或打开一个共享内存,成功返回一个整数的文件描述符，错误返回-1。</code></div><div class="line number13 index12 alt2"><code class="cpp comments">1.name:共享内存区的名字；</code></div><div class="line number14 index13 alt1"><code class="cpp comments">2.标志位；open的标志一样</code></div><div class="line number15 index14 alt2"><code class="cpp comments">3.权限位</code></div><div class="line number16 index15 alt1"><code class="cpp comments">int shm_unlink(const char *name);</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="cpp comments">编译时要加库文件-lrt</code></div><div class="line number19 index18 alt2"><code class="cpp comments">*/</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="cpp preprocessor">#define SHMNAME "shm_ram"</code></div><div class="line number22 index21 alt1"><code class="cpp preprocessor">#define OPEN_FLAG O_RDWR|O_CREAT</code></div><div class="line number23 index22 alt2"><code class="cpp preprocessor">#define OPEN_MODE 00777</code></div><div class="line number24 index23 alt1"><code class="cpp preprocessor">#define FILE_SIZE 4096*4</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1">&nbsp;</div><div class="line number27 index26 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">main(</code><code class="cpp keyword bold">void</code><code class="cpp plain">)</code></div><div class="line number28 index27 alt1"><code class="cpp plain">{</code></div><div class="line number29 index28 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">ret = -1;</code></div><div class="line number30 index29 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">fd = -1;</code></div><div class="line number31 index30 alt2">&nbsp;</div><div class="line number32 index31 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">char</code> <code class="cpp plain">buf[4096] = {0};</code></div><div class="line number33 index32 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">void</code><code class="cpp plain">* add_r = NULL;</code></div><div class="line number34 index33 alt1">&nbsp;</div><div class="line number35 index34 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//创建或者打开一个共享内存</code></div><div class="line number36 index35 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fd = shm_open(SHMNAME, OPEN_FLAG, OPEN_MODE);</code></div><div class="line number37 index36 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == (ret = fd))</code></div><div class="line number38 index37 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number39 index38 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"shm&nbsp; failed: "</code><code class="cpp plain">);</code></div><div class="line number40 index39 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number41 index40 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number42 index41 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number43 index42 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//调整确定文件共享内存的空间</code></div><div class="line number44 index43 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">ret = ftruncate(fd, FILE_SIZE);</code></div><div class="line number45 index44 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == ret)</code></div><div class="line number46 index45 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number47 index46 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"ftruncate faile: "</code><code class="cpp plain">);</code></div><div class="line number48 index47 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number49 index48 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number50 index49 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number51 index50 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//映射目标文件的存储区</code></div><div class="line number52 index51 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">add_r = mmap(NULL, FILE_SIZE, PROT_READ, MAP_SHARED, fd, SEEK_SET);</code></div><div class="line number53 index52 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(NULL == add_r)</code></div><div class="line number54 index53 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number55 index54 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"mmap add_r failed: "</code><code class="cpp plain">);</code></div><div class="line number56 index55 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number57 index56 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number58 index57 alt1">&nbsp;</div><div class="line number59 index58 alt2">&nbsp;</div><div class="line number60 index59 alt1">&nbsp;</div><div class="line number61 index60 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//memcpy 内存共享 写入内容</code></div><div class="line number62 index61 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">memcpy</code><code class="cpp plain">(buf, add_r, </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(buf));</code></div><div class="line number63 index62 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number64 index63 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">printf</code><code class="cpp plain">(</code><code class="cpp string">"buf = %s\n"</code><code class="cpp plain">, buf);</code></div><div class="line number65 index64 alt2">&nbsp;</div><div class="line number66 index65 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//取消映射</code></div><div class="line number67 index66 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">ret = munmap(add_r, FILE_SIZE);</code></div><div class="line number68 index67 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == ret)</code></div><div class="line number69 index68 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number70 index69 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"munmap add_r faile: "</code><code class="cpp plain">);</code></div><div class="line number71 index70 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number72 index71 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number73 index72 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//删除内存共享</code></div><div class="line number74 index73 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">shm_unlink(SHMNAME);</code></div><div class="line number75 index74 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == ret)</code></div><div class="line number76 index75 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number77 index76 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"shm_unlink faile: "</code><code class="cpp plain">);</code></div><div class="line number78 index77 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number79 index78 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number80 index79 alt1">&nbsp;</div><div class="line number81 index80 alt2"><code class="cpp plain">_OUT:&nbsp;&nbsp; </code></div><div class="line number82 index81 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">return</code> <code class="cpp plain">ret;</code></div><div class="line number83 index82 alt2"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+    				    				            	            	</div>
+            	            	<div class="code_piece">
+            	    				                	<h3><i>2.&nbsp;</i><i>[文件]</i>
+    					write.c&nbsp;~&nbsp;1KB&nbsp;&nbsp;&nbsp;&nbsp;
+    					<a href="https://www.oschina.net/action/code/download?code=8645&amp;id=13752">下载</a><span style="font-weight:normal;font-size:8pt;">(107)</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    					<i class="jump_to_code">
+    						    							<span>
+        							<a>跳至</a>
+        							    									    										    											<a href="https://www.oschina.net/code/snippet_237505_8645#13751">[1]</a>
+    										    									        							    									    										    											<a href="https://www.oschina.net/code/snippet_237505_8645#13752">[2]</a>
+    										    									        							    							</span>
+    						    							<a href="https://www.oschina.net/code/piece_full?code=8645&amp;piece=13752#13752" name="13752" target="_blank">[全屏预览]</a>
+    					</i>
+    				</h3>
+            		                	<div><div id="highlighter_82288" class="syntaxhighlighter  cpp"><div class="toolbar"><span><a href="https://www.oschina.net/code/snippet_237505_8645#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div><div class="line number62 index61 alt1">62</div><div class="line number63 index62 alt2">63</div><div class="line number64 index63 alt1">64</div><div class="line number65 index64 alt2">65</div><div class="line number66 index65 alt1">66</div><div class="line number67 index66 alt2">67</div><div class="line number68 index67 alt1">68</div><div class="line number69 index68 alt2">69</div><div class="line number70 index69 alt1">70</div><div class="line number71 index70 alt2">71</div><div class="line number72 index71 alt1">72</div><div class="line number73 index72 alt2">73</div><div class="line number74 index73 alt1">74</div><div class="line number75 index74 alt2">75</div><div class="line number76 index75 alt1">76</div><div class="line number77 index76 alt2">77</div><div class="line number78 index77 alt1">78</div><div class="line number79 index78 alt2">79</div><div class="line number80 index79 alt1">80</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include &lt;sys/types.h&gt;</code></div><div class="line number2 index1 alt1"><code class="cpp preprocessor">#include &lt;sys/stat.h&gt;</code></div><div class="line number3 index2 alt2"><code class="cpp preprocessor">#include &lt;fcntl.h&gt;</code></div><div class="line number4 index3 alt1"><code class="cpp preprocessor">#include &lt;stdio.h&gt;</code></div><div class="line number5 index4 alt2"><code class="cpp preprocessor">#include &lt;sys/mman.h&gt;</code></div><div class="line number6 index5 alt1"><code class="cpp preprocessor">#include &lt;string.h&gt;</code></div><div class="line number7 index6 alt2"><code class="cpp preprocessor">#include &lt;errno.h&gt;</code></div><div class="line number8 index7 alt1"><code class="cpp preprocessor">#include &lt;unistd.h&gt;</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="cpp comments">/*</code></div><div class="line number11 index10 alt2"><code class="cpp comments">int shm_open(const char *name, int oflag, mode_t mode);</code></div><div class="line number12 index11 alt1"><code class="cpp comments">//创建或打开一个共享内存,成功返回一个整数的文件描述符，错误返回-1。</code></div><div class="line number13 index12 alt2"><code class="cpp comments">1.name:共享内存区的名字；</code></div><div class="line number14 index13 alt1"><code class="cpp comments">2.标志位；open的标志一样</code></div><div class="line number15 index14 alt2"><code class="cpp comments">3.权限位</code></div><div class="line number16 index15 alt1"><code class="cpp comments">int shm_unlink(const char *name);</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="cpp comments">编译时要加库文件-lrt</code></div><div class="line number19 index18 alt2"><code class="cpp comments">*/</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="cpp preprocessor">#define SHMNAME "shm_ram"</code></div><div class="line number22 index21 alt1"><code class="cpp preprocessor">#define OPEN_FLAG O_RDWR|O_CREAT</code></div><div class="line number23 index22 alt2"><code class="cpp preprocessor">#define OPEN_MODE 00777</code></div><div class="line number24 index23 alt1"><code class="cpp preprocessor">#define FILE_SIZE 4096*4</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1">&nbsp;</div><div class="line number27 index26 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">main(</code><code class="cpp keyword bold">void</code><code class="cpp plain">)</code></div><div class="line number28 index27 alt1"><code class="cpp plain">{</code></div><div class="line number29 index28 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">ret = -1;</code></div><div class="line number30 index29 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">fd = -1;</code></div><div class="line number31 index30 alt2">&nbsp;</div><div class="line number32 index31 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">void</code><code class="cpp plain">* add_w = NULL;</code></div><div class="line number33 index32 alt2">&nbsp;</div><div class="line number34 index33 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//创建或者打开一个共享内存</code></div><div class="line number35 index34 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fd = shm_open(SHMNAME, OPEN_FLAG, OPEN_MODE);</code></div><div class="line number36 index35 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == (ret = fd))</code></div><div class="line number37 index36 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number38 index37 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"shm&nbsp; failed: "</code><code class="cpp plain">);</code></div><div class="line number39 index38 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number40 index39 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number41 index40 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number42 index41 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number43 index42 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//调整确定文件共享内存的空间</code></div><div class="line number44 index43 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">ret = ftruncate(fd, FILE_SIZE);</code></div><div class="line number45 index44 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == ret)</code></div><div class="line number46 index45 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number47 index46 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"ftruncate faile: "</code><code class="cpp plain">);</code></div><div class="line number48 index47 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number49 index48 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number50 index49 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number51 index50 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//映射目标文件的存储区</code></div><div class="line number52 index51 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">add_w = mmap(NULL, FILE_SIZE, PROT_WRITE, MAP_SHARED, fd, SEEK_SET);</code></div><div class="line number53 index52 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(NULL == add_w)</code></div><div class="line number54 index53 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number55 index54 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"mmap src failed: "</code><code class="cpp plain">);</code></div><div class="line number56 index55 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number57 index56 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number58 index57 alt1">&nbsp;</div><div class="line number59 index58 alt2">&nbsp;</div><div class="line number60 index59 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//memcpy 内存共享 写入内容</code></div><div class="line number61 index60 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">memcpy</code><code class="cpp plain">(add_w, </code><code class="cpp string">"howaylee"</code><code class="cpp plain">, </code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp string">"howaylee"</code><code class="cpp plain">));</code></div><div class="line number62 index61 alt1">&nbsp;</div><div class="line number63 index62 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//取消映射</code></div><div class="line number64 index63 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">ret = munmap(add_w, FILE_SIZE);</code></div><div class="line number65 index64 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(-1 == ret)</code></div><div class="line number66 index65 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number67 index66 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">perror</code><code class="cpp plain">(</code><code class="cpp string">"munmap add_w faile: "</code><code class="cpp plain">);</code></div><div class="line number68 index67 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">goto</code> <code class="cpp plain">_OUT;</code></div><div class="line number69 index68 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number70 index69 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//删除内存共享</code></div><div class="line number71 index70 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">/*shm_unlink(SHMNAME);</code></div><div class="line number72 index71 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">if(-1 == ret)</code></div><div class="line number73 index72 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">{</code></div><div class="line number74 index73 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">perror("shm_unlink faile: ");</code></div><div class="line number75 index74 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">goto _OUT;</code></div><div class="line number76 index75 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">}*/</code></div><div class="line number77 index76 alt2">&nbsp;</div><div class="line number78 index77 alt1"><code class="cpp plain">_OUT:&nbsp;&nbsp; </code></div><div class="line number79 index78 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">return</code> <code class="cpp plain">ret;</code></div><div class="line number80 index79 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+    				    				            	            	</div>
+            	        	</div>
+			<style type="text/css">
+				.code_report{float:right}
+				.code_report div{ float: left; margin-left: 5px; background: url("/img/ask-icon.gif") no-repeat; padding: 6px 0 6px 15px; padding-left: 15px; height: 16px;}
+				.code_report a{ background: url("/img/ask-icon.gif") 0 -160px no-repeat;padding-left: 20px; line-height: 15px;height: 16px; color: #333; text-decoration: none; display:inline-block; zoom:1; vertical-align: middle;}
+				.code_report em{ height: 28px; line-height:28px; width: 14px; display: inline-block; float: left; background: url("/img/ask-icon.gif") top right;}
+            </style>
+			<div class="code_report"><div><a href="javascript:report(&#39;https://www.oschina.net/code/snippet_237505_8645&#39;,8645,5)">举报</a></div><em></em></div>
+			<br>
+			<br>
+			<p style="margin:10px 0 0 0;font-weight:bold;color:#A00;text-decoration:none;">开源中国-程序员在线工具：<a href="http://git.oschina.net/" target="_blank">Git代码托管</a> <a href="http://tool.oschina.net/apidocs" style="text-decoration:none;">API文档大全(120+)</a> <a href="http://runjs.cn/" style="text-decoration:none;" target="_blank">JS在线编辑演示</a> <a href="http://tool.oschina.net/qr" style="text-decoration:none;" target="_blank">二维码</a>  <a href="http://tool.oschina.net/" style="text-decoration:none;" target="_blank">更多»</a></p>
+
+        <div id="google_ads_1" class="google_ads" style="margin:10px 0 20px 5px;">
+            
+        <!-- question-side --><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-7090564139599510" data-ad-slot="5982720268"></ins></div>
+
+        	        				        	<div class="code_comments code_module">
+        		<h2>
+        			<span class="right">
+        			<a href="https://www.oschina.net/code/snippet_237505_8645#commentform">发表评论</a>
+        			<a href="https://www.oschina.net/code/snippet_237505_8645#">回到顶部</a>
+        			</span>
+        			<a name="comments">网友评论<em>(3)</em></a>
+        		</h2>
+        		<div class="Comments">
+        		            	<ul>
+        		            	            	<li id="cmt_234046_48004" class="row_1">
+		<table width="100%"><tbody><tr>
+	<td class="portrait">
+		<a href="https://my.oschina.net/u/234046" name="rpl_48004"><img src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/portrait.gif" align="absmiddle" data-bd-imgshare-binded="1"></a>
+	</td>
+	<td class="body">
+		<div class="r_title">
+			1楼：<b>tllock</b> 发表于 2012-02-15 14:54 			<span class="opts">
+												<a href="javascript:ReplyInline(234046,48004)">回复此评论</a>
+							</span>
+		</div>
+		<div class="r_content TextContent">为啥不用管道？</div>
+		<div id="inline_reply_of_234046_48004" class="inline_reply"></div>
+    </td></tr></tbody></table>
+</li>            	            	<li id="cmt_733274_5471341" class="row_0">
+		<table width="100%"><tbody><tr>
+	<td class="portrait">
+		<a href="https://my.oschina.net/haolifeng" name="rpl_5471341"><img src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/733274_50.png" align="absmiddle" data-bd-imgshare-binded="1"></a>
+	</td>
+	<td class="body">
+		<div class="r_title">
+			2楼：<b>haolifeng</b> 发表于 2012-12-25 11:18 			<span class="opts">
+												<a href="javascript:ReplyInline(733274,5471341)">回复此评论</a>
+							</span>
+		</div>
+		<div class="r_content TextContent">很好</div>
+		<div id="inline_reply_of_733274_5471341" class="inline_reply"></div>
+    </td></tr></tbody></table>
+</li>            	            	<li id="cmt_863276_8170721" class="row_1">
+		<table width="100%"><tbody><tr>
+	<td class="portrait">
+		<a href="https://my.oschina.net/u/863276" name="rpl_8170721"><img src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/portrait.gif" align="absmiddle" data-bd-imgshare-binded="1"></a>
+	</td>
+	<td class="body">
+		<div class="r_title">
+			3楼：<b>Thomas-yang</b> 发表于 2013-05-30 16:27 			<span class="opts">
+												<a href="javascript:ReplyInline(863276,8170721)">回复此评论</a>
+							</span>
+		</div>
+		<div class="r_content TextContent">牛B，膜拜下</div>
+		<div id="inline_reply_of_863276_8170721" class="inline_reply"></div>
+    </td></tr></tbody></table>
+</li>            	            	</ul>
+        		                		</div>
+        	</div>
+        	<div class="CommentForm" style="margin:0;">
+        		<form id="form_code_comment" action="https://www.oschina.net/action/code/comment" method="POST">
+					<input type="hidden" name="code" value="8645">
+					<input type="hidden" name="user" value="${g_user.id}">
+        			<a name="commentform"></a><table>
+        				
+        				<tbody><tr>
+        					<td><div class="ke-container ke-container-oschina" style="width: 570px;"><div style="display:block;" class="ke-toolbar" unselectable="on"><span class="ke-outline" data-name="fontname" title="字体" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-fontname" unselectable="on"></span></span><span class="ke-outline" data-name="fontsize" title="文字大小" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-fontsize" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="forecolor" title="文字颜色" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-forecolor" unselectable="on"></span></span><span class="ke-outline" data-name="hilitecolor" title="文字背景" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-hilitecolor" unselectable="on"></span></span><span class="ke-outline" data-name="bold" title="粗体(Ctrl+B)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-bold" unselectable="on"></span></span><span class="ke-outline" data-name="italic" title="斜体(Ctrl+I)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-italic" unselectable="on"></span></span><span class="ke-outline" data-name="underline" title="下划线(Ctrl+U)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-underline" unselectable="on"></span></span><span class="ke-outline" data-name="removeformat" title="删除格式" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-removeformat" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="justifyleft" title="左对齐" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-justifyleft" unselectable="on"></span></span><span class="ke-outline" data-name="justifycenter" title="居中" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-justifycenter" unselectable="on"></span></span><span class="ke-outline" data-name="justifyright" title="右对齐" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-justifyright" unselectable="on"></span></span><span class="ke-outline" data-name="insertorderedlist" title="编号" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-insertorderedlist" unselectable="on"></span></span><span class="ke-outline" data-name="insertunorderedlist" title="项目符号" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-insertunorderedlist" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="emoticons" title="插入表情" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-emoticons" unselectable="on"></span></span><span class="ke-outline" data-name="link" title="超级链接" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-link" unselectable="on"></span></span><span class="ke-outline" data-name="unlink" title="取消超级链接" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-unlink" unselectable="on"></span></span><span class="ke-outline" data-name="source" title="HTML代码" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-source" unselectable="on"></span></span><span class="ke-outline" data-name="about" title="关于" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-about" unselectable="on"></span></span></div><div style="display: block; height: 101px;" class="ke-edit"><iframe class="ke-edit-iframe" hidefocus="true" frameborder="0" style="width: 100%; height: 101px;" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/saved_resource.html"></iframe><textarea class="ke-edit-textarea" hidefocus="true" style="width: 100%; height: 101px; display: none;"></textarea></div><div class="ke-statusbar"><span class="ke-inline-block ke-statusbar-center-icon"></span><span class="ke-inline-block ke-statusbar-right-icon"></span></div></div><textarea id="ta_code_comment" name="content" style="width: 600px; height: 150px; visibility: hidden; display: none;"></textarea></td>
+        				</tr>
+        				<tr class="buttons">
+        					<td>
+        						<input type="submit" value="发表评论" class="BUTTON SUBMIT rndbutton">
+        						<span id="comment_submit_msg" class="code_error_msg"></span>
+        					</td>
+        				</tr>
+        				<tr><td></td></tr>
+        			</tbody></table>
+        		</form>
+        		<a href="https://www.oschina.net/code/snippet_237505_8645#" class="more">回到顶部</a>&nbsp;&nbsp;
+        		<a href="https://www.oschina.net/code/snippet_237505_8645#comments" class="more">回到评论列表</a>
+        	</div>
+        </div>
+	</div>
+    <div class="QuestionRelations">
+		
+		<div id="QuestionWizard">
+			开源从代码分享开始
+			<a href="https://www.oschina.net/code/step1" class="rndbutton"><span>分享代码</span></a>
+			<div class="clear"></div>
+		</div>
+		<div id="google_ads_2" style="text-align:center;">
+			            
+					</div>
+
+				<div id="OtherQuestionsOfUser" class="Qlist">
+			<strong><em>howaylee</em>的其它代码</strong>
+			<ul>
+						<li><a href="https://www.oschina.net/code/snippet_237505_8650" title="linux 下的守护进程实现">linux 下的守护进程实现</a><span class="date">(5评/3310阅,5年前)</span></li>						<li><a href="https://www.oschina.net/code/snippet_237505_8649" title="linux 下阻塞睡眠等待poll函数简单实现">linux 下阻塞睡眠等待poll函数简单实现</a><span class="date">(0评/2949阅,5年前)</span></li>						<li><a href="https://www.oschina.net/code/snippet_237505_8648" title="linux 下阻塞睡眠等待selec函数简单实现">linux 下阻塞睡眠等待selec函数简单实现</a><span class="date">(0评/848阅,5年前)</span></li>						<li><a href="https://www.oschina.net/code/snippet_237505_8647" title="linux 内存映射mmap">linux 内存映射mmap</a><span class="date">(0评/1853阅,5年前)</span></li>						<li><a href="https://www.oschina.net/code/snippet_237505_8646" title="linux 命名信号量实现进程间的互斥与同步">linux 命名信号量实现进程间的互斥与同步</a><span class="date">(0评/9981阅,5年前)</span></li>						</ul>
+			<a href="https://www.oschina.net/code/list_by_user?id=237505" class="more">全部(8)...</a>
+		</div>
+		<div id="google_ads_3" style="text-align:center;margin-bottom:20px;">
+			
+		</div>
+    </div>
+	<div class="clear"></div>
+</div>
+<div id="inline_reply_editor" style="display:none;">
+<div class="CommentForm" style="padding-left:0px;">
+	<form id="form_inline_comment" action="https://www.oschina.net/action/code/comment?code=8645&amp;user=${g_user.id}" method="POST">
+	  <input type="hidden" id="inline_reply_id" name="reply_id" value="">
+		<table>
+						<tbody><tr height="40">
+				<td>
+					邮箱或帐号：<input type="text" name="email" class="TEXT" size="20">
+					登录密码：<input type="password" name="pwd" class="TEXT" size="10">
+					还没帐号呢，<a href="https://www.oschina.net/home/reg" target="_blank">现在注册一个？</a>
+				</td>
+			</tr>
+						<tr>
+				<td><textarea name="content" style="width:500px;height:80px;"></textarea></td>
+			</tr>
+			<tr class="buttons">
+				<td>
+					<input type="submit" value="发表评论" class="BUTTON SUBMIT">
+					<input type="button" value="关闭" class="SUBMIT" id="btn_close_inline_reply">
+				</td>
+			</tr>
+			<tr><td></td></tr>
+		</tbody></table>
+	</form>
+</div>
+</div>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="/js/minmax.js?t=1451961936000"></script>
+<![endif]-->
+<script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/code" defer="defer"></script>
+<script charset="utf-8" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/kindeditor-min.js"></script>
+
+<script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/xregexp-min.js"></script>
+<script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/shCore.min.js"></script>
+<script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/shThemeDefault.css">
+
+<script type="text/javascript">
+    SyntaxHighlighter.autoloader(
+            'applescript			/js/sh309/scripts/shBrushAppleScript.js?t=1451961936000',
+            'actionscript3 as3		/js/sh309/scripts/shBrushAS3.js?t=1451961936000',
+            'bash shell				/js/sh309/scripts/shBrushBash.js?t=1451961936000',
+            'coldfusion cf			/js/sh309/scripts/shBrushColdFusion.js?t=1451961936000',
+            'cpp c					/js/sh309/scripts/shBrushCpp.js?t=1451961936000',
+            'obj-c objc				/js/sh309/scripts/shBrushObjC.js?t=1451961936000',
+            'c# c-sharp csharp		/js/sh309/scripts/shBrushCSharp.js?t=1451961936000',
+            'css					/js/sh309/scripts/shBrushCss.js?t=1451961936000',
+            'delphi pascal			/js/sh309/scripts/shBrushDelphi.js?t=1451961936000',
+            'diff patch pas			/js/sh309/scripts/shBrushDiff.js?t=1451961936000',
+            'erl erlang				/js/sh309/scripts/shBrushErlang.js?t=1451961936000',
+            'groovy					/js/sh309/scripts/shBrushGroovy.js?t=1451961936000',
+            'haxe hx				/js/sh309/scripts/shBrushHaxe.js?t=1451961936000',
+            'java					/js/sh309/scripts/shBrushJava.js?t=1451961936000',
+            'jfx javafx				/js/sh309/scripts/shBrushJavaFX.js?t=1451961936000',
+            'js jscript javascript	/js/sh309/scripts/shBrushJScript.js?t=1451961936000',
+            'perl pl				/js/sh309/scripts/shBrushPerl.js?t=1451961936000',
+            'php					/js/sh309/scripts/shBrushPhp.js?t=1451961936000',
+            'text plain				/js/sh309/scripts/shBrushPlain.js?t=1451961936000',
+            'py python				/js/sh309/scripts/shBrushPython.js?t=1451961936000',
+            'ruby rails ror rb		/js/sh309/scripts/shBrushRuby.js?t=1451961936000',
+            'scala					/js/sh309/scripts/shBrushScala.js?t=1451961936000',
+            'sql					/js/sh309/scripts/shBrushSql.js?t=1451961936000',
+            'vb vbnet				/js/sh309/scripts/shBrushVb.js?t=1451961936000',
+            'xml xhtml xslt html	/js/sh309/scripts/shBrushXml.js?t=1451961936000'
+    );
+    SyntaxHighlighter.all();
+</script>
+<script type="text/javascript"><!--
+function pay_attention(pid,concern_it){
+	login_and_do(function(msg){
+		if(concern_it){
+			$("#p_attention_count").load("/action/favorite/add?mailnotify=true&type=5&id="+pid, {user: ''});
+			$('#attention_it').html('<a href="javascript:pay_attention('+pid+',false)" style="color:#A00;">取消收藏</a>');
+		}
+		else{
+			$("#p_attention_count").load("/action/favorite/cancel?type=5&id="+pid, {user: ''});
+			$('#attention_it').html('<a href="javascript:pay_attention('+pid+',true)" style="color:#3E62A6;">收藏此代码</a>');
+		}
+		tb_remove();
+	});
+}
+
+function close_tip(tid){$('#'+tid).poshytip('destroy');}
+function vote_question(qid, vote_up, need_confirm){
+	if(need_confirm && !vote_up){
+		if($('#Vote #vote_down').hasClass('vote-down-off')){
+			var vote_down_confirm_msg = "<p>踩代码将会扣掉你1个积分，是否继续？</p><p style='margin-top:10px;'><a href='javascript:vote_question(8645,false,false)' class='rbtn' style='margin-right:10px;'><span>确定</span></a><a href=\"javascript:close_tip('vote_down')\" class='rbtn'><span>取消</span></a></p>";
+			$('#Vote #vote_down').poshytip({
+				className: 'tip-yellowsimple',
+				content: vote_down_confirm_msg,
+				slide: false,
+				fade: false,
+				showOn: 'none',
+				alignTo: 'target',
+				alignX: 'inner-right',
+				alignY: 'bottom',
+				offsetX: -30,
+				offsetY: 15
+			});
+			$('#Vote #vote_down').poshytip('show');
+			return;
+		}
+	}
+	if(!need_confirm){
+		$('#Vote #vote_down').poshytip('destroy');
+	}
+	ajax_post("/action/code/vote?user=${g_user.id}&id="+qid+"&vote="+vote_up,"",function(data){
+		json = eval('('+data+')');
+		if(json.msg){
+			var aid = vote_up?"vote_up":"vote_down";
+			$('#'+aid).poshytip({
+				className: 'tip-yellowsimple',
+				content: json.msg,
+				showOn: 'none',
+				alignTo: 'target',
+				alignX: 'inner-right',
+				alignY: 'bottom',
+				offsetX: 5,
+				offsetX: -35
+			});
+			$('#'+aid).poshytip('show');
+			var t = setTimeout(function(){
+				clearTimeout(t);
+				$('#'+aid).poshytip('destroy');
+			},2000);
+		}
+		else{
+			$('#Vote .vote-count-post').html(json.vote);
+			if(vote_up){
+				$('#Vote #vote_up').toggleClass('vote-up-off');
+				$('#Vote #vote_up').toggleClass('vote-up-on');
+			}
+			else{
+				$('#Vote #vote_down').toggleClass('vote-down-off');
+				$('#Vote #vote_down').toggleClass('vote-down-on');
+			}
+		}
+	});
+}
+function delete_c(code,uid,cid){
+  if(confirm("您确认要删除此篇评论？")){
+    var args = "cmt="+cid+"#"+uid+"#"+code;
+    ajax_post("/action/code/delete_comments",args,function(){$("#cmt_"+uid+"_"+cid).fadeOut();});
+  }
+}
+function ReplyInline(user,reply){
+	$('.inline_reply').empty();
+	var div_id = '#inline_reply_of_'+user+'_'+reply;
+	$('#inline_reply_id').val(user+'_'+reply);
+	$(div_id).html($('#inline_reply_editor').html());
+	$('#txt_focus').focus();
+	$('#btn_close_inline_reply').click(function(){
+		$(div_id).empty();
+	});
+	$('#form_inline_comment').ajaxForm({
+	dataType: 'json',
+	success: function(json) {
+    	if(json.msg){
+    		alert(json.msg);
+    	}
+    	else if(json.id){
+			location.reload();
+    	}
+	}
+});
+}
+
+function edit_code_tags(code_id){
+	popup("/code/edit_tags?code="+code_id);
+}
+
+var editor;
+KindEditor.ready(function(K) {
+    editor = K.create('#ta_code_comment', {
+		themeType : 'oschina',
+		width:'570px',
+		resizeType : 2,
+		urlType: 'domain',
+		shadowMode : false,
+		cssPath : '/css/ke-oschina.css?t=1482162822000',
+		allowPreviewEmoticons : false,
+		newlineTag : 'br',
+		afterCreate : function(){
+			K.ctrl(this.edit.iframe.get(0).contentWindow.document, 13, function() {
+				$("#ta_code_comment").parent().submit();
+			});
+		},
+		afterChange : function() {
+			this.sync();
+		},
+		items : [
+		'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+		'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+		'insertunorderedlist', '|', 'emoticons', 'link','unlink','source','about']
+    });
+});
+
+$(document).ready(function(){
+
+    $('#form_code_comment').ajaxForm({
+		dataType: 'json',
+		beforeSerialize: function($form, options) {
+			editor.sync();
+        },
+        success: function(json) {
+        	if(json.msg){
+        		$('#comment_submit_msg').html(json.msg);
+    			$('#comment_submit_msg').css('display','inline');
+        	}else{
+        		jQuery.get("/code/show_reply?_cmt_user="+json.user+"&_cmt_id="+json.id, function(data){
+    				$('.Comments .NoData').hide();
+        			$('.Comments ul').eq(0).append(data);
+					editor.html('');
+        		});
+        	}
+        }
+    });
+
+
+    //问题投票 
+    $('#vote_up').click(function(){
+    	if(this.clickTimeout){
+            // 双击
+            clearTimeout(this.clickTimeout);
+            this.clickTimeout = null;
+    		alert("不用那么费劲啦，点击一下就够了:)");
+        }
+        else{
+            // 单击
+            var elem = this;
+            this.clickTimeout = setTimeout(function(){
+                // 执行点击动作
+                elem.clickTimeout = null;
+    			vote_question(8645,true, true);
+            }, 250);
+        }
+        //阻止链接onclick时的默认行为
+        return false;
+    });
+    $('#vote_down').click(function(){
+    	vote_question(8645,false, true);
+        return false;
+    });
+
+    $('#google_ads_1').append("" +
+    "<script src=\"\/\/pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"><\/script>"+
+    "<!-- question-side -->"+
+    "<ins class=\"adsbygoogle\""+
+    "     style=\"display:inline-block;width:728px;height:90px\""+
+    "     data-ad-client=\"ca-pub-7090564139599510\""+
+    "     data-ad-slot=\"5982720268\"></ins>"+
+    "<script>"+
+    "    (adsbygoogle = window.adsbygoogle || []).push({});"+
+    "<\/script>");
+    
+});
+function edit_catalogs(qid){
+	popup("/admin/catalog/set-catalogs?parent=1&type=5&id="+qid);
+}
+//-->
+</script>
+<div class="clear"></div></div>
+	<div id="OSC_Footer" class="CenterDiv"><style>
+.oscapp {text-align:left; width:220px;}
+.oscapp span {float:left;width:140px;}
+.oscapp a {float:left;text-indent:-9999em;width:16px;margin-left:8px;}
+.oscapp a.android {background:url('/img/android.gif') no-repeat left center;}
+.oscapp a.iphone {background:url('/img/iphone.gif') no-repeat left center;}
+.oscapp a.wp7 {background:url('/img/wp7.gif') no-repeat left center;}
+</style>
+<table width="100%"><tbody><tr>
+<td align="left">© 开源中国(OSChina.NET) | <a href="https://www.oschina.net/home/aboutosc">关于我们</a> | <a href="mailto:market@oschina.cn">广告联系</a> | <a href="http://weibo.com/oschina2010" target="_blank">@新浪微博</a> | <a href="http://m.oschina.net/">开源中国手机版</a> | <a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:#737573;text-decoration:none;">粤ICP备12009483号-3</a></td>
+<td class="oscapp">
+	<span>开源中国手机客户端：</span>
+	<a href="http://www.oschina.net/app" class="android" title="Android客户端">Android</a>
+	<a href="http://www.oschina.net/app" class="iphone" title="iPhone 客户端">iPhone</a>
+	<a href="http://www.oschina.net/app" class="wp7" title="Windows Phone 客户端">WP7</a>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="left">开源中国社区(OSChina.net)是工信部 <a href="http://www.copu.org.cn/" target="_blank">开源软件推进联盟</a> 指定的官方社区</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">
+<!--
+if (top.location != self.location)top.location=self.location;
+//-->
+</script></div>
+</div>
+
+	<script type="text/javascript">
+     (function (ww, dt) {
+         ww.__gac = {
+             domain: 'www.oschina.net'
+         };
+         if(!(/\/marketing\/ad-slice/.test(location.href))){
+             var script = dt.createElement('script');
+             script.setAttribute('type', 'text/javascript');
+             script.setAttribute('src', '//www.oschina.net/public/javascripts/cjl/ga.js?t=20160926');
+             dt.body.appendChild(script);
+         }
+     } (window, window.document));
+ </script><script type="text/javascript" src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/ga.js"></script>
+
+<!-- Generated by OsChina.NET (init:0[ms],page:29[ms],ip:119.180.24.156) --><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div id="topcontrol" title="回到顶部" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer;"><img src="./linux 共享内存shm_open实现进程间大数据交互 - 开源中国社区_files/gotop.gif" style="width:31px; height:31px;" data-bd-imgshare-binded="1"></div><div id="bdimgshare_1487061628078" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-16 sr-bdimgshare-black" style="height:36px;line-height:26px;font-size:12px;width:autopx;display:none;" data-bd-bind="1487061628078"><div class="bdimgshare-bg"></div><div class="bdimgshare-content bdsharebuttonbox bdshare-button-style0-16"><label class="bdimgshare-lbl">分享到：</label><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_tsina" data-cmd="tsina" hidefocus=""></a><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_tqq" data-cmd="tqq" hidefocus=""></a><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_qzone" data-cmd="qzone" hidefocus=""></a><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_weixin" data-cmd="weixin" hidefocus=""></a><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_sqq" data-cmd="sqq" hidefocus=""></a><a href="https://www.oschina.net/code/snippet_237505_8645#" onclick="return false;" class="bds_more" data-cmd="more" hidefocus=""></a></div></div></body></html>

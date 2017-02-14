@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.cnblogs.com/hongzg1982/articles/2310274.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./UCOS源码详解 - 不知道 - 博客园_files/ca-pub-4210569241504288.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UCOS源码详解 - 不知道 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./UCOS源码详解 - 不知道 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./UCOS源码详解 - 不知道 - 博客园_files/bundle-AnotherEon001.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./UCOS源码详解 - 不知道 - 博客园_files/bundle-AnotherEon001-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/hongzg1982/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/hongzg1982/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/hongzg1982/wlwmanifest.xml">
+<script src="./UCOS源码详解 - 不知道 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'hongzg1982', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./UCOS源码详解 - 不知道 - 博客园_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/hongzg1982/">techniqual momory</a></h1>
+<div id="subtitle"></div>
+</div>
+<div id="sub"><div id="blog_stats">
+<div class="BlogStats">随笔 - 21, 文章 - 323, 评论 - 9, 引用 - 0</div>
+</div></div>
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/hongzg1982/articles/2310274.html">UCOS源码详解</a>
+		</h2>
+		<div class="postbody">
+		<div id="cnblogs_post_body"><p>uC/OS-II源码分析(总体思路 一)</p>
+<p>首先从main函数开始，下面是uC/OS-II main函数的大致流程：</p>
+<p>main()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>OSInit();</p>
+<p>TaskCreate(...);</p>
+<p>OSStart();&nbsp; &nbsp;}</p>
+<p>首先是调用OSInit进行初始化，然后使用TaskCreate创建几个进程/Task，最后调用OSStart，操作系统就开始运行了。</p>
+<p>OSInit</p>
+<p>最先看看OSInit完成哪些初始化：</p>
+<p>void OSInit (void)</p>
+<p>{</p>
+<p>#if OS_VERSION &gt;= 204</p>
+<p>OSInitHookBegin();</p>
+<p>#endif</p>
+<p>OS_InitMisc();</p>
+<p>OS_InitRdyList();</p>
+<p>OS_InitTCBList();</p>
+<p>OS_InitEventList();</p>
+<p>#if (OS_VERSION &gt;= 251) &amp;&amp; (OS_FLAG_EN &gt; 0) &amp;&amp; (OS_MAX_FLAGS &gt; 0)</p>
+<p>OS_FlagInit();</p>
+<p>#endif</p>
+<p>#if (OS_MEM_EN &gt; 0) &amp;&amp; (OS_MAX_MEM_PART &gt; 0)</p>
+<p>OS_MemInit();</p>
+<p>#endif</p>
+<p>#if (OS_Q_EN &gt; 0) &amp;&amp; (OS_MAX_QS &gt; 0)</p>
+<p>OS_QInit();</p>
+<p>#endif</p>
+<p>OS_InitTaskIdle();</p>
+<p>#if OS_TASK_STAT_EN &gt; 0</p>
+<p>OS_InitTaskStat();</p>
+<p>#endif</p>
+<p>#if OS_VERSION &gt;= 204</p>
+<p>OSInitHookEnd();</p>
+<p>#endif</p>
+<p>#if OS_VERSION &gt;= 270 &amp;&amp; OS_DEBUG_EN &gt; 0</p>
+<p>OSDebugInit();</p>
+<p>#endif</p>
+<p>}</p>
+<p>OS_InitMisc()完成的是一些其其他他的变量的初始化：</p>
+<p>OSIntNesting = 0;</p>
+<p>OSLockNesting = 0;</p>
+<p>OSTaskCtr = 0;</p>
+<p>OSRunning = FALSE;</p>
+<p>OSCtxSwCtr = 0;</p>
+<p>OSIdleCtr =0L;</p>
+<p>其中包括：中断嵌套标志OSIntNesting，调度锁定标志OSLockNesting，OS标志OSRunning等。OSRunning在这里设置为FALSE，在后面OSStartHighRdy中会被设置为TRUE表示OS开始工作。</p>
+<p>OS_InitRdyList()初始化就绪Task列表：</p>
+<p>static void OS_InitRdyList (void)</p>
+<p>{</p>
+<p>INT8U i;</p>
+<p>INT8U *prdytbl;</p>
+<p>OSRdyGrp = 0x00;</p>
+<p>prdytbl = &amp;OSRdyTbl[0];</p>
+<p>for (i = 0; i &lt; OS_RDY_TBL_SIZE; i++) {</p>
+<p>*prdytbl++ = 0x00;</p>
+<p>}</p>
+<p>OSPrioCur = 0;</p>
+<p>OSPrioHighRdy = 0;</p>
+<p>OSTCBHighRdy = (OS_TCB *)0;</p>
+<p>OSTCBCur = (OS_TCB *)0;</p>
+<p>}</p>
+<p>首先将OSRdyTbl[]数组中全部初始化0，同时将OSPrioCur/OSTCBCur初始化为0，OSPrioHighRdy/OSTCBHighRdy也初始化为0，这几个变量将在第一个OSSchedule中被赋予正确的值。</p>
+<p>OS_InitTCBList()这个函数看名称我们就知道是初始化TCB列表。</p>
+<p>static void OS_InitTCBList (void)</p>
+<p>{</p>
+<p>INT8U i;</p>
+<p>OS_TCB *ptcb1;</p>
+<p>OS_TCB *ptcb2;</p>
+<p>OS_MemClr((INT8U *)&amp;OSTCBTbl[0], sizeof(OSTCBTbl));</p>
+<p>OS_MemClr((INT8U *)&amp;OSTCBPrioTbl[0], sizeof(OSTCBPrioTbl));</p>
+<p>ptcb1 = &amp;OSTCBTbl[0];</p>
+<p>ptcb2 = &amp;OSTCBTbl[1];</p>
+<p>for (i = 0; i &lt; (OS_MAX_TASKS + OS_N_SYS_TASKS - 1); i++) {</p>
+<p>ptcb1-&gt;OSTCBNext = ptcb2;</p>
+<p>#if OS_TASK_NAME_SIZE &gt; 1</p>
+<p>ptcb1-&gt;OSTCBTaskName[0] = '?';</p>
+<p>ptcb1-&gt;OSTCBTaskName[1] = OS_ASCII_NUL;</p>
+<p>#endif</p>
+<p>ptcb1++;</p>
+<p>ptcb2++;</p>
+<p>}</p>
+<p>ptcb1-&gt;OSTCBNext = (OS_TCB *)0;</p>
+<p>#if OS_TASK_NAME_SIZE &gt; 1</p>
+<p>ptcb1-&gt;OSTCBTaskName[0] = '?';</p>
+<p>ptcb1-&gt;OSTCBTaskName[1] = OS_ASCII_NUL;</p>
+<p>#endif</p>
+<p>OSTCBList = (OS_TCB *)0;</p>
+<p>OSTCBFreeList = &amp;OSTCBTbl[0];</p>
+<p>}</p>
+<p>这里完成的工作很简单，首先把整个数组使用OSTCBNext指针连接成链表链起来，然后将OSTCBList初始化为0，也就是还没有TCB，因为还没有Task产生，OSTCBFreeList指向OSTCBTbl[]数组的第一个表示所有TCB都处于Free状态。</p>
+<p>OS_InitEventList()初始化Event列表。</p>
+<p>static void OS_InitEventList (void)</p>
+<p>{</p>
+<p>#if OS_EVENT_EN &amp;&amp; (OS_MAX_EVENTS &gt; 0)</p>
+<p>#if (OS_MAX_EVENTS &gt; 1)</p>
+<p>INT16U i;</p>
+<p>OS_EVENT *pevent1;</p>
+<p>OS_EVENT *pevent2;</p>
+<p>OS_MemClr((INT8U *)&amp;OSEventTbl[0], sizeof(OSEventTbl));</p>
+<p>pevent1 = &amp;OSEventTbl[0];</p>
+<p>pevent2 = &amp;OSEventTbl[1];</p>
+<p>for (i = 0; i &lt; (OS_MAX_EVENTS - 1); i++) {</p>
+<p>pevent1-&gt;OSEventType = OS_EVENT_TYPE_UNUSED;</p>
+<p>pevent1-&gt;OSEventPtr = pevent2;</p>
+<p>#if OS_EVENT_NAME_SIZE &gt; 1</p>
+<p>pevent1-&gt;OSEventName[0] = '?';</p>
+<p>pevent1-&gt;OSEventName[1] = OS_ASCII_NUL;</p>
+<p>#endif</p>
+<p>pevent1++;</p>
+<p>pevent2++;</p>
+<p>}</p>
+<p>pevent1-&gt;OSEventType = OS_EVENT_TYPE_UNUSED;</p>
+<p>pevent1-&gt;OSEventPtr = (OS_EVENT *)0;</p>
+<p>#if OS_EVENT_NAME_SIZE &gt; 1</p>
+<p>pevent1-&gt;OSEventName[0] = '?';</p>
+<p>pevent1-&gt;OSEventName[1] = OS_ASCII_NUL;</p>
+<p>#endif</p>
+<p>OSEventFreeList = &amp;OSEventTbl[0];</p>
+<p>#else</p>
+<p>OSEventFreeList = &amp;OSEventTbl[0];</p>
+<p>OSEventFreeList-&gt;OSEventType = OS_EVENT_TYPE_UNUSED;</p>
+<p>OSEventFreeList-&gt;OSEventPtr = (OS_EVENT *)0;</p>
+<p>#if OS_EVENT_NAME_SIZE &gt; 1</p>
+<p>OSEventFreeList-&gt;OSEventName[0] = '?';</p>
+<p>OSEventFreeList-&gt;OSEventName[1] = OS_ASCII_NUL;</p>
+<p>#endif</p>
+<p>#endif</p>
+<p>#endif</p>
+<p>}</p>
+<p>同样将EventTbl[]数组中的OSEventType都初始化为OS_EVENT_TYPE_UNUSED。</p>
+<p>OS_InitTaskIdle()，中间我们跳过其他的如Mem等的初始化，看看Idle Task的初始化。</p>
+<p>(void)OSTaskCreateExt(OS_TaskIdle,</p>
+<p>(void *)0,</p>
+<p>&amp;OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE - 1],</p>
+<p>OS_IDLE_PRIO,</p>
+<p>OS_TASK_IDLE_ID,</p>
+<p>&amp;OSTaskIdleStk[0],</p>
+<p>OS_TASK_IDLE_STK_SIZE,</p>
+<p>(void *)0,</p>
+<p>OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);</p>
+<p>其实Idle Task的初始化很简单就是调用OSTaskCrete系列的函数创建一个Task, OSTaskCreate我们后面再做进一步分析。</p>
+<p>初始化State Task也是类似调用OSTaskCreate系列函数创建Stat Task。这里只是创建了该Task的各个结构还没有真正运行该Task，直到OSStart中才依据优先级调度运行。</p>
+<p>OK，到这里OSInit算高一个段落了，我们接着回到main往下看</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>uC/OS-II源码分析(总体思路 二)</p>
+<p>&nbsp;OSTaskCreate负责创建Task所需的数据结构，该函数原形如下所示：</p>
+<p>INT8U OSTaskCreate (void (*task)(void *pd), void *p_arg, OS_STK *ptos, INT8U prio)</p>
+<p>其中task是一个函数指针，指向该Task所开始的函数，当这个Task第一次被调度运行时将会从task处开始运行。</p>
+<p>p_arg是传给task的参数指针；</p>
+<p>ptos是堆栈指针，指向栈顶（堆栈从上往下）或栈底（堆栈从下往上）；</p>
+<p>prio是进程的优先级，uC/OS-II共支持最大64个优先级，其中最低的两个优先级给Idle和Stat进程，并且各个Task的优先级必须不同。</p>
+<p>接下来，我们看看这个函数的执行流程：</p>
+<p>#if OS_ARG_CHK_EN &gt; 0</p>
+<p>if (prio &gt; OS_LOWEST_PRIO) {</p>
+<p>return (OS_PRIO_INVALID);</p>
+<p>}</p>
+<p>#endif</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>if (OSIntNesting &gt; 0) {</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>return (OS_ERR_TASK_CREATE_ISR);</p>
+<p>}</p>
+<p>if (OSTCBPrioTbl[prio] == (OS_TCB *)0) {</p>
+<p>OSTCBPrioTbl[prio] = (OS_TCB *)1;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>psp = (OS_STK *)OSTaskStkInit(task, p_arg, ptos, 0);</p>
+<p>err = OS_TCBInit(prio, psp, (OS_STK *)0, 0, 0, (void *)0, 0);</p>
+<p>if (err == OS_NO_ERR) {</p>
+<p>if (OSRunning == TRUE) {</p>
+<p>OS_Sched();</p>
+<p>}</p>
+<p>} else {</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>OSTCBPrioTbl[prio] = (OS_TCB *)0;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>}</p>
+<p>return (err);</p>
+<p>}</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>return (OS_PRIO_EXIST);</p>
+<p>OS_LOWEST_PRIO在ucos-ii.h中被定义为63，表示Task的优先级从0到63，共64级。首先判断prio是否超过最低优先级，如果是，则返回OS_PRIO_INVALID错误。</p>
+<p>然后调用OS_ENTER_CRITICAL()，进入临界段，在临界段中的代码执行不允许被中断。这个宏是用户自定义的，一般是进行关中断操作，例如在x86中的CLI等。这个宏和OS_EXIT_CRITICAL()相对应，这个宏表示离开临界段。</p>
+<p>OSTaskCreate不允许在中断中调用，因此会判断OSIntNesting是否大于0，如果大于0，表示正在中断嵌套，返回OS_ERR_TASK_CREATE_ISR错误。</p>
+<p>接着判断该prio是否已经有Task存在，由于uC/OS-II只支持每一个优先级一个Task，因此如果该prio已经有进程存在，OSTaskCreate会返回OS_PRIO_EXIST错误。</p>
+<p>相反，如果该prio先前没有Task存在，则将OSTCBPrioTbl[prio]置1，表示该prio已被占用，然后调用OSTaskStkInit初始化堆栈，调用OS_TCBInit初始化TCB，如果OSRunning为TRUE表示OS正在运行，则调用OS_Sched进行进程调度；否则返回。</p>
+<p>下面来看看OSTaskStkInit和OS_TCBInit这两个函数。</p>
+<p>OSTaskStkInit是一个用户自定义的函数，因为uC/OS-II在设计时无法知道当前处理器在进行进程调度时需要保存那些信息，OSTaskStkInit就是初始化堆栈，让Task看起来就好像刚刚进入中断并保存好寄存器的值一样，当OS_Sched调度到该Task时，只需切换到该堆栈中，将寄存器值Pop出来，然后执行一个中断返回指令IRET即可。</p>
+<p>OSTaskStkInit的原型如下：</p>
+<p>OS_STK *OSTaskStkInit (void (*task)(void *pd), void *pdata, OS_STK *ptos, INT16U opt)</p>
+<p>和OSTaskCreate类似，task是进程入口地址，pdata是参数地址，ptos是堆栈指针，而opt只是作为一个预留的参数Option而保留。返回的是调整以后的堆栈指针。</p>
+<p>在OSTaskStkInit中，一般是将pdata入栈，flag入栈，task入栈，然后将各寄存器依次入栈。</p>
+<p>OS_TCBInit初始化TCB数据结构，下面只提取主要部分来看：</p>
+<p>INT8U OS_TCBInit (INT8U prio, OS_STK *ptos, OS_STK *pbos, INT16U id, INT32U stk_size, void *pext, INT16U opt)</p>
+<p>{</p>
+<p>OS_TCB *ptcb;</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>ptcb = OSTCBFreeList;</p>
+<p>if (ptcb != (OS_TCB *)0) {</p>
+<p>OSTCBFreeList = ptcb-&gt;OSTCBNext;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>ptcb-&gt;OSTCBStkPtr = ptos;</p>
+<p>ptcb-&gt;OSTCBPrio = prio;</p>
+<p>ptcb-&gt;OSTCBStat = OS_STAT_RDY;</p>
+<p>ptcb-&gt;OSTCBPendTO = FALSE;</p>
+<p>ptcb-&gt;OSTCBDly = 0;</p>
+<p>#if OS_TASK_CREATE_EXT_EN &gt; 0</p>
+<p>ptcb-&gt;OSTCBExtPtr = pext;</p>
+<p>ptcb-&gt;OSTCBStkSize = stk_size;</p>
+<p>ptcb-&gt;OSTCBStkBottom = pbos;</p>
+<p>ptcb-&gt;OSTCBOpt = opt;</p>
+<p>ptcb-&gt;OSTCBId = id;</p>
+<p>#else</p>
+<p>pext = pext;</p>
+<p>stk_size = stk_size;</p>
+<p>pbos = pbos;</p>
+<p>opt = opt;</p>
+<p>id = id;</p>
+<p>#endif</p>
+<p>#if OS_TASK_DEL_EN &gt; 0</p>
+<p>ptcb-&gt;OSTCBDelReq = OS_NO_ERR;</p>
+<p>#endif</p>
+<p>ptcb-&gt;OSTCBY = (INT8U)(prio &gt;&gt; 3);</p>
+<p>ptcb-&gt;OSTCBBitY = OSMapTbl[ptcb-&gt;OSTCBY];</p>
+<p>ptcb-&gt;OSTCBX = (INT8U)(prio &amp; 0x07);</p>
+<p>ptcb-&gt;OSTCBBitX = OSMapTbl[ptcb-&gt;OSTCBX];</p>
+<p>#if OS_EVENT_EN</p>
+<p>ptcb-&gt;OSTCBEventPtr = (OS_EVENT *)0;</p>
+<p>#endif</p>
+<p>OSTaskCreateHook(ptcb);</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>OSTCBPrioTbl[prio] = ptcb;</p>
+<p>ptcb-&gt;OSTCBNext = OSTCBList;</p>
+<p>ptcb-&gt;OSTCBPrev = (OS_TCB *)0;</p>
+<p>if (OSTCBList != (OS_TCB *)0) {</p>
+<p>OSTCBList-&gt;OSTCBPrev = ptcb;</p>
+<p>}</p>
+<p>OSTCBList = ptcb;</p>
+<p>OSRdyGrp |= ptcb-&gt;OSTCBBitY;</p>
+<p>OSRdyTbl[ptcb-&gt;OSTCBY] |= ptcb-&gt;OSTCBBitX;</p>
+<p>OSTaskCtr++;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>return (OS_NO_ERR);</p>
+<p>}</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>return (OS_NO_MORE_TCB);</p>
+<p>}</p>
+<p>首先调用OS_ENTER_CRITICAL进入临界段，首先从OSTCBFreeList中拿出一个TCB，如果OSTCBFreeList为空，则返回OS_NO_MORE_TCB错误。</p>
+<p>然后调用OS_EXIT_CRITICAL离开临界段，接着对该TCB进行初始化：</p>
+<p>将OSTCBStkPtr初始化为该Task当前堆栈指针；</p>
+<p>OSTCBPrio设置为该Task的prio；</p>
+<p>OSTCBStat设置为OS_STAT_RDY，表示就绪状态；</p>
+<p>OSTCBDly设置为0，当该Task调用OSTimeDly时会初始化这个变量为Delay的时钟数，然后Task转入OS_STAT_状态。这个变量在OSTimeTick中检查，如果大于0表示还需要进行Delay，则进行减1；如果等于零表示无须进行Delay，可以马上运行，转入OS_STAT_RDY状态。</p>
+<p>OSTCBBitY和OSTCBBitX的作用我们在等会专门来讨论。</p>
+<p>紧接着就要将该TCB插入OSTCBList列表中，先调用OS_ENTER_CRITICAL进入临界段，将该TCB插入到OSTCBList成为第一个节点，然后调整OSRdyGrp和OSRdyTbl，（这两个变量一会和OSTCBBitX/OSTCBBitY一起讨论），最后将OSTaskCtr计数器加一，调用OS_EXIT_CRITICAL退出临界段。</p>
+<p>OSMapTbl和OSUnMapTbl</p>
+<p>刚才我们看到TCB数据结构中的OSTCBBitX/OSTCBBitY以及OSRdyGrp/OSRdyTbl的使用，这里专门来讨论讨论这几个变量的用法。</p>
+<p>uC/OS-II将64个优先级的进程分为8组，每组8个。刚好可以使用8个INT8U的数据进行表示，于是这就是OSRdyGrp和OSRdyTbl的由来，OSRdyGrp表示组别，从0到7，从前面我们可以看到OSRdyGrp和OSRdyTbl是这么被赋值的：</p>
+<p>OSRdyGrp |= ptcb-&gt;OSTCBBitY;</p>
+<p>OSRdyTbl[ptcb-&gt;OSTCBY] |= ptcb-&gt;OSTCBBitX;</p>
+<p>也就是OSTCBBitY保存的是组别，OSTCBBitX保存的是组内的偏移。而这两个变量是这么被初始化的：</p>
+<p>ptcb-&gt;OSTCBY = (INT8U)(prio &gt;&gt; 3);</p>
+<p>ptcb-&gt;OSTCBBitY = OSMapTbl[ptcb-&gt;OSTCBY];</p>
+<p>ptcb-&gt;OSTCBX = (INT8U)(prio &amp; 0x07);</p>
+<p>ptcb-&gt;OSTCBBitX = OSMapTbl[ptcb-&gt;OSTCBX];</p>
+<p>由于prio不会大于64，prio为6位值，因此OSTCBY为prio高3位，不会大于8，OSTCBX为prio低3位。</p>
+<p>这里就涉及到OSMapTbl数组和OSUnMapTbl数组的用法了。我们先看看OSMapTbl和OSUnMapTbl的定义：</p>
+<p>INT8U const OSMapTbl[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};</p>
+<p>INT8U const OSUnMapTbl[256] = {</p>
+<p>从略………………</p>
+<p>};</p>
+<p>OSMapTbl分别是一个INT8U的八个位，而OSUnMap数组中的值就是从0x00到0xFF的八位中，每一个值所对应的最低位的值。我们在调度的时候只需将OSRdyGrp的值代入OSUnMapTbl数组中，得到OSUnMapTbl[OSRdyGrp]的值就是哪个优先级最高的Group有Ready进程存在，再使用该Group对应OSRdyTbl[]数组中的值一样带入OSUnMapTbl中就可以得出哪个Task是优先级最高的。</p>
+<p>于是我们提前来看看OS_Sched()中获取最高优先级所使用的方法：</p>
+<p>y = OSUnMapTbl[OSRdyGrp];</p>
+<p>OSPrioHighRdy = (INT8U)((y &lt;&lt; 3) + OSUnMapTbl[OSRdyTbl[y]]);</p>
+<p>显然，先得到的y就是存在最高优先级的Group，然后OSUnMapTbl[OSRdyTbl[y]]就是Group中的偏移，因此OSPrioHighRdy最高优先级就应该是Group&lt;&lt;3再加上这个偏移。</p>
+<p>于是乎，我们就可以对上面那一小段很模糊的代码做一下总结：</p>
+<p>prio只有6位，高3位代表着某一个Group保存在OSTCBY中，OSTCBBitY表示该Group所对应的Bit，将OSRdyGrp的该位置1表示该Group中有进程是Ready的；低3位代表着该Group中的第几个进程，保存在OSTCBX中，OSTCBBitX表示该进程在该Group中所对应的Bit，OSRdyTbl[ptcb-&gt;OSTCBY] |= ptcb-&gt;OSTCBBitX就等于将该进程所对应的Bit置1了。</p>
+<p>OSStart</p>
+<p>OK，接下来我们来看这个开始函数了。OSStart其实很短，只有匆匆几句代码：</p>
+<p>void OSStart (void)</p>
+<p>{</p>
+<p>INT8U y;</p>
+<p>INT8U x;</p>
+<p>if (OSRunning == FALSE) {</p>
+<p>y = OSUnMapTbl[OSRdyGrp];</p>
+<p>x = OSUnMapTbl[OSRdyTbl[y]];</p>
+<p>OSPrioHighRdy = (INT8U)((y &lt;&lt; 3) + x);</p>
+<p>OSPrioCur = OSPrioHighRdy;</p>
+<p>OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];</p>
+<p>OSTCBCur = OSTCBHighRdy;</p>
+<p>OSStartHighRdy();</p>
+<p>}</p>
+<p>}</p>
+<p>如果OSRunning为TRUE，表示OS已经在运行了，则OSStart不做任何事。</p>
+<p>OSRunning为FALSE，则找出最高优先级的Ready的Task，并将该指针赋给OSTCBHighRdy和OSTCBCur。然后调用OSStartHighRdy()开始运行该进程。</p>
+<p>OSStartHighRdy()为用户自定义函数，在这个函数中，主要功能就是进行堆栈切换并将OSRunning设置为TRUE表示OS已经开始运行，然后将保存的寄存器弹出，最后执行中断返回指令IRET就跳到OSTCBHighRdy的最开始处运行了。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>uC/OS-II源码分析(总体思路 三)</p>
+<p>&nbsp;</p>
+<p>OSTimeDly</p>
+<p>在Task中，一般执行一段时间之后调用OSTimeDly推迟一段时间再继续运行，OSTimeDly将本进程从Ready TCBList中删除，然后将Delay的时间设置给OSTCBDly，最后调用OS_Sched进行进程调度。</p>
+<p>void OSTimeDly (INT16U ticks)</p>
+<p>{</p>
+<p>INT8U y;</p>
+<p>if (ticks &gt; 0) {</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>y = OSTCBCur-&gt;OSTCBY;</p>
+<p>OSRdyTbl[y] &amp;= ~OSTCBCur-&gt;OSTCBBitX;</p>
+<p>if (OSRdyTbl[y] == 0) {</p>
+<p>OSRdyGrp &amp;= ~OSTCBCur-&gt;OSTCBBitY;</p>
+<p>}</p>
+<p>OSTCBCur-&gt;OSTCBDly = ticks;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>OS_Sched();</p>
+<p>}</p>
+<p>}</p>
+<p>如果ticks为零，说明不需延迟，则什么事情都不做。否则，调用OS_ENTER_CRITICAL进入临界段，将本进程从Ready TCBList中删除的代码如下：</p>
+<p>y = OSTCBCur-&gt;OSTCBY;</p>
+<p>OSRdyTbl[y] &amp;= ~OSTCBCur-&gt;OSTCBBitX;</p>
+<p>if (OSRdyTbl[y] == 0) {</p>
+<p>OSRdyGrp &amp;= ~OSTCBCur-&gt;OSTCBBitY;</p>
+<p>}</p>
+<p>y为当前进程所在Group，OSRdyTbl[y]为该Group所在字节，&amp;=~则将该字节中本进程所占用的Bit清零。如果OSRdyTbl[y]为0，则说明这个Group中没有进程处于Ready状态，则将OSRdyGrp中该Group所占用的Bit清零。</p>
+<p>然后将ticks保存在OSTCBDly中，每次OSTimeTick运行时会将这个值减一直至为零。</p>
+<p>调用OS_EXIT_CRITICAL离开临界段，紧接着调用OS_Sched进入调度例程。</p>
+<p>OS_Sched</p>
+<p>OS_Sched是进程调度所使用的函数，在这里面找到最高优先级的进程，然后切换到该进程运行。</p>
+<p>void OS_Sched (void)</p>
+<p>{</p>
+<p>INT8U y;</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>if (OSIntNesting == 0) {</p>
+<p>if (OSLockNesting == 0) {</p>
+<p>y = OSUnMapTbl[OSRdyGrp];</p>
+<p>OSPrioHighRdy = (INT8U)((y &lt;&lt; 3) + OSUnMapTbl[OSRdyTbl[y]]);</p>
+<p>if (OSPrioHighRdy != OSPrioCur) {</p>
+<p>OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];</p>
+<p>OSCtxSwCtr++;</p>
+<p>OS_TASK_SW();</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>}</p>
+<p>OS_Sched不允许在中断嵌套中调用，因此先判断是否是中断嵌套，并且是否限制进程调度，这两个条件都满足之后，找到最高优先级的进程，如果这个进程不是当前进程，则将新的进程TCB指针保存到OSTCBHighRdy中，为调度计数器OSCtxSwCtr加一，然后调用宏OS_TASK_SW()进行切换。</p>
+<p>OS_TASK_SW()宏也是一个自定义的宏，uC/OS-II推荐使用软中断方式实现。</p>
+<p>OSCtxSw是一个中断响应函数，一般我们在初始化时将这个软终端和OSCtxSw挂接好。在OSCtxSw中所需要做的事情就是将当前寄存器的值保存到当前堆栈中，然后切换堆栈到新进程的堆栈，将寄存器的值出栈，然后调用中断返回指令IRET就返回到新进程中断前的地方继续执行了。</p>
+<p>定时中断</p>
+<p>uC/OS-II的定时中断必须在OSStart之后初始化，而不能在OSStart之前，因为害怕第一个TimeTick发生时第一个进程还没有开始运行，而这时uC/OS是处于不可预期状态，会导致死机。</p>
+<p>因此对于定时中断，我一般是放在最高级进程的初始化中进行，然后将定时中断和OSTickISR挂接。</p>
+<p>OSTickISR也是一个用户自定义函数，所要完成的功能一个是保存当前的寄存器到当前堆栈将OSIntNesting加一，然后调用uC/OS提供的OSTimeTick函数，然后调用OSIntExit()将OSIntNesting减一，最后将各寄存器值出栈，使用中断返回指令IRET返回。</p>
+<p>OSTimeTick在每个时钟中断中被调用一次，在该函数中会更新各个进程TCB所对应的OSTCBDly，如果该OSTCBDly减为0，则对应的TCB就被放入Ready TCBList中。</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>OSTime++;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>ptcb = OSTCBList;</p>
+<p>while (ptcb-&gt;OSTCBPrio != OS_IDLE_PRIO) {</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>if (ptcb-&gt;OSTCBDly != 0) {</p>
+<p>if (--ptcb-&gt;OSTCBDly == 0) {</p>
+<p>if ((ptcb-&gt;OSTCBStat &amp; OS_STAT_PEND_ANY) != OS_STAT_RDY) {</p>
+<p>ptcb-&gt;OSTCBStat &amp;= ~OS_STAT_PEND_ANY;</p>
+<p>ptcb-&gt;OSTCBPendTO = TRUE;</p>
+<p>} else {</p>
+<p>ptcb-&gt;OSTCBPendTO = FALSE;</p>
+<p>}</p>
+<p>if ((ptcb-&gt;OSTCBStat &amp; OS_STAT_SUSPEND) == OS_STAT_RDY) {</p>
+<p>OSRdyGrp |= ptcb-&gt;OSTCBBitY;</p>
+<p>OSRdyTbl[ptcb-&gt;OSTCBY] |= ptcb-&gt;OSTCBBitX;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>ptcb = ptcb-&gt;OSTCBNext;</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>}</p>
+<p>首先在临界段将OSTime加一，然后遍历整个非Free的TCBList，如果OSTCBDly不为0，则，将OSTCBDly减一，如果这时OSTCBDly为0，而且TCB对应的进程需要等待任何信号量或Event等，则说明超时时间到了，将当前TCB的State中OS_STAT_PEND_ANY位去掉，然后将OSTCBPendTo设置为TRUE，表示这是PEND的超时，否则设置OSTCBPendTO为FALSE。</p>
+<p>如果OSTCBDly减为零，且该进程没有Suspend，则将该进程放入Ready TCBList中，使用方法同TaskCreate中的方法。</p>
+<p>然后我们来说说OSIntExit这个函数。该函数代码如下：</p>
+<p>void OSIntExit (void)</p>
+<p>{</p>
+<p>INT8U y;</p>
+<p>if (OSRunning == TRUE) {</p>
+<p>OS_ENTER_CRITICAL();</p>
+<p>if (OSIntNesting &gt; 0) {</p>
+<p>OSIntNesting--;</p>
+<p>}</p>
+<p>if (OSIntNesting == 0) {</p>
+<p>if (OSLockNesting == 0) {</p>
+<p>y = OSUnMapTbl[OSRdyGrp];</p>
+<p>OSPrioHighRdy = (INT8U)((y &lt;&lt; 3) + OSUnMapTbl[OSRdyTbl[y]]);</p>
+<p>if (OSPrioHighRdy != OSPrioCur) {</p>
+<p>OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];</p>
+<p>OSCtxSwCtr++;</p>
+<p>OSIntCtxSw();</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>OS_EXIT_CRITICAL();</p>
+<p>}</p>
+<p>}</p>
+<p>首先判断OSRunning是否为1，也就是OS是否在运行，当然没有运行就什么都不做。</p>
+<p>然后将OSIntNesting减一，这个是需要在临界段进行的。如果OSIntNesting减为零，并且没有限制进程切换，则找到当前最高优先级的进程（方法同OS_Sched()），然后调用OSIntCtxSw进行进程切换。</p>
+<p>OSIntCtxSw()是用户自定义函数，该函数的主要功能与OSCtxSw类似，只是需要对当前的堆栈进行稍微的调整，将OSIntExit和OSIntCtxSw调用所需要的堆栈去掉，然后做的和OSCtxSw一样。</p>
+<p>在实际的Porting中发现要去掉OSIntExit和OSIntCtxSw调用所占用的堆栈还是比较麻烦的，因此我就现在OSTickISR刚开始的时候保存好现场之后就将堆栈指针赋给当前进程TCB的OSStkPtr，这样，在OSIntCtxSw中就不需要重新对当前堆栈的值进行保存，只需进行切换就可以了</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>堆栈结构</p>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/hongzg1982/category/346978.html" target="_blank">UCOS</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2310274,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;42af6793-7bfe-dd11-9e4d-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./UCOS源码详解 - 不知道 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./UCOS源码详解 - 不知道 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/hongzg1982/" target="_blank"><img src="./UCOS源码详解 - 不知道 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/hongzg1982/">不知道</a><br>
+            <a href="http://home.cnblogs.com/u/hongzg1982/followees">关注 - 2</a><br>
+            <a href="http://home.cnblogs.com/u/hongzg1982/followers">粉丝 - 39</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;42af6793-7bfe-dd11-9e4d-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(2310274,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(2310274,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/hongzg1982/archive/2011/08/05/2128843.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/hongzg1982/archive/2011/08/05/2128843.html" title="发布于2011-08-05 17:09">让C语言更有效率的集中方法</a><br></div>
+</div>
+
+
+		</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2012-01-02 17:26</span> <a href="http://www.cnblogs.com/hongzg1982/">不知道</a> 阅读(<span id="post_view_count">3505</span>) 评论(<span id="post_comment_count">0</span>) &nbsp;<a href="https://i.cnblogs.com/EditArticles.aspx?postid=2310274" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/hongzg1982/articles/2310274.html#" onclick="AddToWz(2310274);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=69058,cb_entryId=2310274,cb_blogApp=currentBlogApp,cb_blogUserGuid='42af6793-7bfe-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2012/1/2 17:26:00';loadViewCount(cb_entryId);</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/hongzg1982/articles/2310274.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/hongzg1982/articles/2310274.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/76017.html" target="_blank">【活动】一元专享1500元微软智能云Azure</a><br></div>
+<div id="opt_under_post"></div>
+<div id="ad_c1" class="c_ad_block">     <ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-4210569241504288" data-ad-slot="5457903683" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" src="./UCOS源码详解 - 不知道 - 博客园_files/saved_resource.html"></iframe></ins></ins></ins></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/562792/" target="_blank">Facebook开源内存数据库Beringei，追求极致压缩率</a><br> ·  <a href="http://news.cnblogs.com/n/562791/" target="_blank">谷歌要通过Windows和SQL Server来争取企业客户</a><br> ·  <a href="http://news.cnblogs.com/n/562790/" target="_blank">Oracle提醒Java开发者们，很快就没有浏览器可以运行Applets了</a><br> ·  <a href="http://news.cnblogs.com/n/562789/" target="_blank">如何用股票交易机器人每月赚3500美元？</a><br> ·  <a href="http://news.cnblogs.com/n/562788/" target="_blank">创业第一诫：千万不要企图不劳而获</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="ad_c2" class="c_ad_block"><a href="http://bbs.h3bpm.com/index.php?m=app&amp;app=product_download&amp;a=reg&amp;utm_source=csdn&amp;utm_medium=pic&amp;utm_campaign=show&amp;utm_content=v10&amp;utm_term=%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD" target="_blank"><img width="468" height="60" src="./UCOS源码详解 - 不知道 - 博客园_files/24442-20170118152220281-363324784.jpg" alt=""></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/554260/" target="_blank">「代码家」的学习过程和学习经验分享</a><br> ·  <a href="http://kb.cnblogs.com/page/556770/" target="_blank">写给未来的程序媛</a><br> ·  <a href="http://kb.cnblogs.com/page/558087/" target="_blank">高质量的工程代码为什么难写</a><br> ·  <a href="http://kb.cnblogs.com/page/555750/" target="_blank">循序渐进地代码重构</a><br> ·  <a href="http://kb.cnblogs.com/page/554496/" target="_blank">技术的正宗与野路子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+<li>
+<a id="blog_nav_sitehome" href="http://www.cnblogs.com/">博客园</a></li>
+<li>
+<a id="blog_nav_myhome" class="two_words" href="http://www.cnblogs.com/hongzg1982/">首页</a></li>
+<li>
+<a id="blog_nav_newpost" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li>
+<a id="blog_nav_contact" accesskey="9" class="two_words" rel="nofollow" href="https://msg.cnblogs.com/send/%E4%B8%8D%E7%9F%A5%E9%81%93">联系</a></li>
+<li>
+<a id="blog_nav_rss" class="two_words" href="http://www.cnblogs.com/hongzg1982/rss">订阅</a>
+<a id="blog_nav_rss_image" href="http://www.cnblogs.com/hongzg1982/rss"><img src="./UCOS源码详解 - 不知道 - 博客园_files/xml.gif" alt="订阅"></a>
+</li>
+<li>
+<a id="blog_nav_admin" class="two_words" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/01/01&#39;);return false;">&lt;</a></td><td align="center">2017年2月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/03/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td class="CalTodayDay" align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td class="CalWeekendDay" align="center">25</td></tr><tr><td class="CalWeekendDay" align="center">26</td><td align="center">27</td><td align="center">28</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr><tr><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td><td class="CalOtherMonthDay" align="center">11</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+<meta name="vs_showGrid" content="False">
+
+<h3>公告</h3>
+<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/hongzg1982/">不知道</a><br>园龄：<a href="http://home.cnblogs.com/u/hongzg1982/" title="入园时间：2009-02-19">7年11个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/hongzg1982/followers/">39</a><br>关注：<a href="http://home.cnblogs.com/u/hongzg1982/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;42af6793-7bfe-dd11-9e4d-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+
+<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/hongzg1982/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/hongzg1982/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/hongzg1982/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/hongzg1982/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/hongzg1982/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+		<h3>随笔分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/hongzg1982/category/241610.html">Brew开发(1)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/hongzg1982/category/241887.html">FPGA(1)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/hongzg1982/category/241298.html">MFC(8)</a></li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/hongzg1982/category/241297.html">Perl(1)</a></li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/hongzg1982/archive/2011/08.html">2011年8月 (1)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/hongzg1982/archive/2011/05.html">2011年5月 (2)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/hongzg1982/archive/2011/04.html">2011年4月 (2)</a></li>
+			
+				<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/hongzg1982/archive/2010/04.html">2010年4月 (16)</a></li>
+			
+				</ul>
+			
+	
+		<h3>文章分类</h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/hongzg1982/category/400300.html">Algorithm</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_1" href="http://www.cnblogs.com/hongzg1982/category/316150.html">Android(6)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_2" href="http://www.cnblogs.com/hongzg1982/category/319305.html">ARM(10)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_3" href="http://www.cnblogs.com/hongzg1982/category/361010.html">Audio相关</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_4" href="http://www.cnblogs.com/hongzg1982/category/314803.html">Bochs QEMU(7)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_5" href="http://www.cnblogs.com/hongzg1982/category/372931.html">busybox</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_6" href="http://www.cnblogs.com/hongzg1982/category/315597.html">C , C++(23)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_7" href="http://www.cnblogs.com/hongzg1982/category/350774.html">CDMA(3)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_8" href="http://www.cnblogs.com/hongzg1982/category/351463.html">Computer Network(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_9" href="http://www.cnblogs.com/hongzg1982/category/326322.html">eclipse(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_10" href="http://www.cnblogs.com/hongzg1982/category/317121.html">Embedded(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_11" href="http://www.cnblogs.com/hongzg1982/category/402502.html">GNU Linux hero跟他们的相关网站 消息</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_12" href="http://www.cnblogs.com/hongzg1982/category/317120.html">GPS(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_13" href="http://www.cnblogs.com/hongzg1982/category/321867.html">GRUB(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_14" href="http://www.cnblogs.com/hongzg1982/category/331401.html">hacker(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_15" href="http://www.cnblogs.com/hongzg1982/category/346495.html">Java(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_16" href="http://www.cnblogs.com/hongzg1982/category/311142.html">Linux相关(29)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_17" href="http://www.cnblogs.com/hongzg1982/category/470350.html">Lisp语言</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_18" href="http://www.cnblogs.com/hongzg1982/category/311569.html">makefile(5)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_19" href="http://www.cnblogs.com/hongzg1982/category/422516.html">minix</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_20" href="http://www.cnblogs.com/hongzg1982/category/414025.html">OpenSource related</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_21" href="http://www.cnblogs.com/hongzg1982/category/360047.html">OS X Mountain Lion</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_22" href="http://www.cnblogs.com/hongzg1982/category/347992.html">Perl(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_23" href="http://www.cnblogs.com/hongzg1982/category/347508.html">Pistachio Rex L4 (3)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_24" href="http://www.cnblogs.com/hongzg1982/category/317119.html">PLD(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_25" href="http://www.cnblogs.com/hongzg1982/category/346494.html">Python</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_26" href="http://www.cnblogs.com/hongzg1982/category/346493.html">Ruby语言</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_27" href="http://www.cnblogs.com/hongzg1982/category/470349.html">rust语言</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_28" href="http://www.cnblogs.com/hongzg1982/category/324584.html">shell(4)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_29" href="http://www.cnblogs.com/hongzg1982/category/341517.html">SourceInsight(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_30" href="http://www.cnblogs.com/hongzg1982/category/376695.html">TCP/IP</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_31" href="http://www.cnblogs.com/hongzg1982/category/311566.html">Toolchain</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_32" href="http://www.cnblogs.com/hongzg1982/category/350616.html">Trace32(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_33" href="http://www.cnblogs.com/hongzg1982/category/408504.html">ubuntu系统使用</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_34" href="http://www.cnblogs.com/hongzg1982/category/346978.html">UCOS(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_35" href="http://www.cnblogs.com/hongzg1982/category/311570.html">VC++ MFC(4)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_36" href="http://www.cnblogs.com/hongzg1982/category/347105.html">webkit</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_37" href="http://www.cnblogs.com/hongzg1982/category/347055.html">webOS(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_38" href="http://www.cnblogs.com/hongzg1982/category/340805.html">Windows使用(4)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_39" href="http://www.cnblogs.com/hongzg1982/category/351166.html">zeroboot(据说是世界上最快的linuxboot程序)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_40" href="http://www.cnblogs.com/hongzg1982/category/415266.html">代码管理</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_41" href="http://www.cnblogs.com/hongzg1982/category/360088.html">工作相关(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_42" href="http://www.cnblogs.com/hongzg1982/category/312520.html">汇编</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_43" href="http://www.cnblogs.com/hongzg1982/category/339706.html">闲书(2)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_44" href="http://www.cnblogs.com/hongzg1982/category/347056.html">相关网站(5)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_45" href="http://www.cnblogs.com/hongzg1982/category/367143.html">摇滚乐队(1)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_46" href="http://www.cnblogs.com/hongzg1982/category/311173.html">英语相关(11)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_47" href="http://www.cnblogs.com/hongzg1982/category/344745.html">游戏(3)</a></li>
+			
+				<li><a id="CatList_LinkList_2_Link_48" href="http://www.cnblogs.com/hongzg1982/category/386152.html">云</a></li>
+			
+				</ul>
+			
+	</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hongzg1982/archive/2010/04/14/1711852.html#3248386">1. Re:fseek函数</a></li>
+        <li class="recent_comment_body">楼楼手误了吧？？？<br>是正数表示正向偏移    <br>NOT  整数</li>
+        <li class="recent_comment_author">--Lzzzz</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hongzg1982/articles/2340560.html#2942046">2. Re:堆栈段可读可写可执行</a></li>
+        <li class="recent_comment_body">对于那种既可执行又可可读的段来说是可以使用的。例如当常数随着指令代码放到随机存储器RAM中时，可执行的是指令，而可读的则是那些常数。参考链接：=LpEt7IAlkgUC&amp;pg=PA75&amp;lpg=PA7......</li>
+        <li class="recent_comment_author">--Icrt</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hongzg1982/archive/2012/01/06/2314986.html#2893497">3. Re:C语言字符串操作</a></li>
+        <li class="recent_comment_body">谢谢，学到很多。</li>
+        <li class="recent_comment_author">--idifferentway</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hongzg1982/archive/2011/07/24/2115334.html#2857163">4. Re:编写MBR从硬盘启动linux0.11</a></li>
+        <li class="recent_comment_body">2014年1月9日 by chenghao0511@gmail.com制作方法：把bootsect 替换 原来的makedd bs=8192 if=Image of=/dev/hd5 c h s ......</li>
+        <li class="recent_comment_author">--chenghao0511</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/hongzg1982/archive/2011/07/04/2097339.html#2742621">5. Re:C++ RTTI</a></li>
+        <li class="recent_comment_body">typeid是个关键字，不是函数，分析的也不是很详细，有待更改</li>
+        <li class="recent_comment_author">--星空雾雨</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/hongzg1982/archive/2011/04/20/2022298.html">1. C++ Project-&gt;settings设置相关(转)(8741)</a></li><li><a href="http://www.cnblogs.com/hongzg1982/archive/2011/05/11/2042920.html">2. C++多态(7217)</a></li><li><a href="http://www.cnblogs.com/hongzg1982/archive/2010/04/14/1711964.html">3. fopen函数(3129)</a></li><li><a href="http://www.cnblogs.com/hongzg1982/archive/2010/04/14/1711852.html">4. fseek函数(1177)</a></li><li><a href="http://www.cnblogs.com/hongzg1982/archive/2011/08/05/2128843.html">5. 让C语言更有效率的集中方法(1082)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<h3 class="catListTitle">评论排行榜</h3>
+<div class="RecentComment" id="TopCommentsPosts">
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/hongzg1982/archive/2010/04/15/1712964.html">1. (转载)H.264(1)</a></li><li><a href="http://www.cnblogs.com/hongzg1982/archive/2010/04/14/1711852.html">2. fseek函数(1)</a></li></ul></div>
+</div></div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/hongzg1982/archive/2011/04/20/2022298.html">1. C++ Project-&gt;settings设置相关(转)(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © 不知道
+</p>
+</div>
+</div>
+
+
+
+</body></html>
