@@ -19,7 +19,7 @@ int main(void)
 		message = "This is the parent\n";
 		n = 3;
 	}
-	for(; n > 0; n--) {
+	for (; n > 0; n--) {
 		printf(message);
 		sleep(1);
 	}
